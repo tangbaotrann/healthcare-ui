@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 // me
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
     return (
@@ -17,7 +18,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
 
                 {/* Forgot password */}
-                {/* <Route path='/forgot-password'/> */}
+                <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
         </Router>
     );
