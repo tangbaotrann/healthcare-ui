@@ -1,0 +1,24 @@
+.wrapper-icons {
+    display: flex;
+    align-items: center;
+    width: 240px;
+    margin-top: 16px;
+}
+
+.bg-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    background-color: var(--white);
+    border-radius: 50%;
+    box-shadow: 5px 10px 30px var(--menu-icon);
+    position: relative;
+}
+
+.title-icons {
+    font-size: 1.4rem;
+    color: var(--black);
+}

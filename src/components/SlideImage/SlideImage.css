@@ -1,0 +1,91 @@
+.wrapper-slide-image {
+    position: absolute;
+    left: 0;
+    right: 120px;
+    padding: 12px;
+    margin-top: 62px;
+}
+
+.slide-image-item {
+    width: 1100px;
+    height: 600px;
+    border-radius: 30px;
+    background-size: cover;
+    object-fit: cover;
+}
+
+.react-slideshow-wrapper.slide  {
+    border-radius: 30px;
+}
+
+/* indicators */
+.react-slideshow-container+ul.indicators {
+    margin-top: 12px;
+}
+
+.react-slideshow-container+ul.indicators li {
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.react-slideshow-container+ul.indicators .each-slideshow-indicator:before {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary);
+}
+
+/* appointments */
+.appointments {
+    position: absolute;
+    right: 0;
+    bottom: 120px;
+    padding: 35px 0 35px 13px;
+    width: 20%;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: linear-gradient(53.15deg, rgba(255, 255, 255, 0.94) 46.32%, rgba(255, 255, 255, 0.54) 69.81%);
+}
+
+.appointment-header {
+    position: relative;
+}
+
+.heart-icon {
+    position: absolute;
+    top: -80px;
+    right: 0;
+}
+
+.banner-clinic-icon {
+    position: absolute;
+    bottom: -80px;
+    right: -60px;
+}
+
+.appointment-desc {
+    line-height: 46px;
+    font-size: 3.6rem;
+    background: linear-gradient(272.22deg, #280198 24.78%, #8C3D6D 93.1%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.appointment-btn {
+    border: none;
+    outline: none;
+    font-size: 1.8rem;
+    max-width: 240px;
+    padding: 24px;
+    line-height: 0;
+    border-radius: 100px;
+    margin-top: 12px;
+    color: var(--white);
+    background: linear-gradient(271.41deg, #3300C4 11.44%, #D68397 93%);
+}
+
+.appointment-btn:hover {
+    color: var(--white) !important;
+    background: linear-gradient(271.41deg, #5924EF 11.44%, #EF9EB2 93%)
+}
+
+

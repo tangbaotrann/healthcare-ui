@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import UpdateInfoUser from './pages/UpdateInfoUser';
+import Home from './pages/Home';
 
 function App() {
     return (
@@ -23,6 +24,9 @@ function App() {
 
                 {/* Update information user */}
                 <Route path="/update/info/me" element={<UpdateInfoUser />} />
+
+                {/* Home */}
+                <Route path="/home" element={<Home />} />
             </Routes>
         </Router>
     );

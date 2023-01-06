@@ -9,6 +9,7 @@ function BackgroundOutSite({ children }) {
                 {/* Inputs */}
                 <div className="inputs">{children}</div>
             </div>
+            <div className="bg-out-site-footer"></div>
         </div>
     );
 }

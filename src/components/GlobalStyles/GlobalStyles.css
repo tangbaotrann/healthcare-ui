@@ -4,9 +4,28 @@
 /* init var */
 :root {
     /* color */
-    --primary: #3466AB;
-    --text: #ffffff;
-    --bg-out-site: rgba(255, 255, 255, 0.7);
+    --primary: #1DCBB6;
+    --blu: #2320D4;
+    --white: #ffffff;
+    --black: #111c63;
+
+    /* btn primary hover */
+    --btn-primary-hover: #30b5a1;
+    --btn-blu-hover: #201dc4;
+
+    /* background hover with opacity */
+    --bg-opacity: #f1f5fa;
+
+    /* Menu icon */
+    --menu-icon: #ccd6ef;
+
+    /* modal */
+    --modal-out-site: rgba(255, 255, 255, 0.7);
+
+    /* background images */
+    --bg-out-site-left: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/online-pharmacy-video-cover.svg');
+    --bg-out-site-right: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/not-feeling-well.svg');
+    --bg-in-site-clinic: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/multi-clinic-bg-2.svg');
 
     /* font-family */
     --font-family: 'Barlow', sans-serif;
@@ -25,7 +44,28 @@ html {
 /* default */
 body {
     font-family: var(--font-family);
-    color: var(--text);
+    color: var(--white);
     overflow-y: overlay;
     overflow-x: overlay;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black);
+}
+
+/* Scrollbar Css */
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
