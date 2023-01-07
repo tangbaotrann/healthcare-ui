@@ -80,3 +80,113 @@ export const SlideShowBannerClinicIcon = () => {
         />
     );
 };
+
+// icon location
+export const ExploreClinicInformationLocationIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/smart-clinic/location.svg"
+            alt="location-icon"
+        />
+    );
+};
+
+// icon clock
+export const ExploreClinicInformationClockIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/smart-clinic/clock.svg"
+            alt="clock-icon"
+        />
+    );
+};
+
+// icon endocrinology
+export const HealthInformationEndocrinologyIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/endocrinology-icon.svg"
+            alt="endocrinology-icon"
+        />
+    );
+};
+
+// icon cardiology
+export const HealthInformationCardiologyIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/cardiology-icon.svg"
+            alt="cardiology-icon"
+        />
+    );
+};
+
+// icon sexual health
+export const HealthInformationSexualHealthIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/sexual-health-icon.svg"
+            alt="sexual-health-icon"
+        />
+    );
+};
+
+// icon video
+export const RemoteHealthConsultationVideoIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/video-icon.svg"
+            alt="video-icon"
+        />
+    );
+};
+
+// icon chat
+export const RemoteHealthConsultationChatIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/chat-icon.svg"
+            alt="chat-icon"
+        />
+    );
+};
+
+// icon stethoscope
+export const FeelUnwellStethoscopeIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/stethoscope-icon.svg"
+            alt="stethoscope-icon"
+        />
+    );
+};
+
+// icon lab
+export const FeelUnwellLabIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/lab-icon.svg"
+            alt="lab-icon"
+        />
+    );
+};
+
+// icon delivery
+export const PharmacyOnlineDeliveryIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/delivery-icon.svg"
+            alt="delivery-icon"
+        />
+    );
+};
+
+// icon discount
+export const PharmacyOnlineDiscountIcon = () => {
+    return (
+        <img
+            src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/discount-icon.svg"
+            alt="discount-icon"
+        />
+    );
+};

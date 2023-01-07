@@ -1,0 +1,82 @@
+.wrapper-explore-clinic-information {
+    width: 350px;
+    height: 560px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 42px;
+    margin-right: 42px;
+    background: linear-gradient(89.37deg,rgba(255,255,255,.92) 16.06%,rgba(255,255,255,.74) 99.35%);
+    position: relative;
+}
+
+.explore-clinic-information-img {
+    width: 100%;
+    height: 380px !important;
+    border-radius: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    object-fit: cover;
+}
+
+.ant-image-mask:hover {
+    border-radius: 20px;
+}
+
+.explore-clinic-information {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.explore-clinic-information-name {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--black);
+}
+
+.explore-clinic-information-address, .explore-clinic-information-time {
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 18px;
+    margin-top: 10px;
+    color: var(--black);
+}
+
+.explore-clinic-information-footer {
+    margin-top: 12px;
+}
+
+.explore-clinic-information-call-now-btn {
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 20px;
+    margin-right: 12px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--blu);
+}
+
+.explore-clinic-information-call-now-btn:hover, .explore-clinic-information-appointment-btn:hover {
+    color: var(--white) !important;
+    opacity: 0.8;
+}
+
+.explore-clinic-information-appointment-btn {
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--primary);
+}

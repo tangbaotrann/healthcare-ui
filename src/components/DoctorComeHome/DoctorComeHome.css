@@ -1,0 +1,76 @@
+.wrapper-doctor-come-home {
+    position: absolute;
+    right: 0;
+    top: 660px;
+    display: flex;
+    align-items: center;
+    z-index: -1;
+}
+
+/* Section left */
+.doctor-come-home-section-left {
+    margin-right: 100px;
+    margin-left: 22px;
+}
+
+.doctor-come-home-section-left-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-come-home-section-left-inner-title {
+    font-size: 4.8rem;
+    line-height: 53px;
+    white-space: pre-wrap;
+    color: var(--black);
+}
+
+.doctor-come-home-section-left-desc {
+    font-size: 1.8rem;
+    line-height: 24px;
+    margin-top: 18px;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    color: var(--black);
+}
+
+.doctor-come-home-section-left-btn {
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 20px;
+    margin-right: 12px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.doctor-come-home-section-left-btn:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+}
+
+/* Section right */
+.doctor-come-home-section-right {
+    display: flex;
+    position: relative;
+}
+
+.doctor-come-home-section-right-img {
+    width: 67vw;
+    z-index: 99;
+}
+
+.doctor-come-home-section-right-video-out-site {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.doctor-come-home-section-right-video {
+    width: calc(65vw - 3px);
+    height: calc(65vw / 1500 * 1080);
+}

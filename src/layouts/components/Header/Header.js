@@ -9,7 +9,7 @@ import { MenuGeneralExaminationIcon, MenuPeriodicHealthExaminationIcon } from '~
 
 function Header() {
     return (
-        <div style={{ color: 'black' }} className="wrapper-header">
+        <div className="wrapper-header">
             <div className="container-header">
                 {/* Logo */}
                 <Link to="/home">

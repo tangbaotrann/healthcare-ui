@@ -1,0 +1,5 @@
+.scroll-to-top:hover {
+    opacity: 0.8;
+    background-color: var(--primary);
+    transition: 0.4s linear;
+}

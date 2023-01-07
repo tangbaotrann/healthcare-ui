@@ -1,3 +1,4 @@
+// Images of slide show
 const images = [
     {
         id: 1,
