@@ -1,0 +1,76 @@
+.wrapper-explore-clinic {
+    position: relative;
+    top: 12%;
+}
+
+.explore-clinic-title {
+    font-size: 4.2rem;
+    line-height: 36px;
+    margin-right: 42px;
+    color: var(--black);
+}
+
+.separator {
+    width: 100px;
+    border-radius: 100px;
+    height: 2px;
+    margin-top: 22px;
+    background-color: var(--primary);
+}
+
+.explore-clinic-btn {
+    margin-right: 16px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--blu);
+}
+
+.explore-clinic-btn:hover {
+    color: var(--white) !important;
+    opacity: 0.8;
+}
+
+/* Header */
+.explore-clinic-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.explore-clinic-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Body */
+.explore-clinic-body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -260px;
+    height: 1095px;
+    background-image: var(--bg-in-site-clinic);
+    background-size: auto 94%; 
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+/* Footer */
+.explore-clinic-footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 680px;
+    background-image: var(--bg-in-site-clinic-box-shadow);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center bottom;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+}

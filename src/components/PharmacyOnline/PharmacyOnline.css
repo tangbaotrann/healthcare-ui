@@ -1,0 +1,71 @@
+.wrapper-pharmacy-online {
+    position: absolute;
+    left: -42px;
+    right: 0;
+    top: 660px;
+    display: flex;
+    align-items: center;
+    z-index: -1;
+}
+
+/* Section left */
+.pharmacy-online-section-left {
+    display: flex;
+    position: relative;
+}
+
+.pharmacy-online-section-img {
+    width: 65vw;
+    z-index: 99;
+}
+
+.pharmacy-online-section-video-out-site {
+    position: absolute;
+    top: 9vw;
+    left: 0;
+}
+
+.pharmacy-online-section-video {
+    width: 35vw;
+    height: calc(35vw / 1750 * 1080);
+}
+
+/* Section right */
+.pharmacy-online-section-right {
+    z-index: 999;
+}
+
+.pharmacy-online-section-right-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.pharmacy-online-section-right-title {
+    font-size: 4.8rem;
+    line-height: 53px;
+    white-space: pre-wrap;
+    color: var(--black);
+}
+
+.pharmacy-online-section-right-desc {
+    font-size: 1.8rem;
+    line-height: 24px;
+    margin-top: 18px;
+    margin-right: 12px;
+    color: var(--black);
+}
+
+/* Icon */
+.pharmacy-online-section-right-icon {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pharmacy-online-section-right-icon-text {
+    font-size: 1.4rem;
+    line-height: 18px;
+    margin-left: 10px;
+    margin-right: 42px;
+    color: var(--black);
+}

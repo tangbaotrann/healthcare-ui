@@ -1,12 +1,8 @@
 // me
-import SlideShow from '~/components/SlideShow';
+import './Content.css';
 
-function Content() {
-    return (
-        <>
-            <SlideShow />
-        </>
-    );
+function Content({ children }) {
+    return <div className="wrapper-content">{children}</div>;
 }
 
 export default Content;

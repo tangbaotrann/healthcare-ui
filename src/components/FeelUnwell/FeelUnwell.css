@@ -1,0 +1,63 @@
+.wrapper-feel-unwell {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -580px;
+    display: flex;
+    align-items: center;
+    z-index: -1;
+    margin-left: 42px;
+}
+
+/* Section left */
+.feel-unwell-section-left {
+    display: flex;
+    flex: 6;
+}
+
+.feel-unwell-section-left-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.feel-unwell-section-left-title {
+    font-size: 4.8rem;
+    line-height: 53px;
+    white-space: pre-wrap;
+    color: var(--black);
+}
+
+.feel-unwell-section-left-desc {
+    font-size: 1.8rem;
+    line-height: 24px;
+    margin-top: 18px;
+    margin-right: 12px;
+    color: var(--black);
+}
+
+.feel-unwell-section-left-icon {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.feel-unwell-section-left-icon-text {
+    font-size: 1.4rem;
+    line-height: 18px;
+    margin-left: 10px;
+    margin-right: 42px;
+    color: var(--black);
+}
+
+/* Section right */
+.feel-unwell-section-right {
+    display: flex;
+    flex: 1;
+}
+
+.feel-unwell-section-right-img {
+    height: 42vw;
+    object-fit: cover;
+    z-index: -1;
+}
