@@ -111,11 +111,11 @@
 }
 
 .avatar-user {
-    margin-right: 12px;
+    margin-right: 10px;
     cursor: pointer;
 }
 
 .name-user {
     font-size: 1.4rem;
-    color: var(--black);
+    color: var(--primary);
 }
