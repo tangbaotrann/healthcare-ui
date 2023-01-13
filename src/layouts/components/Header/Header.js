@@ -1,6 +1,6 @@
 // lib
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Popover } from 'antd';
+import { Avatar, Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
 
 // me
@@ -65,7 +65,7 @@ function Header() {
                 {/* Section right */}
                 <div className="section-right">
                     <Popover content={<InformationOfDoctor />}>
-                        <Avatar size={46} icon={<UserOutlined />} className="avatar-user" />
+                        <Avatar size={42} icon={<UserOutlined />} className="avatar-user" />
                     </Popover>
                     <h4 className="name-user">BS. Kiên</h4>
 

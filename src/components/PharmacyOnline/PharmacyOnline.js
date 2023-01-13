@@ -1,7 +1,7 @@
 // me
 import './PharmacyOnline.css';
 import { PharmacyOnlineDeliveryIcon, PharmacyOnlineDiscountIcon } from '../Icons';
-import DoctorComeHome from '../DoctorComeHome';
+import Footer from '~/layouts/components/Footer';
 
 function PharmacyOnline() {
     return (
@@ -49,7 +49,10 @@ function PharmacyOnline() {
             </div>
 
             {/* Doctor come home */}
-            <DoctorComeHome />
+            {/* <DoctorComeHome /> */}
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 }

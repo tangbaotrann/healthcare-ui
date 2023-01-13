@@ -9,8 +9,6 @@ function DefaultLayout({ children }) {
 
             {/* Content */}
             {children}
-
-            {/* Footer */}
         </>
     );
 }
