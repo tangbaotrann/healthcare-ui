@@ -10,7 +10,7 @@ function DoctorComeHome() {
             {/* Section left */}
             <div className="doctor-come-home-section-left">
                 <div className="doctor-come-home-section-left-inner">
-                    <h2 className="doctor-come-home-section-left-inner-title">Bác sĩ đến nhà</h2>
+                    <h2 className="doctor-come-home-section-left-inner-title">Bác sĩ đến khám</h2>
 
                     <span className="separator"></span>
 

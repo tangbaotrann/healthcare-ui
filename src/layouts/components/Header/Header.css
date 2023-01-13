@@ -40,7 +40,7 @@
     border-radius: 100px;
     background-color: var(--bg-opacity);
     cursor: pointer;
-    transition: all .3s ease-in-out 0.15s;
+    transition: all 0.3s ease-in-out 0.15s;
 }
 
 /* Menu item */
@@ -51,7 +51,7 @@
     margin-left: 9px;
     border-radius: 100px;
     cursor: pointer;
-    background-color: var(--bg-opacity); 
+    background-color: var(--bg-opacity);
 }
 
 .menu-item-icon {
@@ -60,6 +60,11 @@
 }
 
 /* Section right */
+.section-right {
+    display: flex;
+    align-items: center;
+}
+
 .book-now {
     border: none;
     outline: none;
@@ -67,7 +72,7 @@
     font-weight: 500;
     padding: 20px;
     line-height: 0;
-    text-align: center; 
+    text-align: center;
     border-radius: 100px;
     color: var(--white);
     background-color: var(--primary);
@@ -90,7 +95,7 @@
     font-weight: 500;
     padding: 20px;
     line-height: 0;
-    text-align: center; 
+    text-align: center;
     border-radius: 100px;
     color: var(--white);
     background-color: var(--blu);
@@ -103,4 +108,14 @@
     color: var(--white) !important;
     background-color: var(--btn-blu-hover);
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}
+
+.avatar-user {
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.name-user {
+    font-size: 1.4rem;
+    color: var(--black);
 }

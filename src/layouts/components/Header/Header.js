@@ -1,11 +1,12 @@
 // lib
-import { DownOutlined } from '@ant-design/icons';
-import { Button, Popover } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
 
 // me
 import './Header.css';
-import { MenuGeneralExaminationIcon, MenuPeriodicHealthExaminationIcon } from '~/components/Icons';
+import { MenuGeneralExaminationIcon } from '~/components/Icons';
+import InformationOfDoctor from '~/components/InformationOfDoctor';
 
 function Header() {
     return (
@@ -37,25 +38,40 @@ function Header() {
                         </Popover>
 
                         {/* Dịch vụ tại nhà */}
-                        <Popover content={<MenuPeriodicHealthExaminationIcon />}>
+                        {/* <Popover content={<MenuPeriodicHealthExaminationIcon />}>
                             <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/service-all">
                                 Dịch vụ tại nhà
                                 <DownOutlined className="menu-item-icon" />
                             </NavLink>
-                        </Popover>
+                        </Popover> */}
 
                         {/* Đội ngũ bác sĩ */}
                         <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/team-of-doctors">
                             Đội ngũ bác sĩ
+                        </NavLink>
+
+                        {/* Thống kê (chart) */}
+                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/statistics">
+                            Chỉ số thống kê
+                        </NavLink>
+
+                        {/* Blogger */}
+                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/blog">
+                            Blog
                         </NavLink>
                     </ul>
                 </div>
 
                 {/* Section right */}
                 <div className="section-right">
+                    <Popover content={<InformationOfDoctor />}>
+                        <Avatar size={46} icon={<UserOutlined />} className="avatar-user" />
+                    </Popover>
+                    <h4 className="name-user">BS. Kiên</h4>
+
                     {/* Khi click vào nút thì hiện lên Modal */}
-                    <Button className="book-now">Đặt hẹn khám ngay</Button>
-                    <Button className="download-app-now">Tải ứng dụng ngay</Button>
+                    {/* <Button className="book-now">Đặt hẹn khám ngay</Button> */}
+                    {/* <Button className="download-app-now">Tải ứng dụng ngay</Button> */}
                 </div>
             </div>
         </div>
