@@ -1,26 +1,80 @@
 // lib
-import { PlusSquareOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { SendOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, DatePicker, Form, Input, Select, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import './UpdateInfoUser.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { fetchApiUpdateInfoUser } from '~/redux/features/user/userSlice';
+import { fetchApiRegisterSelector } from '~/redux/selector';
 
 function UpdateInfoUser() {
+    const [fileList, setFileList] = useState([]);
+
+    const dispatch = useDispatch();
+
+    const tokenCurrent = useSelector(fetchApiRegisterSelector);
+
+    const navigate = useNavigate();
+
+    // preview avatar
+    const handleChangeAvatar = ({ fileList: newFileList }) => {
+        setFileList(newFileList);
+    };
+
     return (
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    console.log(values);
+                    if (values && tokenCurrent.accessToken) {
+                        dispatch(
+                            fetchApiUpdateInfoUser({
+                                values: values,
+                                tokenCurrent: tokenCurrent.accessToken,
+                            }),
+                        );
+                        navigate('/update/profile-doctor/me');
+                    }
                 }}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
             >
+                {/* avatar */}
+                <Form.Item
+                    name="avatar"
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bạn cần phải chọn ảnh đại diện.',
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <label htmlFor="avatar">
+                        <Input type="file" name="avatar" id="avatar" style={{ display: 'none' }} />
+                        <ImgCrop rotate>
+                            <Upload
+                                id="avatar"
+                                listType="picture-card"
+                                fileList={fileList}
+                                onChange={handleChangeAvatar}
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            >
+                                {fileList.length === 0 && '+ Ảnh đại diện'}
+                            </Upload>
+                        </ImgCrop>
+                    </label>
+                </Form.Item>
+
                 {/* Full name */}
                 <Form.Item
-                    name="fullName"
+                    name="username"
                     rules={[
                         {
                             required: true,
@@ -44,14 +98,14 @@ function UpdateInfoUser() {
                     hasFeedback
                 >
                     <Select style={{ width: '100%' }} placeholder="Giới tính..." allowClear>
-                        <Select.Option value="male">Nam</Select.Option>
-                        <Select.Option value="female">Nữ</Select.Option>
+                        <Select.Option value={true}>Nam</Select.Option>
+                        <Select.Option value={false}>Nữ</Select.Option>
                     </Select>
                 </Form.Item>
 
                 {/* Date of birth */}
                 <Form.Item
-                    name="dateOfBirth"
+                    name="dob"
                     rules={[
                         {
                             required: true,
@@ -75,20 +129,6 @@ function UpdateInfoUser() {
                     hasFeedback
                 >
                     <Input prefix={<SendOutlined />} placeholder="Địa chỉ..." />
-                </Form.Item>
-
-                {/* Insurance code */}
-                <Form.Item
-                    name="insurance"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Bạn cần phải nhập mã bảo hiểm.',
-                        },
-                    ]}
-                    hasFeedback
-                >
-                    <Input prefix={<PlusSquareOutlined />} placeholder="Mã bảo hiểm..." />
                 </Form.Item>
 
                 {/* Button update */}
