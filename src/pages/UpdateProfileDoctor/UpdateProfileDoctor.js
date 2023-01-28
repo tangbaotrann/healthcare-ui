@@ -5,22 +5,35 @@ import {
     GlobalOutlined,
     PercentageOutlined,
     ReadOutlined,
-    SafetyCertificateOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import './UpdateProfileDoctor.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { fetchApiCreateProfileForDoctor } from '~/redux/features/user/userSlice';
+import { fetchApiRegisterSelector } from '~/redux/selector';
 
 function UpdateProfileDoctor() {
+    const dispatch = useDispatch();
+
+    const tokenCurrent = useSelector(fetchApiRegisterSelector);
+
     return (
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    console.log(values);
+                    if (values && tokenCurrent.accessToken) {
+                        dispatch(
+                            fetchApiCreateProfileForDoctor({
+                                values: values,
+                                tokenCurrent: tokenCurrent.accessToken,
+                            }),
+                        );
+                    }
                 }}
                 onFinishFailed={(error) => {
                     console.log({ error });
@@ -42,7 +55,7 @@ function UpdateProfileDoctor() {
 
                 {/* training place */}
                 <Form.Item
-                    name="trainingPlace"
+                    name="training_place"
                     rules={[
                         {
                             required: true,
@@ -70,7 +83,7 @@ function UpdateProfileDoctor() {
 
                 {/* language */}
                 <Form.Item
-                    name="language"
+                    name="languages"
                     rules={[
                         {
                             required: true,
@@ -83,7 +96,7 @@ function UpdateProfileDoctor() {
                 </Form.Item>
 
                 {/* certificate */}
-                <Form.Item
+                {/* <Form.Item
                     name="certificate"
                     rules={[
                         {
@@ -94,7 +107,7 @@ function UpdateProfileDoctor() {
                     hasFeedback
                 >
                     <Input prefix={<SafetyCertificateOutlined />} placeholder="Chứng chỉ..." />
-                </Form.Item>
+                </Form.Item> */}
 
                 {/* education */}
                 <Form.Item
@@ -112,7 +125,7 @@ function UpdateProfileDoctor() {
 
                 {/* experience */}
                 <Form.Item
-                    name="experience"
+                    name="experiences"
                     rules={[
                         {
                             required: true,
@@ -122,6 +135,20 @@ function UpdateProfileDoctor() {
                     hasFeedback
                 >
                     <Input prefix={<PercentageOutlined />} placeholder="Kinh nghiệm..." />
+                </Form.Item>
+
+                {/* doctor_id */}
+                <Form.Item
+                    name="doctor_id"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bạn cần phải nhập id của bác sĩ.',
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input placeholder="Id của bác sĩ..." />
                 </Form.Item>
 
                 {/* Button update */}
