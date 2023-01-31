@@ -1,19 +1,33 @@
 // lib
-import { PhoneOutlined } from '@ant-design/icons';
 import { KeyOutlined } from '@ant-design/icons/lib/icons';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 import { Form, Input, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 // me
 import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { fetchApiLogin } from '~/redux/features/user/userSlice';
 
 function Login() {
+    const [number, setNumber] = useState('');
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+
     return (
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
                     console.log(values);
+                    if (values) {
+                        dispatch(fetchApiLogin(values));
+                        navigate('/home');
+                    }
                 }}
                 onFinishFailed={(error) => {
                     console.log({ error });
@@ -21,7 +35,7 @@ function Login() {
             >
                 {/* Number phone */}
                 <Form.Item
-                    name="numberPhone"
+                    name="phone_number"
                     rules={[
                         {
                             required: true,
@@ -30,7 +44,14 @@ function Login() {
                     ]}
                     hasFeedback
                 >
-                    <Input prefix={<PhoneOutlined />} placeholder="Số điện thoại..." />
+                    <PhoneInput
+                        className="register-phone-number"
+                        value={number}
+                        onChange={setNumber}
+                        defaultCountry="VN"
+                        placeholder="Số điện thoại..."
+                    />
+                    {/* <Input prefix={<PhoneOutlined />} placeholder="Số điện thoại..." /> */}
                 </Form.Item>
 
                 {/* Password */}

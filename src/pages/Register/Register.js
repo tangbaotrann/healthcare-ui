@@ -1,35 +1,71 @@
 // lib
-import { PhoneOutlined } from '@ant-design/icons';
-import { KeyOutlined } from '@ant-design/icons/lib/icons';
+import { KeyOutlined, PhoneOutlined } from '@ant-design/icons/lib/icons';
 import { Form, Input, Button, Select } from 'antd';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // me
 import './Register.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiRegister } from '~/redux/features/user/userSlice';
-import { fetchApiRegisterSelector } from '~/redux/selector';
+import { useUserAuth } from '~/context/UserAuthContext';
 
 function Register() {
+    const [number, setNumber] = useState('');
+    const [flag, setFlag] = useState(false);
+    const [confirmOTP, setConfirmOTP] = useState('');
+
     const dispatch = useDispatch();
 
-    const tokenCurrent = useSelector(fetchApiRegisterSelector);
+    const { setUpRecaptcha } = useUserAuth();
 
     const navigate = useNavigate();
+
+    // handle send otp
+    const handleOnFinishSendOTP = async (values) => {
+        const { phone_number } = values;
+
+        console.log('phone_number', phone_number);
+
+        if (values) {
+            dispatch(fetchApiRegister(values));
+        }
+
+        try {
+            const res = await setUpRecaptcha(phone_number);
+            console.log(res);
+            setConfirmOTP(res);
+            setFlag(true);
+        } catch (err) {
+            console.log({ err });
+        }
+    };
+
+    // handle verify OTP
+    const handleOnFinishVerifyOTP = async (values) => {
+        const { basic_otp } = values;
+
+        console.log('basic_otp', basic_otp);
+
+        try {
+            await confirmOTP.confirm(basic_otp);
+            navigate('/create/info');
+        } catch (err) {
+            console.log({ err });
+        }
+    };
 
     return (
         <BackgroundOutSite>
             <Form
-                onFinish={(values) => {
-                    if (values && tokenCurrent) {
-                        dispatch(fetchApiRegister(values));
-                        navigate('/update/info/me');
-                    }
-                }}
+                onFinish={handleOnFinishSendOTP}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
+                style={{ display: !flag ? 'block' : 'none' }}
             >
                 {/* Number phone */}
                 <Form.Item
@@ -42,22 +78,14 @@ function Register() {
                     ]}
                     hasFeedback
                 >
-                    <Input prefix={<PhoneOutlined />} placeholder="Số điện thoại..." />
+                    <PhoneInput
+                        className="register-phone-number"
+                        value={number}
+                        onChange={setNumber}
+                        defaultCountry="VN"
+                        placeholder="Số điện thoại..."
+                    />
                 </Form.Item>
-
-                {/* Full name */}
-                {/* <Form.Item
-                    name="fullName"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Bạn cần phải nhập họ và tên.',
-                        },
-                    ]}
-                    hasFeedback
-                >
-                    <Input prefix={<UserOutlined />} placeholder="Họ và tên..." />
-                </Form.Item> */}
 
                 {/* Password */}
                 <Form.Item
@@ -114,11 +142,44 @@ function Register() {
                     </Select>
                 </Form.Item>
 
+                {/* reCaptcha */}
+                <div id="recaptcha-container" />
+
                 {/* Register button */}
                 <div className="register-footer">
                     <Link to="/login">Quay lại</Link>
                     <Button type="primary" htmlType="submit">
                         Đăng ký
+                    </Button>
+                </div>
+            </Form>
+
+            {/* Verify captcha (otp) */}
+            <Form
+                onFinish={handleOnFinishVerifyOTP}
+                onFinishFailed={(error) => {
+                    console.log({ error });
+                }}
+                style={{ display: flag ? 'block' : 'none' }}
+            >
+                <Form.Item
+                    name="basic_otp"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bạn cần phải nhập mã OTP.',
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input prefix={<PhoneOutlined />} placeholder="Mã OTP của bạn..." />
+                </Form.Item>
+
+                {/* Confirm otp button */}
+                <div className="register-footer">
+                    <Link to="/login">Quay lại</Link>
+                    <Button type="primary" htmlType="submit">
+                        Xác nhận mã OTP
                     </Button>
                 </div>
             </Form>

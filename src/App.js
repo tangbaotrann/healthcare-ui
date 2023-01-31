@@ -23,11 +23,11 @@ function App() {
                 {/* Forgot password */}
                 <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                {/* Update information user */}
-                <Route path="/update/info/me" element={<UpdateInfoUser />} />
+                {/* Create information user */}
+                <Route path="/create/info" element={<UpdateInfoUser />} />
 
                 {/* Update profile doctor */}
-                <Route path="/update/profile-doctor/me" element={<UpdateProfileDoctor />} />
+                <Route path="/create/profile-doctor" element={<UpdateProfileDoctor />} />
 
                 {/* Home */}
                 <Route path="/home" element={<Home />} />

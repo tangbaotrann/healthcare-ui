@@ -7,6 +7,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
 import { MenuGeneralExaminationIcon } from '~/components/Icons';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
+import { logo } from '~/asset/images';
 
 function Header() {
     return (
@@ -14,11 +15,12 @@ function Header() {
             <div className="container-header">
                 {/* Logo */}
                 <Link to="/home">
-                    <img
+                    {/* <img
                         className="logo-image"
                         src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/logo.svg"
                         alt="img-logo"
-                    />
+                    /> */}
+                    <img className="logo-image" src={logo.logo} alt="logo" />
                 </Link>
 
                 {/* Menu */}

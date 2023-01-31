@@ -8,7 +8,7 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // me
@@ -22,6 +22,8 @@ function UpdateProfileDoctor() {
 
     const tokenCurrent = useSelector(fetchApiRegisterSelector);
 
+    const navigate = useNavigate();
+
     return (
         <BackgroundOutSite>
             <Form
@@ -33,6 +35,7 @@ function UpdateProfileDoctor() {
                                 tokenCurrent: tokenCurrent.accessToken,
                             }),
                         );
+                        navigate('/home');
                     }
                 }}
                 onFinishFailed={(error) => {
