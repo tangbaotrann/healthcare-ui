@@ -21,6 +21,9 @@
 
 .logo-image {
     margin-right: 30px;
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
 }
 
 /* List menu */

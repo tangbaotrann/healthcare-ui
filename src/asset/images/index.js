@@ -1,3 +1,8 @@
+// logo
+export const logo = {
+    logo: require('~/asset/images/logo.jpg'),
+};
+
 // Images of slide show
 const images = [
     {

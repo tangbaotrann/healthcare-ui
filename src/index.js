@@ -8,13 +8,16 @@ import store from './redux/store';
 
 // me
 import GlobalStyles from './components/GlobalStyles';
+import { UserAuthContextProvider } from './context/UserAuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <GlobalStyles>
             <Provider store={store}>
-                <App />
+                <UserAuthContextProvider>
+                    <App />
+                </UserAuthContextProvider>
             </Provider>
         </GlobalStyles>
     </React.StrictMode>,

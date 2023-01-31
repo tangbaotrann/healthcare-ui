@@ -30,14 +30,16 @@ function UpdateInfoUser() {
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
+                    console.log(values);
                     if (values && tokenCurrent.accessToken) {
                         dispatch(
                             fetchApiUpdateInfoUser({
                                 values: values,
+                                fileList: fileList,
                                 tokenCurrent: tokenCurrent.accessToken,
                             }),
                         );
-                        navigate('/update/profile-doctor/me');
+                        navigate('/create/profile-doctor');
                     }
                 }}
                 onFinishFailed={(error) => {
@@ -65,6 +67,7 @@ function UpdateInfoUser() {
                                 fileList={fileList}
                                 onChange={handleChangeAvatar}
                                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                // action="http://localhost:3000/update/info"
                             >
                                 {fileList.length === 0 && '+ Ảnh đại diện'}
                             </Upload>

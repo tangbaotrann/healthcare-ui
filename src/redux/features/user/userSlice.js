@@ -2,17 +2,39 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// login
+export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (values) => {
+    try {
+        const { phone_number, password } = values;
+
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/login`, {
+            phone_number: phone_number,
+            password: password,
+        });
+        console.log(res.data);
+
+        return res.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 // register
 export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async (values) => {
     try {
         const { confirmPassword, phone_number, password, rule } = values;
 
-        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/register`, {
-            phone_number: phone_number,
-            password: password,
-            rule: rule,
-            headers: { Authorization: '***' },
-        });
+        const res = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}auth/register`,
+            {
+                phone_number: phone_number,
+                password: password,
+                rule: rule,
+            },
+            {
+                headers: { Authorization: '***' },
+            },
+        );
         console.log('res', res.data.data);
 
         return res.data.data;
@@ -21,30 +43,35 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
     }
 });
 
+const createFormData = (values, fileList) => {
+    const { username, dob, address, gender, avatar } = values;
+
+    const formData = new FormData();
+
+    formData.append('username', username);
+    formData.append('dob', dob);
+    formData.append('address', address);
+    formData.append('gender', gender);
+    formData.append('avatar', fileList[0].originFileObj);
+
+    return formData;
+};
+
 // update info user
 export const fetchApiUpdateInfoUser = createAsyncThunk(
     'user/fetchApiUpdateInfoUser',
-    async ({ values, tokenCurrent }) => {
+    async ({ values, fileList, tokenCurrent }) => {
         try {
-            const { username, dob, address, gender, avatar } = values;
+            let formData = createFormData(values, fileList);
 
-            const res = await axios.post(
-                `${process.env.REACT_APP_BASE_URL}doctors`,
-                {
-                    username: username,
-                    dob: dob,
-                    address: address,
-                    gender: gender,
-                    avatar: avatar,
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}doctors`, formData, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${tokenCurrent}`,
+                    ContentType: 'multipart/form-data',
                 },
-                {
-                    headers: {
-                        Accept: 'application/json, text/plain, */*',
-                        Authorization: `Bearer ${tokenCurrent}`,
-                        ContentType: 'application/json',
-                    },
-                },
-            );
+            });
+            console.log('update info me', res.data);
 
             return res.data;
         } catch (err) {
@@ -57,6 +84,8 @@ export const fetchApiUpdateInfoUser = createAsyncThunk(
 export const fetchApiCreateProfileForDoctor = createAsyncThunk(
     'user/fetchApiCreateProfileForDoctor',
     async ({ values, tokenCurrent }) => {
+        console.log('values', values);
+        console.log('values', tokenCurrent);
         try {
             const { specialist, training_place, degree, languages, education, experiences, doctor_id } = values;
 
@@ -93,15 +122,20 @@ const userSlice = createSlice({
         data: [],
         infoUser: [],
         profileForDoctor: [],
+        userLogin: [],
     },
     extraReducers: (builder) => {
         builder
+            // login
+            .addCase(fetchApiLogin.fulfilled, (state, action) => {
+                state.userLogin = action.payload;
+            })
             // register
             .addCase(fetchApiRegister.fulfilled, (state, action) => {
                 state.data = action.payload;
             })
             // info user
-            .addCase(fetchApiUpdateInfoUser, (state, action) => {
+            .addCase(fetchApiUpdateInfoUser.fulfilled, (state, action) => {
                 state.infoUser = action.payload;
             })
             // profile for doctor

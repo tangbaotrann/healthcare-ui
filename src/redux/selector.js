@@ -1,3 +1,6 @@
+// login
+export const fetchApiLoginSelector = (state) => state.userSlice.userLogin;
+
 // register
 export const fetchApiRegisterSelector = (state) => state.userSlice.data;
 
