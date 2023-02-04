@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // me
+import { endPoints } from './routers';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
@@ -10,27 +11,48 @@ import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 
 function App() {
+    const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
     return (
         <Router>
             <Routes>
                 {/* Login */}
-                <Route path="/login" element={<Login />} />
-                <Route path="/" element={<Navigate replace to="/login" />} />
+                <Route path={endPoints.login} element={<Login />} />
+                <Route
+                    path={endPoints.root}
+                    element={
+                        typeof getToken === 'undefined' || !getToken ? (
+                            <Navigate replace to={endPoints.login} />
+                        ) : (
+                            <Navigate replace to={endPoints.home} />
+                        )
+                    }
+                />
 
                 {/* Register */}
-                <Route path="/register" element={<Register />} />
+                <Route path={endPoints.register} element={<Register />} />
 
                 {/* Forgot password */}
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path={endPoints.forgotPassword} element={<ForgotPassword />} />
 
                 {/* Create information user */}
-                <Route path="/create/info" element={<UpdateInfoUser />} />
+                <Route path={endPoints.createInfo} element={<UpdateInfoUser />} />
 
                 {/* Update profile doctor */}
-                <Route path="/create/profile-doctor" element={<UpdateProfileDoctor />} />
+                <Route path={endPoints.createProfileDoctor} element={<UpdateProfileDoctor />} />
 
                 {/* Home */}
-                <Route path="/home" element={<Home />} />
+                <Route path={endPoints.home} element={<Home />} />
+                <Route
+                    path={endPoints.root}
+                    element={
+                        typeof getToken === 'undefined' || !getToken ? (
+                            <Navigate replace to={endPoints.home} />
+                        ) : (
+                            <Navigate replace to={endPoints.login} />
+                        )
+                    }
+                />
             </Routes>
         </Router>
     );
