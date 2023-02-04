@@ -19,16 +19,22 @@ function Login() {
 
     const navigate = useNavigate();
 
+    // handle submit login
+    const handleOnFishSubmitLogin = (values) => {
+        try {
+            if (values) {
+                dispatch(fetchApiLogin(values));
+                navigate('/home');
+            }
+        } catch (err) {
+            console.log({ err });
+        }
+    };
+
     return (
         <BackgroundOutSite>
             <Form
-                onFinish={(values) => {
-                    console.log(values);
-                    if (values) {
-                        dispatch(fetchApiLogin(values));
-                        navigate('/home');
-                    }
-                }}
+                onFinish={handleOnFishSubmitLogin}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}

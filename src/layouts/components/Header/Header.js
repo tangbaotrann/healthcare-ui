@@ -1,6 +1,6 @@
 // lib
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Popover } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
 
 // me
@@ -9,7 +9,7 @@ import { MenuGeneralExaminationIcon } from '~/components/Icons';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import { logo } from '~/asset/images';
 
-function Header() {
+function Header({ userLogin }) {
     return (
         <div className="wrapper-header">
             <div className="container-header">
@@ -67,9 +67,9 @@ function Header() {
                 {/* Section right */}
                 <div className="section-right">
                     <Popover content={<InformationOfDoctor />}>
-                        <Avatar size={42} icon={<UserOutlined />} className="avatar-user" />
+                        <img src={userLogin.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
                     </Popover>
-                    <h4 className="name-user">BS. Kiên</h4>
+                    <h4 className="name-user">BS. {userLogin.doctor?.person?.username}</h4>
 
                     {/* Khi click vào nút thì hiện lên Modal */}
                     {/* <Button className="book-now">Đặt hẹn khám ngay</Button> */}

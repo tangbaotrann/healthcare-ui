@@ -11,9 +11,45 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
             phone_number: phone_number,
             password: password,
         });
-        console.log(res.data);
+        console.log(res.data.data);
 
-        return res.data;
+        localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
+// find all user Doctor
+export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', async () => {
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors`);
+        console.log('res doctors -', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
+// find user Doctor by token
+export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async () => {
+    try {
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        if (getToken !== null) {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            });
+            console.log('res doctor by id -', res.data.data);
+
+            return res.data.data;
+        }
     } catch (err) {
         console.log({ err });
     }
@@ -36,6 +72,8 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
             },
         );
         console.log('res', res.data.data);
+
+        localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
         return res.data.data;
     } catch (err) {
@@ -120,6 +158,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         data: [],
+        userRegister: [],
         infoUser: [],
         profileForDoctor: [],
         userLogin: [],
@@ -130,9 +169,17 @@ const userSlice = createSlice({
             .addCase(fetchApiLogin.fulfilled, (state, action) => {
                 state.userLogin = action.payload;
             })
+            // find all user doctor
+            .addCase(fetchApiUserDoctors.fulfilled, (state, action) => {
+                // state.data = action.payload;
+            })
+            // find user doctor by id
+            .addCase(fetchApiUserDoctorByToken.fulfilled, (state, action) => {
+                state.data = action.payload;
+            })
             // register
             .addCase(fetchApiRegister.fulfilled, (state, action) => {
-                state.data = action.payload;
+                state.userRegister = action.payload;
             })
             // info user
             .addCase(fetchApiUpdateInfoUser.fulfilled, (state, action) => {
