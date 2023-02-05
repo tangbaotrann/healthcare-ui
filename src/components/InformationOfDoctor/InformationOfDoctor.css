@@ -14,3 +14,12 @@
     color: var(--black);
     margin-left: 6px;
 }
+
+.information-of-doctor-title {
+    text-align: center;
+    font-size: 2.6rem;
+    background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 14px;
+}

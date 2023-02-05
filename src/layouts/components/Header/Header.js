@@ -66,10 +66,10 @@ function Header({ userLogin }) {
 
                 {/* Section right */}
                 <div className="section-right">
-                    <Popover content={<InformationOfDoctor />}>
-                        <img src={userLogin.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
+                    <Popover content={<InformationOfDoctor userLogin={userLogin} />}>
+                        <img src={userLogin?.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
                     </Popover>
-                    <h4 className="name-user">BS. {userLogin.doctor?.person?.username}</h4>
+                    <h4 className="name-user">BS. {userLogin?.doctor?.person?.username}</h4>
 
                     {/* Khi click vào nút thì hiện lên Modal */}
                     {/* <Button className="book-now">Đặt hẹn khám ngay</Button> */}

@@ -95,7 +95,7 @@ const createFormData = (values, fileList) => {
     return formData;
 };
 
-// update info user
+// create info user
 export const fetchApiUpdateInfoUser = createAsyncThunk(
     'user/fetchApiUpdateInfoUser',
     async ({ values, fileList, tokenCurrent }) => {
@@ -109,7 +109,6 @@ export const fetchApiUpdateInfoUser = createAsyncThunk(
                     ContentType: 'multipart/form-data',
                 },
             });
-            console.log('update info me', res.data);
 
             return res.data;
         } catch (err) {
@@ -117,6 +116,37 @@ export const fetchApiUpdateInfoUser = createAsyncThunk(
         }
     },
 );
+
+// update info for doctor
+export const fetchApiUpdateInfoForDoctor = createAsyncThunk('user/fetchApiUpdateInfoForDoctor', async (values) => {
+    try {
+        const { username, dob, address, gender, doctor_id } = values;
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        const res = await axios.put(
+            `${process.env.REACT_APP_BASE_URL}doctors/profile`,
+            {
+                username: username,
+                dob: dob,
+                address: address,
+                gender: gender,
+                doctor_id: doctor_id,
+            },
+            {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            },
+        );
+        console.log('update info doctor - ', res.data);
+
+        return res.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
 
 // create profile for doctor
 export const fetchApiCreateProfileForDoctor = createAsyncThunk(
@@ -181,11 +211,15 @@ const userSlice = createSlice({
             .addCase(fetchApiRegister.fulfilled, (state, action) => {
                 state.userRegister = action.payload;
             })
-            // info user
+            // create info user
             .addCase(fetchApiUpdateInfoUser.fulfilled, (state, action) => {
                 state.infoUser = action.payload;
             })
-            // profile for doctor
+            // update info for doctor
+            // .addCase(fetchApiUpdateInfoForDoctor.fulfilled, (state, action) => {
+            //     state.infoUser = action.payload;
+            // })
+            // create profile for doctor
             .addCase(fetchApiCreateProfileForDoctor.fulfilled, (state, action) => {
                 state.profileForDoctor = action.payload;
             });
