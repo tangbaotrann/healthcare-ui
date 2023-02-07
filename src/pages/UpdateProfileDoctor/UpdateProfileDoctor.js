@@ -15,12 +15,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import './UpdateProfileDoctor.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiCreateProfileForDoctor } from '~/redux/features/user/userSlice';
-import { fetchApiRegisterSelector } from '~/redux/selector';
+import { fetchApiRegisterSelector, fetchApiUpdateInfoUserSelector } from '~/redux/selector';
 
 function UpdateProfileDoctor() {
     const dispatch = useDispatch();
 
     const tokenCurrent = useSelector(fetchApiRegisterSelector);
+    const getIdInfoDoctor = useSelector(fetchApiUpdateInfoUserSelector);
+
+    console.log('getIdInfoDoctor', getIdInfoDoctor);
 
     const navigate = useNavigate();
 
@@ -41,6 +44,12 @@ function UpdateProfileDoctor() {
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
+                fields={[
+                    {
+                        name: ['doctor_id'],
+                        value: getIdInfoDoctor?.data?._id,
+                    },
+                ]}
             >
                 {/* specialist */}
                 <Form.Item
@@ -151,7 +160,7 @@ function UpdateProfileDoctor() {
                     ]}
                     hasFeedback
                 >
-                    <Input placeholder="Id của bác sĩ..." />
+                    <Input placeholder="Id của bác sĩ..." disabled />
                 </Form.Item>
 
                 {/* Button update */}

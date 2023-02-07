@@ -144,7 +144,7 @@ function InformationOfDoctor({ userLogin }) {
                             ]}
                             hasFeedback
                         >
-                            <Input placeholder="Id của bác sĩ..." />
+                            <Input placeholder="Id của bác sĩ..." disabled />
                         </Form.Item>
 
                         {/* Button */}
