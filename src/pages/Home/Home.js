@@ -13,11 +13,13 @@ import HealthInformation from '~/components/HealthInformation';
 import ChatBot from '~/components/ChatBot';
 import { fetchApiUserDoctorByTokenSelector } from '~/redux/selector';
 import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
+import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 
 function Home() {
     const dispatch = useDispatch();
 
     const userLogin = useSelector(fetchApiUserDoctorByTokenSelector);
+    console.log('userLogin', userLogin);
 
     useEffect(() => {
         dispatch(fetchApiUserDoctorByToken());
@@ -26,15 +28,18 @@ function Home() {
     }, []);
 
     return (
-        <DefaultLayout userLogin={userLogin}>
-            <ScrollToTop smooth className="scroll-to-top" />
-            <ChatBot />
-            <Content>
-                <SlideImage />
-                <ExploreClinic />
-                <HealthInformation />
-            </Content>
-        </DefaultLayout>
+        <>
+            {userLogin?.doctor?.isAccepted === false && <AwaitBrowsingAccountDoctor userLogin={userLogin} />}
+            <DefaultLayout userLogin={userLogin}>
+                <ScrollToTop smooth className="scroll-to-top" />
+                <ChatBot />
+                <Content>
+                    <SlideImage />
+                    <ExploreClinic />
+                    <HealthInformation />
+                </Content>
+            </DefaultLayout>
+        </>
     );
 }
 
