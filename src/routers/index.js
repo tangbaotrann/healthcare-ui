@@ -5,6 +5,6 @@ export const endPoints = {
     forgotPassword: '/forgot-password',
     createInfo: '/create/info',
     createProfileDoctor: '/create/profile-doctor',
-    home: '/home',
+    homeIntro: '/home-intro',
     doctorManager: '/doctor-manager',
 };

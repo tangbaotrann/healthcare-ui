@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // me
 import './UpdateInfoUser.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { endPoints } from '~/routers';
 import { fetchApiUpdateInfoUser } from '~/redux/features/user/userSlice';
 import { fetchApiRegisterSelector } from '~/redux/selector';
 
@@ -39,7 +40,7 @@ function UpdateInfoUser() {
                                 tokenCurrent: tokenCurrent.accessToken,
                             }),
                         );
-                        navigate('/create/profile-doctor');
+                        navigate(`${endPoints.createProfileDoctor}`);
                     }
                 }}
                 onFinishFailed={(error) => {
@@ -66,8 +67,8 @@ function UpdateInfoUser() {
                                 listType="picture-card"
                                 fileList={fileList}
                                 onChange={handleChangeAvatar}
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                // action="http://localhost:3000/update/info"
+                                // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                action="http://localhost:3000/create/info"
                             >
                                 {fileList.length === 0 && '+ Ảnh đại diện'}
                             </Upload>

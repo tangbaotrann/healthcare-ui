@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 // me
 import './Register.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { endPoints } from '~/routers';
 import { fetchApiRegister } from '~/redux/features/user/userSlice';
 import { useUserAuth } from '~/context/UserAuthContext';
 
@@ -52,7 +53,7 @@ function Register() {
 
         try {
             await confirmOTP.confirm(basic_otp);
-            navigate('/create/info');
+            navigate(`${endPoints.createInfo}`);
         } catch (err) {
             console.log({ err });
         }
