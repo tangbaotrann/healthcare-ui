@@ -1,17 +1,20 @@
 // lib
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons/lib/icons';
-import { Layout, Menu, theme } from 'antd';
+import { LeftOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons/lib/icons';
+import { Layout, Menu, Popover, theme } from 'antd';
 
 // me
 import './LayoutDoctorManager.css';
+import { endPoints } from '~/routers';
+import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
 
 const { Header, Sider, Content } = Layout;
 
-function LayoutDoctorManager({ children }) {
+function LayoutDoctorManager({ children, infoUser }) {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
@@ -64,7 +67,20 @@ function LayoutDoctorManager({ children }) {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+                <Header className="site-layout-header" style={{ padding: 0, background: colorBgContainer }}>
+                    <div className="site-layout-header-info-user">
+                        <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
+                            <LeftOutlined />
+                            Trang giới thiệu
+                        </Link>
+
+                        <div className="site-layout-header-right">
+                            <Popover content={<InformationOfDoctor infoUser={infoUser} />}>
+                                <img src={infoUser?.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
+                            </Popover>
+                            <h4 className="name-user">BS. {infoUser?.doctor?.person?.username}</h4>
+                        </div>
+                    </div>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                         className: 'trigger',
                         onClick: () => setCollapsed(!collapsed),

@@ -1,7 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 // find user doctor by token
-export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.data;
+export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.doctorByToken;
+
+// all user doctor
+export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
 
 // login
 export const fetchApiLoginSelector = (state) => state.userSlice.userLogin;
@@ -23,6 +26,21 @@ export const fetchApiAllCreateScheduleDoctorSelector = (state) => state.schedule
 export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoctor.days;
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
+
+// get all user doctor -> get doctor login -> fetch api
+export const getDoctorLoginFilter = createSelector(
+    fetchApiUserDoctorsSelector,
+    fetchApiUserDoctorByTokenSelector,
+    (listUser, userLogin) => {
+        // console.log('1111', listUser);
+        console.log('2222', userLogin);
+
+        const getUserLogin = listUser.filter((_user) => _user?.person?._id === userLogin?.doctor?.person?._id);
+        console.log('3333', getUserLogin);
+
+        return getUserLogin[0];
+    },
+);
 
 // get doctor id -> fetch api
 export const getIdDoctorFilter = createSelector(
@@ -54,7 +72,7 @@ export const getIdDoctorFilter = createSelector(
                     day_number: days.day_number,
                 },
                 time: {
-                    _id: shifts._id,
+                    _id: shifts?._id,
                     name: shifts.name,
                     desc: shifts.desc,
                     time_start: shifts.time_start,

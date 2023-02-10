@@ -1,21 +1,21 @@
 // lib
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, RightOutlined } from '@ant-design/icons';
 import { Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
 
 // me
 import './Header.css';
-import { MenuGeneralExaminationIcon } from '~/components/Icons';
-import InformationOfDoctor from '~/components/InformationOfDoctor';
-import { logo } from '~/asset/images';
 import { endPoints } from '~/routers';
+import { MenuGeneralExaminationIcon } from '~/components/Icons';
+import { logo } from '~/asset/images';
 
-function Header({ userLogin }) {
+function Header({ checkUserLogin }) {
+    console.log('checkUserLogin', checkUserLogin);
     return (
         <div className="wrapper-header">
             <div className="container-header">
                 {/* Logo */}
-                <Link to="/home">
+                <Link to={endPoints.homeIntro}>
                     {/* <img
                         className="logo-image"
                         src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/logo.svg"
@@ -28,7 +28,10 @@ function Header({ userLogin }) {
                 <div className="menu-list">
                     <ul>
                         {/* Trang chủ */}
-                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/home">
+                        <NavLink
+                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                            to={endPoints.homeIntro}
+                        >
                             Trang chủ
                         </NavLink>
 
@@ -67,16 +70,24 @@ function Header({ userLogin }) {
 
                 {/* Section right */}
                 <div className="section-right">
-                    {/* <Popover content={<InformationOfDoctor userLogin={userLogin} />}>
-                        <img src={userLogin?.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
-                    </Popover>
-                    <h4 className="name-user">BS. {userLogin?.doctor?.person?.username}</h4> */}
-                    <h4 className="section-right-login">
-                        <Link to={endPoints.login}>Đăng nhập</Link>
-                    </h4>
-                    <h4 className="section-right-register">
-                        <Link to={endPoints.register}>Đăng ký</Link>
-                    </h4>
+                    {checkUserLogin === null || checkUserLogin === undefined || checkUserLogin.length < 0 ? (
+                        <>
+                            <h4 className="section-right-login">
+                                <Link to={endPoints.login} className="login">
+                                    Đăng nhập
+                                </Link>
+                            </h4>
+                            <h4 className="section-right-register">
+                                <Link to={endPoints.register} className="register">
+                                    Đăng ký
+                                </Link>
+                            </h4>
+                        </>
+                    ) : (
+                        <Link className="section-right-back" to={endPoints.doctorManager}>
+                            Quay lại <RightOutlined />
+                        </Link>
+                    )}
 
                     {/* Khi click vào nút thì hiện lên Modal */}
                     {/* <Button className="book-now">Đặt hẹn khám ngay</Button> */}

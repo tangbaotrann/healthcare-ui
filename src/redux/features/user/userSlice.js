@@ -36,16 +36,18 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
 // find user Doctor by token
 export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async (token) => {
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
-            headers: {
-                Accept: 'application/json, text/plain, */*',
-                Authorization: `Bearer ${token}`,
-                ContentType: 'application/json',
-            },
-        });
-        console.log('res doctor by id -', res.data.data);
+        if (token) {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${token}`,
+                    ContentType: 'application/json',
+                },
+            });
+            console.log('res doctor by id -', res.data.data);
 
-        return res.data.data;
+            return res.data.data;
+        }
     } catch (err) {
         console.log({ err });
     }
@@ -184,6 +186,7 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
         data: [],
+        doctorByToken: [],
         userRegister: [],
         infoUser: [],
         profileForDoctor: [],
@@ -197,11 +200,11 @@ const userSlice = createSlice({
             })
             // find all user doctor
             .addCase(fetchApiUserDoctors.fulfilled, (state, action) => {
-                // state.data = action.payload;
+                state.data = action.payload;
             })
             // find user doctor by id
             .addCase(fetchApiUserDoctorByToken.fulfilled, (state, action) => {
-                state.data = action.payload;
+                state.doctorByToken = action.payload;
             })
             // register
             .addCase(fetchApiRegister.fulfilled, (state, action) => {

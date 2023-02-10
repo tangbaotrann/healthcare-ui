@@ -1,6 +1,6 @@
 // lib
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // me
@@ -13,10 +13,15 @@ import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
 import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
+import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 
 function App() {
     const dispatch = useDispatch();
     const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+    const checkUserLogin = useSelector(fetchApiUserDoctorByTokenSelector);
+
+    // console.log('userLogin - app', userLogin);
 
     useEffect(() => {
         dispatch(fetchApiUserDoctorByToken(getToken));
@@ -32,9 +37,9 @@ function App() {
                     path={endPoints.root}
                     element={
                         typeof getToken === 'undefined' || !getToken ? (
-                            <Navigate replace to={endPoints.login} />
+                            <Navigate replace to={endPoints.homeIntro} />
                         ) : (
-                            <Navigate replace to={endPoints.home} />
+                            <Navigate replace to={endPoints.doctorManager} />
                         )
                     }
                 />
@@ -51,15 +56,15 @@ function App() {
                 {/* Update profile doctor */}
                 <Route path={endPoints.createProfileDoctor} element={<UpdateProfileDoctor />} />
 
-                {/* Home */}
-                <Route path={endPoints.home} element={<Home />} />
+                {/* Home intro */}
+                <Route path={endPoints.homeIntro} element={<Home checkUserLogin={checkUserLogin} />} />
                 <Route
                     path={endPoints.root}
                     element={
                         typeof getToken === 'undefined' || !getToken ? (
-                            <Navigate replace to={endPoints.home} />
+                            <Navigate replace to={endPoints.homeIntro} />
                         ) : (
-                            <Navigate replace to={endPoints.login} />
+                            <Navigate replace to={endPoints.doctorManager} />
                         )
                     }
                 />

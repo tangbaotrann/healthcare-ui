@@ -1,11 +1,11 @@
 // me
 import Header from '../components/Header';
 
-function DefaultLayout({ children, userLogin }) {
+function DefaultLayout({ children, checkUserLogin }) {
     return (
         <>
             {/* Header */}
-            <Header userLogin={userLogin} />
+            <Header checkUserLogin={checkUserLogin} />
 
             {/* Content */}
             {children}

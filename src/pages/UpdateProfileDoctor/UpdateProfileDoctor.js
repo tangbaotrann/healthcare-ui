@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // me
 import './UpdateProfileDoctor.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
+import { endPoints } from '~/routers';
 import { fetchApiCreateProfileForDoctor } from '~/redux/features/user/userSlice';
 import { fetchApiRegisterSelector, fetchApiUpdateInfoUserSelector } from '~/redux/selector';
 
@@ -38,7 +39,7 @@ function UpdateProfileDoctor() {
                                 tokenCurrent: tokenCurrent.accessToken,
                             }),
                         );
-                        navigate('/home');
+                        navigate(`${endPoints.doctorManager}`);
                     }
                 }}
                 onFinishFailed={(error) => {
@@ -159,6 +160,7 @@ function UpdateProfileDoctor() {
                         },
                     ]}
                     hasFeedback
+                    style={{ display: 'none' }}
                 >
                     <Input placeholder="Id của bác sĩ..." disabled />
                 </Form.Item>

@@ -6,7 +6,7 @@ import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 // me
 import './InformationOfDoctor.css';
 
-function InformationOfDoctor({ userLogin }) {
+function InformationOfDoctor({ infoUser }) {
     const [modalInfoDoctor, setModalInfoDoctor] = useState(false);
 
     // show modal info doctor
@@ -49,11 +49,11 @@ function InformationOfDoctor({ userLogin }) {
                         fields={[
                             {
                                 name: ['username'],
-                                value: userLogin?.doctor.person.username,
+                                value: infoUser?.doctor.person.username,
                             },
                             {
                                 name: ['gender'],
-                                value: userLogin?.doctor.person.gender,
+                                value: infoUser?.doctor.person.gender,
                             },
                             // {
                             //     name: ['dob'],
@@ -61,11 +61,11 @@ function InformationOfDoctor({ userLogin }) {
                             // },
                             {
                                 name: ['address'],
-                                value: userLogin?.doctor.person.address,
+                                value: infoUser?.doctor.person.address,
                             },
                             {
                                 name: ['doctor_id'],
-                                value: userLogin?.doctor._id,
+                                value: infoUser?.doctor._id,
                             },
                         ]}
                     >
@@ -143,6 +143,7 @@ function InformationOfDoctor({ userLogin }) {
                                 },
                             ]}
                             hasFeedback
+                            style={{ display: 'none' }}
                         >
                             <Input placeholder="Id của bác sĩ..." disabled />
                         </Form.Item>
