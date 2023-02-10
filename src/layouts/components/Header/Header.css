@@ -125,3 +125,12 @@
     font-size: 1.4rem;
     color: var(--primary);
 }
+
+.section-right-login {
+    font-size: 1.6rem;
+    margin-right: 14px;
+}
+
+.section-right-register {
+    font-size: 1.6rem;
+}

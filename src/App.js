@@ -1,4 +1,6 @@
 // lib
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // me
@@ -9,9 +11,17 @@ import ForgotPassword from './pages/ForgotPassword';
 import UpdateInfoUser from './pages/UpdateInfoUser';
 import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
+import DoctorManager from './pages/DoctorManager';
+import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 
 function App() {
+    const dispatch = useDispatch();
     const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+    useEffect(() => {
+        dispatch(fetchApiUserDoctorByToken(getToken));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Router>
@@ -53,6 +63,9 @@ function App() {
                         )
                     }
                 />
+
+                {/* Doctor Manager */}
+                <Route path={endPoints.doctorManager} element={<DoctorManager />} />
             </Routes>
         </Router>
     );
