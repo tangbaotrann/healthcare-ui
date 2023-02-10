@@ -6,4 +6,5 @@ export const endPoints = {
     createInfo: '/create/info',
     createProfileDoctor: '/create/profile-doctor',
     home: '/home',
+    doctorManager: '/doctor-manager',
 };

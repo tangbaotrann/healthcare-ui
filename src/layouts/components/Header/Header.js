@@ -8,6 +8,7 @@ import './Header.css';
 import { MenuGeneralExaminationIcon } from '~/components/Icons';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import { logo } from '~/asset/images';
+import { endPoints } from '~/routers';
 
 function Header({ userLogin }) {
     return (
@@ -53,9 +54,9 @@ function Header({ userLogin }) {
                         </NavLink>
 
                         {/* Thống kê (chart) */}
-                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/statistics">
+                        {/* <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/statistics">
                             Chỉ số thống kê
-                        </NavLink>
+                        </NavLink> */}
 
                         {/* Blogger */}
                         <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/blog">
@@ -66,10 +67,16 @@ function Header({ userLogin }) {
 
                 {/* Section right */}
                 <div className="section-right">
-                    <Popover content={<InformationOfDoctor userLogin={userLogin} />}>
+                    {/* <Popover content={<InformationOfDoctor userLogin={userLogin} />}>
                         <img src={userLogin?.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
                     </Popover>
-                    <h4 className="name-user">BS. {userLogin?.doctor?.person?.username}</h4>
+                    <h4 className="name-user">BS. {userLogin?.doctor?.person?.username}</h4> */}
+                    <h4 className="section-right-login">
+                        <Link to={endPoints.login}>Đăng nhập</Link>
+                    </h4>
+                    <h4 className="section-right-register">
+                        <Link to={endPoints.register}>Đăng ký</Link>
+                    </h4>
 
                     {/* Khi click vào nút thì hiện lên Modal */}
                     {/* <Button className="book-now">Đặt hẹn khám ngay</Button> */}

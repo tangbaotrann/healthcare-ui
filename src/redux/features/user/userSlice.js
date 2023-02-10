@@ -34,22 +34,18 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
 });
 
 // find user Doctor by token
-export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async () => {
+export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async (token) => {
     try {
-        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                Authorization: `Bearer ${token}`,
+                ContentType: 'application/json',
+            },
+        });
+        console.log('res doctor by id -', res.data.data);
 
-        if (getToken !== null) {
-            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    Authorization: `Bearer ${getToken}`,
-                    ContentType: 'application/json',
-                },
-            });
-            console.log('res doctor by id -', res.data.data);
-
-            return res.data.data;
-        }
+        return res.data.data;
     } catch (err) {
         console.log({ err });
     }
