@@ -1,3 +1,4 @@
+// lib
 import { createSelector } from '@reduxjs/toolkit';
 
 // find user doctor by token
@@ -33,10 +34,9 @@ export const getDoctorLoginFilter = createSelector(
     fetchApiUserDoctorByTokenSelector,
     (listUser, userLogin) => {
         // console.log('1111', listUser);
-        console.log('2222', userLogin);
+        // console.log('2222', userLogin);
 
         const getUserLogin = listUser.filter((_user) => _user?.person?._id === userLogin?.doctor?.person?._id);
-        console.log('3333', getUserLogin);
 
         return getUserLogin[0];
     },

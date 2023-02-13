@@ -4,10 +4,10 @@ import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons
 // me
 import './AwaitBrowsingAccountDoctor.css';
 
-function AwaitBrowsingAccountDoctor({ awaitAccept }) {
+function AwaitBrowsingAccountDoctor({ checkAwaitAccept, awaitAccept }) {
     return (
         <div className="container-await-rule-doctor">
-            {awaitAccept?.data?.deleted === true ? (
+            {awaitAccept?.doctor?.deleted === true || checkAwaitAccept?.deleted === true ? (
                 <h6>
                     <CloseOutlined className="icon-delete-await-rule-doctor" /> Tài khoản của bạn đã không được duyệt.
                     Vui lòng liên hệ trực tiếp số điện thoại này (0325676569) để chúng tôi có thể hỗ trợ bạn nhé!

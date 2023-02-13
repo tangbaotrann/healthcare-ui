@@ -9,6 +9,7 @@ import {
     btnSelectMenuChangeLayoutSelector,
     fetchApiUpdateInfoUserSelector,
     fetchApiUserDoctorByTokenSelector,
+    getDoctorLoginFilter,
     getIdDoctorFilter,
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
@@ -26,10 +27,12 @@ function DoctorManager() {
     const infoUser = useSelector(fetchApiUserDoctorByTokenSelector);
     const schedules = useSelector(getIdDoctorFilter);
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
+    const checkAwaitAccept = useSelector(getDoctorLoginFilter);
 
     // console.log(changeLayout);
-    // console.log('userLogin - doctor-manager', userLogin);
+    // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
+    // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 27', schedules);
 
     useEffect(() => {
@@ -49,8 +52,9 @@ function DoctorManager() {
 
     return (
         <>
-            {awaitAccept?.data?.isAccepted === false && <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />}
-            {/* infoUser={infoUser} */}
+            {(awaitAccept?.data?.isAccepted === false || checkAwaitAccept?.isAccepted === false) && (
+                <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
+            )}
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === '1' || changeLayout === null ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
