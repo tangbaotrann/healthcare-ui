@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
-import { LeftOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons/lib/icons';
+import {
+    LeftOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    NotificationOutlined,
+    OrderedListOutlined,
+    ScheduleOutlined,
+} from '@ant-design/icons/lib/icons';
 import { Layout, Menu, Popover, theme } from 'antd';
 
 // me
@@ -44,14 +51,23 @@ function LayoutDoctorManager({ children, infoUser }) {
                         },
                         {
                             key: '2',
-                            icon: <ClockCircleOutlined />,
-                            label: 'Option 2',
+                            icon: <ScheduleOutlined />,
+                            label: 'Lịch hẹn tư vấn',
                         },
-                        // {
-                        //     key: '3',
-                        //     icon: <FormOutlined />,
-                        //     label: 'Quản lý ngày làm cho Bác sĩ',
-                        // },
+                        {
+                            key: '3',
+                            icon: <NotificationOutlined />,
+                            label: 'Thông báo',
+                        },
+                        {
+                            key: '4',
+                            icon: <OrderedListOutlined />,
+                            label: 'Danh sách bệnh nhân',
+                            // sub: Xem thông tin chi tiết bệnh nhân;
+                            // Sức khỏe hằng ngày của bệnh nhân (Chart.js);
+                            // Phác đồ điều trị;
+                            // Chỉ số BMI
+                        },
                     ]}
                     // Change layout
                     onSelect={(item) => {

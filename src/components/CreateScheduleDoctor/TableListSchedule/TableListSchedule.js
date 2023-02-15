@@ -5,13 +5,13 @@ import { Table } from 'antd';
 import TitleName from '~/components/TitleName';
 
 function TableListSchedule({ schedules }) {
-    // console.log('schedules =', schedules);
+    console.log('schedules =', schedules);
 
     // cols
     const cols = [
         {
             key: '_id',
-            title: 'Id',
+            title: '#',
             dataIndex: '_id',
         },
         {
@@ -47,8 +47,9 @@ function TableListSchedule({ schedules }) {
 
             <Table
                 columns={cols}
-                dataSource={schedules.map((schedule) => ({
-                    _id: schedule._id,
+                dataSource={schedules.map((schedule, index) => ({
+                    // schedule._id
+                    _id: index + 1,
                     time_per_conversation: `${schedule.time_per_conversation} phút`,
                     fee: `${schedule.fee} VNĐ`,
                     day: schedule.day.day,
