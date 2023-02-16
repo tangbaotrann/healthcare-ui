@@ -64,23 +64,23 @@ export const getIdDoctorFilter = createSelector(
             const shifts = listShift.find((_shift) => _shift._id === schedule.time);
             return {
                 _id: schedule?._id,
-                time_per_conversation: schedule.time_per_conversation,
-                fee: schedule.fee,
+                time_per_conversation: schedule?.time_per_conversation,
+                fee: schedule?.fee,
                 day: {
                     _id: days?._id,
-                    day: days.day,
-                    day_number: days.day_number,
+                    day: days?.day,
+                    day_number: days?.day_number,
                 },
                 time: {
                     _id: shifts?._id,
-                    name: shifts.name,
-                    desc: shifts.desc,
-                    time_start: shifts.time_start,
-                    time_end: shifts.time_end,
+                    name: shifts?.name,
+                    desc: shifts?.desc,
+                    time_start: shifts?.time_start,
+                    time_end: shifts?.time_end,
                 },
                 doctor: {
-                    doctor_id: infoDoctor.doctor?._id,
-                    person: infoDoctor.doctor.person,
+                    doctor_id: infoDoctor?.doctor?._id,
+                    person: infoDoctor?.doctor?.person,
                 },
             };
         });

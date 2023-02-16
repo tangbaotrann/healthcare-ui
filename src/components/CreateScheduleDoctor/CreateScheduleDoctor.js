@@ -48,6 +48,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     const handleCreateScheduleDoctorOnFish = (values) => {
         if (values) {
             dispatch(fetchApiCreateScheduleDoctor(values));
+            setShowModal(false);
             message.success('Bạn đã đăng ký ca lịch thành công.');
         } else {
             message.error('Đăng ký ca lịch không thành công!');

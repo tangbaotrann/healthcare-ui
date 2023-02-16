@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // me
 import './DoctorManager.css';
+import constants from '~/utils/constants';
 import LayoutDoctorManager from '~/layouts/LayoutDoctorManager';
 import {
     btnSelectMenuChangeLayoutSelector,
@@ -19,6 +20,7 @@ import {
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
+import BarChart from '~/components/BarChart';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -29,7 +31,7 @@ function DoctorManager() {
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
 
-    // console.log(changeLayout);
+    console.log(changeLayout);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
@@ -56,10 +58,13 @@ function DoctorManager() {
                 <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
             )}
             <LayoutDoctorManager infoUser={infoUser}>
-                {changeLayout === '1' || changeLayout === null ? (
+                {changeLayout === constants.layoutListRegisterSchedule || changeLayout === null ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === '2' ? (
                     <h2>Opt 2</h2>
+                ) : changeLayout === constants.layoutSubHealth ? (
+                    /* <BarChart /> */
+                    <h2>Test</h2>
                 ) : null}
             </LayoutDoctorManager>
         </>
