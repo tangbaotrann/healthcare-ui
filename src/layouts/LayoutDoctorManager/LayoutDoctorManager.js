@@ -15,6 +15,7 @@ import { Layout, Menu, Popover, theme } from 'antd';
 
 // me
 import './LayoutDoctorManager.css';
+import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
@@ -42,10 +43,10 @@ function LayoutDoctorManager({ children, infoUser }) {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={[constants.layoutListRegisterSchedule]}
                     items={[
                         {
-                            key: '1',
+                            key: constants.layoutListRegisterSchedule,
                             icon: <ClockCircleOutlined />,
                             label: 'Đăng ký ca lịch của Bác sĩ',
                         },
@@ -63,8 +64,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                             key: '4',
                             icon: <OrderedListOutlined />,
                             label: 'Danh sách bệnh nhân',
+                            children: [{ label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth }],
                             // sub: Xem thông tin chi tiết bệnh nhân;
-                            // Sức khỏe hằng ngày của bệnh nhân (Chart.js);
                             // Phác đồ điều trị;
                             // Chỉ số BMI
                         },
@@ -75,10 +76,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === '2') {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutSubHealth) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
-                        // else if (item.key === '3') {
-                        //     dispatch(layoutSlice.actions.btnClickMenuChangeLayout(item.key));
-                        // }
                     }}
                 />
             </Sider>
