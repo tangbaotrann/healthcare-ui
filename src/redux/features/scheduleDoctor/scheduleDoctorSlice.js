@@ -49,7 +49,7 @@ export const fetchApiCreateScheduleDoctor = createAsyncThunk(
                     },
                 },
             );
-            console.log('res', res.data.data);
+            // console.log('res', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -64,7 +64,7 @@ export const fetchApiAllCreateScheduleDoctor = createAsyncThunk(
     async () => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules`);
-            console.log('res all', res.data.data);
+            // console.log('res all', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -80,7 +80,7 @@ export const fetchApiScheduleByIdDoctor = createAsyncThunk(
         if (idDoctor) {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules/doctor/${idDoctor}`);
-                console.log('res', res.data.data);
+                // console.log('res', res.data.data);
 
                 return res.data.data;
             } catch (err) {

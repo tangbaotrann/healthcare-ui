@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, message, Modal, Select } from 'antd';
+import moment from 'moment';
 
 // me
 import TitleName from '../TitleName';
@@ -22,7 +23,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     const shifts = useSelector(fetchApiAllShiftsDoctorSelector);
 
     // console.log(days);
-    // console.log(shifts);
+    // console.log('-->', shifts);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateDaysDoctor());
@@ -131,7 +132,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
                     >
                         <Select
                             options={days.map((day) => ({
-                                label: day.day,
+                                label: moment(day.day).format('dddd'),
                                 value: day._id,
                             }))}
                             placeholder="Chọn thứ..."
@@ -151,7 +152,9 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
                     >
                         <Select
                             options={shifts.map((shift) => ({
-                                label: shift.name,
+                                label: `${shift.name} (${moment(new Date(shift.time_start)).format(
+                                    'HH:mm',
+                                )} -> ${moment(new Date(shift.time_end)).format('HH:mm')})`,
                                 value: shift._id,
                             }))}
                             placeholder="Chọn ca làm việc..."

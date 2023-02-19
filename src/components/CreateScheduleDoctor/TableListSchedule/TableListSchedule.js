@@ -1,5 +1,6 @@
 // lib
 import { Table } from 'antd';
+import moment from 'moment';
 
 // me
 import TitleName from '~/components/TitleName';
@@ -48,12 +49,13 @@ function TableListSchedule({ schedules }) {
             <Table
                 columns={cols}
                 dataSource={schedules.map((schedule, index) => ({
-                    // schedule._id
                     _id: index + 1,
                     time_per_conversation: `${schedule.time_per_conversation} phút`,
                     fee: `${schedule.fee} VNĐ`,
-                    day: schedule.day.day,
-                    time: `${schedule.time.name} (${schedule.time.desc})`,
+                    day: moment(schedule.day.day).format('dddd'),
+                    time: `${schedule.time.name} (${moment(new Date(schedule.time.time_start)).format(
+                        'HH:mm',
+                    )} -> ${moment(new Date(schedule.time.time_end)).format('HH:mm')})`,
                     doctor: schedule.doctor.person.username,
                 }))}
                 rowKey="_id"
