@@ -20,7 +20,7 @@ import {
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
-import BarChart from '~/components/BarChart';
+import { BarChart } from '~/components/BarChart/BarChart';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -63,8 +63,7 @@ function DoctorManager() {
                 ) : changeLayout === '2' ? (
                     <h2>Opt 2</h2>
                 ) : changeLayout === constants.layoutSubHealth ? (
-                    /* <BarChart /> */
-                    <h2>Test</h2>
+                    <BarChart />
                 ) : null}
             </LayoutDoctorManager>
         </>
