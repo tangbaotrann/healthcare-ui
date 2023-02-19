@@ -11,7 +11,7 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
             phone_number: phone_number,
             password: password,
         });
-        console.log(res.data.data);
+        // console.log(res.data.data);
 
         localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
@@ -25,7 +25,7 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
 export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', async () => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors`);
-        console.log('res doctors -', res.data.data);
+        // console.log('res doctors -', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -44,7 +44,7 @@ export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoct
                     ContentType: 'application/json',
                 },
             });
-            console.log('res doctor by id -', res.data.data);
+            // console.log('res doctor by id -', res.data.data);
 
             return res.data.data;
         }
@@ -97,20 +97,22 @@ const createFormData = (values, fileList) => {
 export const fetchApiUpdateInfoUser = createAsyncThunk(
     'user/fetchApiUpdateInfoUser',
     async ({ values, fileList, tokenCurrent }) => {
-        try {
-            let formData = createFormData(values, fileList);
+        if (tokenCurrent) {
+            try {
+                let formData = createFormData(values, fileList);
 
-            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}doctors`, formData, {
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    Authorization: `Bearer ${tokenCurrent}`,
-                    ContentType: 'multipart/form-data',
-                },
-            });
+                const res = await axios.post(`${process.env.REACT_APP_BASE_URL}doctors`, formData, {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${tokenCurrent}`,
+                        ContentType: 'multipart/form-data',
+                    },
+                });
 
-            return res.data;
-        } catch (err) {
-            console.log({ err });
+                return res.data;
+            } catch (err) {
+                console.log({ err });
+            }
         }
     },
 );
@@ -138,7 +140,7 @@ export const fetchApiUpdateInfoForDoctor = createAsyncThunk('user/fetchApiUpdate
                 },
             },
         );
-        console.log('update info doctor - ', res.data);
+        // console.log('update info doctor - ', res.data);
 
         return res.data;
     } catch (err) {
@@ -150,8 +152,8 @@ export const fetchApiUpdateInfoForDoctor = createAsyncThunk('user/fetchApiUpdate
 export const fetchApiCreateProfileForDoctor = createAsyncThunk(
     'user/fetchApiCreateProfileForDoctor',
     async ({ values, tokenCurrent }) => {
-        console.log('values', values);
-        console.log('values', tokenCurrent);
+        // console.log('values', values);
+        // console.log('values', tokenCurrent);
         try {
             const { specialist, training_place, degree, languages, education, experiences, doctor_id } = values;
 

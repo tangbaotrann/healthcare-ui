@@ -35,10 +35,13 @@ export const getDoctorLoginFilter = createSelector(
     (listUser, userLogin) => {
         // console.log('1111', listUser);
         // console.log('2222', userLogin);
+        if (listUser) {
+            const getUserLogin = listUser.filter((_user) => _user?.person?._id === userLogin?.doctor?.person?._id);
 
-        const getUserLogin = listUser.filter((_user) => _user?.person?._id === userLogin?.doctor?.person?._id);
-
-        return getUserLogin[0];
+            return getUserLogin[0];
+        } else {
+            return [];
+        }
     },
 );
 
