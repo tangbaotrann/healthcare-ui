@@ -20,7 +20,8 @@ import {
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
-import { BarChart } from '~/components/BarChart/BarChart';
+import BarChart from '~/components/BarChart';
+import PatientList from '~/components/PatientList';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -62,6 +63,8 @@ function DoctorManager() {
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === '2' ? (
                     <h2>Opt 2</h2>
+                ) : changeLayout === constants.layoutListPatient ? (
+                    <PatientList />
                 ) : changeLayout === constants.layoutSubHealth ? (
                     <BarChart />
                 ) : null}

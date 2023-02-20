@@ -1,7 +1,7 @@
 // lib
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import {
     LeftOutlined,
@@ -19,6 +19,8 @@ import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
+import { getDoctorLoginFilter } from '~/redux/selector';
+import { fetchApiScheduleDetailByIdDoctor } from '~/redux/features/patient/patientSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -29,6 +31,9 @@ function LayoutDoctorManager({ children, infoUser }) {
     } = theme.useToken();
 
     const dispatch = useDispatch();
+
+    const getIdDoctor = useSelector(getDoctorLoginFilter);
+    // console.log('getIdDoctor', getIdDoctor);
 
     return (
         <Layout>
@@ -63,8 +68,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                         {
                             key: '4',
                             icon: <OrderedListOutlined />,
-                            label: 'Danh sách bệnh nhân',
-                            children: [{ label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth }],
+                            label: 'Quản lý bệnh nhân',
+                            children: [
+                                { label: 'Danh sách bệnh nhân', key: constants.layoutListPatient },
+                                { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
+                            ],
                             // sub: Xem thông tin chi tiết bệnh nhân;
                             // Phác đồ điều trị;
                             // Chỉ số BMI
@@ -72,11 +80,15 @@ function LayoutDoctorManager({ children, infoUser }) {
                     ]}
                     // Change layout
                     onSelect={(item) => {
-                        if (item.key === '1') {
+                        if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === '2') {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutSubHealth) {
+                            dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutListPatient) {
+                            dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
                     }}

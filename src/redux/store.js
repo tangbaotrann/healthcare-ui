@@ -1,6 +1,9 @@
 // lib
 import { configureStore } from '@reduxjs/toolkit';
 import layoutSlice from './features/layout/layoutSlice';
+import bmisSlice from './features/layout/metric/bmisSlice';
+import glycemicSlice from './features/layout/metric/glycemicSlice';
+import patientSlice from './features/patient/patientSlice';
 import scheduleDoctor from './features/scheduleDoctor/scheduleDoctorSlice';
 
 // me
@@ -11,6 +14,9 @@ const store = configureStore({
         userSlice: userSlice.reducer,
         layoutSlice: layoutSlice.reducer,
         scheduleDoctor: scheduleDoctor.reducer,
+        patientSlice: patientSlice.reducer,
+        bmisSlice: bmisSlice.reducer,
+        glycemicSlice: glycemicSlice.reducer,
     },
 });
 

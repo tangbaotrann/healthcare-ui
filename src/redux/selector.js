@@ -28,6 +28,15 @@ export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoct
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 
+// schedule detail by id doctor
+export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data;
+
+// get patient -> bmis
+export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
+
+// get patient -> glycemic
+export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
+
 // get all user doctor -> get doctor login -> fetch api
 export const getDoctorLoginFilter = createSelector(
     fetchApiUserDoctorsSelector,
@@ -87,5 +96,19 @@ export const getIdDoctorFilter = createSelector(
                 },
             };
         });
+    },
+);
+
+// list schedule detail -> return patient id
+export const scheduleDetailByIdDoctorFilters = createSelector(
+    fetchApiScheduleDetailByIdDoctorSelector,
+    (listScheduleDetail) => {
+        if (listScheduleDetail) {
+            return listScheduleDetail.map((_list) => {
+                return _list;
+            });
+        } else {
+            return [];
+        }
     },
 );
