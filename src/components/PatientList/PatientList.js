@@ -1,23 +1,38 @@
 // lib
 import { Button, Modal, Table } from 'antd';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import TitleName from '../TitleName';
-import { fetchApiScheduleDetailByIdDoctorSelector } from '~/redux/selector';
+import {
+    fetchApiBMIByIdPatientSelector,
+    fetchApiGlycemicByIdPatientSelector,
+    fetchApiScheduleDetailByIdDoctorSelector,
+} from '~/redux/selector';
+import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
+import BarChart from '../BarChart';
+import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
 
 function PatientList() {
     const [showModalProfileDoctor, setShowModalProfileDoctor] = useState(false);
+    const [infoPatient, setInfoPatient] = useState({});
+
+    const dispatch = useDispatch();
 
     const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
+    const bmis = useSelector(fetchApiBMIByIdPatientSelector);
+    const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
 
     // console.log('patients', patients);
+    // console.log('bmis', bmis);
+    // console.log('glycemics', glycemics);
 
     // view detail patient
     const handleViewDetailPatient = (record) => {
-        console.log('rec', record);
-        // dispatch(fetchApiScheduleDetailByIdDoctor(record._id));
+        dispatch(fetchApiBMIByIdPatient(record._id));
+        dispatch(fetchApiGlycemicByIdPatient(record._id));
+        setInfoPatient(record);
         setShowModalProfileDoctor(true);
     };
 
@@ -69,7 +84,7 @@ function PatientList() {
                 return (
                     <>
                         <Button
-                            type="dashed"
+                            type="primary"
                             style={{ marginRight: '10px' }}
                             onClick={() => handleViewDetailPatient(record)}
                         >
@@ -89,12 +104,13 @@ function PatientList() {
                 columns={cols}
                 dataSource={patients.map(({ patient, bmi_avg, glycemic }, index) => ({
                     index: index + 1,
-                    username: patient?.person.username,
+                    username: patient?.person?.username,
                     gender: patient?.person?.gender === true ? 'Nam' : 'Nữ',
                     dob: patient?.person?.dob,
                     blood: patient?.blood,
                     bmi_avg: bmi_avg ? bmi_avg : 0,
                     glycemic: glycemic ? glycemic.metric : 0,
+                    address: patient?.person?.address,
                     _id: patient?._id,
                 }))}
                 rowKey="index"
@@ -106,8 +122,9 @@ function PatientList() {
                 onCancel={handleCancel}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
+                width={1000}
             >
-                {/* <BarChart /> */}
+                <BarChart bmis={bmis} glycemics={glycemics} infoPatient={infoPatient} />
             </Modal>
         </>
     );

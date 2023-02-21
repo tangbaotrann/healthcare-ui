@@ -12,6 +12,7 @@ import UpdateInfoUser from './pages/UpdateInfoUser';
 import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
+import Maps from './components/Maps';
 import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 
@@ -71,6 +72,9 @@ function App() {
 
                 {/* Doctor Manager */}
                 <Route path={endPoints.doctorManager} element={<DoctorManager />} />
+
+                {/* Maps */}
+                <Route path={endPoints.maps} element={<Maps />} />
             </Routes>
         </Router>
     );

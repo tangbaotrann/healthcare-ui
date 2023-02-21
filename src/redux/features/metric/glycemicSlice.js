@@ -4,24 +4,28 @@ import axios from 'axios';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 // fetch api glycemic by id of patient
-export const fetchApiGlycemicByIdPatient = createAsyncThunk('bmi/fetchApiGlycemicByIdPatient', async (patients) => {
+export const fetchApiGlycemicByIdPatient = createAsyncThunk('bmi/fetchApiGlycemicByIdPatient', async (idPatient) => {
     try {
-        if (patients.length === 1) {
-            const idPatient = patients[0];
-            console.log('idPatient', idPatient);
-            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-            console.log('res - patient', res.data.data);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
+        console.log('res - patient - glycemic', res.data.data);
 
-            return res.data.data;
-        } else if (patients.length > 1) {
-            const idPatient = patients.forEach((_idPatient) => _idPatient);
-            console.log('idPatient', idPatient);
+        return res.data.data;
+        // if (patients.length === 1) {
+        //     const idPatient = patients[0];
+        //     console.log('idPatient', idPatient);
+        //     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
+        //     console.log('res - patient', res.data.data);
 
-            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-            console.log('res - patient', res.data.data);
+        //     return res.data.data;
+        // } else if (patients.length > 1) {
+        //     const idPatient = patients.forEach((_idPatient) => _idPatient);
+        //     console.log('idPatient', idPatient);
 
-            return res.data.data;
-        }
+        //     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
+        //     console.log('res - patient', res.data.data);
+
+        //     return res.data.data;
+        // }
     } catch (err) {
         console.log({ err });
     }

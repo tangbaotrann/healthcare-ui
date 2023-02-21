@@ -33,7 +33,7 @@ function LayoutDoctorManager({ children, infoUser }) {
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
-    console.log('getIdDoctor', getIdDoctor);
+    // console.log('getIdDoctor', getIdDoctor);
 
     return (
         <Layout>
@@ -71,7 +71,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Quản lý bệnh nhân',
                             children: [
                                 { label: 'Danh sách bệnh nhân', key: constants.layoutListPatient },
-                                { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
+                                // { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
                             ],
                             // sub: Xem thông tin chi tiết bệnh nhân;
                             // Phác đồ điều trị;
@@ -84,10 +84,12 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === '2') {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        } else if (item.key === constants.layoutSubHealth) {
-                            dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
-                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        } else if (item.key === constants.layoutListPatient) {
+                        }
+                        // else if (item.key === constants.layoutSubHealth) {
+                        //     dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
+                        //     dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        // }
+                        else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
