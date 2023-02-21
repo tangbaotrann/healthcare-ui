@@ -20,8 +20,8 @@ import {
     fetchApiGlycemicByIdPatientSelector,
     fetchApiScheduleDetailByIdDoctorSelector,
 } from '~/redux/selector';
-import { fetchApiBMIByIdPatient } from '~/redux/features/layout/metric/bmisSlice';
-import { fetchApiGlycemicByIdPatient } from '~/redux/features/layout/metric/glycemicSlice';
+import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
+import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -33,7 +33,7 @@ function BarChart() {
     const bmis = useSelector(fetchApiBMIByIdPatientSelector);
     const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
 
-    // console.log('patients', patients[0]);
+    // console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
 

@@ -1,25 +1,30 @@
 // lib
-import { Table } from 'antd';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Modal, Table } from 'antd';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // me
 import TitleName from '../TitleName';
-import { fetchApiBMIByIdPatientSelector, fetchApiScheduleDetailByIdDoctorSelector } from '~/redux/selector';
-import { fetchApiBMIByIdPatient } from '~/redux/features/layout/metric/bmisSlice';
+import { fetchApiScheduleDetailByIdDoctorSelector } from '~/redux/selector';
 
 function PatientList() {
-    // const dispatch = useDispatch();
+    const [showModalProfileDoctor, setShowModalProfileDoctor] = useState(false);
 
-    // const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
-    // const bmis = useSelector(fetchApiBMIByIdPatientSelector);
+    const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
 
-    // console.log('patients', patients[0]);
-    // console.log('bmis', bmis);
+    // console.log('patients', patients);
 
-    // useEffect(() => {
-    //     dispatch(fetchApiBMIByIdPatient(patients));
-    // }, [patients]);
+    // view detail patient
+    const handleViewDetailPatient = (record) => {
+        console.log('rec', record);
+        // dispatch(fetchApiScheduleDetailByIdDoctor(record._id));
+        setShowModalProfileDoctor(true);
+    };
+
+    // close modal view profile doctor
+    const handleCancel = () => {
+        setShowModalProfileDoctor(false);
+    };
 
     // cols
     const cols = [
@@ -29,9 +34,50 @@ function PatientList() {
             dataIndex: 'index',
         },
         {
-            key: 'name',
+            key: 'username',
             title: 'Họ & tên',
-            dataIndex: 'name',
+            dataIndex: 'username',
+        },
+        {
+            key: 'gender',
+            title: 'Giới tính',
+            dataIndex: 'gender',
+        },
+        {
+            key: 'dob',
+            title: 'Năm sinh',
+            dataIndex: 'dob',
+        },
+        {
+            key: 'blood',
+            title: 'Nhóm máu',
+            dataIndex: 'blood',
+        },
+        {
+            key: 'bmi_avg',
+            title: 'BMI trung bình',
+            dataIndex: 'bmi_avg',
+        },
+        {
+            key: 'glycemic',
+            title: 'Chỉ số đường huyết',
+            dataIndex: 'glycemic',
+        },
+        {
+            key: '5',
+            render: (record) => {
+                return (
+                    <>
+                        <Button
+                            type="dashed"
+                            style={{ marginRight: '10px' }}
+                            onClick={() => handleViewDetailPatient(record)}
+                        >
+                            Xem chi tiết
+                        </Button>
+                    </>
+                );
+            },
         },
     ];
 
@@ -39,7 +85,30 @@ function PatientList() {
         <>
             <TitleName>Danh sách bệnh nhân đăng ký khám</TitleName>
 
-            <Table columns={cols} rowKey="index"></Table>
+            <Table
+                columns={cols}
+                dataSource={patients.map(({ patient, bmi_avg, glycemic }, index) => ({
+                    index: index + 1,
+                    username: patient?.person.username,
+                    gender: patient?.person?.gender === true ? 'Nam' : 'Nữ',
+                    dob: patient?.person?.dob,
+                    blood: patient?.blood,
+                    bmi_avg: bmi_avg ? bmi_avg : 0,
+                    glycemic: glycemic ? glycemic.metric : 0,
+                    _id: patient?._id,
+                }))}
+                rowKey="index"
+            ></Table>
+
+            {/* View profile doctor */}
+            <Modal
+                open={showModalProfileDoctor}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+            >
+                {/* <BarChart /> */}
+            </Modal>
         </>
     );
 }

@@ -5,7 +5,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 // fetch api bmis by id of patient
 export const fetchApiBMIByIdPatient = createAsyncThunk('bmi/fetchApiBMIByIdPatient', async (patients) => {
     try {
-        console.log('patients', patients);
+        // console.log('patients', patients);
         // if (idPatient) {
         //     console.log('slice id patient', idPatient);
         //     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}bmis/${idPatient}`);
