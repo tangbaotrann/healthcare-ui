@@ -1,0 +1,31 @@
+.info-patient {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-detail {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.info-detail strong {
+    font-size: 1.6rem;
+}
+
+.info-text {
+    margin-left: 10px;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.container-chart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.inner-chart {
+    /* width: 100%; */
+}
