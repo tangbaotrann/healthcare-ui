@@ -33,7 +33,7 @@ function LayoutDoctorManager({ children, infoUser }) {
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
-    // console.log('getIdDoctor', getIdDoctor);
+    console.log('getIdDoctor', getIdDoctor);
 
     return (
         <Layout>
@@ -53,7 +53,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                         {
                             key: constants.layoutListRegisterSchedule,
                             icon: <ClockCircleOutlined />,
-                            label: 'Đăng ký ca lịch của Bác sĩ',
+                            label: 'Đăng ký ca làm cho Bác sĩ',
                         },
                         {
                             key: '2',

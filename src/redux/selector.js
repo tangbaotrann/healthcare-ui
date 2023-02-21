@@ -37,6 +37,11 @@ export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
 
+// get info patient
+export const fetchApiGetInfoPatientSelector = (state) => state.patientSlice.patientInfo;
+
+/* -- Handle Selector -- */
+
 // get all user doctor -> get doctor login -> fetch api
 export const getDoctorLoginFilter = createSelector(
     fetchApiUserDoctorsSelector,
