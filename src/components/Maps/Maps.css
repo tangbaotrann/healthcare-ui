@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     right: 0;
-    width: 30%;
+    width: 40%;
     margin: 0 auto;
     background-color: var(--modal-out-site);
     border-radius: 6px;
@@ -41,8 +41,10 @@
     justify-content: space-between;
 }
 
-.calculate-duration {
-    /* margin-left: 144px; */
+.calculate strong {
+    color: var(--black);
+    font-size: 1.6rem;
+    font-weight: 600;
 }
 
 .calculate-endpoint-btn {
@@ -53,5 +55,28 @@
 
 .icon-endpoint {
     font-size: 2rem;
-    margin-right: 28px;
+    margin-right: 60px;
+}
+
+.clear-route-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.icon-clear-route {
+    font-size: 2rem;
+}
+
+.icon-clear-route:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.maps-form-input-position {
+    padding: 6px;
+    border-radius: 6px;
+    outline: none;
+    border: 1px solid #1677ff;
+    margin-right: 10px;
 }

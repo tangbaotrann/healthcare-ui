@@ -47,6 +47,10 @@
     margin-right: 6px;
 }
 
+.trigger svg {
+    color: var(--white);
+}
+
 /* Right bar */
 .ant-layout {
     position: relative;

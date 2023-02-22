@@ -61,7 +61,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     return (
         <div className="wrapper-create-schedule-doctor">
             <Button onClick={handleOpenModal} className="btn-register-schedule">
-                Đăng ký ca làm
+                <span>Đăng ký ca làm</span>
             </Button>
 
             {/* Modal */}
@@ -71,7 +71,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
                 okButtonProps={{ style: { display: 'none' } }}
                 onCancel={handleCancel}
             >
-                <TitleName>Đăng ký ca lịch cho Bác sĩ</TitleName>
+                <TitleName>Đăng ký ca làm cho Bác sĩ</TitleName>
 
                 <Form
                     onFinish={handleCreateScheduleDoctorOnFish}
