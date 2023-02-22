@@ -1,5 +1,5 @@
 // lib
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
@@ -21,6 +21,7 @@ import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
 import { getDoctorLoginFilter } from '~/redux/selector';
 import { fetchApiScheduleDetailByIdDoctor } from '~/redux/features/patient/patientSlice';
+import ParticlesBackground from '~/components/ParticlesBackground';
 
 const { Header, Sider, Content } = Layout;
 
@@ -97,7 +98,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-header" style={{ padding: 0, background: colorBgContainer }}>
+                <Header className="site-layout-header" style={{ padding: 0 }}>
                     <div className="site-layout-header-info-user">
                         <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
                             <LeftOutlined />
@@ -121,11 +122,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                         margin: '24px 16px',
                         padding: 24,
                         minHeight: 280,
-                        background: colorBgContainer,
                     }}
                 >
                     {children}
                 </Content>
+                <ParticlesBackground />
             </Layout>
         </Layout>
     );

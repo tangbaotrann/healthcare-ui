@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import moment from 'moment';
 
 // me
+import './TableListSchedule.css';
 import TitleName from '~/components/TitleName';
 
 function TableListSchedule({ schedules }) {
@@ -44,7 +45,7 @@ function TableListSchedule({ schedules }) {
 
     return (
         <>
-            <TitleName>Danh sách đã đăng ký ca lịch của Bác sĩ</TitleName>
+            <TitleName>Danh Sách Đăng Ký Ca Làm Của Bác Sĩ</TitleName>
 
             <Table
                 columns={cols}

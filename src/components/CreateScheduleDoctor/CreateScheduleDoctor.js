@@ -5,6 +5,7 @@ import { Button, Form, Input, message, Modal, Select } from 'antd';
 import moment from 'moment';
 
 // me
+import './CreateScheduleDoctor.css';
 import TitleName from '../TitleName';
 import TableListSchedule from './TableListSchedule';
 import {
@@ -59,8 +60,8 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
 
     return (
         <div className="wrapper-create-schedule-doctor">
-            <Button onClick={handleOpenModal} type="primary">
-                Đăng ký lịch khám
+            <Button onClick={handleOpenModal} className="btn-register-schedule">
+                Đăng ký ca làm
             </Button>
 
             {/* Modal */}

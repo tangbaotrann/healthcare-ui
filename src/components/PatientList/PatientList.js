@@ -98,7 +98,7 @@ function PatientList() {
 
     return (
         <>
-            <TitleName>Danh sách bệnh nhân đăng ký khám</TitleName>
+            <TitleName>Danh Sách Bệnh Nhân Đăng Ký Khám Bệnh</TitleName>
 
             <Table
                 columns={cols}
