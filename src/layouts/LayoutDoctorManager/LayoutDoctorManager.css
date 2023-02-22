@@ -6,14 +6,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-right: 32px;
+    margin-top: 4px;
+    margin-right: 16px;
+    margin-left: 16px;
+
+    background-color: var(--modal-out-site);
+    box-shadow: 0 0 18px 0 var(--modal-out-site); 
+    border-radius: 6px;
 }
 
 .site-layout-header-introduce {
     font-size: 1.6rem;
     font-weight: 600;
-    margin-left: 32px;
-    margin-bottom: 14px;
+    margin-left: 6px;
     border-radius: 100px;
     cursor: pointer;
 }
@@ -26,7 +31,6 @@
 .site-layout-header-right {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
 }
 
 .avatar-user {
@@ -40,4 +44,11 @@
 .name-user {
     font-size: 1.4rem;
     color: var(--primary);
+    margin-right: 6px;
+}
+
+/* Right bar */
+.ant-layout {
+    position: relative;
+    background-color: transparent;
 }
