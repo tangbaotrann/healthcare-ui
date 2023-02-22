@@ -128,7 +128,12 @@ function BarChart({ bmis, glycemics, infoPatient }) {
             <Divider />
 
             <Button type="primary">
-                <Link to={endPoints.maps} target="_blank" style={{ color: '#fff' }}>
+                <Link
+                    to={endPoints.maps}
+                    // state={{ infoPatient: infoPatient }}
+                    target="_blank"
+                    style={{ color: '#fff' }}
+                >
                     Xem maps
                 </Link>
             </Button>

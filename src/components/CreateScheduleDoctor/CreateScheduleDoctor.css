@@ -11,3 +11,10 @@
     background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
     box-shadow: 6px 8px 14px 2px #8065cc;
 }
+
+.btn-register-schedule:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    color: var(--white);
+    transition: all 0.3s;
+}
