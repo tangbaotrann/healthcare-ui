@@ -49,6 +49,7 @@
 
 .trigger svg {
     color: var(--white);
+    margin-bottom: 12px;
 }
 
 /* Right bar */

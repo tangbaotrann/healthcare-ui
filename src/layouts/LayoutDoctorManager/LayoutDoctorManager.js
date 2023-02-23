@@ -20,7 +20,10 @@ import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
 import { getDoctorLoginFilter } from '~/redux/selector';
-import { fetchApiScheduleDetailByIdDoctor } from '~/redux/features/patient/patientSlice';
+import {
+    fetchApiScheduleDetailByIdDoctor,
+    fetchApiScheduleMedicalAppointment,
+} from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
 
 const { Header, Sider, Content } = Layout;
@@ -57,9 +60,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Đăng ký ca làm cho Bác sĩ',
                         },
                         {
-                            key: '2',
+                            key: constants.layoutScheduleMedical,
                             icon: <ScheduleOutlined />,
-                            label: 'Lịch hẹn tư vấn',
+                            label: 'Lịch hẹn khám bệnh',
                         },
                         {
                             key: '3',
@@ -83,7 +86,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                     onSelect={(item) => {
                         if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        } else if (item.key === '2') {
+                        } else if (item.key === constants.layoutScheduleMedical) {
+                            dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
                         // else if (item.key === constants.layoutSubHealth) {
@@ -98,7 +102,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-header" style={{ padding: 0 }}>
+                <Header className="site-layout-header" style={{ padding: 0, marginBottom: '12px' }}>
                     <div className="site-layout-header-info-user">
                         <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
                             <LeftOutlined />

@@ -22,6 +22,7 @@ import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor'
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
 import BarChart from '~/components/BarChart';
 import PatientList from '~/components/PatientList';
+import TableListScheduleMedical from '~/components/TableListScheduleMedical';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -61,8 +62,8 @@ function DoctorManager() {
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === constants.layoutListRegisterSchedule || changeLayout === null ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
-                ) : changeLayout === '2' ? (
-                    <h2>Opt 2</h2>
+                ) : changeLayout === constants.layoutScheduleMedical ? (
+                    <TableListScheduleMedical />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutSubHealth ? (
