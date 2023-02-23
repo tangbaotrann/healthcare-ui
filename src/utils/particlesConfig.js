@@ -1,5 +1,5 @@
 const particlesConfig = {
-    autoPlay: true,
+    autoPlay: false,
     background: {
         color: {
             value: '#000',

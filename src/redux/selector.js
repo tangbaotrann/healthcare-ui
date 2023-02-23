@@ -37,8 +37,8 @@ export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
 
-// get info patient
-export const fetchApiGetInfoPatientSelector = (state) => state.patientSlice.patientInfo;
+// get all schedule medical appointment
+export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
 
 /* -- Handle Selector -- */
 
@@ -115,5 +115,40 @@ export const scheduleDetailByIdDoctorFilters = createSelector(
         } else {
             return [];
         }
+    },
+);
+
+// filter -> day (Thứ) + time (Ca làm) of doctor
+export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
+    fetchApiScheduleMedicalAppointmentSelector,
+    fetchApiAllCreateDaysDoctorSelector,
+    fetchApiAllShiftsDoctorSelector,
+    (listScheduleMedical, listDay, listShift) => {
+        // console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listDay', listDay);
+        // console.log('listShift', listShift);
+
+        const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
+            const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
+            const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+            // fetch all patient -> tìm patient (bệnh nhân) theo id
+
+            // console.log('days', days);
+            // console.log('shifts', shifts);
+
+            return {
+                content_exam: _scheduleMedical.content_exam,
+                createdAt: _scheduleMedical.createdAt,
+                doctor: _scheduleMedical.doctor,
+                patient: _scheduleMedical.patient,
+                schedule: _scheduleMedical.schedule,
+                updatedAt: _scheduleMedical.updatedAt,
+                days,
+                shifts,
+                _id: _scheduleMedical._id,
+            };
+        });
+
+        return scheduleMedicals;
     },
 );

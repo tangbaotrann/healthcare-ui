@@ -91,27 +91,40 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         <>
             <TitleName>Thông tin cá nhân</TitleName>
 
-            <div className="info-patient">
-                <div className="info-detail">
-                    <strong>Họ và tên: </strong>
-                    <p className="info-text"> {infoPatient.username}</p>
+            <div className="container-bar-chart">
+                <div className="info-patient">
+                    <div className="info-detail">
+                        <strong>Họ và tên: </strong>
+                        <p className="info-text"> {infoPatient.username}</p>
+                    </div>
+                    <div className="info-detail">
+                        <strong>Năm sinh: </strong>
+                        <p className="info-text"> {infoPatient.dob}</p>
+                    </div>
+                    <div className="info-detail">
+                        <strong>Địa chỉ: </strong>
+                        <p className="info-text"> {infoPatient.address}</p>
+                    </div>
+                    <div className="info-detail">
+                        <strong>Giới tính: </strong>
+                        <p className="info-text"> {infoPatient.gender}</p>
+                    </div>
+                    <div className="info-detail">
+                        <strong>Nhóm máu: </strong>
+                        <p className="info-text"> {infoPatient.blood}</p>
+                    </div>
                 </div>
-                <div className="info-detail">
-                    <strong>Năm sinh: </strong>
-                    <p className="info-text"> {infoPatient.dob}</p>
-                </div>
-                <div className="info-detail">
-                    <strong>Địa chỉ: </strong>
-                    <p className="info-text"> {infoPatient.address}</p>
-                </div>
-                <div className="info-detail">
-                    <strong>Giới tính: </strong>
-                    <p className="info-text"> {infoPatient.gender}</p>
-                </div>
-                <div className="info-detail">
-                    <strong>Nhóm máu: </strong>
-                    <p className="info-text"> {infoPatient.blood}</p>
-                </div>
+
+                <Button type="primary">
+                    <Link
+                        to={endPoints.maps}
+                        // state={{ infoPatient: infoPatient }}
+                        target="_blank"
+                        style={{ color: '#fff' }}
+                    >
+                        Xem vị trí trên maps
+                    </Link>
+                </Button>
             </div>
 
             <Divider />
@@ -126,17 +139,6 @@ function BarChart({ bmis, glycemics, infoPatient }) {
             </div>
 
             <Divider />
-
-            <Button type="primary">
-                <Link
-                    to={endPoints.maps}
-                    // state={{ infoPatient: infoPatient }}
-                    target="_blank"
-                    style={{ color: '#fff' }}
-                >
-                    Xem maps
-                </Link>
-            </Button>
         </>
     );
 }
