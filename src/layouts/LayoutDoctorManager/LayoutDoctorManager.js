@@ -65,7 +65,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Lịch hẹn khám bệnh',
                         },
                         {
-                            key: '3',
+                            key: constants.layoutListNotification,
                             icon: <NotificationOutlined />,
                             label: 'Thông báo',
                         },
@@ -89,12 +89,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                         } else if (item.key === constants.layoutScheduleMedical) {
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        }
-                        // else if (item.key === constants.layoutSubHealth) {
-                        //     dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
-                        //     dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        // }
-                        else if (item.key === constants.layoutListPatient) {
+                        } else if (item.key === constants.layoutListNotification) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }

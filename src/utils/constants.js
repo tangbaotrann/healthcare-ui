@@ -1,7 +1,7 @@
 const constants = {
-    layoutListRegisterSchedule: '1',
+    layoutListRegisterSchedule: 'listRegisterSchedule',
     layoutListPatient: 'listPatient',
-    layoutSubHealth: 'subHealth',
+    layoutListNotification: 'listNotification',
     layoutScheduleMedical: 'scheduleMedical',
 };
 

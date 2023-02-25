@@ -20,9 +20,10 @@ import {
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
-import BarChart from '~/components/BarChart';
 import PatientList from '~/components/PatientList';
 import TableListScheduleMedical from '~/components/TableListScheduleMedical';
+import socket from '~/utils/socket';
+import TableListNotification from '~/components/TableListNotification';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -38,6 +39,13 @@ function DoctorManager() {
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 27', schedules);
+
+    // Test socket from server
+    useEffect(() => {
+        socket.on('from_server', (message) => {
+            console.log(message);
+        });
+    }, []);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateScheduleDoctor());
@@ -66,8 +74,8 @@ function DoctorManager() {
                     <TableListScheduleMedical />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
-                ) : changeLayout === constants.layoutSubHealth ? (
-                    <BarChart />
+                ) : changeLayout === constants.layoutListNotification ? (
+                    <TableListNotification />
                 ) : null}
             </LayoutDoctorManager>
         </>
