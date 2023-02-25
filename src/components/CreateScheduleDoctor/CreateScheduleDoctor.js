@@ -25,6 +25,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
 
     // console.log(days);
     // console.log('-->', shifts);
+    // console.log('-->', schedules);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateDaysDoctor());

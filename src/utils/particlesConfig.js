@@ -1,8 +1,8 @@
 const particlesConfig = {
-    autoPlay: false,
+    autoPlay: true,
     background: {
         color: {
-            value: '#000',
+            value: '#f0ffff',
         },
         image: '',
         position: '',
@@ -38,15 +38,15 @@ const particlesConfig = {
             },
             onDiv: {
                 selectors: [],
-                enable: false,
+                enable: true,
                 mode: [],
                 type: 'circle',
             },
             onHover: {
-                enable: true,
+                enable: false,
                 mode: 'trail',
                 parallax: {
-                    enable: false,
+                    enable: true,
                     force: 2,
                     smooth: 10,
                 },
@@ -58,23 +58,23 @@ const particlesConfig = {
         },
         modes: {
             attract: {
-                distance: 200,
-                duration: 0.4,
+                distance: 100,
+                duration: 0.1,
                 easing: 'ease-out-quad',
                 factor: 1,
-                maxSpeed: 50,
-                speed: 1,
+                maxSpeed: 0,
+                speed: 0,
             },
             bounce: {
-                distance: 200,
+                distance: 100,
             },
             bubble: {
-                distance: 200,
-                duration: 0.4,
+                distance: 100,
+                duration: 0.1,
                 mix: false,
                 divs: {
-                    distance: 200,
-                    duration: 0.4,
+                    distance: 100,
+                    duration: 0.1,
                     mix: false,
                     selectors: [],
                 },
@@ -103,18 +103,18 @@ const particlesConfig = {
                 quantity: 2,
             },
             repulse: {
-                distance: 200,
-                duration: 0.4,
+                distance: 100,
+                duration: 0.1,
                 factor: 100,
-                speed: 1,
-                maxSpeed: 50,
+                speed: 0,
+                maxSpeed: 0,
                 easing: 'ease-out-quad',
                 divs: {
-                    distance: 200,
-                    duration: 0.4,
+                    distance: 100,
+                    duration: 0.1,
                     factor: 100,
-                    speed: 1,
-                    maxSpeed: 50,
+                    speed: 0,
+                    maxSpeed: 0,
                     easing: 'ease-out-quad',
                     selectors: [],
                 },
@@ -132,7 +132,7 @@ const particlesConfig = {
                         value: '#ff0000',
                         animation: {
                             enable: true,
-                            speed: 400,
+                            speed: 100,
                             sync: true,
                         },
                     },
@@ -146,13 +146,13 @@ const particlesConfig = {
                         outModes: {
                             default: 'destroy',
                         },
-                        speed: 2,
+                        speed: 0,
                     },
                     size: {
                         value: 5,
                         animation: {
                             enable: true,
-                            speed: 5,
+                            speed: 0,
                             minimumValue: 1,
                             sync: true,
                             startValue: 'min',
@@ -177,7 +177,7 @@ const particlesConfig = {
                     color: {
                         value: '#17163e',
                     },
-                    length: 2000,
+                    length: 100,
                 },
             },
         },
@@ -202,7 +202,7 @@ const particlesConfig = {
         },
         collisions: {
             absorb: {
-                speed: 2,
+                speed: 0,
             },
             bounce: {
                 horizontal: {
@@ -234,7 +234,7 @@ const particlesConfig = {
                     count: 0,
                     enable: true,
                     offset: 0,
-                    speed: 50,
+                    speed: 0,
                     decay: 0,
                     sync: false,
                 },
@@ -242,7 +242,7 @@ const particlesConfig = {
                     count: 0,
                     enable: false,
                     offset: 0,
-                    speed: 1,
+                    speed: 0,
                     decay: 0,
                     sync: true,
                 },
@@ -250,7 +250,7 @@ const particlesConfig = {
                     count: 0,
                     enable: false,
                     offset: 0,
-                    speed: 1,
+                    speed: 0,
                     decay: 0,
                     sync: true,
                 },
@@ -263,7 +263,7 @@ const particlesConfig = {
                 value: 90,
             },
             attract: {
-                distance: 200,
+                distance: 10,
                 enable: false,
                 rotate: {
                     x: 3000,
@@ -285,7 +285,7 @@ const particlesConfig = {
                 acceleration: 9.81,
                 enable: false,
                 inverse: false,
-                maxSpeed: 50,
+                maxSpeed: 0,
             },
             path: {
                 clamp: true,
@@ -308,7 +308,7 @@ const particlesConfig = {
             },
             random: false,
             size: false,
-            speed: 2,
+            speed: 0.2,
             spin: {
                 acceleration: 0,
                 enable: false,
@@ -316,7 +316,7 @@ const particlesConfig = {
             straight: false,
             trail: {
                 enable: false,
-                length: 10,
+                length: 1,
                 fill: {},
             },
             vibrate: false,
@@ -329,7 +329,7 @@ const particlesConfig = {
                 height: 1080,
             },
             limit: 0,
-            value: 100,
+            value: 50, // new
         },
         opacity: {
             random: {

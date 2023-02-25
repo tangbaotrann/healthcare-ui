@@ -48,8 +48,8 @@
 }
 
 .trigger svg {
-    color: var(--white);
-    margin-bottom: 12px;
+    color: var(--black);
+    margin-bottom: 28px;
 }
 
 /* Right bar */

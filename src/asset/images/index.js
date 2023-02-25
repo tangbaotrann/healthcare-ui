@@ -1,6 +1,7 @@
 // logo
 export const logo = {
     logo: require('~/asset/images/logo.jpg'),
+    iconHeart: require('~/asset/images/icon-heart.png'),
 };
 
 // Images of slide show

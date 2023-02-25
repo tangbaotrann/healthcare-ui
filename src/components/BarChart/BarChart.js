@@ -115,7 +115,7 @@ function BarChart({ bmis, glycemics, infoPatient }) {
                     </div>
                 </div>
 
-                <Button type="primary">
+                <Button className="position-on-map-btn">
                     <Link
                         to={endPoints.maps}
                         // state={{ infoPatient: infoPatient }}

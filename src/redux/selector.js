@@ -67,18 +67,19 @@ export const getIdDoctorFilter = createSelector(
     fetchApiAllShiftsDoctorSelector,
     (infoDoctor, listSchedule, listDay, listShift) => {
         // console.log('infoDoctor', infoDoctor);
-        // console.log('listSchedule', listSchedule);
+        // console.log('listSchedule -selector', listSchedule);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
 
         const getIdDoctorFromListSchedule = listSchedule.filter(
-            (schedule) => schedule.doctor === infoDoctor?.doctor?._id,
+            (schedule) => schedule?.doctor?._id === infoDoctor?.doctor?._id,
         );
         // console.log('getIdDoctorFromListSchedule', getIdDoctorFromListSchedule);
 
         return getIdDoctorFromListSchedule.map((schedule) => {
-            const days = listDay.find((_day) => _day._id === schedule.day);
-            const shifts = listShift.find((_shift) => _shift._id === schedule.time);
+            // console.log('sche -->', schedule);
+            const days = listDay.find((_day) => _day._id === schedule.day._id);
+            const shifts = listShift.find((_shift) => _shift._id === schedule.time._id);
             return {
                 _id: schedule?._id,
                 time_per_conversation: schedule?.time_per_conversation,

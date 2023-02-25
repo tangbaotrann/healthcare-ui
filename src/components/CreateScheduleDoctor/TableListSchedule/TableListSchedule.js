@@ -60,6 +60,11 @@ function TableListSchedule({ schedules }) {
                     doctor: schedule.doctor.person.username,
                 }))}
                 rowKey="_id"
+                pagination={{
+                    pageSize: 8,
+                }}
+                style={{ height: '300px' }}
+                scroll={{ y: 400 }}
             ></Table>
         </>
     );

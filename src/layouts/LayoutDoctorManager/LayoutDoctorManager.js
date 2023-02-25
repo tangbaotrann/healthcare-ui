@@ -102,7 +102,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-header" style={{ padding: 0, marginBottom: '12px' }}>
+                <Header className="site-layout-header" style={{ padding: 0, marginBottom: '12px', height: '0px' }}>
                     <div className="site-layout-header-info-user">
                         <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
                             <LeftOutlined />
@@ -123,7 +123,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                 </Header>
                 <Content
                     style={{
-                        margin: '24px 16px',
+                        margin: '64px 16px',
                         minHeight: 280,
                     }}
                 >

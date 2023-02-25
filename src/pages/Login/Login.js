@@ -11,6 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiLogin } from '~/redux/features/user/userSlice';
+import { endPoints } from '~/routers';
 
 function Login() {
     const [number, setNumber] = useState('');
@@ -24,7 +25,7 @@ function Login() {
         try {
             if (values) {
                 dispatch(fetchApiLogin(values));
-                navigate('/home');
+                navigate(`${endPoints.doctorManager}`);
             }
         } catch (err) {
             console.log({ err });

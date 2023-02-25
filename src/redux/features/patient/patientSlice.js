@@ -25,7 +25,7 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
 export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     'patient/fetchApiScheduleMedicalAppointment',
     async (getIdDoctor) => {
-        console.log('get ->', getIdDoctor);
+        // console.log('get ->', getIdDoctor);
         try {
             const res = await axios.get(
                 `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,

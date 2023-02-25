@@ -35,3 +35,26 @@
     /* align-items: center; */
     justify-content: space-between;
 }
+
+/* Button position on map */
+.position-on-map-btn {
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.position-on-map-btn:hover {
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    color: var(--white) !important;
+    background-color: var(--btn-primary-hover);
+    box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}
