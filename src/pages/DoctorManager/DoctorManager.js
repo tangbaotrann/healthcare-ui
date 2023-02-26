@@ -24,6 +24,7 @@ import PatientList from '~/components/PatientList';
 import TableListScheduleMedical from '~/components/TableListScheduleMedical';
 import socket from '~/utils/socket';
 import TableListNotification from '~/components/TableListNotification';
+import Conversation from '~/components/Conversation';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -76,6 +77,8 @@ function DoctorManager() {
                     <PatientList />
                 ) : changeLayout === constants.layoutListNotification ? (
                     <TableListNotification />
+                ) : changeLayout === constants.layoutListConversation ? (
+                    <Conversation />
                 ) : null}
             </LayoutDoctorManager>
         </>

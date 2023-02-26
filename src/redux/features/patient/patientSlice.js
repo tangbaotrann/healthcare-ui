@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-// get all schedule detail by id doctor
+// get all schedule detail by id doctor (3.)
 export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
     'patient/fetchApiScheduleDetailByIdDoctor',
     async (getIdDoctor) => {
@@ -21,7 +21,7 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
     },
 );
 
-// get all schedule medical appointment
+// get all schedule medical appointment (5. Lấy danh sách lịch khám hẹn khám của bác sĩ)
 export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     'patient/fetchApiScheduleMedicalAppointment',
     async (getIdDoctor) => {
