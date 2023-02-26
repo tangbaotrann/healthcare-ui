@@ -7,6 +7,7 @@ import {
     LeftOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
+    MessageOutlined,
     NotificationOutlined,
     OrderedListOutlined,
     ScheduleOutlined,
@@ -25,6 +26,8 @@ import {
     fetchApiScheduleMedicalAppointment,
 } from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
+import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
+import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -70,6 +73,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Thông báo',
                         },
                         {
+                            key: constants.layoutListConversation,
+                            icon: <MessageOutlined />,
+                            label: 'Cuộc trò chuyện',
+                        },
+                        {
                             key: '4',
                             icon: <OrderedListOutlined />,
                             label: 'Quản lý bệnh nhân',
@@ -90,6 +98,10 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
+                            dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutListConversation) {
+                            dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
@@ -120,7 +132,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                 </Header>
                 <Content
                     style={{
-                        margin: '64px 16px',
+                        marginTop: '80px',
+                        marginLeft: '16px',
+                        marginRight: '16px',
                         minHeight: 280,
                     }}
                 >

@@ -24,6 +24,11 @@ function TableListScheduleMedical() {
             dataIndex: 'day',
         },
         {
+            key: 'createdAt',
+            title: 'Ngày đăng ký',
+            dataIndex: 'createdAt',
+        },
+        {
             key: 'time',
             title: 'Ca làm',
             dataIndex: 'time',
@@ -55,6 +60,7 @@ function TableListScheduleMedical() {
                 dataSource={scheduleMedicalsFilter.map((scheduleMedical, index) => ({
                     index: index + 1,
                     day: moment(scheduleMedical.days.day).format('dddd'),
+                    createdAt: moment(scheduleMedical.createdAt).format('DD-MM-YYYY'),
                     time: `${scheduleMedical.shifts.name} (${moment(new Date(scheduleMedical.shifts.time_start)).format(
                         'HH:mm',
                     )} -> ${moment(new Date(scheduleMedical.shifts.time_end)).format('HH:mm')})`,

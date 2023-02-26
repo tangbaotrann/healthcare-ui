@@ -40,6 +40,21 @@ export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlic
 // get all schedule medical appointment
 export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
 
+// get all notification by id doctor
+export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
+
+// update seen notification
+export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificationSlice.seen;
+
+// get all conversation by id doctor
+export const fetchApiConversationsSelector = (state) => state.conversationSlice.data;
+
+// get id conversation when clicked
+export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
+
+// get all message by id conversation
+export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
+
 /* -- Handle Selector -- */
 
 // get all user doctor -> get doctor login -> fetch api
@@ -125,7 +140,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllCreateDaysDoctorSelector,
     fetchApiAllShiftsDoctorSelector,
     (listScheduleMedical, listDay, listShift) => {
-        // console.log('listScheduleMedical', listScheduleMedical);
+        console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
 
@@ -151,5 +166,78 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
         });
 
         return scheduleMedicals;
+    },
+);
+
+// get member conversation
+export const cleanConversationListSelector = createSelector(
+    fetchApiUserDoctorByTokenSelector,
+    fetchApiConversationsSelector,
+    (user, conversations) => {
+        // console.log('user ->', user);
+        console.log('conversations ->', conversations);
+
+        const conversationList = conversations.map((conversation) => {
+            const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
+
+            return {
+                _id: conversation._id,
+                member: {
+                    username: member.person.username,
+                    avatar: member.person.avatar,
+                    _id: member.person._id,
+                },
+                last_message: {
+                    content: conversation.last_message.content,
+                    createdAt: conversation.last_message.createdAt,
+                },
+            };
+        });
+
+        // console.log(conversationList);
+        return conversationList;
+    },
+);
+
+// get message theo user
+export const messageOfUserFilter = createSelector(
+    fetchApiUserDoctorByTokenSelector,
+    fetchApiMessagesSelector,
+    fetchApiConversationsSelector,
+    (user, listMessage, conversations) => {
+        // console.log('user ->', user);
+        // console.log('listMessage ->', listMessage);
+
+        const messages = listMessage.map((_message) => {
+            const getMember = conversations.map((_conversation) => {
+                const member =
+                    _conversation.members[0]._id === user.doctor._id
+                        ? _conversation.members[1]
+                        : _conversation.members[0];
+
+                return member;
+            });
+            // console.log('getMember ->', getMember);
+
+            const _user = _message?.senderId === user?.person?._id ? user : getMember[0];
+            // console.log('_user ->', _user);
+
+            return {
+                _id: _message._id,
+                content: _message.content,
+                conversation: _message.conversation,
+                createdAt: _message.createdAt,
+                images: _message.images,
+                updatedAt: _message.updatedAt,
+                senderId: _message.senderId,
+                user: {
+                    doctor: _user,
+                },
+            };
+        });
+
+        // console.log('message selector ->', messages);
+
+        return messages;
     },
 );

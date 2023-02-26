@@ -64,7 +64,7 @@ function TableListSchedule({ schedules }) {
                     pageSize: 8,
                 }}
                 style={{ height: '300px' }}
-                scroll={{ y: 400 }}
+                scroll={{ y: 380 }}
             ></Table>
         </>
     );
