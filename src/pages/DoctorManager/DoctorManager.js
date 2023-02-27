@@ -41,6 +41,15 @@ function DoctorManager() {
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 27', schedules);
 
+    // socket when send message
+    // useEffect(() => {
+    //     socket.on('receiver_message', (message) => {
+    //         console.log('message socket ->', message);
+    //         dispatch(messageSlice.actions.arrivalMessageFromSocket(message));
+    //     });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
+
     // Test socket from server
     useEffect(() => {
         socket.on('from_server', (message) => {

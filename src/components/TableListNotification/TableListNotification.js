@@ -79,7 +79,7 @@ function TableListNotification() {
                     pageSize: 8,
                 }}
                 style={{ height: '300px' }}
-                scroll={{ y: 460 }}
+                scroll={{ y: 440 }}
             ></Table>
         </>
     );

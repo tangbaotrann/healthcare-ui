@@ -205,7 +205,7 @@ export const messageOfUserFilter = createSelector(
     fetchApiMessagesSelector,
     fetchApiConversationsSelector,
     (user, listMessage, conversations) => {
-        // console.log('user ->', user);
+        console.log('user ->', user);
         // console.log('listMessage ->', listMessage);
 
         const messages = listMessage.map((_message) => {
@@ -219,7 +219,7 @@ export const messageOfUserFilter = createSelector(
             });
             // console.log('getMember ->', getMember);
 
-            const _user = _message?.senderId === user?.person?._id ? user : getMember[0];
+            const _user = _message?.senderId === user?.doctor?._id ? user : getMember[0];
             // console.log('_user ->', _user);
 
             return {
