@@ -1,5 +1,4 @@
 // lib
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // me
@@ -18,11 +17,11 @@ function Conversation() {
     const dispatch = useDispatch();
 
     const conversations = useSelector(cleanConversationListSelector);
-    const idConversation = useSelector(btnClickGetIdConversationSelector);
+    const conversation = useSelector(btnClickGetIdConversationSelector);
     const messages = useSelector(messageOfUserFilter);
 
     // console.log('conversations', conversations);
-    // console.log('idConversation', idConversation);
+    // console.log('conversation', conversation);
     // console.log('messages', messages);
 
     // handle click conversation -> get id conversation
@@ -60,8 +59,8 @@ function Conversation() {
             </div>
 
             {/* Message */}
-            {idConversation ? (
-                <Message messages={messages} />
+            {conversation ? (
+                <Message messages={messages} conversation={conversation} />
             ) : (
                 <div className="wrapper-message">
                     <strong className="message-welcome">

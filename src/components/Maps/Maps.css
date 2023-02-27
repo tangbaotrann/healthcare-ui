@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     right: 0;
-    width: 32%;
+    width: 42%;
     margin: 0 auto;
     background-color: var(--modal-out-site);
     border-radius: 6px;
@@ -74,11 +74,15 @@
     opacity: 0.6;
 }
 
+.maps-form-input-auto {
+    margin-right: 10px;
+}
+
 .maps-form-input-position {
     padding: 6px;
     border-radius: 6px;
     outline: none;
     border: 1px solid #1677ff;
-    /* margin-right: 10px; */
+    /* margin-right: 12px; */
     width: 100%;
 }
