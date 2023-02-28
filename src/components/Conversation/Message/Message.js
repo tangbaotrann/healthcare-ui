@@ -2,17 +2,19 @@
 import moment from 'moment';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 
 // me
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
 import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
-import { SendOutlined } from '@ant-design/icons';
+import { CloseOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
 
 function Message({ messages, conversation }) {
     const [value, setValue] = useState('');
+    const [previewEmoji, setPreviewEmoji] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -64,6 +66,24 @@ function Message({ messages, conversation }) {
             );
             setValue('');
         }
+    };
+
+    // handle preview emoji
+    const handlePreviewEmoji = () => {
+        setPreviewEmoji(true);
+    };
+
+    // handle close preview emoji
+    const handleClosePreviewEmoji = () => {
+        setPreviewEmoji(false);
+    };
+
+    // handle send emoji
+    const handleEmojiClicked = (emojiObj) => {
+        let emojis = emojiObj.emoji;
+        const _message = [...value, emojis];
+
+        setValue(_message.join(''));
     };
 
     // scroll message
@@ -127,6 +147,15 @@ function Message({ messages, conversation }) {
                         <SendOutlined className="btn-submit-icon" />
                     </button>
                 )}
+                <div className="container-emoji-picker">
+                    {!previewEmoji && <SmileOutlined onClick={handlePreviewEmoji} />}
+                    {previewEmoji && (
+                        <>
+                            <EmojiPicker defaultSkinTone={SkinTones} onEmojiClick={handleEmojiClicked} />
+                            <CloseOutlined className="emoji-picker-close-btn" onClick={handleClosePreviewEmoji} />
+                        </>
+                    )}
+                </div>
             </div>
         </div>
     );

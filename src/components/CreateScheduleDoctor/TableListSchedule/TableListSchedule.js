@@ -15,6 +15,7 @@ function TableListSchedule({ schedules }) {
             key: '_id',
             title: '#',
             dataIndex: '_id',
+            width: '4%',
         },
         {
             key: 'time_per_conversation',

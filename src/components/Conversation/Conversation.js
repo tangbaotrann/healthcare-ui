@@ -1,5 +1,6 @@
 // lib
 import { useDispatch, useSelector } from 'react-redux';
+import { Divider } from 'antd';
 
 // me
 import './Conversation.css';
@@ -57,6 +58,7 @@ function Conversation() {
                     );
                 })}
             </div>
+            <Divider type="vertical" className="divider-vertical" />
 
             {/* Message */}
             {conversation ? (

@@ -142,7 +142,7 @@
 }
 
 .btn-submit-icon {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     transform: rotate(-20deg);
 }
 
@@ -156,4 +156,17 @@
     left: 34px;
     /* right: 12px; */
     background-color: var(--status-online);
+}
+
+/* Emoji picker */
+.container-emoji-picker {
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+}
+
+.emoji-picker-close-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
 }
