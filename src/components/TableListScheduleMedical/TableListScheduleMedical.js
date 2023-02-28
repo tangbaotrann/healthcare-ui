@@ -17,6 +17,7 @@ function TableListScheduleMedical() {
             key: 'index',
             title: '#',
             dataIndex: 'index',
+            width: '4%',
         },
         {
             key: 'day',
@@ -69,6 +70,11 @@ function TableListScheduleMedical() {
                     content_exam: scheduleMedical.content_exam,
                 }))}
                 rowKey="index"
+                style={{ height: '400px' }}
+                scroll={{ y: 480 }}
+                pagination={{
+                    pageSize: 8,
+                }}
             ></Table>
         </>
     );

@@ -14,9 +14,11 @@ function TableListNotification() {
     const dispatch = useDispatch();
 
     const notifications = useSelector(fetchApiNotificationByDoctorIdSelector);
+    // const updateHasSeen = useSelector(fetchApiUpdateSeenNotificationSelector);
 
     // console.log('notifications', notifications);
     // console.log('seenNotification', seenNotification);
+    // console.log('updateHasSeen ->', updateHasSeen);
 
     // handle update seen notification
     const handleUpdateSeenNotification = (record) => {
@@ -29,11 +31,13 @@ function TableListNotification() {
             key: 'index',
             title: '#',
             dataIndex: 'index',
+            width: '4%',
         },
         {
             key: 'content',
             title: 'Nội dung thông báo',
             dataIndex: 'content',
+            width: '60%',
         },
         {
             key: 'createdAt',
@@ -42,6 +46,7 @@ function TableListNotification() {
         },
         {
             key: 'seen',
+            width: '14%',
             render: (record) => {
                 return (
                     <>
