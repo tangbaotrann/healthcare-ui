@@ -153,6 +153,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
             // console.log('shifts', shifts);
 
             return {
+                status: _scheduleMedical.status,
                 content_exam: _scheduleMedical.content_exam,
                 createdAt: _scheduleMedical.createdAt,
                 doctor: _scheduleMedical.doctor,
@@ -217,7 +218,7 @@ export const messageOfUserFilter = createSelector(
 
                 return member;
             });
-            // console.log('getMember ->', getMember);
+            console.log('getMember ->', getMember);
 
             const _user = _message?.senderId === user?.doctor?._id ? user : getMember[0];
             // console.log('_user ->', _user);

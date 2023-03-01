@@ -39,6 +39,66 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     },
 );
 
+// fetch api confirm (2 Xác nhận khám bệnh)
+export const fetchApiConfirmScheduleMedical = createAsyncThunk(
+    'patient/fetchApiConfirmScheduleMedical',
+    async (idSchedule) => {
+        console.log('idSchedule ->', idSchedule);
+        try {
+            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+            console.log('token', getToken);
+
+            const res = await axios.put(
+                `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/accept/${idSchedule}`,
+                null,
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            );
+
+            console.log('res confirm ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
+// fetch api delete (3 Xác nhận khám bệnh)
+export const fetchApiDeleteScheduleMedical = createAsyncThunk(
+    'patient/fetchApiDeleteScheduleMedical',
+    async (values) => {
+        // console.log('idSchedule ->', idSchedule);
+        try {
+            const { reason } = values;
+            const { idDoctor, _id } = values.record;
+
+            const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}schedule-details/${_id}`, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    ContentType: 'application/json',
+                },
+                data: {
+                    reason: reason,
+                    from: idDoctor,
+                },
+            });
+
+            console.log('res del ->', res.data);
+
+            return res.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
