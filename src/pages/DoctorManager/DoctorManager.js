@@ -22,7 +22,6 @@ import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor'
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
 import PatientList from '~/components/PatientList';
 import TableListScheduleMedical from '~/components/TableListScheduleMedical';
-import socket from '~/utils/socket';
 import TableListNotification from '~/components/TableListNotification';
 import Conversation from '~/components/Conversation';
 
@@ -40,22 +39,6 @@ function DoctorManager() {
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 27', schedules);
-
-    // socket when send message
-    // useEffect(() => {
-    //     socket.on('receiver_message', (message) => {
-    //         console.log('message socket ->', message);
-    //         dispatch(messageSlice.actions.arrivalMessageFromSocket(message));
-    //     });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
-    // Test socket from server
-    useEffect(() => {
-        socket.on('from_server', (message) => {
-            console.log(message);
-        });
-    }, []);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateScheduleDoctor());

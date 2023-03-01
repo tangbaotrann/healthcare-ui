@@ -24,7 +24,7 @@ function Message({ messages, conversation }) {
     const scrollMessage = useRef();
 
     // console.log('infoMember ->', infoMember);
-    // console.log('messages ->', messages);
+    console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
 
@@ -115,7 +115,11 @@ function Message({ messages, conversation }) {
                             <div className="message-item" key={message._id} ref={scrollMessage}>
                                 <img
                                     src={
-                                        message.user.doctor.person ? message.user.doctor.person.avatar : logo.iconHeart
+                                        message.user.doctor.person
+                                            ? message.user.doctor.person.avatar
+                                            : message.user.doctor.doctor.person
+                                            ? message.user.doctor.doctor.person.avatar
+                                            : logo.iconHeart
                                     }
                                     className="message-avt"
                                     alt="message-avt"

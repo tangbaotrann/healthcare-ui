@@ -58,10 +58,14 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
     try {
         const { confirmPassword, phone_number, password, rule } = values;
 
+        const formatPhone = phone_number.replace('+84', '0');
+
+        console.log('formatPhone ->', formatPhone);
+
         const res = await axios.post(
             `${process.env.REACT_APP_BASE_URL}auth/register`,
             {
-                phone_number: phone_number,
+                phone_number: formatPhone,
                 password: password,
                 rule: rule,
             },
