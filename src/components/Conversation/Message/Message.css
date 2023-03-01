@@ -19,7 +19,7 @@
 }
 
 .message-header {
-    position: relative;
+    position: absolute;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -126,6 +126,11 @@
 }
 
 .message-header-info {
+    display: flex;
+    align-items: center;
+}
+
+.message-header-info {
     color: var(--black);
 }
 
@@ -169,4 +174,25 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 6px;
+}
+
+/* Call video */
+.icon-call-video-btn {
+    position: absolute;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 6px;
+    margin-right: 16px;
+}
+
+.icon-call-video {
+    font-size: 1.8rem;
+    color: var(--black);
+}
+
+.icon-call-video:hover {
+    opacity: 0.8;
+    cursor: pointer;
 }
