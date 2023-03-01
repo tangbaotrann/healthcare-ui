@@ -189,8 +189,8 @@ export const cleanConversationListSelector = createSelector(
                     _id: member.person._id,
                 },
                 last_message: {
-                    content: conversation.last_message.content,
-                    createdAt: conversation.last_message.createdAt,
+                    content: conversation?.last_message?.content,
+                    createdAt: conversation?.last_message?.createdAt,
                 },
             };
         });

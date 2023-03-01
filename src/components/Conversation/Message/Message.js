@@ -9,7 +9,7 @@ import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
 import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
-import { CloseOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
+import { CloseOutlined, PhoneOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
 
 function Message({ messages, conversation }) {
@@ -107,6 +107,11 @@ function Message({ messages, conversation }) {
                         {/* <p>Offline</p> */}
                         {/* <div className="badge"></div> */}
                     </div>
+
+                    {/* icon call video */}
+                    <button className="icon-call-video-btn">
+                        <PhoneOutlined className="icon-call-video" />
+                    </button>
                 </div>
 
                 <div className="message-body">
