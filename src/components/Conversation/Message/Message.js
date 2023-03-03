@@ -8,7 +8,11 @@ import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
-import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
+import {
+    btnClickGetIdConversationSelector,
+    filterInfoDoctorInConversationListSelector,
+    getDoctorLoginFilter,
+} from '~/redux/selector';
 import { CloseOutlined, PhoneOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
 
@@ -24,19 +28,24 @@ function Message({ messages, conversation }) {
     const scrollMessage = useRef();
 
     // console.log('infoMember ->', infoMember);
-    console.log('messages ->', messages);
+    // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
 
     // user join room
     useEffect(() => {
-        socket.emit('join_room', conversation._id);
+        socket.emit('join_room', conversation);
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
             console.log('USER - ONLINE -', users);
         });
-    }, [conversation._id, infoMember.member._id]);
+
+        // joined_room
+        socket.on('joined_room', (conversationId) => {
+            console.log('[conversation - id] ->', conversationId);
+        });
+    }, [conversation, infoMember.member._id]);
 
     // socket when send message
     useEffect(() => {
@@ -46,6 +55,9 @@ function Message({ messages, conversation }) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // handle joined in room
+    const handleRoomJoined = () => {};
 
     // handle change input
     const handleChangeInput = (e) => {
@@ -109,7 +121,7 @@ function Message({ messages, conversation }) {
                     </div>
 
                     {/* icon call video */}
-                    <button className="icon-call-video-btn">
+                    <button className="icon-call-video-btn" onClick={handleRoomJoined}>
                         <PhoneOutlined className="icon-call-video" />
                     </button>
                 </div>

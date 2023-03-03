@@ -218,7 +218,7 @@ export const messageOfUserFilter = createSelector(
 
                 return member;
             });
-            console.log('getMember ->', getMember);
+            // console.log('getMember ->', getMember);
 
             const _user = _message?.senderId === user?.doctor?._id ? user : getMember[0];
             // console.log('_user ->', _user);

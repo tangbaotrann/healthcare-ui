@@ -7,8 +7,12 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
     try {
         const { phone_number, password } = values;
 
+        const formatPhone = phone_number.replace('+84', '0');
+
+        console.log('formatPhone ->', formatPhone);
+
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/login`, {
-            phone_number: phone_number,
+            phone_number: formatPhone, //phone_number,
             password: password,
         });
         // console.log(res.data.data);
