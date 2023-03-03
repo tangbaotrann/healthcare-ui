@@ -4,6 +4,7 @@ const constants = {
     layoutListNotification: 'listNotification',
     layoutListConversation: 'listConversation',
     layoutScheduleMedical: 'scheduleMedical',
+    layoutMeeting: 'meeting',
 };
 
 export default constants;
