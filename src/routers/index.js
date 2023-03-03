@@ -7,5 +7,6 @@ export const endPoints = {
     createProfileDoctor: '/create/profile-doctor',
     homeIntro: '/home-intro',
     doctorManager: '/doctor-manager',
+    doctorManagerJoinIdRoom: '/doctor-manager/room',
     maps: '/maps',
 };

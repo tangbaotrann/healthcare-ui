@@ -28,6 +28,8 @@
 
     /* modal */
     --modal-out-site: rgba(255, 255, 255, 0.7);
+    --modal-meeting: rgb(230 230 230 / 0%);
+    --modal-meeting-box-shadow: rgb(230 230 230 / 70%);
 
     /* background images */
     --bg-out-site-left: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/online-pharmacy-video-cover.svg');

@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import {
+    CommentOutlined,
     LeftOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    MessageOutlined,
     NotificationOutlined,
     OrderedListOutlined,
     ScheduleOutlined,
+    VideoCameraAddOutlined,
 } from '@ant-design/icons/lib/icons';
 import { Layout, Menu, Popover, theme } from 'antd';
 
@@ -74,8 +75,13 @@ function LayoutDoctorManager({ children, infoUser }) {
                         },
                         {
                             key: constants.layoutListConversation,
-                            icon: <MessageOutlined />,
+                            icon: <CommentOutlined />,
                             label: 'Cuộc trò chuyện',
+                        },
+                        {
+                            key: constants.layoutMeeting,
+                            icon: <VideoCameraAddOutlined />,
+                            label: 'Meeting',
                         },
                         {
                             key: '4',
@@ -105,6 +111,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutMeeting) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
                     }}

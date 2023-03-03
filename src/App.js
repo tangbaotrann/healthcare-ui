@@ -71,6 +71,7 @@ function App() {
                 />
 
                 {/* Doctor Manager */}
+                <Route path={`${endPoints.doctorManagerJoinIdRoom}/:roomId`} element={<DoctorManager />} />
                 <Route path={endPoints.doctorManager} element={<DoctorManager />} />
 
                 {/* Maps */}

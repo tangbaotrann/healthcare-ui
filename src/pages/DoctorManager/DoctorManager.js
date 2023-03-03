@@ -24,6 +24,7 @@ import PatientList from '~/components/PatientList';
 import TableListScheduleMedical from '~/components/TableListScheduleMedical';
 import TableListNotification from '~/components/TableListNotification';
 import Conversation from '~/components/Conversation';
+import Meeting from '~/components/Meeting';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function DoctorManager() {
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
 
     console.log(changeLayout);
+    console.log(infoUser);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
@@ -71,6 +73,8 @@ function DoctorManager() {
                     <TableListNotification />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation />
+                ) : changeLayout === constants.layoutMeeting ? (
+                    <Meeting infoUser={infoUser} />
                 ) : null}
             </LayoutDoctorManager>
         </>
