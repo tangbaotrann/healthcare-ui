@@ -11,6 +11,11 @@
     --footer: #242a61;
     --status-online: #15a85f;
 
+    /* status heath of patient */
+    --status-waring: #ffa500;
+    --status-alarm: #ff0000;
+    --status-normal: #37d137;
+
     /* btn primary hover */
     --btn-primary-hover: #30b5a1;
     --btn-blu-hover: #201dc4;

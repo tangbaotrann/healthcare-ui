@@ -13,6 +13,7 @@ import {
 import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
 import BarChart from '../BarChart';
 import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
+import StatusHeathLoader from '../StatusHeathLoader';
 
 function PatientList() {
     const [showModalProfileDoctor, setShowModalProfileDoctor] = useState(false);
@@ -24,7 +25,7 @@ function PatientList() {
     const bmis = useSelector(fetchApiBMIByIdPatientSelector);
     const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
 
-    // console.log('patients', patients);
+    console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
 
@@ -47,6 +48,7 @@ function PatientList() {
             key: 'index',
             title: '#',
             dataIndex: 'index',
+            width: '4%',
         },
         {
             key: 'username',
@@ -57,26 +59,37 @@ function PatientList() {
             key: 'gender',
             title: 'Giới tính',
             dataIndex: 'gender',
+            width: '8%',
         },
         {
             key: 'dob',
             title: 'Năm sinh',
             dataIndex: 'dob',
+            width: '10%',
         },
         {
             key: 'blood',
             title: 'Nhóm máu',
             dataIndex: 'blood',
+            width: '10%',
         },
         {
             key: 'bmi_avg',
             title: 'BMI trung bình',
             dataIndex: 'bmi_avg',
+            width: '12%',
         },
         {
             key: 'glycemic',
-            title: 'Chỉ số đường huyết',
+            title: 'Đường huyết',
             dataIndex: 'glycemic',
+            width: '10%',
+        },
+        {
+            key: 'status',
+            title: 'Sức khỏe',
+            dataIndex: 'status',
+            width: '10%',
         },
         {
             key: '5',
@@ -102,7 +115,7 @@ function PatientList() {
 
             <Table
                 columns={cols}
-                dataSource={patients.map(({ patient, bmi_avg, glycemic }, index) => ({
+                dataSource={patients.map(({ patient, bmi_avg, glycemic, status }, index) => ({
                     index: index + 1,
                     username: patient?.person?.username,
                     gender: patient?.person?.gender === true ? 'Nam' : 'Nữ',
@@ -111,6 +124,14 @@ function PatientList() {
                     bmi_avg: bmi_avg ? bmi_avg : 0,
                     glycemic: glycemic ? glycemic.metric : 0,
                     address: patient?.person?.address,
+                    status: status.message ? <StatusHeathLoader status={status} /> : null,
+                    // status?.message?.code === -1 ? (
+                    //     <p>Màu cam</p>
+                    // ) : status?.message?.code === 2 ? (
+                    //     <p>Màu đỏ</p>
+                    // ) : (
+                    //     <p>Màu xanh</p>
+                    // ),
                     _id: patient?._id,
                 }))}
                 rowKey="index"

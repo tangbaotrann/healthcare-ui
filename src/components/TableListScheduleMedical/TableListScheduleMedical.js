@@ -2,7 +2,7 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Form, Input, message, Modal, Select, Table } from 'antd';
+import { Button, Form, Input, message, Modal, Table } from 'antd';
 
 // me
 import './TableListScheduleMedical.css';
@@ -31,7 +31,7 @@ function TableListScheduleMedical() {
             key: 'day',
             title: 'Thứ',
             dataIndex: 'day',
-            width: '6%',
+            width: '8%',
         },
         {
             key: 'createdAt',
@@ -54,7 +54,7 @@ function TableListScheduleMedical() {
             key: 'fee',
             title: 'Chi phí',
             dataIndex: 'fee',
-            width: '8%',
+            width: '10%',
         },
         {
             key: 'content_exam',
@@ -66,6 +66,26 @@ function TableListScheduleMedical() {
             title: 'Trạng thái',
             dataIndex: 'status',
             width: '9%',
+            render: (status) => {
+                return (
+                    <>
+                        {status.props ? (
+                            status.props.children === 'Đã xác nhận' ? (
+                                <p style={{ color: 'green' }}>Đã xác nhận</p>
+                            ) : (
+                                <p style={{ color: 'blue' }}>Chờ xác nhận</p>
+                            )
+                        ) : null}
+                    </>
+                );
+            },
+            filters: [
+                { text: 'Đã xác nhận', value: 'Đã xác nhận' },
+                { text: 'Chờ xác nhận', value: 'Chờ xác nhận' },
+            ],
+            onFilter: (value, record) => {
+                return record.status.props.children === value;
+            },
         },
         {
             key: 'handleStatus',
@@ -79,7 +99,7 @@ function TableListScheduleMedical() {
                                 </Button>
                                 <Button
                                     style={{ backgroundColor: 'red', color: 'white', marginLeft: '4px' }}
-                                    onClick={handleShowModal} // () => handleDeleteScheduleMedical(record)
+                                    onClick={handleShowModal}
                                 >
                                     Hủy
                                 </Button>
@@ -167,17 +187,6 @@ function TableListScheduleMedical() {
     return (
         <>
             <TitleName>Danh Sách Lịch Khám Của Bác Sĩ</TitleName>
-
-            <div className="schedule-medical-option">
-                <Select
-                    options={[
-                        { value: '1', label: 'opt1' },
-                        { value: '2', label: 'opt2' },
-                    ]}
-                    style={{ width: '16%' }}
-                    placeholder="Chọn trạng thái"
-                />
-            </div>
 
             {/* return: { info patient } -> get info */}
             <Table
