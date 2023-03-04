@@ -5,7 +5,11 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 // fetch api all shifts
 export const fetchApiAllShiftsDoctor = createAsyncThunk('shifts/fetchApiAllShiftsDoctor', async () => {
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}shifts`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}shifts`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
         return res.data.data;
     } catch (err) {
@@ -16,7 +20,11 @@ export const fetchApiAllShiftsDoctor = createAsyncThunk('shifts/fetchApiAllShift
 // fetch api all create days
 export const fetchApiAllCreateDaysDoctor = createAsyncThunk('days/fetchApiAllCreateDaysDoctor', async () => {
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}days`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}days`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
         return res.data.data;
     } catch (err) {
@@ -63,8 +71,12 @@ export const fetchApiAllCreateScheduleDoctor = createAsyncThunk(
     'scheduleDoctor/fetchApiAllCreateScheduleDoctor',
     async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules`);
-            // console.log('res all', res.data.data);
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('res all schedule ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -79,7 +91,12 @@ export const fetchApiScheduleByIdDoctor = createAsyncThunk(
     async (idDoctor) => {
         if (idDoctor) {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules/doctor/${idDoctor}`);
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedules/doctor/${idDoctor}`, {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        ContentType: 'application/json',
+                    },
+                });
                 // console.log('res', res.data.data);
 
                 return res.data.data;

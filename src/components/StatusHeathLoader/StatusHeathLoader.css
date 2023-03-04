@@ -59,7 +59,7 @@
     margin: 0 1px;
     background-color: var(--status-alarm);
     border-radius: 4px;
-    animation: loadingAlarm 2s infinite;
+    animation: loadingAlarm 1s infinite;
 }
 
 @keyframes loadingAlarm {
@@ -105,7 +105,7 @@
     margin: 0 1px;
     background-color: var(--status-normal);
     border-radius: 4px;
-    animation: loadingNormal 2s infinite;
+    animation: loadingNormal 3s infinite;
 }
 
 @keyframes loadingNormal {

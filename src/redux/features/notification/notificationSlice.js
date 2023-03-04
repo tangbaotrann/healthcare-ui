@@ -42,6 +42,22 @@ const notificationSlice = createSlice({
     initialState: {
         data: [],
         seen: [],
+        notifications: [],
+    },
+    reducers: {
+        notificationRegisterScheduleFromPatientSuccess: (state, action) => {
+            const notification = action.payload;
+            console.log('act pay', notification);
+
+            const getNotification = state.data.find((_notification) => _notification._id === notification._id);
+
+            if (getNotification) {
+                state.notifications.push(notification);
+            } else {
+                console.log('err notification!');
+                return;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchApiNotificationByDoctorId.fulfilled, (state, action) => {

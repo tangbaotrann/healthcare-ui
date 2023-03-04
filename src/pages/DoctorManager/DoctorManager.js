@@ -35,8 +35,8 @@ function DoctorManager() {
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
 
-    console.log(changeLayout);
-    console.log(infoUser);
+    // console.log(changeLayout);
+    // console.log(infoUser);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);

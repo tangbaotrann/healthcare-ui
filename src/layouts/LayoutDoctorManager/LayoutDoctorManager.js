@@ -1,5 +1,5 @@
 // lib
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
@@ -13,7 +13,7 @@ import {
     ScheduleOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons/lib/icons';
-import { Layout, Menu, Popover, theme } from 'antd';
+import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
 
 // me
 import './LayoutDoctorManager.css';
@@ -21,14 +21,15 @@ import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
-import { getDoctorLoginFilter } from '~/redux/selector';
+import { getDoctorLoginFilter, getTotalNotifications } from '~/redux/selector';
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
 } from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
-import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
+import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
+import socket from '~/utils/socket';
 
 const { Header, Sider, Content } = Layout;
 
@@ -41,7 +42,17 @@ function LayoutDoctorManager({ children, infoUser }) {
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
+    const totalNotifications = useSelector(getTotalNotifications);
+
     // console.log('getIdDoctor', getIdDoctor);
+    console.log('totalNotifications', totalNotifications);
+
+    useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', (data) => {
+            console.log('notification_register_schedule_from_patient_success', data);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(data));
+        });
+    }, []);
 
     return (
         <Layout>
@@ -70,7 +81,19 @@ function LayoutDoctorManager({ children, infoUser }) {
                         },
                         {
                             key: constants.layoutListNotification,
-                            icon: <NotificationOutlined />,
+                            icon: (
+                                <>
+                                    {totalNotifications.length > 0 ? (
+                                        <Space size="small">
+                                            <Badge count={12} overflowCount={5} size="default" offset={[180, 6]}>
+                                                <NotificationOutlined style={{ color: '#fff' }} />
+                                            </Badge>
+                                        </Space>
+                                    ) : (
+                                        <NotificationOutlined style={{ color: '#fff' }} />
+                                    )}
+                                </>
+                            ),
                             label: 'Thông báo',
                         },
                         {

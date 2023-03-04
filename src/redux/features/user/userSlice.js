@@ -28,7 +28,11 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
 // find all user Doctor
 export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', async () => {
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors`);
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         // console.log('res doctors -', res.data.data);
 
         return res.data.data;
