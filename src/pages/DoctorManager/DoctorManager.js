@@ -8,6 +8,7 @@ import constants from '~/utils/constants';
 import LayoutDoctorManager from '~/layouts/LayoutDoctorManager';
 import {
     btnSelectMenuChangeLayoutSelector,
+    fetchApiNotificationByDoctorIdSelector,
     fetchApiUpdateInfoUserSelector,
     fetchApiUserDoctorByTokenSelector,
     getDoctorLoginFilter,
@@ -34,6 +35,8 @@ function DoctorManager() {
     const schedules = useSelector(getIdDoctorFilter);
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
+
+    const notifications = useSelector(fetchApiNotificationByDoctorIdSelector); // filterNotifications
 
     // console.log(changeLayout);
     // console.log(infoUser);
@@ -70,7 +73,7 @@ function DoctorManager() {
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutListNotification ? (
-                    <TableListNotification />
+                    <TableListNotification notifications={notifications} />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation />
                 ) : changeLayout === constants.layoutMeeting ? (

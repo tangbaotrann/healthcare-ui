@@ -43,9 +43,8 @@ export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patie
 // get all notification by id doctor
 export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
 export const getTotalNotifications = (state) => state.notificationSlice.notifications;
-
 // update seen notification
-export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificationSlice.data;
+export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificationSlice.seen; // hide
 
 // get all conversation by id doctor
 export const fetchApiConversationsSelector = (state) => state.conversationSlice.data;
@@ -57,6 +56,51 @@ export const btnClickGetIdConversationSelector = (state) => state.conversationSl
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
 
 /* -- Handle Selector -- */
+
+// filter notification not has seen
+export const filterNotificationNotHasSeen = createSelector(
+    fetchApiNotificationByDoctorIdSelector,
+    (listNotification) => {
+        if (listNotification) {
+            const getNotificationNotHasSeen = listNotification.filter(
+                (_notification) => _notification.hasSeen === false,
+            );
+
+            return getNotificationNotHasSeen;
+        }
+    },
+);
+
+// filter notification
+export const filterNotifications = createSelector(
+    fetchApiNotificationByDoctorIdSelector,
+    fetchApiUpdateSeenNotificationSelector,
+    (listNotification, seenNotification) => {
+        console.log('listNotification ->', listNotification);
+        console.log('seenNotification ->', seenNotification);
+
+        const notifications = listNotification.map((_notification) => {
+            //const seens =
+            //seenNotification[0]._id === _notification._id ? seenNotification[0].hasSeen : _notification.hasSeen;
+
+            const seens = seenNotification.find((_seen) => _seen._id === _notification._id);
+            console.log('seens ->', seens);
+
+            return {
+                content: _notification.content,
+                createdAt: _notification.createdAt,
+                from: _notification.from,
+                hasSeen: _notification.hasSeen,
+                rule: _notification.rule,
+                to: _notification.to,
+                updatedAt: _notification.updatedAt,
+                _id: _notification._id,
+            };
+        });
+
+        return notifications;
+    },
+);
 
 // get all user doctor -> get doctor login -> fetch api
 export const getDoctorLoginFilter = createSelector(
