@@ -2,21 +2,16 @@
 import moment from 'moment';
 import { Button, Table } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // me
 import './TableListNotification.css';
 import TitleName from '../TitleName';
-import { fetchApiNotificationByDoctorIdSelector } from '~/redux/selector';
 import { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
 
-function TableListNotification() {
+function TableListNotification({ notifications }) {
     const dispatch = useDispatch();
 
-    const notifications = useSelector(fetchApiNotificationByDoctorIdSelector);
-    // const updateHasSeen = useSelector(fetchApiUpdateSeenNotificationSelector);
-
-    // console.log('notifications', notifications);
     // console.log('seenNotification', seenNotification);
     // console.log('updateHasSeen ->', updateHasSeen);
 

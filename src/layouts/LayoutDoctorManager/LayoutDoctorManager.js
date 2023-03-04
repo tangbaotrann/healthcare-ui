@@ -21,7 +21,12 @@ import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
-import { getDoctorLoginFilter, getTotalNotifications } from '~/redux/selector';
+import {
+    fetchApiNotificationByDoctorIdSelector,
+    filterNotificationNotHasSeen,
+    getDoctorLoginFilter,
+    getTotalNotifications,
+} from '~/redux/selector';
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
@@ -42,10 +47,13 @@ function LayoutDoctorManager({ children, infoUser }) {
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
-    const totalNotifications = useSelector(getTotalNotifications);
+    const notifications = useSelector(fetchApiNotificationByDoctorIdSelector);
+    const notificationNotHasSeen = useSelector(filterNotificationNotHasSeen);
+    // const totalNotifications = useSelector(getTotalNotifications);
 
     // console.log('getIdDoctor', getIdDoctor);
-    console.log('totalNotifications', totalNotifications);
+    // console.log('totalNotifications', totalNotifications);
+    console.log('notificationNotHasSeen', notificationNotHasSeen);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', (data) => {
@@ -83,10 +91,15 @@ function LayoutDoctorManager({ children, infoUser }) {
                             key: constants.layoutListNotification,
                             icon: (
                                 <>
-                                    {totalNotifications.length > 0 ? (
+                                    {notificationNotHasSeen.length > 0 ? (
                                         <Space size="small">
-                                            <Badge count={12} overflowCount={5} size="default" offset={[180, 6]}>
-                                                <NotificationOutlined style={{ color: '#fff' }} />
+                                            <Badge
+                                                count={notificationNotHasSeen.length}
+                                                overflowCount={99}
+                                                size="default"
+                                                offset={[180, 6]}
+                                            >
+                                                <NotificationOutlined style={{ color: '#fff', marginRight: '6px' }} />
                                             </Badge>
                                         </Space>
                                     ) : (

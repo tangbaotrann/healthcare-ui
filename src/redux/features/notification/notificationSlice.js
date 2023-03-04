@@ -41,7 +41,7 @@ const notificationSlice = createSlice({
     name: 'notification',
     initialState: {
         data: [],
-        seen: [],
+        seen: [], // hide
         notifications: [],
     },
     reducers: {
@@ -64,13 +64,12 @@ const notificationSlice = createSlice({
             state.data = action.payload;
         });
         builder.addCase(fetchApiUpdateSeenNotification.fulfilled, (state, action) => {
+            // state.seen = action.payload;
+
             const hasSeen = action.payload;
-            // console.log('hasSeen ->', action.payload);
 
             const spliceHasSeen = state.data.findIndex((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
             const allHasSeen = state.data.find((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
-
-            // console.log('allHasSeen ->', allHasSeen);
 
             if (spliceHasSeen) {
                 state.data.splice(spliceHasSeen, 1);
