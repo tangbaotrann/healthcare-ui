@@ -1,6 +1,7 @@
 // lib
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
     Chart as ChartJS,
@@ -13,21 +14,30 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Button, Divider } from 'antd';
+import { Button, Divider, Form, Input, message, Modal } from 'antd';
 
 // me
 import './BarChart.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
+import { getDoctorLoginFilter } from '~/redux/selector';
+import { fetchApiRemindPatient } from '~/redux/features/patient/patientSlice';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function BarChart({ bmis, glycemics, infoPatient }) {
+    const [showModal, setShowModal] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const getIdDoctor = useSelector(getDoctorLoginFilter);
+
     // console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
-    console.log('infoPatient', infoPatient);
+    // console.log('infoPatient', infoPatient);
+    // console.log('getIdDoctor', getIdDoctor);
 
     // Opts
     const options = {
@@ -87,9 +97,31 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         ],
     };
 
+    // show modal remind
+    const handleShowModalRemind = () => {
+        setShowModal(true);
+    };
+
+    // hinde modal remind
+    const handleCancel = () => {
+        setShowModal(false);
+    };
+
+    // handle submit button remind
+    const handleRemindOnFish = (values) => {
+        if (values) {
+            dispatch(fetchApiRemindPatient(values));
+            setShowModal(false);
+            message.success('Tạo nhắc nhở thành công.');
+        } else {
+            message.error('Tạo nhắc nhở không thành công!');
+            return;
+        }
+    };
+
     return (
         <>
-            <TitleName>Thông tin cá nhân</TitleName>
+            <TitleName>Thông Tin Cá Nhân</TitleName>
 
             <div className="container-bar-chart">
                 <div className="info-patient">
@@ -139,6 +171,63 @@ function BarChart({ bmis, glycemics, infoPatient }) {
             </div>
 
             <Divider />
+
+            {/* Button remind */}
+            <div className="remind-patient">
+                <Button className="remind-patient-btn" onClick={handleShowModalRemind}>
+                    Nhắc nhở bệnh nhân
+                </Button>
+            </div>
+
+            {/* Modal remind */}
+            <Modal
+                open={showModal}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+            >
+                <TitleName>Nhắc Nhở Bệnh Nhân Cần Chú Ý Đến Sức Khỏe</TitleName>
+
+                <Form
+                    onFinish={handleRemindOnFish}
+                    onFinishFailed={(error) => {
+                        console.log({ error });
+                    }}
+                    fields={[
+                        { name: ['from'], value: getIdDoctor._id },
+                        { name: ['idPatient'], value: infoPatient._id },
+                    ]}
+                >
+                    {/* content */}
+                    <Form.Item
+                        name="content"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Bạn cần phải nhập nội dung để nhắc nhở bệnh nhân.',
+                            },
+                        ]}
+                        hasFeedback
+                    >
+                        <Input placeholder="Nhập nội dung..." />
+                    </Form.Item>
+
+                    {/* Id doctor */}
+                    <Form.Item name="from" style={{ display: 'none' }}>
+                        <Input />
+                    </Form.Item>
+
+                    {/* Id patient */}
+                    <Form.Item name="idPatient" style={{ display: 'none' }}>
+                        <Input />
+                    </Form.Item>
+
+                    {/* Button confirm remind */}
+                    <Button type="primary" htmlType="submit" block>
+                        Tạo nhắc nhở
+                    </Button>
+                </Form>
+            </Modal>
         </>
     );
 }

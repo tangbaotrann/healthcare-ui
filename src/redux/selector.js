@@ -42,6 +42,7 @@ export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patie
 
 // get all notification by id doctor
 export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
+export const getTotalNotifications = (state) => state.notificationSlice.notifications;
 
 // update seen notification
 export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificationSlice.data;

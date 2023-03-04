@@ -211,11 +211,11 @@ function TableListScheduleMedical() {
                     idDoctor: scheduleMedical.doctor._id,
                 }))}
                 rowKey="index"
-                style={{ height: '400px' }}
-                scroll={{ y: 480 }}
                 pagination={{
                     pageSize: 8,
                 }}
+                style={{ height: '300px' }}
+                scroll={{ y: 380 }}
             ></Table>
         </>
     );

@@ -1,5 +1,6 @@
 // lib
 import axios from 'axios';
+import socket from '~/utils/socket';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -99,11 +100,42 @@ export const fetchApiDeleteScheduleMedical = createAsyncThunk(
     },
 );
 
+// fetch api remind for patient
+export const fetchApiRemindPatient = createAsyncThunk('patient/fetchApiRemindPatient', async (values) => {
+    try {
+        const { content, from, idPatient } = values;
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        const res = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}doctors/remind/${idPatient}`,
+            {
+                content: content,
+                from: from,
+            },
+            {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            },
+        );
+
+        console.log('res remind ->', res.data);
+
+        return res.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
         data: [],
         scheduleMedicalAppointment: [],
+        // confirmScheduleMedical: [],
+        deleteScheduleMedical: [],
     },
     extraReducers: (builder) => {
         builder.addCase(fetchApiScheduleDetailByIdDoctor.fulfilled, (state, action) => {
@@ -111,6 +143,46 @@ const patientSlice = createSlice({
         });
         builder.addCase(fetchApiScheduleMedicalAppointment.fulfilled, (state, action) => {
             state.scheduleMedicalAppointment = action.payload;
+        });
+        builder.addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {
+            const schedule = action.payload;
+
+            console.log('schedule slice ->', schedule);
+
+            const spliceSchedule = state.data.findIndex((_schedule) => _schedule._id === schedule.schedule_detail._id);
+            const updateSchedule = state.scheduleMedicalAppointment.find(
+                (_schedule) => _schedule._id === schedule.schedule_detail._id,
+            );
+
+            // updated
+            // updateSchedule.status = schedule.schedule_detail.status;
+
+            if (spliceSchedule) {
+                state.scheduleMedicalAppointment.splice(spliceSchedule, 1);
+            }
+
+            if (updateSchedule) {
+                state.scheduleMedicalAppointment.push(schedule);
+            }
+
+            // socket
+            socket.emit('notification_confirm_register_schedule', {
+                data: action.payload,
+            });
+        });
+        builder.addCase(fetchApiDeleteScheduleMedical.fulfilled, (state, action) => {
+            state.deleteScheduleMedical = action.payload;
+
+            // socket
+            socket.emit('notification_confirm_cancel_schedule', {
+                data: action.payload.data,
+            });
+        });
+        builder.addCase(fetchApiRemindPatient.fulfilled, (state, action) => {
+            // socket
+            socket.emit('notification_doctor_remind', {
+                data: action.payload.data,
+            });
         });
     },
 });

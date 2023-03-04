@@ -7,7 +7,7 @@ import './TableListSchedule.css';
 import TitleName from '~/components/TitleName';
 
 function TableListSchedule({ schedules }) {
-    // console.log('schedules =', schedules);
+    console.log('schedules =', schedules);
 
     // cols
     const cols = [

@@ -125,13 +125,6 @@ function PatientList() {
                     glycemic: glycemic ? glycemic.metric : 0,
                     address: patient?.person?.address,
                     status: status.message ? <StatusHeathLoader status={status} /> : null,
-                    // status?.message?.code === -1 ? (
-                    //     <p>Màu cam</p>
-                    // ) : status?.message?.code === 2 ? (
-                    //     <p>Màu đỏ</p>
-                    // ) : (
-                    //     <p>Màu xanh</p>
-                    // ),
                     _id: patient?._id,
                 }))}
                 rowKey="index"
