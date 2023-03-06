@@ -29,7 +29,7 @@ export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.s
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 
 // schedule detail by id doctor
-export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data;
+export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
 
 // get patient -> bmis
 export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
@@ -186,8 +186,8 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     (listScheduleMedical, listDay, listShift) => {
         console.log('listScheduleMedical', listScheduleMedical);
-        // console.log('listDay', listDay);
-        // console.log('listShift', listShift);
+        console.log('listDay', listDay);
+        console.log('listShift', listShift);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
             const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);

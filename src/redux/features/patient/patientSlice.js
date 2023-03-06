@@ -31,7 +31,7 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
             const res = await axios.get(
                 `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
             );
-            console.log('res -> ', res.data.data);
+            console.log('res schedule-medical-appointment -> ', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -147,22 +147,23 @@ const patientSlice = createSlice({
         builder.addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {
             const schedule = action.payload;
 
-            console.log('schedule slice ->', schedule);
+            // console.log('schedule slice ->', schedule);
 
-            const spliceSchedule = state.data.findIndex((_schedule) => _schedule._id === schedule.schedule_detail._id);
+            const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
+                (_schedule) => _schedule._id === schedule.schedule_detail._id,
+            );
             const updateSchedule = state.scheduleMedicalAppointment.find(
                 (_schedule) => _schedule._id === schedule.schedule_detail._id,
             );
 
-            // updated
-            // updateSchedule.status = schedule.schedule_detail.status;
-
+            // cut
             if (spliceSchedule) {
                 state.scheduleMedicalAppointment.splice(spliceSchedule, 1);
             }
 
+            // updated
             if (updateSchedule) {
-                state.scheduleMedicalAppointment.push(schedule);
+                state.scheduleMedicalAppointment.push(schedule.schedule_detail); // -> obj
             }
 
             // socket
@@ -171,6 +172,19 @@ const patientSlice = createSlice({
             });
         });
         builder.addCase(fetchApiDeleteScheduleMedical.fulfilled, (state, action) => {
+            const schedule = action.payload;
+
+            // console.log('schedule del slice ->', schedule);
+
+            const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
+                (_schedule) => _schedule._id === schedule.schedule_detail_id,
+            );
+
+            // cut
+            if (spliceSchedule) {
+                state.scheduleMedicalAppointment.splice(spliceSchedule, 1);
+            }
+
             state.deleteScheduleMedical = action.payload;
 
             // socket

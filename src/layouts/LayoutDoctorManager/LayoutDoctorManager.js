@@ -21,12 +21,7 @@ import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
-import {
-    fetchApiNotificationByDoctorIdSelector,
-    filterNotificationNotHasSeen,
-    getDoctorLoginFilter,
-    getTotalNotifications,
-} from '~/redux/selector';
+import { filterNotificationNotHasSeen, getDoctorLoginFilter } from '~/redux/selector';
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
@@ -47,13 +42,12 @@ function LayoutDoctorManager({ children, infoUser }) {
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
-    const notifications = useSelector(fetchApiNotificationByDoctorIdSelector);
     const notificationNotHasSeen = useSelector(filterNotificationNotHasSeen);
     // const totalNotifications = useSelector(getTotalNotifications);
 
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('totalNotifications', totalNotifications);
-    console.log('notificationNotHasSeen', notificationNotHasSeen);
+    // console.log('notificationNotHasSeen', notificationNotHasSeen);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', (data) => {
