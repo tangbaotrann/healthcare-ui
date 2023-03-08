@@ -64,11 +64,9 @@ function Meeting({ infoUser }) {
                         </Form.Item>
 
                         {/* Button */}
-                        {/* <Link to={`${endPoints.doctorManagerJoinIdRoom}/${roomCode}`}> */}
                         <Button className="meeting-join-btn" block htmlType="submit">
                             Tham gia ngày
                         </Button>
-                        {/* </Link> */}
                     </Form>
                 </div>
             )}

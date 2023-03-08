@@ -2,7 +2,7 @@
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -28,6 +28,8 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 function BarChart({ bmis, glycemics, infoPatient }) {
     const [showModal, setShowModal] = useState(false);
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -107,6 +109,11 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         setShowModal(false);
     };
 
+    // handle maps navigate
+    const handleMapsNavigate = () => {
+        navigate(`${endPoints.maps}/${infoPatient.address}`);
+    };
+
     // handle submit button remind
     const handleRemindOnFish = (values) => {
         if (values) {
@@ -147,15 +154,8 @@ function BarChart({ bmis, glycemics, infoPatient }) {
                     </div>
                 </div>
 
-                <Button className="position-on-map-btn">
-                    <Link
-                        to={endPoints.maps}
-                        // state={{ infoPatient: infoPatient }}
-                        target="_blank"
-                        style={{ color: '#fff' }}
-                    >
-                        Xem vị trí trên maps
-                    </Link>
+                <Button className="position-on-map-btn" onClick={handleMapsNavigate}>
+                    Xem vị trí trên maps
                 </Button>
             </div>
 

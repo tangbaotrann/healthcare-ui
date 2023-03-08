@@ -23,6 +23,7 @@ function Room({ infoUser }) {
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
+
         zp.joinRoom({
             container: element,
             scenario: {

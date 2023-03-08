@@ -75,7 +75,7 @@ function App() {
                 <Route path={endPoints.doctorManager} element={<DoctorManager />} />
 
                 {/* Maps */}
-                <Route path={endPoints.maps} element={<Maps />} />
+                <Route path={`${endPoints.maps}/:address`} element={<Maps />} />
             </Routes>
         </Router>
     );

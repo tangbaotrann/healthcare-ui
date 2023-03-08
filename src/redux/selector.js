@@ -185,9 +185,9 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllCreateDaysDoctorSelector,
     fetchApiAllShiftsDoctorSelector,
     (listScheduleMedical, listDay, listShift) => {
-        console.log('listScheduleMedical', listScheduleMedical);
-        console.log('listDay', listDay);
-        console.log('listShift', listShift);
+        // console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listDay', listDay);
+        // console.log('listShift', listShift);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
             const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
