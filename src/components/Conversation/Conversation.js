@@ -22,7 +22,7 @@ function Conversation() {
     const messages = useSelector(messageOfUserFilter);
 
     // console.log('conversations', conversations);
-    // console.log('conversation', conversation);
+    // console.log('conversation info user patient ->', conversation);
     // console.log('messages', messages);
 
     // handle click conversation -> get id conversation

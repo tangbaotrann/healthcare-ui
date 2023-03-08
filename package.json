@@ -30,7 +30,8 @@
     "react-tsparticles": "^1.42.4",
     "socket.io-client": "^4.6.1",
     "uuidv4": "^6.2.13",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zego-zim-web": "^2.5.1"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^4.1.0",

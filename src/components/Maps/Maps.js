@@ -1,11 +1,13 @@
 // lib
 import { useState, useRef } from 'react';
-import { CloseOutlined, SendOutlined } from '@ant-design/icons';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { ArrowLeftOutlined, CloseOutlined, SendOutlined } from '@ant-design/icons';
 import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api';
 import { Button, Spin } from 'antd';
 
 // me
 import './Maps.css';
+import { endPoints } from '~/routers';
 
 // center map
 const center = { lat: 10.832403, lng: 106.667299 };
@@ -16,6 +18,12 @@ function Maps() {
 
     const [distance, setDistance] = useState('');
     const [duration, setDuration] = useState('');
+
+    const { address } = useParams();
+    // const state = location.state;
+
+    console.log('address ->', address);
+    // console.log('data ->', data);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef();
@@ -64,6 +72,12 @@ function Maps() {
         <div className="wrapper-maps">
             {/* Form */}
             <div className="maps-form">
+                <div className="back-to-doctor-manager">
+                    <Link to={endPoints.doctorManager} className="back-to-doctor-manager-link">
+                        <ArrowLeftOutlined className="back-to-doctor-manager-icon" />
+                        Quay lại
+                    </Link>
+                </div>
                 <div className="maps-form-input">
                     {/* origin */}
                     <Autocomplete>
@@ -80,6 +94,7 @@ function Maps() {
                     <Autocomplete>
                         <input
                             className="maps-form-input-position"
+                            defaultValue={address}
                             type="text"
                             ref={destinationRef}
                             placeholder="Điểm đến"
@@ -94,7 +109,7 @@ function Maps() {
                         style={{ marginLeft: '12px' }}
                         onClick={handleCalculateRoute}
                     >
-                        Tính đường đi
+                        Tìm đường đi
                     </Button>
                     <Button className="clear-route-btn" onClick={handleClearRoute}>
                         <CloseOutlined className="icon-clear-route" />

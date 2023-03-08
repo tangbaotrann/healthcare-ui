@@ -86,3 +86,22 @@
     /* margin-right: 12px; */
     width: 100%;
 }
+
+.back-to-doctor-manager {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.back-to-doctor-manager-link:hover {
+    color: var(--primary);
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.back-to-doctor-manager-icon {
+    margin-right: 4px;
+}
