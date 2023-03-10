@@ -1,4 +1,5 @@
 const constants = {
+    layoutDashboard: 'dashboard',
     layoutListRegisterSchedule: 'listRegisterSchedule',
     layoutListPatient: 'listPatient',
     layoutListNotification: 'listNotification',

@@ -11,6 +11,7 @@ import {
     NotificationOutlined,
     OrderedListOutlined,
     ScheduleOutlined,
+    TableOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons/lib/icons';
 import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
@@ -69,12 +70,17 @@ function LayoutDoctorManager({ children, infoUser }) {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={[constants.layoutListRegisterSchedule]}
+                    defaultSelectedKeys={[constants.layoutDashboard]}
                     items={[
+                        {
+                            key: constants.layoutDashboard,
+                            icon: <TableOutlined />,
+                            label: 'Bảng điều khiển',
+                        },
                         {
                             key: constants.layoutListRegisterSchedule,
                             icon: <ClockCircleOutlined />,
-                            label: 'Đăng ký ca làm cho Bác sĩ',
+                            label: 'Đăng ký ca làm',
                         },
                         {
                             key: constants.layoutScheduleMedical,
@@ -128,7 +134,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                     ]}
                     // Change layout
                     onSelect={(item) => {
-                        if (item.key === constants.layoutListRegisterSchedule) {
+                        if (item.key === constants.layoutDashboard) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));

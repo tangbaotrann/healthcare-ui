@@ -26,6 +26,7 @@ import TableListScheduleMedical from '~/components/TableListScheduleMedical';
 import TableListNotification from '~/components/TableListNotification';
 import Conversation from '~/components/Conversation';
 import Meeting from '~/components/Meeting';
+import Dashboard from '~/components/Dashboard';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -66,7 +67,9 @@ function DoctorManager() {
                 <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
             )}
             <LayoutDoctorManager infoUser={infoUser}>
-                {changeLayout === constants.layoutListRegisterSchedule || changeLayout === null ? (
+                {changeLayout === constants.layoutDashboard || changeLayout === null ? (
+                    <Dashboard />
+                ) : changeLayout === constants.layoutListRegisterSchedule ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === constants.layoutScheduleMedical ? (
                     <TableListScheduleMedical />
