@@ -52,6 +52,9 @@ export const fetchApiConversationsSelector = (state) => state.conversationSlice.
 // get id conversation when clicked
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
 
+// get id user when clicked button call
+export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallGetUserId;
+
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
 
@@ -175,6 +178,42 @@ export const scheduleDetailByIdDoctorFilters = createSelector(
             });
         } else {
             return [];
+        }
+    },
+);
+
+// filter status health of patient -> Chart (Normal)
+export const filterStatusHealthNormalOfPatientForChart = createSelector(
+    fetchApiScheduleDetailByIdDoctorSelector,
+    (listPatient) => {
+        if (listPatient) {
+            const patient = listPatient.filter((_patient) => _patient.status.message.code === 0);
+
+            return patient;
+        }
+    },
+);
+
+// filter status health of patient -> Chart (Alarm)
+export const filterStatusHealthAlarmOfPatientForChart = createSelector(
+    fetchApiScheduleDetailByIdDoctorSelector,
+    (listPatient) => {
+        if (listPatient) {
+            const patient = listPatient.filter((_patient) => _patient.status.message.code === 2);
+
+            return patient;
+        }
+    },
+);
+
+// filter status health of patient -> Chart (Warning)
+export const filterStatusHealthWarningOfPatientForChart = createSelector(
+    fetchApiScheduleDetailByIdDoctorSelector,
+    (listPatient) => {
+        if (listPatient) {
+            const patient = listPatient.filter((_patient) => _patient.status.message.code === 1);
+
+            return patient;
         }
     },
 );

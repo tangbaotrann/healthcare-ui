@@ -9,6 +9,7 @@
     --white: #ffffff;
     --black: #111c63;
     --footer: #242a61;
+    --orange-gradient: linear-gradient(268.35deg, rgba(255, 70, 70, 0.99) 3.47%, rgba(255, 114, 70, 0.99) 60.18%);
     --status-online: #15a85f;
 
     /* status heath of patient */

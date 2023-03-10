@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // me
+import './PatientList.css';
 import TitleName from '../TitleName';
 import {
     fetchApiBMIByIdPatientSelector,
@@ -14,6 +15,7 @@ import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
 import BarChart from '../BarChart';
 import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
 import StatusHeathLoader from '../StatusHeathLoader';
+import MetricPieChart from './MetricPieChart';
 
 function PatientList() {
     const [showModalProfileDoctor, setShowModalProfileDoctor] = useState(false);
@@ -25,7 +27,7 @@ function PatientList() {
     const bmis = useSelector(fetchApiBMIByIdPatientSelector);
     const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
 
-    console.log('patients', patients);
+    // console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
 
@@ -89,7 +91,7 @@ function PatientList() {
             key: 'status',
             title: 'Sức khỏe',
             dataIndex: 'status',
-            width: '10%',
+            width: '20%',
         },
         {
             key: '5',
@@ -128,7 +130,16 @@ function PatientList() {
                     _id: patient?._id,
                 }))}
                 rowKey="index"
+                pagination={{
+                    pageSize: 4,
+                }}
             ></Table>
+
+            {/* Chart (MBI & GLYCEMIC) */}
+            <div className="patient-list-chart">
+                <h2 className="patient-list-chart-title">Thống Kê Trạng Thái Sức Khỏe:</h2>
+                <MetricPieChart />
+            </div>
 
             {/* View profile doctor */}
             <Modal

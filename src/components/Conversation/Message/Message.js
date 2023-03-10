@@ -15,10 +15,15 @@ import {
 } from '~/redux/selector';
 import { CloseOutlined, PhoneOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
+import { Button, Form, Input, Modal } from 'antd';
+import TitleName from '~/components/TitleName';
+import Room from '~/components/Meeting/Room';
+import callSlice from '~/redux/features/call/callSlice';
 
 function Message({ messages, conversation }) {
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
+    const [showModalCall, setShowModalCall] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -30,7 +35,7 @@ function Message({ messages, conversation }) {
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
-    // console.log('conversation ->', conversation);
+    console.log('conversation ->', conversation);
 
     // user join room
     useEffect(() => {
@@ -57,7 +62,15 @@ function Message({ messages, conversation }) {
     }, []);
 
     // handle joined in room
-    const handleRoomJoined = () => {};
+    const handleRoomJoined = () => {
+        setShowModalCall(true);
+        dispatch(callSlice.actions.arrivalUserId(conversation.member._id));
+    };
+
+    // hide modal call
+    const hideModalCall = () => {
+        setShowModalCall(false);
+    };
 
     // handle change input
     const handleChangeInput = (e) => {
@@ -124,6 +137,20 @@ function Message({ messages, conversation }) {
                     <button className="icon-call-video-btn" onClick={handleRoomJoined}>
                         <PhoneOutlined className="icon-call-video" />
                     </button>
+
+                    {/* Show Modal Call */}
+                    <Modal
+                        open={showModalCall}
+                        onCancel={hideModalCall}
+                        cancelButtonProps={{ style: { display: 'none' } }}
+                        okButtonProps={{ style: { display: 'none' } }}
+                    >
+                        <TitleName>Gọi cho {conversation.member.username}</TitleName>
+                        <input type="text" defaultValue={conversation.member._id} style={{ display: 'none' }} />
+
+                        {/* Button confirm Called */}
+                        {conversation.member && <Room />}
+                    </Modal>
                 </div>
 
                 <div className="message-body">

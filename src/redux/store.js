@@ -1,5 +1,6 @@
 // lib
 import { configureStore } from '@reduxjs/toolkit';
+import callSlice from './features/call/callSlice';
 import conversationSlice from './features/conversation/conversationSlice';
 import layoutSlice from './features/layout/layoutSlice';
 import messageSlice from './features/message/messageSlice';
@@ -23,6 +24,7 @@ const store = configureStore({
         notificationSlice: notificationSlice.reducer,
         conversationSlice: conversationSlice.reducer,
         messageSlice: messageSlice.reducer,
+        callSlice: callSlice.reducer,
     },
 });
 

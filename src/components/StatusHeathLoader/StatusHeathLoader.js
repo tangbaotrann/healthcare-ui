@@ -7,7 +7,7 @@ function StatusHeathLoader({ status }) {
     return (
         <>
             {status.message ? (
-                status.message.code === -1 ? (
+                status.message.code === 1 ? (
                     <div className="status-heath-loader-warning">
                         <span></span>
                         <span></span>
@@ -25,6 +25,8 @@ function StatusHeathLoader({ status }) {
                         <span></span>
                         <span></span>
                     </div>
+                ) : status.message.code === -1 ? (
+                    <span className="status-message-remind">Chưa cập nhật (BMI và GLYCEMIC)</span>
                 ) : null
             ) : null}
         </>
