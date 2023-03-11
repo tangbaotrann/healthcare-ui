@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid';
 import './Meeting.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
-import Room from './Room';
+import MeetScreen from './MeetScreen';
 
 const { Paragraph } = Typography;
 
@@ -28,7 +28,7 @@ function Meeting({ infoUser }) {
     return (
         <div className="meeting-wrapper">
             {roomCode ? (
-                <Room infoUser={infoUser} />
+                <MeetScreen infoUser={infoUser} />
             ) : (
                 <div className="meeting-container">
                     <TitleName>Meeting</TitleName>
