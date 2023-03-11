@@ -8,16 +8,12 @@ import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
-import {
-    btnClickGetIdConversationSelector,
-    filterInfoDoctorInConversationListSelector,
-    getDoctorLoginFilter,
-} from '~/redux/selector';
+import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
 import { CloseOutlined, PhoneOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
-import { Button, Form, Input, Modal } from 'antd';
+import { Modal } from 'antd';
 import TitleName from '~/components/TitleName';
-import Room from '~/components/Meeting/Room';
+import CallScreen from '~/components/Meeting/CallScreen';
 import callSlice from '~/redux/features/call/callSlice';
 
 function Message({ messages, conversation }) {
@@ -43,7 +39,7 @@ function Message({ messages, conversation }) {
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
-            console.log('USER - ONLINE -', users);
+            // console.log('USER - ONLINE -', users);
         });
 
         // joined_room
@@ -61,8 +57,8 @@ function Message({ messages, conversation }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // handle joined in room
-    const handleRoomJoined = () => {
+    // handle call joined
+    const handleCallJoined = () => {
         setShowModalCall(true);
         dispatch(callSlice.actions.arrivalUserId(conversation.member._id));
     };
@@ -134,7 +130,7 @@ function Message({ messages, conversation }) {
                     </div>
 
                     {/* icon call video */}
-                    <button className="icon-call-video-btn" onClick={handleRoomJoined}>
+                    <button className="icon-call-video-btn" onClick={handleCallJoined}>
                         <PhoneOutlined className="icon-call-video" />
                     </button>
 
@@ -149,7 +145,7 @@ function Message({ messages, conversation }) {
                         <input type="text" defaultValue={conversation.member._id} style={{ display: 'none' }} />
 
                         {/* Button confirm Called */}
-                        {conversation.member && <Room />}
+                        {conversation.member._id && <CallScreen />}
                     </Modal>
                 </div>
 

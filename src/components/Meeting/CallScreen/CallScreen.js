@@ -6,11 +6,11 @@ import { ZIM } from 'zego-zim-web';
 import { useParams } from 'react-router-dom';
 
 // me
-import './Room.css';
+import './CallScreen.css';
 import { Button } from 'antd';
 import { btnClickGetUserIdSelector } from '~/redux/selector';
 
-function Room({ infoUser }) {
+function CallScreen({ infoUser }) {
     const [valueInput, setValueInput] = useState('');
     const [token, setToken] = useState(null);
 
@@ -82,4 +82,4 @@ function Room({ infoUser }) {
     );
 }
 
-export default Room;
+export default CallScreen;
