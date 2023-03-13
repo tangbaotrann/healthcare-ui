@@ -75,6 +75,11 @@ function StatisticsChart() {
     return (
         <div className="statistics-chart-wrapper">
             <ReactECharts option={option} />
+
+            <div className="statistics-chart-note-text">
+                <p className="statistics-chart-note-text-title">Biểu đồ: </p>
+                <p className="statistics-chart-note-text-desc">Thống kê ...</p>
+            </div>
         </div>
     );
 }

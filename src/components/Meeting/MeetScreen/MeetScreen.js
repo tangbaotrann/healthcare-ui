@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom';
 // me
 import './MeetScreen.css';
 
-function MeetScreen({ infoUser }) {
-    const { roomId } = useParams();
+function MeetScreen() {
+    const { roomId, username } = useParams();
 
-    console.log('roomId', roomId);
-    console.log('infoUser', infoUser);
+    // console.log('roomId', roomId);
+    // console.log('username', username);
+    // console.log('userId', userId);
 
     const myMeeting = async (element) => {
         const appID = 1659484907;
@@ -19,7 +20,7 @@ function MeetScreen({ infoUser }) {
             serverSecret,
             roomId,
             Date.now().toString(),
-            `${infoUser.doctor.person ? infoUser.doctor.person.username : 'BOT'}`,
+            `${username ? username : 'BOT'}`,
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);

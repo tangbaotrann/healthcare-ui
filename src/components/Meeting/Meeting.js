@@ -1,34 +1,41 @@
 // lib
 import { useState } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // me
 import './Meeting.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
 import MeetScreen from './MeetScreen';
+import socket from '~/utils/socket';
 
 const { Paragraph } = Typography;
 
-function Meeting({ infoUser }) {
-    const [roomCode, setRoomCode] = useState('');
-    const unique_id = uuid();
+function Meeting() {
+    const [roomCodeWithInfoMember, setRoomCodeWithInfoMember] = useState('');
+    const { roomId, username } = useParams();
 
     const navigate = useNavigate();
 
+    // console.log('roomId meeting', roomId);
+    // console.log('infoMember params ->', infoMember);
+    // console.log('getIdDoctor ->', getIdDoctor);
+
     // handle submit
     const handleSubmitForm = (values) => {
-        const { roomId } = values;
-        setRoomCode(roomId);
-        navigate(`${endPoints.doctorManagerJoinIdRoom}/${roomId}`);
+        const { room_id } = values;
+        setRoomCodeWithInfoMember(room_id);
+        navigate(`${endPoints.meetingRoom}/${room_id}/${username}`);
+
+        // socket call id room id to user
+        socket.emit('call_id_room_to_user', { roomId: roomId });
     };
 
     return (
         <div className="meeting-wrapper">
-            {roomCode ? (
-                <MeetScreen infoUser={infoUser} />
+            {roomCodeWithInfoMember ? (
+                <MeetScreen />
             ) : (
                 <div className="meeting-container">
                     <TitleName>Meeting</TitleName>
@@ -39,10 +46,16 @@ function Meeting({ infoUser }) {
                         onFinishFailed={(error) => {
                             console.log({ error });
                         }}
+                        fields={[
+                            {
+                                name: ['room_id'],
+                                value: roomId,
+                            },
+                        ]}
                     >
                         {/* id room */}
                         <Form.Item
-                            name="roomId"
+                            name="room_id"
                             rules={[
                                 {
                                     required: true,
@@ -52,11 +65,15 @@ function Meeting({ infoUser }) {
                             hasFeedback
                         >
                             <div className="meeting-generator-id-room">
-                                <Input placeholder="Sao chép và dãn mã phòng vào..." style={{ width: '90%' }} />
+                                <Input
+                                    placeholder="Sao chép và dãn mã phòng vào..."
+                                    defaultValue={roomId}
+                                    style={{ width: '90%' }}
+                                />
                                 <Paragraph
                                     copyable={{
                                         tooltips: ['Sao chép', 'Bạn đã sao chép'],
-                                        text: unique_id,
+                                        text: roomId,
                                     }}
                                     className="meeting-copy-icon"
                                 ></Paragraph>
@@ -65,7 +82,7 @@ function Meeting({ infoUser }) {
 
                         {/* Button */}
                         <Button className="meeting-join-btn" block htmlType="submit">
-                            Tham gia ngày
+                            Tham gia ngay
                         </Button>
                     </Form>
                 </div>

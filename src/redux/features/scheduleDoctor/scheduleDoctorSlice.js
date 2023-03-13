@@ -97,7 +97,7 @@ export const fetchApiScheduleByIdDoctor = createAsyncThunk(
                         ContentType: 'application/json',
                     },
                 });
-                // console.log('res', res.data.data);
+                console.log('fetchApiScheduleByIdDoctor ->', res.data.data);
 
                 return res.data.data;
             } catch (err) {

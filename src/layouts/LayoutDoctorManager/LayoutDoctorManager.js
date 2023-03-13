@@ -12,7 +12,6 @@ import {
     OrderedListOutlined,
     ScheduleOutlined,
     TableOutlined,
-    VideoCameraAddOutlined,
 } from '@ant-design/icons/lib/icons';
 import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
 
@@ -115,11 +114,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Cuộc trò chuyện',
                         },
                         {
-                            key: constants.layoutMeeting,
-                            icon: <VideoCameraAddOutlined />,
-                            label: 'Meeting',
-                        },
-                        {
                             key: '4',
                             icon: <OrderedListOutlined />,
                             label: 'Quản lý bệnh nhân',
@@ -127,9 +121,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                                 { label: 'Danh sách bệnh nhân', key: constants.layoutListPatient },
                                 // { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
                             ],
-                            // sub: Xem thông tin chi tiết bệnh nhân;
-                            // Phác đồ điều trị;
-                            // Chỉ số BMI
                         },
                     ]}
                     // Change layout
@@ -139,6 +130,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
+                            // dispatch(fetchApiScheduleByIdDoctor(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
