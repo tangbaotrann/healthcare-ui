@@ -8,5 +8,6 @@ export const endPoints = {
     homeIntro: '/home-intro',
     doctorManager: '/doctor-manager',
     doctorManagerJoinIdRoom: '/doctor-manager/room',
+    meetingRoom: '/meeting-room',
     maps: '/maps',
 };

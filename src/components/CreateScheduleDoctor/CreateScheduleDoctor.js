@@ -1,5 +1,5 @@
 // lib
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, message, Modal, Select } from 'antd';
 import moment from 'moment';
@@ -8,11 +8,7 @@ import moment from 'moment';
 import './CreateScheduleDoctor.css';
 import TitleName from '../TitleName';
 import TableListSchedule from './TableListSchedule';
-import {
-    fetchApiAllCreateDaysDoctor,
-    fetchApiAllShiftsDoctor,
-    fetchApiCreateScheduleDoctor,
-} from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
+import { fetchApiCreateScheduleDoctor } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import { fetchApiAllCreateDaysDoctorSelector, fetchApiAllShiftsDoctorSelector } from '~/redux/selector';
 
 function CreateScheduleDoctor({ infoUser, schedules }) {
@@ -26,16 +22,6 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     // console.log(days);
     // console.log('-->', shifts);
     // console.log('-->', schedules);
-
-    useEffect(() => {
-        dispatch(fetchApiAllCreateDaysDoctor());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        dispatch(fetchApiAllShiftsDoctor());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     // show modal
     const handleOpenModal = () => {

@@ -16,8 +16,9 @@ import {
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
 import {
+    fetchApiAllCreateDaysDoctor,
     fetchApiAllCreateScheduleDoctor,
-    fetchApiScheduleByIdDoctor,
+    fetchApiAllShiftsDoctor,
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import AwaitBrowsingAccountDoctor from '~/components/AwaitBrowsingAccountDoctor';
 import { fetchApiUserDoctors } from '~/redux/features/user/userSlice';
@@ -25,8 +26,8 @@ import PatientList from '~/components/PatientList';
 import TableListScheduleMedical from '~/components/TableListScheduleMedical';
 import TableListNotification from '~/components/TableListNotification';
 import Conversation from '~/components/Conversation';
-import Meeting from '~/components/Meeting';
 import Dashboard from '~/components/Dashboard';
+import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -36,15 +37,17 @@ function DoctorManager() {
     const schedules = useSelector(getIdDoctorFilter);
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
+    const getIdDoctor = useSelector(getDoctorLoginFilter);
 
     const notifications = useSelector(fetchApiNotificationByDoctorIdSelector); // filterNotifications
 
     // console.log(changeLayout);
     // console.log(infoUser);
+    // console.log('getIdDoctor', getIdDoctor);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
-    // console.log('schedules 27', schedules);
+    // console.log('schedules 46 ->', schedules);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateScheduleDoctor());
@@ -52,12 +55,21 @@ function DoctorManager() {
     }, []);
 
     useEffect(() => {
-        dispatch(fetchApiUserDoctors());
+        dispatch(fetchApiAllCreateDaysDoctor());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        dispatch(fetchApiScheduleByIdDoctor(schedules.doctor));
+        dispatch(fetchApiAllShiftsDoctor());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchApiNotificationByDoctorId(getIdDoctor?._id));
+    }, [getIdDoctor?._id]);
+
+    useEffect(() => {
+        dispatch(fetchApiUserDoctors());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -79,8 +91,6 @@ function DoctorManager() {
                     <TableListNotification notifications={notifications} />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation />
-                ) : changeLayout === constants.layoutMeeting ? (
-                    <Meeting infoUser={infoUser} />
                 ) : null}
             </LayoutDoctorManager>
         </>

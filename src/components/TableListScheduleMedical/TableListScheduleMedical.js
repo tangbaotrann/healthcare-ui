@@ -193,11 +193,11 @@ function TableListScheduleMedical() {
                 columns={cols}
                 dataSource={scheduleMedicalsFilter.map((scheduleMedical, index) => ({
                     index: index + 1,
-                    day: moment(scheduleMedical.days.day).format('dddd'),
+                    day: moment(scheduleMedical?.days?.day).format('dddd'),
                     createdAt: moment(scheduleMedical.createdAt).format('DD-MM-YYYY'),
-                    time: `${scheduleMedical.shifts.name} (${moment(new Date(scheduleMedical.shifts.time_start)).format(
-                        'HH:mm',
-                    )} -> ${moment(new Date(scheduleMedical.shifts.time_end)).format('HH:mm')})`,
+                    time: `${scheduleMedical?.shifts?.name} (${moment(
+                        new Date(scheduleMedical?.shifts?.time_start),
+                    ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
                     time_per_conversation: `${scheduleMedical.schedule.time_per_conversation} phút`,
                     fee: `${scheduleMedical.schedule.fee} VNĐ`,
                     content_exam: scheduleMedical.content_exam,

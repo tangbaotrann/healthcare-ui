@@ -195,4 +195,17 @@
 .icon-call-video:hover {
     opacity: 0.8;
     cursor: pointer;
+    animation: animationVideoMeetingIcon 2s infinite;
+    transition: all 0.3s;
+    color: var(--primary);
+}
+
+@keyframes animationVideoMeetingIcon {
+    0% {
+        transform:rotate(0deg);
+    }
+
+    50% {
+        transform:rotate(45deg);
+    }
 }

@@ -15,6 +15,7 @@ import DoctorManager from './pages/DoctorManager';
 import Maps from './components/Maps';
 import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
+import Meeting from './components/Meeting';
 
 function App() {
     const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function App() {
 
     const checkUserLogin = useSelector(fetchApiUserDoctorByTokenSelector);
 
-    // console.log('userLogin - app', userLogin);
+    // console.log('userLogin - app', checkUserLogin);
 
     useEffect(() => {
         dispatch(fetchApiUserDoctorByToken(getToken));
@@ -71,7 +72,7 @@ function App() {
                 />
 
                 {/* Doctor Manager */}
-                <Route path={`${endPoints.doctorManagerJoinIdRoom}/:roomId`} element={<DoctorManager />} />
+                <Route path={`${endPoints.meetingRoom}/:roomId/:username`} element={<Meeting />} />
                 <Route path={endPoints.doctorManager} element={<DoctorManager />} />
 
                 {/* Maps */}

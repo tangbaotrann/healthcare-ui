@@ -1,15 +1,17 @@
+// Hide
 const { createSlice } = require('@reduxjs/toolkit');
 
 const callSlice = createSlice({
     name: 'call',
     initialState: {
-        btnClickCallGetUserId: null,
+        btnClickCallUserId: null,
     },
     reducers: {
         arrivalUserId: (state, action) => {
-            state.btnClickCallGetUserId = action.payload;
+            state.btnClickCallUserId = action.payload;
         },
     },
 });
 
 export default callSlice;
+// Hide

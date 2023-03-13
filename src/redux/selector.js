@@ -53,7 +53,7 @@ export const fetchApiConversationsSelector = (state) => state.conversationSlice.
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
 
 // get id user when clicked button call
-export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallGetUserId;
+export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide 
 
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
@@ -225,7 +225,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     (listScheduleMedical, listDay, listShift) => {
         // console.log('listScheduleMedical', listScheduleMedical);
-        // console.log('listDay', listDay);
+        console.log('listDay', listDay);
         // console.log('listShift', listShift);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {

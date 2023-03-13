@@ -2,6 +2,7 @@
 import moment from 'moment';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 
 // me
@@ -9,17 +10,13 @@ import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
 import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
-import { CloseOutlined, PhoneOutlined, SendOutlined, SmileOutlined } from '@ant-design/icons';
+import { CloseOutlined, SendOutlined, SmileOutlined, VideoCameraAddOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
-import { Modal } from 'antd';
-import TitleName from '~/components/TitleName';
-import CallScreen from '~/components/Meeting/CallScreen';
-import callSlice from '~/redux/features/call/callSlice';
+import { endPoints } from '~/routers';
 
 function Message({ messages, conversation }) {
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
-    const [showModalCall, setShowModalCall] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -39,7 +36,7 @@ function Message({ messages, conversation }) {
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
-            // console.log('USER - ONLINE -', users);
+            console.log('USER - ONLINE -', users);
         });
 
         // joined_room
@@ -50,23 +47,12 @@ function Message({ messages, conversation }) {
 
     // socket when send message
     useEffect(() => {
-        socket.on('receiver_message', (message) => {
-            // console.log('message socket ->', message);
+        socket.on('receiver_message', ({ message }) => {
+            console.log('message socket ->', message);
             dispatch(messageSlice.actions.arrivalMessageFromSocket(message));
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // handle call joined
-    const handleCallJoined = () => {
-        setShowModalCall(true);
-        dispatch(callSlice.actions.arrivalUserId(conversation.member._id));
-    };
-
-    // hide modal call
-    const hideModalCall = () => {
-        setShowModalCall(false);
-    };
 
     // handle change input
     const handleChangeInput = (e) => {
@@ -113,95 +99,89 @@ function Message({ messages, conversation }) {
     }, [conversation, scrollMessage]);
 
     return (
-        <div className="wrapper-message">
-            <div className="container-message">
-                <div className="message-header">
-                    <img
-                        src={infoMember.member ? infoMember.member.avatar : logo.iconHeart}
-                        className="message-header-avt"
-                        alt="avt-header"
-                    />
+        <>
+            <div className="wrapper-message">
+                <div className="container-message">
+                    <div className="message-header">
+                        <img
+                            src={infoMember.member ? infoMember.member.avatar : logo.iconHeart}
+                            className="message-header-avt"
+                            alt="avt-header"
+                        />
 
-                    <div className="message-header-info">
-                        <h4>{infoMember.member.username}</h4>
+                        <div className="message-header-info">
+                            <h4>{infoMember.member.username}</h4>
 
-                        {/* <p>Offline</p> */}
-                        {/* <div className="badge"></div> */}
+                            {/* <p>Offline</p> */}
+                            {/* <div className="badge"></div> */}
+                        </div>
+
+                        {/* icon call video onClick={handleCallJoined} */}
+                        <button className="icon-call-video-btn">
+                            <Link
+                                to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor.person.username}`}
+                                params={{ infoMember: infoMember }}
+                                target="_blank"
+                            >
+                                <VideoCameraAddOutlined className="icon-call-video" />
+                            </Link>
+                        </button>
                     </div>
 
-                    {/* icon call video */}
-                    <button className="icon-call-video-btn" onClick={handleCallJoined}>
-                        <PhoneOutlined className="icon-call-video" />
-                    </button>
+                    <div className="message-body">
+                        {messages.map((message) => {
+                            return (
+                                <div className="message-item" key={message._id} ref={scrollMessage}>
+                                    <img
+                                        src={
+                                            message.user.doctor.person
+                                                ? message.user.doctor.person.avatar
+                                                : message.user.doctor.doctor.person
+                                                ? message.user.doctor.doctor.person.avatar
+                                                : logo.iconHeart
+                                        }
+                                        className="message-avt"
+                                        alt="message-avt"
+                                    />
 
-                    {/* Show Modal Call */}
-                    <Modal
-                        open={showModalCall}
-                        onCancel={hideModalCall}
-                        cancelButtonProps={{ style: { display: 'none' } }}
-                        okButtonProps={{ style: { display: 'none' } }}
-                    >
-                        <TitleName>Gọi cho {conversation.member.username}</TitleName>
-                        <input type="text" defaultValue={conversation.member._id} style={{ display: 'none' }} />
-
-                        {/* Button confirm Called */}
-                        {conversation.member._id && <CallScreen />}
-                    </Modal>
-                </div>
-
-                <div className="message-body">
-                    {messages.map((message) => {
-                        return (
-                            <div className="message-item" key={message._id} ref={scrollMessage}>
-                                <img
-                                    src={
-                                        message.user.doctor.person
-                                            ? message.user.doctor.person.avatar
-                                            : message.user.doctor.doctor.person
-                                            ? message.user.doctor.doctor.person.avatar
-                                            : logo.iconHeart
-                                    }
-                                    className="message-avt"
-                                    alt="message-avt"
-                                />
-
-                                <div className="message-info">
-                                    <p className="message-info-content">{message.content}</p>
-                                    <p className="message-info-time">{moment(message.createdAt).format('HH:mm')}</p>
+                                    <div className="message-info">
+                                        <p className="message-info-content">{message.content}</p>
+                                        <p className="message-info-time">{moment(message.createdAt).format('HH:mm')}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
-            </div>
-            {/* Input */}
-            <div className="message-footer">
-                <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => handleChangeInput(e)}
-                    onKeyDown={handleSendMessage}
-                    className="input-message-text"
-                    rows="2"
-                    placeholder="Type your message here..."
-                    spellCheck="false"
-                />
-                {value && (
-                    <button className="btn-submit" onClick={handleSendMessage}>
-                        <SendOutlined className="btn-submit-icon" />
-                    </button>
-                )}
-                <div className="container-emoji-picker">
-                    {!previewEmoji && <SmileOutlined onClick={handlePreviewEmoji} />}
-                    {previewEmoji && (
-                        <>
-                            <EmojiPicker defaultSkinTone={SkinTones} onEmojiClick={handleEmojiClicked} />
-                            <CloseOutlined className="emoji-picker-close-btn" onClick={handleClosePreviewEmoji} />
-                        </>
+                {/* Input */}
+                <div className="message-footer">
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={(e) => handleChangeInput(e)}
+                        onKeyDown={handleSendMessage}
+                        className="input-message-text"
+                        rows="2"
+                        placeholder="Type your message here..."
+                        spellCheck="false"
+                    />
+                    {value && (
+                        <button className="btn-submit" onClick={handleSendMessage}>
+                            <SendOutlined className="btn-submit-icon" />
+                        </button>
                     )}
+                    <div className="container-emoji-picker">
+                        {!previewEmoji && <SmileOutlined onClick={handlePreviewEmoji} />}
+                        {previewEmoji && (
+                            <>
+                                <EmojiPicker defaultSkinTone={SkinTones} onEmojiClick={handleEmojiClicked} />
+                                <CloseOutlined className="emoji-picker-close-btn" onClick={handleClosePreviewEmoji} />
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
