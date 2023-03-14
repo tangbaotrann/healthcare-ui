@@ -8,7 +8,6 @@ import './Meeting.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
 import MeetScreen from './MeetScreen';
-import socket from '~/utils/socket';
 
 const { Paragraph } = Typography;
 
@@ -29,7 +28,7 @@ function Meeting() {
         navigate(`${endPoints.meetingRoom}/${room_id}/${username}`);
 
         // socket call id room id to user
-        socket.emit('call_id_room_to_user', { roomId: roomId });
+        // socket.emit('call_id_room_to_user', { roomId: roomId });
     };
 
     return (

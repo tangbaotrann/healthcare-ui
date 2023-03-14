@@ -14,7 +14,7 @@ import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import Message from './Message';
 
-function Conversation() {
+function Conversation({ infoUser, recordConversation }) {
     const dispatch = useDispatch();
 
     const conversations = useSelector(cleanConversationListSelector);
@@ -34,35 +34,39 @@ function Conversation() {
     return (
         <div className="wrapper-messenger">
             {/* Conversation */}
-            <div className="container-conversation">
-                <strong>Cuộc trò chuyện của bạn</strong>
+            {recordConversation ? null : (
+                <>
+                    <div className="container-conversation">
+                        <strong>Cuộc trò chuyện của bạn</strong>
 
-                {conversations.map((conversation) => {
-                    return (
-                        <div
-                            className="conversation-item"
-                            key={conversation._id}
-                            onClick={() => handleClickConversation(conversation)}
-                        >
-                            <img
-                                src={conversation.member ? conversation.member.avatar : logo.iconHeart}
-                                className="conversation-avatar"
-                                alt="img-conversation-avt"
-                            />
+                        {conversations.map((conversation) => {
+                            return (
+                                <div
+                                    className="conversation-item"
+                                    key={conversation._id}
+                                    onClick={() => handleClickConversation(conversation)}
+                                >
+                                    <img
+                                        src={conversation.member ? conversation.member.avatar : logo.iconHeart}
+                                        className="conversation-avatar"
+                                        alt="img-conversation-avt"
+                                    />
 
-                            <div className="conversation-info">
-                                <h4>{conversation.member ? conversation.member.username : null}</h4>
-                                <p>{conversation.last_message ? conversation.last_message.content : null}</p>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-            <Divider type="vertical" className="divider-vertical" />
+                                    <div className="conversation-info">
+                                        <h4>{conversation.member ? conversation.member.username : null}</h4>
+                                        <p>{conversation.last_message ? conversation.last_message.content : null}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <Divider type="vertical" className="divider-vertical" />
+                </>
+            )}
 
             {/* Message */}
             {conversation ? (
-                <Message messages={messages} conversation={conversation} />
+                <Message messages={messages} conversation={conversation} infoUser={infoUser} />
             ) : (
                 <div className="wrapper-message">
                     <strong className="message-welcome">

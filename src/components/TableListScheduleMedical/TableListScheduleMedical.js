@@ -9,15 +9,20 @@ import './TableListScheduleMedical.css';
 import TitleName from '../TitleName';
 import { fetchApiConfirmScheduleMedical, fetchApiDeleteScheduleMedical } from '~/redux/features/patient/patientSlice';
 import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
+import conversationSlice from '~/redux/features/conversation/conversationSlice';
+import { fetchApiMessages } from '~/redux/features/message/messageSlice';
+import Conversation from '../Conversation';
 
-function TableListScheduleMedical() {
+function TableListScheduleMedical({ infoUser }) {
     const [showModal, setShowModal] = useState(false);
+    const [showModalConversation, setShowModalConversation] = useState(false);
 
     const dispatch = useDispatch();
 
     const scheduleMedicalsFilter = useSelector(getDayAndTimeScheduleMedicalFilterOfDoctor);
 
-    console.log('scheduleMedicalsFilter', scheduleMedicalsFilter);
+    // console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
+    // console.log('infoMember render', infoMember);
 
     // cols
     const cols = [
@@ -31,7 +36,7 @@ function TableListScheduleMedical() {
             key: 'day',
             title: 'Thứ',
             dataIndex: 'day',
-            width: '8%',
+            width: '7%',
         },
         {
             key: 'createdAt',
@@ -43,6 +48,7 @@ function TableListScheduleMedical() {
             key: 'time',
             title: 'Ca làm',
             dataIndex: 'time',
+            width: '12%',
         },
         {
             key: 'time_per_conversation',
@@ -54,12 +60,13 @@ function TableListScheduleMedical() {
             key: 'fee',
             title: 'Chi phí',
             dataIndex: 'fee',
-            width: '10%',
+            width: '9%',
         },
         {
             key: 'content_exam',
             title: 'Nội dung khám bệnh',
             dataIndex: 'content_exam',
+            width: '20%',
         },
         {
             key: 'status',
@@ -92,16 +99,28 @@ function TableListScheduleMedical() {
             render: (record) => {
                 return (
                     <div className="status-tbl-schedule-medical">
-                        {record.status.props.children === 'Đã xác nhận' ? null : (
+                        {record.status.props.children === 'Đã xác nhận' ? (
+                            <Button
+                                className="show-conversation-message"
+                                onClick={() => handleShowModalConversation(record)}
+                            >
+                                Trò chuyện
+                            </Button>
+                        ) : (
                             <>
                                 <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
                                     Xác nhận
                                 </Button>
-                                <Button
-                                    style={{ backgroundColor: 'red', color: 'white', marginLeft: '4px' }}
-                                    onClick={handleShowModal}
-                                >
+                                <Button className="btn-delete-schedule" onClick={handleShowModal}>
                                     Hủy
+                                </Button>
+
+                                {/* Button show Chat */}
+                                <Button
+                                    className="show-conversation-message"
+                                    onClick={() => handleShowModalConversation(record)}
+                                >
+                                    Trò chuyện
                                 </Button>
 
                                 {/* Modal confirm delete request schedule */}
@@ -149,6 +168,18 @@ function TableListScheduleMedical() {
                                         </Button>
                                     </Form>
                                 </Modal>
+
+                                {/* Modal conversation   conversation={conversation} infoUser={infoUser}*/}
+                                <Modal
+                                    open={showModalConversation}
+                                    onCancel={hideModalConversation}
+                                    cancelButtonProps={{ style: { display: 'none' } }}
+                                    okButtonProps={{ style: { display: 'none' } }}
+                                >
+                                    {record.conversation ? (
+                                        <Conversation infoUser={infoUser} recordConversation={record} />
+                                    ) : null}
+                                </Modal>
                             </>
                         )}
                     </div>
@@ -173,6 +204,18 @@ function TableListScheduleMedical() {
     // hide modal
     const handleCancel = () => {
         setShowModal(false);
+    };
+
+    // show modal conversation
+    const handleShowModalConversation = (record) => {
+        dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
+        dispatch(fetchApiMessages(record.conversation._id));
+        setShowModalConversation(true);
+    };
+
+    // hide
+    const hideModalConversation = () => {
+        setShowModalConversation(false);
     };
 
     // handle confirm del request schedule
@@ -209,13 +252,14 @@ function TableListScheduleMedical() {
                         ),
                     _id: scheduleMedical._id,
                     idDoctor: scheduleMedical.doctor._id,
+                    conversation: scheduleMedical.conversations,
                 }))}
                 rowKey="index"
                 pagination={{
-                    pageSize: 8,
+                    pageSize: 10,
                 }}
                 style={{ height: '300px' }}
-                scroll={{ y: 380 }}
+                scroll={{ y: 420 }}
             ></Table>
         </>
     );

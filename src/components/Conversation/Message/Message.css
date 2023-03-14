@@ -46,37 +46,7 @@
     overflow-y: scroll; */
 }
 
-.message-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-top: 12px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    color: var(--black);
-    background-color: rgb(204 204 204 / 70%);
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
-}
 
-.message-avt {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-}
-
-.message-info-mess {
-    font-size: 1.4rem;
-    font-weight: 500;
-}
-
-.message-info-time {
-    margin-top: 6px;
-    font-size: 1rem;
-    color: var(--white);
-}
 
 /* Footer Input send message */
 .message-footer {
@@ -140,12 +110,6 @@
     color: #ccc;
 }
 
-.message-info-content {
-    font-size: 1.389rem;
-    font-weight: 400;
-    /* line-height: 1.5; */
-}
-
 .btn-submit-icon {
     font-size: 1.4rem;
     transform: rotate(-20deg);
@@ -168,6 +132,7 @@
     position: absolute;
     right: 50px;
     bottom: 10px;
+    color: var(--white);
 }
 
 .emoji-picker-close-btn {

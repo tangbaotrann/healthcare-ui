@@ -41,7 +41,8 @@ function TableListNotification({ notifications }) {
         },
         {
             key: 'seen',
-            width: '14%',
+            title: 'Trạng thái',
+            width: '12%',
             render: (record) => {
                 return (
                     <>
@@ -54,6 +55,13 @@ function TableListNotification({ notifications }) {
                         )}
                     </>
                 );
+            },
+            filters: [
+                { text: 'Đã xem', value: true },
+                { text: 'Chưa xem', value: false },
+            ],
+            onFilter: (value, record) => {
+                return record.hasSeen === value;
             },
         },
     ];

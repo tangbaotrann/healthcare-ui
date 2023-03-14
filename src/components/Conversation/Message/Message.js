@@ -1,5 +1,4 @@
 // lib
-import moment from 'moment';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,8 +12,9 @@ import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux
 import { CloseOutlined, SendOutlined, SmileOutlined, VideoCameraAddOutlined } from '@ant-design/icons';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
+import MessageItem from './MessageItem';
 
-function Message({ messages, conversation }) {
+function Message({ messages, conversation, infoUser }) {
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
 
@@ -28,11 +28,11 @@ function Message({ messages, conversation }) {
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
-    console.log('conversation ->', conversation);
+    // console.log('conversation ->', conversation);
 
     // user join room
     useEffect(() => {
-        socket.emit('join_room', conversation);
+        socket.emit('join_room', conversation); // obj
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
@@ -48,7 +48,6 @@ function Message({ messages, conversation }) {
     // socket when send message
     useEffect(() => {
         socket.on('receiver_message', ({ message }) => {
-            console.log('message socket ->', message);
             dispatch(messageSlice.actions.arrivalMessageFromSocket(message));
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,10 +92,15 @@ function Message({ messages, conversation }) {
         setValue(_message.join(''));
     };
 
+    // get info user
+    const handleCallGetInfoUser = () => {
+        socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+    };
+
     // scroll message
     useEffect(() => {
-        conversation && scrollMessage.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [conversation, scrollMessage]);
+        conversation && messages && scrollMessage.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [conversation, messages, scrollMessage]);
 
     return (
         <>
@@ -120,37 +124,16 @@ function Message({ messages, conversation }) {
                         <button className="icon-call-video-btn">
                             <Link
                                 to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor.person.username}`}
-                                params={{ infoMember: infoMember }}
                                 target="_blank"
                             >
-                                <VideoCameraAddOutlined className="icon-call-video" />
+                                <VideoCameraAddOutlined className="icon-call-video" onClick={handleCallGetInfoUser} />
                             </Link>
                         </button>
                     </div>
 
+                    {/* Render messages */}
                     <div className="message-body">
-                        {messages.map((message) => {
-                            return (
-                                <div className="message-item" key={message._id} ref={scrollMessage}>
-                                    <img
-                                        src={
-                                            message.user.doctor.person
-                                                ? message.user.doctor.person.avatar
-                                                : message.user.doctor.doctor.person
-                                                ? message.user.doctor.doctor.person.avatar
-                                                : logo.iconHeart
-                                        }
-                                        className="message-avt"
-                                        alt="message-avt"
-                                    />
-
-                                    <div className="message-info">
-                                        <p className="message-info-content">{message.content}</p>
-                                        <p className="message-info-time">{moment(message.createdAt).format('HH:mm')}</p>
-                                    </div>
-                                </div>
-                            );
-                        })}
+                        <MessageItem messages={messages} infoUser={infoUser} scrollMessage={scrollMessage} />
                     </div>
                 </div>
                 {/* Input */}

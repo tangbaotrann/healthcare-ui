@@ -84,13 +84,13 @@ function DoctorManager() {
                 ) : changeLayout === constants.layoutListRegisterSchedule ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === constants.layoutScheduleMedical ? (
-                    <TableListScheduleMedical />
+                    <TableListScheduleMedical infoUser={infoUser} />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutListNotification ? (
                     <TableListNotification notifications={notifications} />
                 ) : changeLayout === constants.layoutListConversation ? (
-                    <Conversation />
+                    <Conversation infoUser={infoUser} />
                 ) : null}
             </LayoutDoctorManager>
         </>

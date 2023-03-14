@@ -58,7 +58,7 @@ function LayoutDoctorManager({ children, infoUser }) {
 
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed} width={250} className="sidebar">
+            <Sider trigger={null} collapsible collapsed={collapsed} width={220} className="sidebar">
                 {!collapsed && (
                     <img
                         style={{ margin: '12px' }}
@@ -96,7 +96,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                                                 count={notificationNotHasSeen.length}
                                                 overflowCount={99}
                                                 size="default"
-                                                offset={[180, 6]}
+                                                offset={[155, 6]}
                                             >
                                                 <NotificationOutlined style={{ color: '#fff', marginRight: '6px' }} />
                                             </Badge>
@@ -131,6 +131,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
                             // dispatch(fetchApiScheduleByIdDoctor(getIdDoctor._id));
+                            dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
