@@ -2,3 +2,32 @@
     display: flex;
     align-items: center;
 }
+
+.btn-delete-schedule {
+    margin-left: 4px;
+    border: 1px solid red;
+    color: var(--white);
+    background-color: red;
+}
+
+.btn-delete-schedule:hover {
+    opacity: 0.6 !important;
+    color: var(--white) !important;
+    border: 1px solid red !important;
+    outline: red;
+}
+
+.show-conversation-message {
+    border-radius: 4px;
+    margin-left: 4px;
+    border: 1px solid var(--orange-gradient);
+    color: var(--white);
+    background: var(--orange-gradient);
+}
+
+.show-conversation-message:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+    border: 1px solid var(--orange-gradient);
+    outline: var(--orange-gradient);
+}

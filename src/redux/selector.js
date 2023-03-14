@@ -53,7 +53,7 @@ export const fetchApiConversationsSelector = (state) => state.conversationSlice.
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
 
 // get id user when clicked button call
-export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide 
+export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide
 
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
@@ -218,21 +218,58 @@ export const filterStatusHealthWarningOfPatientForChart = createSelector(
     },
 );
 
+// get member conversation
+export const cleanConversationListSelector = createSelector(
+    fetchApiUserDoctorByTokenSelector,
+    fetchApiConversationsSelector,
+    (user, conversations) => {
+        // console.log('user ->', user);
+        console.log('conversations selector ->', conversations);
+
+        const conversationList = conversations.map((conversation) => {
+            const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
+
+            console.log('member', member);
+
+            return {
+                _id: conversation._id,
+                member: {
+                    username: member.person.username,
+                    avatar: member.person.avatar,
+                    _id: member._id,
+                },
+                last_message: {
+                    content: conversation?.last_message?.content,
+                    createdAt: conversation?.last_message?.createdAt,
+                },
+            };
+        });
+
+        // console.log(conversationList);
+        return conversationList;
+    },
+);
+
 // filter -> day (Thứ) + time (Ca làm) of doctor
 export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiScheduleMedicalAppointmentSelector,
     fetchApiAllCreateDaysDoctorSelector,
     fetchApiAllShiftsDoctorSelector,
-    (listScheduleMedical, listDay, listShift) => {
+    cleanConversationListSelector,
+    (listScheduleMedical, listDay, listShift, cleanConversation) => {
         // console.log('listScheduleMedical', listScheduleMedical);
-        console.log('listDay', listDay);
+        // console.log('listDay', listDay);
         // console.log('listShift', listShift);
+        console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
             const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
             const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
-            // fetch all patient -> tìm patient (bệnh nhân) theo id
+            const conversations = cleanConversation.find(
+                (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+            );
 
+            console.log('conversations ->', conversations);
             // console.log('days', days);
             // console.log('shifts', shifts);
 
@@ -246,41 +283,12 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
                 updatedAt: _scheduleMedical.updatedAt,
                 days,
                 shifts,
+                conversations,
                 _id: _scheduleMedical._id,
             };
         });
 
         return scheduleMedicals;
-    },
-);
-
-// get member conversation
-export const cleanConversationListSelector = createSelector(
-    fetchApiUserDoctorByTokenSelector,
-    fetchApiConversationsSelector,
-    (user, conversations) => {
-        // console.log('user ->', user);
-        console.log('conversations ->', conversations);
-
-        const conversationList = conversations.map((conversation) => {
-            const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
-
-            return {
-                _id: conversation._id,
-                member: {
-                    username: member.person.username,
-                    avatar: member.person.avatar,
-                    _id: member.person._id,
-                },
-                last_message: {
-                    content: conversation?.last_message?.content,
-                    createdAt: conversation?.last_message?.createdAt,
-                },
-            };
-        });
-
-        // console.log(conversationList);
-        return conversationList;
     },
 );
 
