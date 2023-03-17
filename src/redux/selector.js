@@ -54,11 +54,41 @@ export const btnClickGetIdConversationSelector = (state) => state.conversationSl
 
 // get id user when clicked button call
 export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide
+export const btnClickGetUsernameLeavedRoomSelector = (state) => state.callSlice.btnClickLeaveRoom;
 
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
 
 /* -- Handle Selector -- */
+
+// Tổng lịch khám
+export const totalScheduleOfDoctor = createSelector(
+    fetchApiScheduleMedicalAppointmentSelector,
+    (listScheduleMedical) => {
+        if (listScheduleMedical) {
+            return listScheduleMedical.length;
+        }
+    },
+);
+
+// Lịch hẹn khám
+export const totalAppointmentScheduleOfDoctor = createSelector(
+    fetchApiScheduleMedicalAppointmentSelector,
+    (listScheduleMedical) => {
+        if (listScheduleMedical) {
+            const appointmentSchedule = listScheduleMedical.filter((_schedule) => _schedule.status === false);
+
+            return appointmentSchedule.length;
+        }
+    },
+);
+
+// Tổng số bệnh nhân
+export const totalPatients = createSelector(fetchApiScheduleDetailByIdDoctorSelector, (listPatient) => {
+    if (listPatient) {
+        return listPatient.length;
+    }
+});
 
 // filter notification not has seen
 export const filterNotificationNotHasSeen = createSelector(
@@ -79,8 +109,8 @@ export const filterNotifications = createSelector(
     fetchApiNotificationByDoctorIdSelector,
     fetchApiUpdateSeenNotificationSelector,
     (listNotification, seenNotification) => {
-        console.log('listNotification ->', listNotification);
-        console.log('seenNotification ->', seenNotification);
+        // console.log('listNotification ->', listNotification);
+        // console.log('seenNotification ->', seenNotification);
 
         const notifications = listNotification.map((_notification) => {
             //const seens =
@@ -224,7 +254,7 @@ export const cleanConversationListSelector = createSelector(
     fetchApiConversationsSelector,
     (user, conversations) => {
         // console.log('user ->', user);
-        console.log('conversations selector ->', conversations);
+        // console.log('conversations selector ->', conversations);
 
         const conversationList = conversations.map((conversation) => {
             const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
@@ -257,7 +287,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        // console.log('listScheduleMedical', listScheduleMedical);
+        console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         console.log('cleanConversationListSelector', cleanConversation);
@@ -269,7 +299,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
                 (_conversation) => _conversation.member._id === _scheduleMedical.patient,
             );
 
-            console.log('conversations ->', conversations);
+            // console.log('conversations ->', conversations);
             // console.log('days', days);
             // console.log('shifts', shifts);
 
@@ -298,7 +328,7 @@ export const messageOfUserFilter = createSelector(
     fetchApiMessagesSelector,
     fetchApiConversationsSelector,
     (user, listMessage, conversations) => {
-        console.log('user ->', user);
+        // console.log('user ->', user);
         // console.log('listMessage ->', listMessage);
 
         const messages = listMessage.map((_message) => {

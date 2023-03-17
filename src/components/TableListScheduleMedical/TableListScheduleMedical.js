@@ -21,7 +21,7 @@ function TableListScheduleMedical({ infoUser }) {
 
     const scheduleMedicalsFilter = useSelector(getDayAndTimeScheduleMedicalFilterOfDoctor);
 
-    // console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
+    console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
     // console.log('infoMember render', infoMember);
 
     // cols
@@ -100,12 +100,24 @@ function TableListScheduleMedical({ infoUser }) {
                 return (
                     <div className="status-tbl-schedule-medical">
                         {record.status.props.children === 'Đã xác nhận' ? (
-                            <Button
-                                className="show-conversation-message"
-                                onClick={() => handleShowModalConversation(record)}
-                            >
-                                Trò chuyện
-                            </Button>
+                            <>
+                                <Button
+                                    className="show-conversation-message"
+                                    onClick={() => handleShowModalConversation(record)}
+                                >
+                                    Trò chuyện
+                                </Button>
+
+                                {/* Modal conversation */}
+                                <Modal
+                                    open={showModalConversation}
+                                    onCancel={hideModalConversation}
+                                    cancelButtonProps={{ style: { display: 'none' } }}
+                                    okButtonProps={{ style: { display: 'none' } }}
+                                >
+                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
+                                </Modal>
+                            </>
                         ) : (
                             <>
                                 <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
@@ -169,16 +181,14 @@ function TableListScheduleMedical({ infoUser }) {
                                     </Form>
                                 </Modal>
 
-                                {/* Modal conversation   conversation={conversation} infoUser={infoUser}*/}
+                                {/* Modal conversation */}
                                 <Modal
                                     open={showModalConversation}
                                     onCancel={hideModalConversation}
                                     cancelButtonProps={{ style: { display: 'none' } }}
                                     okButtonProps={{ style: { display: 'none' } }}
                                 >
-                                    {record.conversation ? (
-                                        <Conversation infoUser={infoUser} recordConversation={record} />
-                                    ) : null}
+                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
                                 </Modal>
                             </>
                         )}
@@ -208,9 +218,9 @@ function TableListScheduleMedical({ infoUser }) {
 
     // show modal conversation
     const handleShowModalConversation = (record) => {
+        setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
         dispatch(fetchApiMessages(record.conversation._id));
-        setShowModalConversation(true);
     };
 
     // hide

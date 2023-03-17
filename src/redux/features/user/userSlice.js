@@ -33,7 +33,7 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
                 'Content-Type': 'application/json',
             },
         });
-        // console.log('res doctors -', res.data.data);
+        console.log('res doctors -', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -43,6 +43,7 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
 
 // find user Doctor by token
 export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async (token) => {
+    console.log('tk slice', token);
     try {
         if (token) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {
@@ -52,7 +53,7 @@ export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoct
                     ContentType: 'application/json',
                 },
             });
-            // console.log('res doctor by id -', res.data.data);
+            console.log('res doctor by id -', res.data.data);
 
             return res.data.data;
         }

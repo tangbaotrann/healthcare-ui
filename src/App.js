@@ -23,6 +23,7 @@ function App() {
 
     const checkUserLogin = useSelector(fetchApiUserDoctorByTokenSelector);
 
+    // console.log('getToken - app', getToken);
     // console.log('userLogin - app', checkUserLogin);
 
     useEffect(() => {

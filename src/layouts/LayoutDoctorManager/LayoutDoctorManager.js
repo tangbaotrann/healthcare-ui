@@ -126,6 +126,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                     // Change layout
                     onSelect={(item) => {
                         if (item.key === constants.layoutDashboard) {
+                            // dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
+                            // dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));

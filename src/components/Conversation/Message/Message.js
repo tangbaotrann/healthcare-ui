@@ -36,7 +36,7 @@ function Message({ messages, conversation, infoUser }) {
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
-            console.log('USER - ONLINE -', users);
+            // console.log('USER - ONLINE -', users);
         });
 
         // joined_room

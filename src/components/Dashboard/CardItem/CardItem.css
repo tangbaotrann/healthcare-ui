@@ -8,6 +8,11 @@
 .card-item {
     display: flex;
     flex-direction: column;
+
+    background: var(--orange-gradient);
+    border-radius: 4px;
+    padding: 6px;
+    margin-right: 10px;
 }
 
 /* Card Header */

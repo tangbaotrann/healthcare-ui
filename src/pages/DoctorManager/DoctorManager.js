@@ -28,6 +28,10 @@ import TableListNotification from '~/components/TableListNotification';
 import Conversation from '~/components/Conversation';
 import Dashboard from '~/components/Dashboard';
 import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
+import {
+    fetchApiScheduleDetailByIdDoctor,
+    fetchApiScheduleMedicalAppointment,
+} from '~/redux/features/patient/patientSlice';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -73,6 +77,14 @@ function DoctorManager() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor?._id));
+    }, [getIdDoctor?._id]);
+
+    useEffect(() => {
+        dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor?._id));
+    }, [getIdDoctor?._id]);
+
     return (
         <>
             {(awaitAccept?.data?.isAccepted === false || checkAwaitAccept?.isAccepted === false) && (
@@ -80,7 +92,7 @@ function DoctorManager() {
             )}
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === constants.layoutDashboard || changeLayout === null ? (
-                    <Dashboard />
+                    <Dashboard schedules={schedules} />
                 ) : changeLayout === constants.layoutListRegisterSchedule ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === constants.layoutScheduleMedical ? (
