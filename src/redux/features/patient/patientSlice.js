@@ -9,15 +9,17 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
     'patient/fetchApiScheduleDetailByIdDoctor',
     async (getIdDoctor) => {
         // console.log('get id', getIdDoctor);
-        try {
-            const res = await axios.get(
-                `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/patient-list/${getIdDoctor}`,
-            );
-            console.log('res schedule detail', res.data.data);
+        if (getIdDoctor) {
+            try {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/patient-list/${getIdDoctor}`,
+                );
+                console.log('res schedule detail', res.data.data);
 
-            return res.data.data;
-        } catch (err) {
-            console.log({ err });
+                return res.data.data;
+            } catch (err) {
+                console.log({ err });
+            }
         }
     },
 );
@@ -27,15 +29,17 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     'patient/fetchApiScheduleMedicalAppointment',
     async (getIdDoctor) => {
         // console.log('get ->', getIdDoctor);
-        try {
-            const res = await axios.get(
-                `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
-            );
-            console.log('res schedule-medical-appointment -> ', res.data.data);
+        if (getIdDoctor) {
+            try {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
+                );
+                // console.log('res schedule-medical-appointment -> ', res.data.data);
 
-            return res.data.data;
-        } catch (err) {
-            console.log({ err });
+                return res.data.data;
+            } catch (err) {
+                console.log({ err });
+            }
         }
     },
 );
@@ -44,11 +48,11 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
 export const fetchApiConfirmScheduleMedical = createAsyncThunk(
     'patient/fetchApiConfirmScheduleMedical',
     async (idSchedule) => {
-        console.log('idSchedule ->', idSchedule);
+        // console.log('idSchedule ->', idSchedule);
         try {
             const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-            console.log('token', getToken);
+            // console.log('token', getToken);
 
             const res = await axios.put(
                 `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/accept/${idSchedule}`,
@@ -62,7 +66,7 @@ export const fetchApiConfirmScheduleMedical = createAsyncThunk(
                 },
             );
 
-            console.log('res confirm ->', res.data.data);
+            // console.log('res confirm ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -91,7 +95,7 @@ export const fetchApiDeleteScheduleMedical = createAsyncThunk(
                 },
             });
 
-            console.log('res del ->', res.data);
+            // console.log('res del ->', res.data);
 
             return res.data;
         } catch (err) {
@@ -121,7 +125,7 @@ export const fetchApiRemindPatient = createAsyncThunk('patient/fetchApiRemindPat
             },
         );
 
-        console.log('res remind ->', res.data);
+        // console.log('res remind ->', res.data);
 
         return res.data;
     } catch (err) {

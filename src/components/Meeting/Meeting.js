@@ -8,6 +8,8 @@ import './Meeting.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
 import MeetScreen from './MeetScreen';
+import { useSelector } from 'react-redux';
+import { btnClickGetUsernameLeavedRoomSelector } from '~/redux/selector';
 
 const { Paragraph } = Typography;
 
@@ -16,6 +18,10 @@ function Meeting() {
     const { roomId, username } = useParams();
 
     const navigate = useNavigate();
+
+    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+
+    console.log('checkLeavedRoom', checkLeavedRoom);
 
     // console.log('roomId meeting', roomId);
     // console.log('infoMember params ->', infoMember);
@@ -33,7 +39,7 @@ function Meeting() {
 
     return (
         <div className="meeting-wrapper">
-            {roomCodeWithInfoMember ? (
+            {roomId ? (
                 <MeetScreen />
             ) : (
                 <div className="meeting-container">

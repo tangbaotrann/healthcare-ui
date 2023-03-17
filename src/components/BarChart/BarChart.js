@@ -36,8 +36,8 @@ function BarChart({ bmis, glycemics, infoPatient }) {
     const getIdDoctor = useSelector(getDoctorLoginFilter);
 
     // console.log('patients', patients);
-    // console.log('bmis', bmis);
-    // console.log('glycemics', glycemics);
+    console.log('bmis', bmis);
+    console.log('glycemics', glycemics);
     // console.log('infoPatient', infoPatient);
     // console.log('getIdDoctor', getIdDoctor);
 
@@ -72,6 +72,8 @@ function BarChart({ bmis, glycemics, infoPatient }) {
     // labels
     const labels = bmis?.bmis?.map((bmi) => moment(bmi.createdAt).format('DD-MM-YYYY'));
     const labelsGlycemic = glycemics?.map((glycemic) => moment(glycemic.createdAt).format('DD-MM-YYYY'));
+    const lablelArrs = new Set([...labelsGlycemic]);
+    const resultsLabelsGlycemic = Array.from(lablelArrs);
 
     // Data BMI
     const data = {
@@ -79,7 +81,7 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         datasets: [
             {
                 label: `BMI (BMI trung bình: ${bmis?.avgBMI})`,
-                data: bmis?.bmis?.map((bmi) => bmi.calBMI),
+                data: bmis.bmis ? bmis.bmis.map((bmi) => bmi.cal_bmi) : 0,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
@@ -88,13 +90,31 @@ function BarChart({ bmis, glycemics, infoPatient }) {
 
     // data glycemic
     const dataGlycemic = {
-        labels: labelsGlycemic,
+        labels: resultsLabelsGlycemic,
         datasets: [
             {
-                label: 'Glycemic',
-                data: glycemics?.map((glycemic) => glycemic.metric),
+                label: 'Glycemic (TH 1)',
+                data: glycemics
+                    ? glycemics.filter((glycemic) => glycemic.case === 1).map((glycemic) => glycemic.metric)
+                    : 0,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+                label: 'Glycemic (TH 2)',
+                data: glycemics
+                    ? glycemics.filter((glycemic) => glycemic.case === 2).map((glycemic) => glycemic.metric)
+                    : 0,
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: 'Glycemic (TH 3)',
+                data: glycemics
+                    ? glycemics.filter((glycemic) => glycemic.case === 3).map((glycemic) => glycemic.metric)
+                    : 0,
+                borderColor: 'rgb(93, 235, 53)',
+                backgroundColor: 'rgba(93, 235, 53, 0.5)',
             },
         ],
     };

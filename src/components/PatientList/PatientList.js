@@ -27,7 +27,7 @@ function PatientList() {
     const bmis = useSelector(fetchApiBMIByIdPatientSelector);
     const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
 
-    // console.log('patients', patients);
+    console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
 
@@ -58,27 +58,15 @@ function PatientList() {
             dataIndex: 'username',
         },
         {
-            key: 'gender',
-            title: 'Giới tính',
-            dataIndex: 'gender',
-            width: '8%',
-        },
-        {
-            key: 'dob',
-            title: 'Năm sinh',
-            dataIndex: 'dob',
-            width: '10%',
-        },
-        {
             key: 'blood',
             title: 'Nhóm máu',
             dataIndex: 'blood',
             width: '10%',
         },
         {
-            key: 'bmi_avg',
+            key: 'cal_bmi',
             title: 'BMI trung bình',
-            dataIndex: 'bmi_avg',
+            dataIndex: 'cal_bmi',
             width: '12%',
         },
         {
@@ -88,10 +76,27 @@ function PatientList() {
             width: '10%',
         },
         {
+            key: 'blood_pressures',
+            title: 'Huyết áp',
+            dataIndex: 'blood_pressures',
+            width: '19%',
+        },
+        {
             key: 'status',
             title: 'Sức khỏe',
             dataIndex: 'status',
             width: '20%',
+            render: (record) => {
+                return <>{record.props.status.message ? <StatusHeathLoader status={record.props.status} /> : null}</>;
+            },
+            filters: [
+                { text: 'Bình thường', value: 0 },
+                { text: 'Cảnh báo', value: 1 },
+                { text: 'Báo động', value: 2 },
+            ],
+            onFilter: (value, record) => {
+                return record.status.props.status.message.code === value;
+            },
         },
         {
             key: '5',
@@ -117,14 +122,27 @@ function PatientList() {
 
             <Table
                 columns={cols}
-                dataSource={patients.map(({ patient, bmi_avg, glycemic, status }, index) => ({
+                dataSource={patients.map(({ patient, bmis, glycemics, blood_pressures, status }, index) => ({
                     index: index + 1,
                     username: patient?.person?.username,
                     gender: patient?.person?.gender === true ? 'Nam' : 'Nữ',
                     dob: patient?.person?.dob,
                     blood: patient?.blood,
-                    bmi_avg: bmi_avg ? bmi_avg : 0,
-                    glycemic: glycemic ? glycemic.metric : 0,
+                    cal_bmi: bmis
+                        ? bmis.map((_bmi) => {
+                              return _bmi.cal_bmi;
+                          })[bmis.length - 1]
+                        : 0,
+                    glycemic: glycemics
+                        ? glycemics.map((_glycemic) => {
+                              return _glycemic.metric;
+                          })[glycemics.length - 1]
+                        : 0,
+                    blood_pressures: blood_pressures
+                        ? blood_pressures.map((_blood) => {
+                              return `Tâm trương: ${_blood.diastole} - Tâm thu: ${_blood.systolic}`;
+                          })[blood_pressures.length - 1]
+                        : 0,
                     address: patient?.person?.address,
                     status: status.message ? <StatusHeathLoader status={status} /> : null,
                     _id: patient?._id,

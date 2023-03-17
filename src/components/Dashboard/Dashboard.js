@@ -6,7 +6,7 @@ import CardItem from './CardItem';
 import './Dashboard.css';
 import Statistics from './Statistics';
 
-function Dashboard() {
+function Dashboard({ schedules }) {
     return (
         <div className="dashboard-wrapper">
             <span className="dashboard-date-now">{moment().format('dddd, Do MMM YYYY')}</span>
@@ -14,7 +14,7 @@ function Dashboard() {
             <div className="dashboard-container">
                 {/* Left */}
                 <div className="dashboard-container-left">
-                    <CardItem />
+                    <CardItem schedules={schedules} />
                     <Statistics />
                 </div>
 
