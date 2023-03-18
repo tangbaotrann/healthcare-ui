@@ -26,7 +26,7 @@ import { fetchApiRemindPatient } from '~/redux/features/patient/patientSlice';
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function BarChart({ bmis, glycemics, infoPatient }) {
+function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
     const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
@@ -36,12 +36,12 @@ function BarChart({ bmis, glycemics, infoPatient }) {
     const getIdDoctor = useSelector(getDoctorLoginFilter);
 
     // console.log('patients', patients);
-    console.log('bmis', bmis);
-    console.log('glycemics', glycemics);
+    // console.log('bmis', bmis);
+    // console.log('glycemics', glycemics);
     // console.log('infoPatient', infoPatient);
     // console.log('getIdDoctor', getIdDoctor);
 
-    // Opts
+    // Option bmi
     const options = {
         responsive: true,
         plugins: {
@@ -55,7 +55,7 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         },
     };
 
-    //
+    // Option glycemic
     const optionsGlycemic = {
         responsive: true,
         plugins: {
@@ -69,11 +69,30 @@ function BarChart({ bmis, glycemics, infoPatient }) {
         },
     };
 
-    // labels
+    // Option bloob pressure
+    const optionBloodPressure = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top', //  as const
+            },
+            title: {
+                display: true,
+                text: 'Biểu đồ thống kê chỉ số Blood Pressure của bệnh nhân',
+            },
+        },
+    };
+
+    // labels bmi
     const labels = bmis?.bmis?.map((bmi) => moment(bmi.createdAt).format('DD-MM-YYYY'));
+
+    // labels glycemic
     const labelsGlycemic = glycemics?.map((glycemic) => moment(glycemic.createdAt).format('DD-MM-YYYY'));
     const lablelArrs = new Set([...labelsGlycemic]);
     const resultsLabelsGlycemic = Array.from(lablelArrs);
+
+    // labels blood pressure
+    const labelsBloodPressure = bloodPressures?.map((_blood) => moment(_blood.createdAt).format('DD-MM-YYYY'));
 
     // Data BMI
     const data = {
@@ -113,6 +132,25 @@ function BarChart({ bmis, glycemics, infoPatient }) {
                 data: glycemics
                     ? glycemics.filter((glycemic) => glycemic.case === 3).map((glycemic) => glycemic.metric)
                     : 0,
+                borderColor: 'rgb(93, 235, 53)',
+                backgroundColor: 'rgba(93, 235, 53, 0.5)',
+            },
+        ],
+    };
+
+    // Data blood pressure
+    const dataBloodPressure = {
+        labels: labelsBloodPressure,
+        datasets: [
+            {
+                label: `Diastole (Tâm trương)`,
+                data: bloodPressures ? bloodPressures.map((_blood) => _blood.diastole) : 0,
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: `Systolic (Tâm thu)`,
+                data: bloodPressures ? bloodPressures.map((_blood) => _blood.systolic) : 0,
                 borderColor: 'rgb(93, 235, 53)',
                 backgroundColor: 'rgba(93, 235, 53, 0.5)',
             },
@@ -182,11 +220,20 @@ function BarChart({ bmis, glycemics, infoPatient }) {
             <Divider />
 
             <div className="container-chart">
-                <div className="inner-chart">
-                    <Line options={options} data={data} height={260} width={400} />
+                <div className="bmi-glycemic-container">
+                    <div className="inner-chart">
+                        <Line options={options} data={data} height={260} width={400} />
+                    </div>
+                    <div className="inner-chart">
+                        <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
+                    </div>
                 </div>
-                <div className="inner-chart">
-                    <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
+
+                {/* Huyết áp */}
+                <div className="blood-pressures-container">
+                    <div className="inner-chart">
+                        <Line options={optionBloodPressure} data={dataBloodPressure} height={260} width={400} />
+                    </div>
                 </div>
             </div>
 
