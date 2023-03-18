@@ -3,20 +3,36 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
+import { Popover, Tooltip } from 'antd';
+import { ReactMic } from 'react-mic';
 
 // me
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
 import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
-import { CloseOutlined, SendOutlined, SmileOutlined, VideoCameraAddOutlined } from '@ant-design/icons';
+import {
+    AudioMutedOutlined,
+    AudioOutlined,
+    CloseOutlined,
+    SendOutlined,
+    SmileOutlined,
+    VideoCameraAddOutlined,
+} from '@ant-design/icons';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import MessageItem from './MessageItem';
+import axios from 'axios';
 
 function Message({ messages, conversation, infoUser }) {
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
+    const [muteRecording, setMuteRecording] = useState(false);
+    const [openPopover, setOpenPopover] = useState(false);
+    const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
+
+    // const [audio, setAudio] = useState(null);
+    // const [transcription, setTranscription] = useState('');
 
     const dispatch = useDispatch();
 
@@ -24,6 +40,7 @@ function Message({ messages, conversation, infoUser }) {
     const infoDoctor = useSelector(getDoctorLoginFilter);
 
     const scrollMessage = useRef();
+    const focusInputMessage = useRef();
 
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
@@ -97,6 +114,41 @@ function Message({ messages, conversation, infoUser }) {
         socket.emit('call_id_room_to_user', { conversation, infoDoctor });
     };
 
+    // handle start recording
+    const handleStartRecording = () => {
+        setMuteRecording(true);
+        setOpenPopover(true);
+    };
+
+    // handle stop recording
+    const handleStopRecording = async (recordedBlob) => {
+        setMuteRecording(false);
+        setOpenPopover(false);
+
+        console.log('recordedBlob is: ', recordedBlob);
+        // setAudio(recordedBlob);
+
+        setIsLoadingSpeech(true);
+
+        if (recordedBlob) {
+            const apiKey = process.env.REACT_APP_OPEN_AI_API_KEY;
+            const formData = new FormData();
+            formData.append('file', recordedBlob.blob, recordedBlob.startTime.toString() + '.mp3');
+            formData.append('model', 'whisper-1');
+
+            const response = await axios.post(`${process.env.REACT_APP_OPEN_AI_API}audio/transcriptions`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${apiKey}`,
+                },
+            });
+
+            setValue(response.data.text);
+            focusInputMessage.current.focus();
+            setIsLoadingSpeech(false);
+        }
+    };
+
     // scroll message
     useEffect(() => {
         conversation && messages && scrollMessage.current?.scrollIntoView({ behavior: 'smooth' });
@@ -138,14 +190,16 @@ function Message({ messages, conversation, infoUser }) {
                 </div>
                 {/* Input */}
                 <div className="message-footer">
+                    {isLoadingSpeech && <p className="loading-listen-message"></p>}
                     <input
                         type="text"
+                        ref={focusInputMessage}
                         value={value}
                         onChange={(e) => handleChangeInput(e)}
                         onKeyDown={handleSendMessage}
                         className="input-message-text"
                         rows="2"
-                        placeholder="Type your message here..."
+                        placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
                         spellCheck="false"
                     />
                     {value && (
@@ -154,12 +208,40 @@ function Message({ messages, conversation, infoUser }) {
                         </button>
                     )}
                     <div className="container-emoji-picker">
-                        {!previewEmoji && <SmileOutlined onClick={handlePreviewEmoji} />}
-                        {previewEmoji && (
+                        {muteRecording ? (
+                            <Popover
+                                title={() => {
+                                    return <p className="loading-listen">Đang nhận diện bằng giọng nói</p>;
+                                }}
+                                trigger="click"
+                                open={openPopover}
+                            >
+                                <AudioOutlined className="audio-un-mute-message" onClick={handleStopRecording} />
+                            </Popover>
+                        ) : (
+                            <>
+                                <Tooltip title="Nhận diện bằng giọng nói">
+                                    <AudioMutedOutlined className="audio-mute-message" onClick={handleStartRecording} />
+                                </Tooltip>
+                            </>
+                        )}
+
+                        <ReactMic
+                            record={muteRecording}
+                            className="sound-wave"
+                            onStop={handleStopRecording}
+                            mimeType="wav"
+                            strokeColor="#000000"
+                            backgroundColor="#FF4081"
+                        />
+
+                        {previewEmoji ? (
                             <>
                                 <EmojiPicker defaultSkinTone={SkinTones} onEmojiClick={handleEmojiClicked} />
                                 <CloseOutlined className="emoji-picker-close-btn" onClick={handleClosePreviewEmoji} />
                             </>
+                        ) : (
+                            <SmileOutlined className="emoji-picker-open-btn" onClick={handlePreviewEmoji} />
                         )}
                     </div>
                 </div>

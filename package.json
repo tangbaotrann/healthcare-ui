@@ -33,7 +33,8 @@
     "web-vitals": "^2.1.4",
     "zego-zim-web": "^2.5.1",
     "echarts": "^5.4.1",
-    "echarts-for-react": "^3.0.2"
+    "echarts-for-react": "^3.0.2",
+    "react-mic": "^12.4.6"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^4.1.0",

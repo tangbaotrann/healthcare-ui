@@ -1,7 +1,3 @@
-.scroll-to-top {
-    margin-bottom: 62px;
-}
-
 .scroll-to-top:hover {
     opacity: 0.8;
     background-color: var(--primary);

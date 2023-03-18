@@ -8,12 +8,14 @@ import './PatientList.css';
 import TitleName from '../TitleName';
 import {
     fetchApiBMIByIdPatientSelector,
+    fetchApiBloodPressuresByIdPatientSelector,
     fetchApiGlycemicByIdPatientSelector,
     fetchApiScheduleDetailByIdDoctorSelector,
 } from '~/redux/selector';
 import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
-import BarChart from '../BarChart';
 import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
+import { fetchApiBloodPressureByIdPatient } from '~/redux/features/metric/bloodPressure';
+import BarChart from '../BarChart';
 import StatusHeathLoader from '../StatusHeathLoader';
 import MetricPieChart from './MetricPieChart';
 
@@ -26,15 +28,18 @@ function PatientList() {
     const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
     const bmis = useSelector(fetchApiBMIByIdPatientSelector);
     const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
+    const bloodPressures = useSelector(fetchApiBloodPressuresByIdPatientSelector);
 
-    console.log('patients', patients);
+    // console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
+    // console.log('bloodPressures', bloodPressures);
 
     // view detail patient
     const handleViewDetailPatient = (record) => {
         dispatch(fetchApiBMIByIdPatient(record._id));
         dispatch(fetchApiGlycemicByIdPatient(record._id));
+        dispatch(fetchApiBloodPressureByIdPatient(record._id));
         setInfoPatient(record);
         setShowModalProfileDoctor(true);
     };
@@ -167,7 +172,7 @@ function PatientList() {
                 okButtonProps={{ style: { display: 'none' } }}
                 width={1000}
             >
-                <BarChart bmis={bmis} glycemics={glycemics} infoPatient={infoPatient} />
+                <BarChart bmis={bmis} glycemics={glycemics} bloodPressures={bloodPressures} infoPatient={infoPatient} />
             </Modal>
         </>
     );

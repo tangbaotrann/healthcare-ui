@@ -93,7 +93,7 @@ function MetricPieChart() {
         ],
     };
 
-    return <ReactECharts style={{ height: 200, marginTop: '6px', marginBottom: '10px' }} option={option} />;
+    return <ReactECharts style={{ height: 200, marginTop: '0px', marginBottom: '10px' }} option={option} />;
 }
 
 export default MetricPieChart;

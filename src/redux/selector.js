@@ -37,6 +37,9 @@ export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
 
+// get patient -> blood pressure
+export const fetchApiBloodPressuresByIdPatientSelector = (state) => state.bloodPressureSlice.data;
+
 // get all schedule medical appointment
 export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
 

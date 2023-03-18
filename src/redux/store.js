@@ -12,6 +12,7 @@ import scheduleDoctor from './features/scheduleDoctor/scheduleDoctorSlice';
 
 // me
 import userSlice from './features/user/userSlice';
+import bloodPressureSlice from './features/metric/bloodPressure';
 
 const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
         patientSlice: patientSlice.reducer,
         bmisSlice: bmisSlice.reducer,
         glycemicSlice: glycemicSlice.reducer,
+        bloodPressureSlice: bloodPressureSlice.reducer,
         notificationSlice: notificationSlice.reducer,
         conversationSlice: conversationSlice.reducer,
         messageSlice: messageSlice.reducer,
