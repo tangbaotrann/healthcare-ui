@@ -60,25 +60,26 @@ const notificationSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchApiNotificationByDoctorId.fulfilled, (state, action) => {
-            state.data = action.payload;
-        });
-        builder.addCase(fetchApiUpdateSeenNotification.fulfilled, (state, action) => {
-            // state.seen = action.payload;
+        builder
+            .addCase(fetchApiNotificationByDoctorId.fulfilled, (state, action) => {
+                state.data = action.payload;
+            })
+            .addCase(fetchApiUpdateSeenNotification.fulfilled, (state, action) => {
+                // state.seen = action.payload;
 
-            const hasSeen = action.payload;
+                const hasSeen = action.payload;
 
-            const spliceHasSeen = state.data.findIndex((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
-            const allHasSeen = state.data.find((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
+                const spliceHasSeen = state.data.findIndex((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
+                const allHasSeen = state.data.find((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
 
-            if (spliceHasSeen) {
-                state.data.splice(spliceHasSeen, 1);
-            }
+                if (spliceHasSeen > -1) {
+                    state.data.splice(spliceHasSeen, 1);
+                }
 
-            if (allHasSeen) {
-                state.data.push(hasSeen[0]);
-            }
-        });
+                if (allHasSeen) {
+                    state.data.push(hasSeen[0]);
+                }
+            });
     },
 });
 

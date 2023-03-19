@@ -11,6 +11,9 @@ import {
     fetchApiBloodPressuresByIdPatientSelector,
     fetchApiGlycemicByIdPatientSelector,
     fetchApiScheduleDetailByIdDoctorSelector,
+    userBMIListSelectorFilter,
+    userBloodPressureListSelectorFilter,
+    userGlycemicListSelectorFilter,
 } from '~/redux/selector';
 import { fetchApiBMIByIdPatient } from '~/redux/features/metric/bmisSlice';
 import { fetchApiGlycemicByIdPatient } from '~/redux/features/metric/glycemicSlice';
@@ -26,9 +29,9 @@ function PatientList() {
     const dispatch = useDispatch();
 
     const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
-    const bmis = useSelector(fetchApiBMIByIdPatientSelector);
-    const glycemics = useSelector(fetchApiGlycemicByIdPatientSelector);
-    const bloodPressures = useSelector(fetchApiBloodPressuresByIdPatientSelector);
+    const bmis = useSelector(userBMIListSelectorFilter);
+    const glycemics = useSelector(userGlycemicListSelectorFilter);
+    const bloodPressures = useSelector(userBloodPressureListSelectorFilter);
 
     // console.log('patients', patients);
     // console.log('bmis', bmis);
@@ -78,7 +81,7 @@ function PatientList() {
             key: 'glycemic',
             title: 'Đường huyết',
             dataIndex: 'glycemic',
-            width: '10%',
+            width: '11%',
         },
         {
             key: 'blood_pressures',
@@ -92,7 +95,15 @@ function PatientList() {
             dataIndex: 'status',
             width: '20%',
             render: (record) => {
-                return <>{record.props.status.message ? <StatusHeathLoader status={record.props.status} /> : null}</>;
+                return (
+                    <>
+                        {record?.props?.status?.message ? (
+                            <StatusHeathLoader status={record.props.status} />
+                        ) : (
+                            'Bạn chưa cập nhật chỉ số sức khỏe'
+                        )}
+                    </>
+                );
             },
             filters: [
                 { text: 'Bình thường', value: 0 },
@@ -149,7 +160,7 @@ function PatientList() {
                           })[blood_pressures.length - 1]
                         : 0,
                     address: patient?.person?.address,
-                    status: status.message ? <StatusHeathLoader status={status} /> : null,
+                    status: status.message ? <StatusHeathLoader status={status} /> : 'Bạn chưa cập nhật chỉ số',
                     _id: patient?._id,
                 }))}
                 rowKey="index"
