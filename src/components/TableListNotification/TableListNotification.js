@@ -50,7 +50,7 @@ function TableListNotification({ notifications }) {
                             <CheckOutlined className="check-is-seen" />
                         ) : (
                             <Button type="link" onClick={() => handleUpdateSeenNotification(record)}>
-                                Xem tin nhắn
+                                Xem
                             </Button>
                         )}
                     </>

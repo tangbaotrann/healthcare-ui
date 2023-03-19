@@ -18,7 +18,7 @@ function CardItem({ schedules }) {
                 </div>
 
                 <div className="card-item-footer">
-                    <span className="card-item-footer-type">Hiện có là: </span>
+                    {/* <span className="card-item-footer-type">Hiện có là: </span> */}
                     <span className="card-item-footer-amount">{getTotalScheduleOfDoctor}</span>
                 </div>
             </div>
@@ -31,7 +31,7 @@ function CardItem({ schedules }) {
                 </div>
 
                 <div className="card-item-footer">
-                    <span className="card-item-footer-type">Hiện có là: </span>
+                    {/* <span className="card-item-footer-type">Hiện có là: </span> */}
                     <span className="card-item-footer-amount">{getTotalAppointmentScheduleOfDoctor}</span>
                 </div>
             </div>
@@ -44,7 +44,7 @@ function CardItem({ schedules }) {
                 </div>
 
                 <div className="card-item-footer">
-                    <span className="card-item-footer-type">Hiện có là: </span>
+                    {/* <span className="card-item-footer-type">Hiện có là: </span> */}
                     <span className="card-item-footer-amount">{schedules.length}</span>
                 </div>
             </div>
@@ -57,7 +57,7 @@ function CardItem({ schedules }) {
                 </div>
 
                 <div className="card-item-footer">
-                    <span className="card-item-footer-type">Hiện có là: </span>
+                    {/* <span className="card-item-footer-type">Hiện có là: </span> */}
                     <span className="card-item-footer-amount">{getTotalPatients}</span>
                 </div>
             </div>

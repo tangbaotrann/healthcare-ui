@@ -30,6 +30,7 @@ import ParticlesBackground from '~/components/ParticlesBackground';
 import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
+import { logo } from '~/asset/images';
 
 const { Header, Sider, Content } = Layout;
 
@@ -59,15 +60,9 @@ function LayoutDoctorManager({ children, infoUser }) {
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed} width={220} className="sidebar">
-                {!collapsed && (
-                    <img
-                        style={{ margin: '12px' }}
-                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/logo.svg"
-                        alt="logo"
-                    />
-                )}
+                {!collapsed && <img className="logo-primary" src={logo.logo} alt="logo" />}
                 <Menu
-                    theme="dark"
+                    theme="light"
                     mode="inline"
                     defaultSelectedKeys={[constants.layoutDashboard]}
                     items={[
@@ -98,11 +93,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                                                 size="default"
                                                 offset={[155, 6]}
                                             >
-                                                <NotificationOutlined style={{ color: '#fff', marginRight: '6px' }} />
+                                                <NotificationOutlined style={{ color: 'black', marginRight: '6px' }} />
                                             </Badge>
                                         </Space>
                                     ) : (
-                                        <NotificationOutlined style={{ color: '#fff' }} />
+                                        <NotificationOutlined style={{ color: 'black' }} />
                                     )}
                                 </>
                             ),
@@ -126,13 +121,10 @@ function LayoutDoctorManager({ children, infoUser }) {
                     // Change layout
                     onSelect={(item) => {
                         if (item.key === constants.layoutDashboard) {
-                            // dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
-                            // dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
-                            // dispatch(fetchApiScheduleByIdDoctor(getIdDoctor._id));
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));

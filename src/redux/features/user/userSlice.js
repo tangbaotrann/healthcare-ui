@@ -43,7 +43,6 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
 
 // find user Doctor by token
 export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async (token) => {
-    console.log('tk slice', token);
     try {
         if (token) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}doctors/profile`, {

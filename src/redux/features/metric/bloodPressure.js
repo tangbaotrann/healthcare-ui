@@ -23,6 +23,12 @@ const bloodPressureSlice = createSlice({
     name: 'bloodPressure',
     initialState: {
         data: [],
+        btnOptionSelectedBloodPressure: null,
+    },
+    reducers: {
+        arrivalFilterBloodPressure: (state, action) => {
+            state.btnOptionSelectedBloodPressure = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchApiBloodPressureByIdPatient.fulfilled, (state, action) => {

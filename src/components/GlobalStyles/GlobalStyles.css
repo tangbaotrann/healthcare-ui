@@ -1,5 +1,5 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200&family=Quicksand:wght@300;400;500;600;700;800;900&display=swap');
 
 /* init var */
 :root {
@@ -32,6 +32,9 @@
     --modal-meeting: rgb(230 230 230 / 0%);
     --modal-meeting-box-shadow: rgb(230 230 230 / 70%);
 
+    /* Cart-item Dashboard */
+    --cart-item: rgb(191, 220, 246);
+
     /* background images */
     --bg-out-site-left: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/online-pharmacy-video-cover.svg');
     --bg-out-site-right: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/not-feeling-well.svg');
@@ -39,7 +42,7 @@
     --bg-in-site-clinic-box-shadow: url('https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/multi-clinic-bg.svg');
 
     /* font-family */
-    --font-family: 'Barlow', sans-serif;
+    --font-family: 'Quicksand', 'sans-serif' !important;
 }
 
 * {

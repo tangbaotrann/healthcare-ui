@@ -1,5 +1,6 @@
 // lib
 import { createSelector } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 // find user doctor by token
 export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.doctorByToken;
@@ -33,12 +34,15 @@ export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patient
 
 // get patient -> bmis
 export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
+export const btnOptionSelectedBMISelector = (state) => state.bmisSlice.btnOptionSelectedBMI;
 
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
+export const btnOptionSelectedGlycemicSelector = (state) => state.glycemicSlice.btnOptionSelectedGlycemic;
 
 // get patient -> blood pressure
 export const fetchApiBloodPressuresByIdPatientSelector = (state) => state.bloodPressureSlice.data;
+export const btnOptionSelectedBloodPressure = (state) => state.bloodPressureSlice.btnOptionSelectedBloodPressure;
 
 // get all schedule medical appointment
 export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
@@ -220,7 +224,7 @@ export const filterStatusHealthNormalOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     (listPatient) => {
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message.code === 0);
+            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 0);
 
             return patient;
         }
@@ -232,7 +236,7 @@ export const filterStatusHealthAlarmOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     (listPatient) => {
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message.code === 2);
+            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 2);
 
             return patient;
         }
@@ -244,7 +248,7 @@ export const filterStatusHealthWarningOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     (listPatient) => {
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message.code === 1);
+            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 1);
 
             return patient;
         }
@@ -365,5 +369,75 @@ export const messageOfUserFilter = createSelector(
         // console.log('message selector ->', messages);
 
         return messages;
+    },
+);
+
+// filter chart glycemic
+export const userGlycemicListSelectorFilter = createSelector(
+    fetchApiGlycemicByIdPatientSelector,
+    btnOptionSelectedGlycemicSelector,
+    (glycemics, option) => {
+        const now = new Date();
+        if (glycemics.length > 0) {
+            if (option === 'all') {
+                return glycemics;
+            } else if (option === 'week') {
+                const _glycemics = glycemics.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _glycemics;
+            } else if (option === 'month') {
+                const _glycemics = glycemics.filter((b) => moment(b.createdAt).month() === moment(now).month());
+
+                return _glycemics;
+            }
+        }
+        return [];
+    },
+);
+
+// filter chart bmis
+export const userBMIListSelectorFilter = createSelector(
+    fetchApiBMIByIdPatientSelector,
+    btnOptionSelectedBMISelector,
+    (bmis, option) => {
+        const now = new Date();
+        if (bmis.length > 0) {
+            if (option === 'all') {
+                return bmis;
+            } else if (option === 'week') {
+                const _bmis = bmis.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _bmis;
+            } else if (option === 'month') {
+                const _bmis = bmis.filter((b) => moment(b.createdAt).month() === moment(now).month());
+
+                return _bmis;
+            }
+        }
+        return [];
+    },
+);
+
+// filter chart blood pressure
+export const userBloodPressureListSelectorFilter = createSelector(
+    fetchApiBloodPressuresByIdPatientSelector,
+    btnOptionSelectedBloodPressure,
+    (bloodPressure, option) => {
+        const now = new Date();
+        if (bloodPressure.length > 0) {
+            if (option === 'all') {
+                return bloodPressure;
+            } else if (option === 'week') {
+                const _blood = bloodPressure.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _blood;
+            } else if (option === 'month') {
+                const _blood = bloodPressure.filter((b) => moment(b.createdAt).month() === moment(now).month());
+
+                return _blood;
+            }
+        }
+
+        return [];
     },
 );

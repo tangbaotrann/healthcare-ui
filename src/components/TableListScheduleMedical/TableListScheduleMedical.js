@@ -36,7 +36,7 @@ function TableListScheduleMedical({ infoUser }) {
             key: 'day',
             title: 'Thứ',
             dataIndex: 'day',
-            width: '7%',
+            width: '8%',
         },
         {
             key: 'createdAt',
@@ -54,13 +54,13 @@ function TableListScheduleMedical({ infoUser }) {
             key: 'time_per_conversation',
             title: 'Thời gian khám',
             dataIndex: 'time_per_conversation',
-            width: '8%',
+            width: '9%',
         },
         {
             key: 'fee',
             title: 'Chi phí',
             dataIndex: 'fee',
-            width: '9%',
+            width: '10%',
         },
         {
             key: 'content_exam',
@@ -72,7 +72,7 @@ function TableListScheduleMedical({ infoUser }) {
             key: 'status',
             title: 'Trạng thái',
             dataIndex: 'status',
-            width: '9%',
+            width: '10%',
             render: (status) => {
                 return (
                     <>

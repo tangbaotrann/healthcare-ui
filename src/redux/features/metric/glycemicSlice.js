@@ -10,22 +10,6 @@ export const fetchApiGlycemicByIdPatient = createAsyncThunk('bmi/fetchApiGlycemi
         console.log('res - patient - glycemic', res.data.data);
 
         return res.data.data;
-        // if (patients.length === 1) {
-        //     const idPatient = patients[0];
-        //     console.log('idPatient', idPatient);
-        //     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-        //     console.log('res - patient', res.data.data);
-
-        //     return res.data.data;
-        // } else if (patients.length > 1) {
-        //     const idPatient = patients.forEach((_idPatient) => _idPatient);
-        //     console.log('idPatient', idPatient);
-
-        //     const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-        //     console.log('res - patient', res.data.data);
-
-        //     return res.data.data;
-        // }
     } catch (err) {
         console.log({ err });
     }
@@ -35,6 +19,12 @@ const glycemicSlice = createSlice({
     name: 'glycemic',
     initialState: {
         data: [],
+        btnOptionSelectedGlycemic: null,
+    },
+    reducers: {
+        arrivalFilterGlycemic: (state, action) => {
+            state.btnOptionSelectedGlycemic = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchApiGlycemicByIdPatient.fulfilled, (state, action) => {
