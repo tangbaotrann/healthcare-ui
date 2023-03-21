@@ -10,6 +10,7 @@ import {
     MenuUnfoldOutlined,
     NotificationOutlined,
     OrderedListOutlined,
+    RobotOutlined,
     ScheduleOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
@@ -65,6 +66,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                     theme="light"
                     mode="inline"
                     defaultSelectedKeys={[constants.layoutDashboard]}
+                    style={{ fontWeight: '600' }}
                     items={[
                         {
                             key: constants.layoutDashboard,
@@ -117,6 +119,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                                 // { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
                             ],
                         },
+                        {
+                            key: constants.layoutChatBot,
+                            icon: <RobotOutlined />,
+                            label: 'Chatbot',
+                        },
                     ]}
                     // Change layout
                     onSelect={(item) => {
@@ -138,6 +145,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutMeeting) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutChatBot) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
                     }}

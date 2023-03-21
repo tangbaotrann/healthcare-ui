@@ -92,7 +92,7 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
 });
 
 const createFormData = (values, fileList) => {
-    const { username, dob, address, gender, avatar } = values;
+    const { username, dob, address, gender, work_type, avatar } = values;
 
     const formData = new FormData();
 
@@ -101,6 +101,7 @@ const createFormData = (values, fileList) => {
     formData.append('address', address);
     formData.append('gender', gender);
     formData.append('avatar', fileList[0].originFileObj);
+    formData.append('work_type', work_type);
 
     return formData;
 };
@@ -109,6 +110,7 @@ const createFormData = (values, fileList) => {
 export const fetchApiUpdateInfoUser = createAsyncThunk(
     'user/fetchApiUpdateInfoUser',
     async ({ values, fileList, tokenCurrent }) => {
+        // console.log('values', values);
         if (tokenCurrent) {
             try {
                 let formData = createFormData(values, fileList);
@@ -167,7 +169,8 @@ export const fetchApiCreateProfileForDoctor = createAsyncThunk(
         // console.log('values', values);
         // console.log('values', tokenCurrent);
         try {
-            const { specialist, training_place, degree, languages, education, experiences, doctor_id } = values;
+            const { specialist, training_place, degree, languages, education, experiences, work_place, doctor_id } =
+                values;
 
             const res = await axios.post(
                 `${process.env.REACT_APP_BASE_URL}doctors/profile`,
@@ -178,6 +181,7 @@ export const fetchApiCreateProfileForDoctor = createAsyncThunk(
                     languages: languages,
                     education: education,
                     experiences: experiences,
+                    work_place: work_place,
                     doctor_id: doctor_id,
                 },
                 {

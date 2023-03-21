@@ -4,6 +4,11 @@ export const logo = {
     iconHeart: require('~/asset/images/icon-heart.png'),
 };
 
+// fake avatar chat-bot ai
+export const avatarGPT = {
+    avatarGPT: 'https://res.cloudinary.com/dgzgkty9d/image/upload/v1679056628/bnjz6tasvaom26vrp2ba.jpg',
+};
+
 // Images of slide show
 const images = [
     {

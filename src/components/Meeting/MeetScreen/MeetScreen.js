@@ -24,7 +24,7 @@ function MeetScreen() {
             serverSecret,
             roomId,
             Date.now().toString(),
-            `${username ? username : 'BOT'}`,
+            `${username ? btoa(unescape(encodeURIComponent(username))) : 'BOT'}`,
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);

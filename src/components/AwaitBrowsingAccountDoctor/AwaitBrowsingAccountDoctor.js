@@ -14,11 +14,11 @@ function AwaitBrowsingAccountDoctor({ checkAwaitAccept, awaitAccept }) {
                 </h6>
             ) : (
                 <h6>
-                    <CheckOutlined className="icon-await-rule-doctor" /> Bạn đã đăng ký thành công tài khoản cho Bác sĩ.
-                    Vui lòng chờ ít phút để được duyệt tài khoản nhé!
+                    <CheckOutlined className="icon-await-rule-doctor" />
+                    Bạn đã đăng ký thành công tài khoản cho Bác sĩ. Vui lòng chờ ít phút để được duyệt tài khoản nhé!
                 </h6>
             )}
-            <LoadingOutlined className="loading-await-rule-doctor" style={{ fontSize: 42 }} spin content="Loading..." />
+            {/* <LoadingOutlined className="loading-await-rule-doctor" style={{ fontSize: 42 }} content="Loading..." /> */}
         </div>
     );
 }

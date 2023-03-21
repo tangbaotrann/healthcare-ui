@@ -34,10 +34,44 @@
     background-color: green;
     border-radius: 50%;
     font-size: 3.4rem;
+    margin-right: 10px;
 }
+
+/* Animation ...  */
+.container-await-rule-doctor h6:after {
+    content: "...";
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ellipsis-dot-message 1s infinite .3s;
+    animation-fill-mode: fowards;
+    width: 3.4rem;
+    font-size: 3.2rem;
+}
+
+@keyframes ellipsis-dot-message {
+    25% {
+        content: "";
+    }
+
+    50% {
+        content: ".";
+    }
+
+    75% {
+        content: "...";
+    }
+
+    100% {
+        content: "....";
+    }
+}
+/* Animation ... */
 
 .icon-delete-await-rule-doctor {
     background-color: red;
     border-radius: 50%;
     font-size: 3.4rem;
+    margin-right: 10px;
 }

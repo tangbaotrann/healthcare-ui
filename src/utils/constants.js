@@ -6,6 +6,7 @@ const constants = {
     layoutListConversation: 'listConversation',
     layoutScheduleMedical: 'scheduleMedical',
     layoutMeeting: 'meeting',
+    layoutChatBot: 'chatbot',
 };
 
 export default constants;

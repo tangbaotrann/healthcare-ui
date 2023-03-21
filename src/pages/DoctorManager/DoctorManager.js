@@ -32,6 +32,7 @@ import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
 } from '~/redux/features/patient/patientSlice';
+import ChatBot from '~/components/ChatBot/ChatBot';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -49,8 +50,8 @@ function DoctorManager() {
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
-    // console.log('awaitAccept', awaitAccept);
-    // console.log('checkAwaitAccept', checkAwaitAccept);
+    console.log('awaitAccept', awaitAccept);
+    console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
 
     useEffect(() => {
@@ -87,7 +88,7 @@ function DoctorManager() {
 
     return (
         <>
-            {(awaitAccept?.data?.isAccepted === false || checkAwaitAccept?.isAccepted === false) && (
+            {(awaitAccept?.data?.is_accepted === false || checkAwaitAccept?.is_accepted === false) && (
                 <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
             )}
             <LayoutDoctorManager infoUser={infoUser}>
@@ -103,6 +104,8 @@ function DoctorManager() {
                     <TableListNotification notifications={notifications} />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation infoUser={infoUser} />
+                ) : changeLayout === constants.layoutChatBot ? (
+                    <ChatBot />
                 ) : null}
             </LayoutDoctorManager>
         </>
