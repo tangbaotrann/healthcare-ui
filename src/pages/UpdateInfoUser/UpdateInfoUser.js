@@ -31,7 +31,7 @@ function UpdateInfoUser() {
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    console.log(values);
+                    console.log('create info doctor ->', values);
                     if (values && tokenCurrent.accessToken) {
                         dispatch(
                             fetchApiUpdateInfoUser({
@@ -133,6 +133,23 @@ function UpdateInfoUser() {
                     hasFeedback
                 >
                     <Input prefix={<SendOutlined />} placeholder="Địa chỉ..." />
+                </Form.Item>
+
+                {/* Gender */}
+                <Form.Item
+                    name="work_type"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bạn cần phải chọn loại bệnh.',
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Select style={{ width: '100%' }} placeholder="Loại bệnh..." allowClear>
+                        <Select.Option value="glycemic">Đường huyết</Select.Option>
+                        <Select.Option value="blood">Huyết áp</Select.Option>
+                    </Select>
                 </Form.Item>
 
                 {/* Button update */}

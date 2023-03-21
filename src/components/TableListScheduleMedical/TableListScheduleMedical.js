@@ -36,7 +36,7 @@ function TableListScheduleMedical({ infoUser }) {
             key: 'day',
             title: 'Thứ',
             dataIndex: 'day',
-            width: '8%',
+            width: '10%',
         },
         {
             key: 'createdAt',

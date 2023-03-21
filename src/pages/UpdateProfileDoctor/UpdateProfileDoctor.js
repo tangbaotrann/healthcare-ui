@@ -4,6 +4,7 @@ import {
     EnvironmentOutlined,
     GlobalOutlined,
     PercentageOutlined,
+    PushpinOutlined,
     ReadOutlined,
     UserOutlined,
 } from '@ant-design/icons';
@@ -148,6 +149,20 @@ function UpdateProfileDoctor() {
                     hasFeedback
                 >
                     <Input prefix={<PercentageOutlined />} placeholder="Kinh nghiệm..." />
+                </Form.Item>
+
+                {/* work_place */}
+                <Form.Item
+                    name="work_place"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Bạn cần phải nhập nơi làm việc.',
+                        },
+                    ]}
+                    hasFeedback
+                >
+                    <Input prefix={<PushpinOutlined />} placeholder="Nơi làm việc..." />
                 </Form.Item>
 
                 {/* doctor_id */}
