@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
-import { Popover, Tooltip } from 'antd';
+import { Image, Popover, Tooltip } from 'antd';
 import { ReactMic } from 'react-mic';
 
 // me
@@ -15,6 +15,8 @@ import {
     AudioMutedOutlined,
     AudioOutlined,
     CloseOutlined,
+    FileJpgOutlined,
+    PaperClipOutlined,
     SendOutlined,
     SmileOutlined,
     VideoCameraAddOutlined,
@@ -30,6 +32,7 @@ function Message({ messages, conversation, infoUser }) {
     const [muteRecording, setMuteRecording] = useState(false);
     const [openPopover, setOpenPopover] = useState(false);
     const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
+    const [newImageMessage, setNewImageMessage] = useState([]);
 
     // const [audio, setAudio] = useState(null);
     // const [transcription, setTranscription] = useState('');
@@ -46,6 +49,7 @@ function Message({ messages, conversation, infoUser }) {
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
+    console.log('new img', newImageMessage);
 
     // user join room
     useEffect(() => {
@@ -85,9 +89,11 @@ function Message({ messages, conversation, infoUser }) {
                     conversation: conversation._id,
                     senderId: infoDoctor._id,
                     content: value,
+                    image: newImageMessage,
                 }),
             );
             setValue('');
+            setNewImageMessage([]);
         }
     };
 
@@ -149,6 +155,41 @@ function Message({ messages, conversation, infoUser }) {
         }
     };
 
+    // handle option change images
+    const handleOptionChangeImages = (e) => {
+        const files = e.target.files;
+        const listFiles = [];
+
+        [...files].forEach((_file) => {
+            listFiles.push({
+                imageFile: _file,
+                preview: URL.createObjectURL(_file),
+            });
+        });
+
+        setNewImageMessage(listFiles);
+        focusInputMessage.current.focus();
+    };
+
+    // cleanup func
+    useEffect(() => {
+        return () => {
+            newImageMessage &&
+                URL.revokeObjectURL(
+                    newImageMessage.map((_image) => {
+                        return _image.preview;
+                    }),
+                );
+        };
+    }, [newImageMessage]);
+
+    // handle delelet preview image
+    const handleDeletePreviewImage = (_image) => {
+        const fileImages = newImageMessage.filter((_img) => _img.preview !== _image.preview);
+        setNewImageMessage(fileImages);
+        focusInputMessage.current.focus();
+    };
+
     // scroll message
     useEffect(() => {
         conversation && messages && scrollMessage.current?.scrollIntoView({ behavior: 'smooth' });
@@ -188,8 +229,30 @@ function Message({ messages, conversation, infoUser }) {
                         <MessageItem messages={messages} infoUser={infoUser} scrollMessage={scrollMessage} />
                     </div>
                 </div>
+
                 {/* Input */}
                 <div className="message-footer">
+                    {/* File */}
+                    <div className="message-footer-inner">
+                        <label htmlFor="opt-file-label">
+                            <div className="option-file-image">
+                                {/* <PaperClipOutlined  /> */}
+                                <Tooltip title="Chọn ảnh">
+                                    <FileJpgOutlined className="option-file-image-icon" />
+                                </Tooltip>
+                                <input
+                                    className="opt-file-label-hide"
+                                    type="file"
+                                    id="opt-file-label"
+                                    name="opt-file-label"
+                                    multiple
+                                    accept=".png, .jpg, .jpeg, .mov, .mp4"
+                                    onChange={handleOptionChangeImages}
+                                />
+                            </div>
+                        </label>
+                    </div>
+
                     {isLoadingSpeech && <p className="loading-listen-message"></p>}
                     <input
                         type="text"
@@ -202,12 +265,34 @@ function Message({ messages, conversation, infoUser }) {
                         placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
                         spellCheck="false"
                     />
-                    {value && (
+
+                    {/* Button send  */}
+                    {(value || newImageMessage.length !== 0) && (
                         <button className="btn-submit" onClick={handleSendMessage}>
                             <SendOutlined className="btn-submit-icon" />
                         </button>
                     )}
+
                     <div className="container-emoji-picker">
+                        <div className="preview-images">
+                            {/* render preview images  */}
+                            {newImageMessage.length > 0
+                                ? newImageMessage.map((_image, index) => {
+                                      return (
+                                          <div key={index} className="preview-images-item">
+                                              <span
+                                                  className="btn-delete-preview-image"
+                                                  onClick={() => handleDeletePreviewImage(_image)}
+                                              >
+                                                  X
+                                              </span>
+                                              <Image className="preview-new-image" src={_image.preview} />
+                                          </div>
+                                      );
+                                  })
+                                : null}
+                        </div>
+
                         {muteRecording ? (
                             <Popover
                                 title={() => {
@@ -235,6 +320,7 @@ function Message({ messages, conversation, infoUser }) {
                             backgroundColor="#FF4081"
                         />
 
+                        {/* Preview Emoji */}
                         {previewEmoji ? (
                             <>
                                 <EmojiPicker defaultSkinTone={SkinTones} onEmojiClick={handleEmojiClicked} />

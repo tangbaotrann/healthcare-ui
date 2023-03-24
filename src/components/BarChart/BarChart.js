@@ -25,6 +25,7 @@ import { fetchApiRemindPatient } from '~/redux/features/patient/patientSlice';
 import glycemicSlice from '~/redux/features/metric/glycemicSlice';
 import bmisSlice from '~/redux/features/metric/bmisSlice';
 import bloodPressureSlice from '~/redux/features/metric/bloodPressure';
+import InformationPatient from './InformationPatient';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -212,28 +213,8 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
             <TitleName>Thông Tin Cá Nhân</TitleName>
 
             <div className="container-bar-chart">
-                <div className="info-patient">
-                    <div className="info-detail">
-                        <strong>Họ và tên: </strong>
-                        <p className="info-text"> {infoPatient.username}</p>
-                    </div>
-                    <div className="info-detail">
-                        <strong>Năm sinh: </strong>
-                        <p className="info-text"> {infoPatient.dob}</p>
-                    </div>
-                    <div className="info-detail">
-                        <strong>Địa chỉ: </strong>
-                        <p className="info-text"> {infoPatient.address}</p>
-                    </div>
-                    <div className="info-detail">
-                        <strong>Giới tính: </strong>
-                        <p className="info-text"> {infoPatient.gender}</p>
-                    </div>
-                    <div className="info-detail">
-                        <strong>Nhóm máu: </strong>
-                        <p className="info-text"> {infoPatient.blood}</p>
-                    </div>
-                </div>
+                {/* Info patient */}
+                <InformationPatient infoPatient={infoPatient} />
 
                 <Button className="position-on-map-btn" onClick={handleMapsNavigate}>
                     Xem vị trí trên maps
@@ -243,6 +224,11 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
             <Divider />
 
             <div className="container-chart">
+                {/* Status text message notification */}
+                <p className="message-status-desc">
+                    <span className="message-status-lbl">Thông báo:</span>
+                    {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
+                </p>
                 <div className="inner-chart">
                     <div className="filter-glycemic">
                         <Select
@@ -271,12 +257,6 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
                         </div>
                     </div>
                 </div>
-
-                {/* Status text message notification */}
-                <p className="message-status-desc">
-                    <span className="message-status-lbl">Thông báo:</span>
-                    {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
-                </p>
             </div>
 
             <Divider />

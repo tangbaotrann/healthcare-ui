@@ -17,21 +17,47 @@ export const fetchApiMessages = createAsyncThunk('message/fetchApiMessages', asy
     }
 });
 
+// Form data for message
+const createFormData = (message) => {
+    const { conversation, senderId, content, image } = message;
+    console.log('img slice ->', image);
+
+    const formData = new FormData();
+
+    formData.append('conversation', conversation);
+    formData.append('senderId', senderId);
+    formData.append('content', content);
+
+    // Check images
+    if (image.length === 1) {
+        formData.append('image', image[0].imageFile);
+    } else if (image.length > 1) {
+        image.forEach((_image) => {
+            formData.append('image', _image.imageFile);
+        });
+    }
+
+    return formData;
+};
+
 // fetch api create message
 export const fetchApiCreateMessage = createAsyncThunk('message/fetchApiCreateMessage', async (message) => {
-    try {
-        const { conversation, senderId, content } = message;
-        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}messages`, {
-            conversation: conversation,
-            senderId: senderId,
-            content: content,
-        });
+    if (message) {
+        console.log('message slice ->', message);
+        try {
+            let formData = createFormData(message);
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}messages`, formData, {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+            });
 
-        console.log('res create message', res.data.data);
+            console.log('res create message', res.data.data);
 
-        return res.data.data;
-    } catch (err) {
-        console.log({ err });
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
     }
 });
 

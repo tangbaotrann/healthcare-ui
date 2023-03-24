@@ -72,7 +72,7 @@
         justify-content: center;
         font-size: 1.6rem;
         font-weight: 600;
-        margin-top: 24px;
+        margin-bottom: 16px;
     
         background-image: linear-gradient(-225deg,
                 #231557 0%,
@@ -81,7 +81,7 @@
                 #fff800 100%);
         background-size: auto auto;
         background-clip: border-box;
-        background-size: 200% auto;
+        background-size: 100% auto;
         color: var(--white);
         background-clip: text;
         text-fill-color: transparent;
