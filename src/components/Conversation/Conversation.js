@@ -66,7 +66,12 @@ function Conversation({ infoUser, recordConversation }) {
 
             {/* Message */}
             {conversation ? (
-                <Message messages={messages} conversation={conversation} infoUser={infoUser} />
+                <Message
+                    messages={messages}
+                    conversation={conversation}
+                    infoUser={infoUser}
+                    recordConversation={recordConversation}
+                />
             ) : (
                 <div className="wrapper-message">
                     <strong className="message-welcome">

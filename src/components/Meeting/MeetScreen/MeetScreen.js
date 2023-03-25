@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 // me
 import './MeetScreen.css';
 import callSlice from '~/redux/features/call/callSlice';
+import socket from '~/utils/socket';
 
 function MeetScreen() {
     const { roomId, username } = useParams();
@@ -37,11 +38,13 @@ function MeetScreen() {
             onJoinRoom: () => {
                 // Add your custom logic
                 console.log('users joined ->', username);
-                dispatch(callSlice.actions.arrivalUsername(username));
+                // dispatch(callSlice.actions.arrivalUsername(username));
             },
             onLeaveRoom: () => {
                 console.log('users leaved ->', username);
-                dispatch(callSlice.actions.arrivalUsername(username));
+                // dispatch(callSlice.actions.arrivalUsername(username));
+
+                socket.emit('user_leave_room_call', { username, roomId });
             },
         });
     };

@@ -43,12 +43,8 @@ function MessageItem({ messages, infoUser, scrollMessage }) {
                                         ) : message.images.length > 1 ? (
                                             message.images.map((_image, index) => {
                                                 return (
-                                                    <div className="display-images">
-                                                        <Image
-                                                            className="message-item-image"
-                                                            key={index}
-                                                            src={_image}
-                                                        />
+                                                    <div className="display-images" key={index}>
+                                                        <Image className="message-item-image" src={_image} />
                                                     </div>
                                                 );
                                             })
@@ -62,8 +58,8 @@ function MessageItem({ messages, infoUser, scrollMessage }) {
                                 <div className="display-message-item-image">
                                     {message.images.map((_image, index) => {
                                         return (
-                                            <div className="display-images">
-                                                <Image className="message-item-image" key={index} src={_image} />
+                                            <div className="display-images" key={index}>
+                                                <Image className="message-item-image" src={_image} />
                                             </div>
                                         );
                                     })}

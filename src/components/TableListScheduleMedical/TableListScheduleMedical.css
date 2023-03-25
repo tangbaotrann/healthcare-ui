@@ -1,3 +1,8 @@
+.tbl-schedule-medical {
+    height: 300px;
+    overflow-x: 1px !important;
+}
+
 .status-tbl-schedule-medical {
     display: flex;
     align-items: center;
