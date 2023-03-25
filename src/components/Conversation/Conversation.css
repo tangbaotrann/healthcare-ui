@@ -84,3 +84,17 @@
     border: 0.1px solid var(--white);
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+/* icon loading */
+.display-icon-loading-conversations {
+    font-size: 2rem;
+    margin: 2px 2px;
+    text-align: left;
+}
+
+.loading-conversations {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 2px 2px;
+    color: var(--await-loading);
+}

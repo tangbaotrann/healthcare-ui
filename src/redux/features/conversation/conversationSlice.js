@@ -19,6 +19,7 @@ const conversationSlice = createSlice({
     initialState: {
         data: [],
         btnClickGetIdConversation: null,
+        isLoading: false,
     },
     reducers: {
         arrivalIdConversation: (state, action) => {
@@ -26,9 +27,14 @@ const conversationSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchApiConversations.fulfilled, (state, action) => {
-            state.data = action.payload;
-        });
+        builder
+            .addCase(fetchApiConversations.pending, (state, action) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchApiConversations.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data = action.payload;
+            });
     },
 });
 

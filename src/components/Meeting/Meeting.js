@@ -1,25 +1,19 @@
 // lib
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import './Meeting.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
 import MeetScreen from './MeetScreen';
-import socket from '~/utils/socket';
-import callSlice from '~/redux/features/call/callSlice';
-import { btnClickGetUsernameLeavedRoomSelector } from '~/redux/selector';
 
 const { Paragraph } = Typography;
 
 function Meeting() {
     const [roomCodeWithInfoMember, setRoomCodeWithInfoMember] = useState('');
     const { roomId, username } = useParams();
-
-    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 

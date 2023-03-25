@@ -115,19 +115,32 @@ const scheduleDoctor = createSlice({
         shifts: [],
         createSchedule: [],
         idDoctor: [],
+        isLoading: false,
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiAllCreateDaysDoctor.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiAllCreateDaysDoctor.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.days = action.payload;
             })
+            .addCase(fetchApiAllShiftsDoctor.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiAllShiftsDoctor.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.shifts = action.payload;
             })
             .addCase(fetchApiCreateScheduleDoctor.fulfilled, (state, action) => {
                 state.createSchedule = action.payload;
             })
+            .addCase(fetchApiAllCreateScheduleDoctor.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiAllCreateScheduleDoctor.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.data = action.payload;
             })
             .addCase(fetchApiScheduleByIdDoctor.fulfilled, (state, action) => {
