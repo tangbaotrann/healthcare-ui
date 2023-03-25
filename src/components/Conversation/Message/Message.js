@@ -10,13 +10,16 @@ import { ReactMic } from 'react-mic';
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
-import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
+import {
+    btnClickGetIdConversationSelector,
+    btnClickGetUsernameLeavedRoomSelector,
+    getDoctorLoginFilter,
+} from '~/redux/selector';
 import {
     AudioMutedOutlined,
     AudioOutlined,
     CloseOutlined,
     FileJpgOutlined,
-    PaperClipOutlined,
     SendOutlined,
     SmileOutlined,
     VideoCameraAddOutlined,
@@ -25,8 +28,10 @@ import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import MessageItem from './MessageItem';
 import axios from 'axios';
+import callSlice from '~/redux/features/call/callSlice';
+import ContentAfterExaminated from '../ContentAfterExaminated';
 
-function Message({ messages, conversation, infoUser }) {
+function Message({ messages, conversation, infoUser, recordConversation }) {
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
     const [muteRecording, setMuteRecording] = useState(false);
@@ -45,11 +50,23 @@ function Message({ messages, conversation, infoUser }) {
     const scrollMessage = useRef();
     const focusInputMessage = useRef();
 
+    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+
+    console.log('checkLeavedRoom', checkLeavedRoom);
+
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
-    console.log('new img', newImageMessage);
+    // console.log('new img', newImageMessage);
+    console.log('recordConversation ->', recordConversation);
+
+    useEffect(() => {
+        socket.on('user_leave_room_call_success', ({ username, roomId }) => {
+            console.log('user_leave_room_call_success ->', username, roomId);
+            dispatch(callSlice.actions.arrivalUsername(username));
+        });
+    }, []);
 
     // user join room
     useEffect(() => {
@@ -57,12 +74,12 @@ function Message({ messages, conversation, infoUser }) {
         socket.emit('status_user', infoMember.member._id);
 
         socket.on('get_users', (users) => {
-            // console.log('USER - ONLINE -', users);
+            console.log('USER - ONLINE -', users);
         });
 
         // joined_room
         socket.on('joined_room', (conversationId) => {
-            console.log('[conversation - id] ->', conversationId);
+            // console.log('[conversation - id] ->', conversationId);
         });
     }, [conversation, infoMember.member._id]);
 
@@ -332,6 +349,14 @@ function Message({ messages, conversation, infoUser }) {
                     </div>
                 </div>
             </div>
+
+            {checkLeavedRoom && (
+                <ContentAfterExaminated
+                    conversation={conversation}
+                    infoDoctor={infoDoctor}
+                    recordConversation={recordConversation}
+                />
+            )}
         </>
     );
 }

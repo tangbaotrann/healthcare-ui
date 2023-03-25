@@ -33,6 +33,7 @@ import {
     fetchApiScheduleMedicalAppointment,
 } from '~/redux/features/patient/patientSlice';
 import ChatBot from '~/components/ChatBot/ChatBot';
+import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -100,6 +101,8 @@ function DoctorManager() {
                     <TableListScheduleMedical infoUser={infoUser} />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
+                ) : changeLayout === constants.layoutResultHealthPatient ? (
+                    <ResultHeathPatient />
                 ) : changeLayout === constants.layoutListNotification ? (
                     <TableListNotification notifications={notifications} />
                 ) : changeLayout === constants.layoutListConversation ? (

@@ -60,13 +60,13 @@ function LayoutDoctorManager({ children, infoUser }) {
 
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed} width={220} className="sidebar">
+            <Sider trigger={null} collapsible collapsed={collapsed} width={230} className="sidebar">
                 {!collapsed && <img className="logo-primary" src={logo.logo} alt="logo" />}
                 <Menu
                     theme="light"
                     mode="inline"
                     defaultSelectedKeys={[constants.layoutDashboard]}
-                    style={{ fontWeight: '600' }}
+                    style={{ fontSize: '1.5rem', fontWeight: '800' }}
                     items={[
                         {
                             key: constants.layoutDashboard,
@@ -116,7 +116,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Quản lý bệnh nhân',
                             children: [
                                 { label: 'Danh sách bệnh nhân', key: constants.layoutListPatient },
-                                // { label: 'Sức khỏe hằng ngày', key: constants.layoutSubHealth },
+                                { label: 'Kết quả khám', key: constants.layoutResultHealthPatient },
                             ],
                         },
                         {
@@ -142,6 +142,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
+                            dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutResultHealthPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutMeeting) {

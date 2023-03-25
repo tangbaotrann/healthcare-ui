@@ -218,6 +218,7 @@ function TableListScheduleMedical({ infoUser }) {
 
     // show modal conversation
     const handleShowModalConversation = (record) => {
+        console.log('record ->', record);
         setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
         dispatch(fetchApiMessages(record.conversation._id));
@@ -268,7 +269,7 @@ function TableListScheduleMedical({ infoUser }) {
                 pagination={{
                     pageSize: 10,
                 }}
-                style={{ height: '300px' }}
+                className="tbl-schedule-medical"
                 scroll={{ y: 420 }}
             ></Table>
         </>

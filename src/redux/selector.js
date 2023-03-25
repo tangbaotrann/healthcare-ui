@@ -66,6 +66,8 @@ export const btnClickGetUsernameLeavedRoomSelector = (state) => state.callSlice.
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
 
+export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
+
 /* -- Handle Selector -- */
 
 // Tổng lịch khám
@@ -295,8 +297,8 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
         console.log('listScheduleMedical', listScheduleMedical);
-        // console.log('listDay', listDay);
-        // console.log('listShift', listShift);
+        console.log('listDay', listDay);
+        console.log('listShift', listShift);
         console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
