@@ -8,7 +8,7 @@ import './ResultHeathPatient.css';
 import TitleName from '../TitleName';
 import { fetchApiResultHeathByIdPatientSelector, fetchApiScheduleDetailByIdDoctorSelector } from '~/redux/selector';
 import { fetchApiResultHeathByIdPatient } from '~/redux/features/patient/patientSlice';
-import ResultHealthMessage from './ResultHealthMessage/ResultHealthMessage';
+import ResultHealthMessage from './ResultHealthMessage';
 
 function ResultHeathPatient() {
     const [openModal, setOpenModal] = useState(false);
@@ -19,8 +19,8 @@ function ResultHeathPatient() {
     const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector);
     const resultHeath = useSelector(fetchApiResultHeathByIdPatientSelector);
 
-    console.log('resultHeath ->', resultHeath);
-    console.log('patient result heath', patients);
+    // console.log('resultHeath ->', resultHeath);
+    // console.log('patient result heath', patients);
 
     // cols
     const cols = [
@@ -76,7 +76,6 @@ function ResultHeathPatient() {
 
     // handle result health
     const handleViewResultHeathPatient = (record) => {
-        console.log('re', record);
         dispatch(fetchApiResultHeathByIdPatient(record._id));
         setOpenModal(true);
         setInformation(record);

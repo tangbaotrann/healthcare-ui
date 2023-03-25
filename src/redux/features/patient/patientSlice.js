@@ -195,13 +195,22 @@ const patientSlice = createSlice({
         // confirmScheduleMedical: [],
         deleteScheduleMedical: [],
         resultHealthMessage: [],
+        isLoading: false,
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiScheduleDetailByIdDoctor.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiScheduleDetailByIdDoctor.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.data = action.payload;
             })
+            .addCase(fetchApiScheduleMedicalAppointment.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiScheduleMedicalAppointment.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.scheduleMedicalAppointment = action.payload;
             })
             .addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {

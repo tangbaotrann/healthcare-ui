@@ -17,6 +17,9 @@
     --blue-message: #e5efff;
     --blue-message-receiver: #eff2f7;
 
+    /* loading */
+    --await-loading: #3300c4;
+
     /* status heath of patient */
     --status-waring: #ffa500;
     --status-alarm: #ff0000;

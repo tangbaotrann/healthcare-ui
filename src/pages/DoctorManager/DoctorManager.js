@@ -13,6 +13,10 @@ import {
     fetchApiUserDoctorByTokenSelector,
     getDoctorLoginFilter,
     getIdDoctorFilter,
+    isLoadingNotificationSelector,
+    isLoadingScheduleDetailByIdDoctorSelector,
+    isLoadingScheduleDoctorSelector,
+    isLoadingUserDoctorByTokenSelector,
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
 import {
@@ -34,6 +38,7 @@ import {
 } from '~/redux/features/patient/patientSlice';
 import ChatBot from '~/components/ChatBot/ChatBot';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -44,8 +49,13 @@ function DoctorManager() {
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
     const getIdDoctor = useSelector(getDoctorLoginFilter);
-
     const notifications = useSelector(fetchApiNotificationByDoctorIdSelector); // filterNotifications
+
+    // loading
+    const isLoadingScheduleDoctor = useSelector(isLoadingScheduleDoctorSelector);
+    const isLoadingNotification = useSelector(isLoadingNotificationSelector);
+    const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
+    const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
 
     // console.log(changeLayout);
     // console.log(infoUser);
@@ -53,6 +63,8 @@ function DoctorManager() {
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     console.log('awaitAccept', awaitAccept);
     console.log('checkAwaitAccept', checkAwaitAccept);
+    console.log('isLoadingScheduleDoctor', isLoadingScheduleDoctor);
+    console.log('isLoadingNotification', isLoadingNotification);
     // console.log('schedules 46 ->', schedules);
 
     useEffect(() => {
@@ -94,7 +106,16 @@ function DoctorManager() {
             )}
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === constants.layoutDashboard || changeLayout === null ? (
-                    <Dashboard schedules={schedules} />
+                    <>
+                        {isLoadingScheduleDoctor ||
+                        isLoadingNotification ||
+                        isLoadingUser ||
+                        isLoadingScheduleDetail ? (
+                            <LoadingOutlined className="icon-loading-dashboard" spin />
+                        ) : (
+                            <Dashboard schedules={schedules} />
+                        )}
+                    </>
                 ) : changeLayout === constants.layoutListRegisterSchedule ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === constants.layoutScheduleMedical ? (

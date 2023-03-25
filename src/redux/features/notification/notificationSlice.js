@@ -43,6 +43,7 @@ const notificationSlice = createSlice({
         data: [],
         seen: [], // hide
         notifications: [],
+        isLoading: false,
     },
     reducers: {
         notificationRegisterScheduleFromPatientSuccess: (state, action) => {
@@ -61,7 +62,11 @@ const notificationSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiNotificationByDoctorId.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiNotificationByDoctorId.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.data = action.payload;
             })
             .addCase(fetchApiUpdateSeenNotification.fulfilled, (state, action) => {

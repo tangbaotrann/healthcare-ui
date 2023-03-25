@@ -65,6 +65,7 @@ const messageSlice = createSlice({
     name: 'message',
     initialState: {
         data: [],
+        isLoading: false,
     },
     reducers: {
         arrivalMessageFromSocket: (state, action) => {
@@ -81,17 +82,22 @@ const messageSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchApiMessages.fulfilled, (state, action) => {
-            state.data = action.payload;
-        });
-        builder.addCase(fetchApiCreateMessage.fulfilled, (state, action) => {
-            state.data.push(action.payload);
+        builder
+            .addCase(fetchApiMessages.pending, (state, action) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchApiMessages.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.data = action.payload;
+            })
+            .addCase(fetchApiCreateMessage.fulfilled, (state, action) => {
+                state.data.push(action.payload);
 
-            // socket
-            socket.emit('send_message', {
-                message: action.payload,
+                // socket
+                socket.emit('send_message', {
+                    message: action.payload,
+                });
             });
-        });
     },
 });
 

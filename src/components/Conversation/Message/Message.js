@@ -46,20 +46,18 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
 
     const infoMember = useSelector(btnClickGetIdConversationSelector);
     const infoDoctor = useSelector(getDoctorLoginFilter);
+    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
     const scrollMessage = useRef();
     const focusInputMessage = useRef();
 
-    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
-
     console.log('checkLeavedRoom', checkLeavedRoom);
-
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
-    console.log('recordConversation ->', recordConversation);
+    // console.log('recordConversation ->', recordConversation);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {

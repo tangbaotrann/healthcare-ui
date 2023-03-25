@@ -4,6 +4,7 @@ import moment from 'moment';
 
 // find user doctor by token
 export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.doctorByToken;
+export const isLoadingUserDoctorByTokenSelector = (state) => state.userSlice.isLoading;
 
 // all user doctor
 export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
@@ -25,12 +26,14 @@ export const btnSelectMenuChangeLayoutSelector = (state) => state.layoutSlice.bt
 
 // all schedule doctor
 export const fetchApiAllCreateScheduleDoctorSelector = (state) => state.scheduleDoctor.data;
+export const isLoadingScheduleDoctorSelector = (state) => state.scheduleDoctor.isLoading;
 export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoctor.days;
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
+export const isLoadingScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.isLoading;
 
 // get patient -> bmis
 export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
@@ -49,12 +52,14 @@ export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patie
 
 // get all notification by id doctor
 export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
+export const isLoadingNotificationSelector = (state) => state.notificationSlice.isLoading;
 export const getTotalNotifications = (state) => state.notificationSlice.notifications;
 // update seen notification
 export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificationSlice.seen; // hide
 
 // get all conversation by id doctor
 export const fetchApiConversationsSelector = (state) => state.conversationSlice.data;
+export const isLoadingConversationsSelector = (state) => state.conversationSlice.isLoading;
 
 // get id conversation when clicked
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
@@ -65,6 +70,7 @@ export const btnClickGetUsernameLeavedRoomSelector = (state) => state.callSlice.
 
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
+export const isLoadingMessagesSelector = (state) => state.messageSlice.isLoading;
 
 export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
 
@@ -126,7 +132,7 @@ export const filterNotifications = createSelector(
             //seenNotification[0]._id === _notification._id ? seenNotification[0].hasSeen : _notification.hasSeen;
 
             const seens = seenNotification.find((_seen) => _seen._id === _notification._id);
-            console.log('seens ->', seens);
+            // console.log('seens ->', seens);
 
             return {
                 content: _notification.content,
@@ -296,10 +302,10 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('listScheduleMedical', listScheduleMedical);
-        console.log('listDay', listDay);
-        console.log('listShift', listShift);
-        console.log('cleanConversationListSelector', cleanConversation);
+        // console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listDay', listDay);
+        // console.log('listShift', listShift);
+        // console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
             const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
@@ -337,8 +343,8 @@ export const messageOfUserFilter = createSelector(
     fetchApiMessagesSelector,
     fetchApiConversationsSelector,
     (user, listMessage, conversations) => {
-        console.log('user ->', user);
-        console.log('listMessage ->', listMessage);
+        // console.log('user ->', user);
+        // console.log('listMessage ->', listMessage);
 
         const messages = listMessage.map((_message) => {
             const getMember = conversations.map((_conversation) => {

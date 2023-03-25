@@ -209,6 +209,7 @@ const userSlice = createSlice({
         infoUser: [],
         profileForDoctor: [],
         userLogin: [],
+        isLoading: false,
     },
     extraReducers: (builder) => {
         builder
@@ -217,7 +218,11 @@ const userSlice = createSlice({
                 state.userLogin = action.payload;
             })
             // find all user doctor
+            .addCase(fetchApiUserDoctors.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiUserDoctors.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.data = action.payload;
             })
             // find user doctor by id
