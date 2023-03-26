@@ -1,5 +1,5 @@
 // lib
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 
@@ -97,4 +97,4 @@ function ContentAfterExaminated({ recordConversation }) {
     );
 }
 
-export default ContentAfterExaminated;
+export default memo(ContentAfterExaminated);

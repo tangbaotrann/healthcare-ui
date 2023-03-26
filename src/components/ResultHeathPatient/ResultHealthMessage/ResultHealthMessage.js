@@ -6,7 +6,7 @@ import { Table } from 'antd';
 import './ResultHealthMessage.css';
 
 function ResultHealthMessage({ resultHeath, information }) {
-    console.log('information ->', information);
+    // console.log('information ->', information);
 
     // cols
     const cols = [
@@ -57,7 +57,7 @@ function ResultHealthMessage({ resultHeath, information }) {
             </div>
 
             {/* List table  */}
-            {resultHeath ? (
+            {resultHeath.length > 0 ? (
                 <div className="result-health-message-list">
                     <Table
                         columns={cols}
@@ -74,7 +74,7 @@ function ResultHealthMessage({ resultHeath, information }) {
                 </div>
             ) : (
                 <p className="result-health-message-none">
-                    <i>-- Bệnh nhân này chưa được khám. --</i>
+                    <i>-- Chưa có thông tin khám của bệnh nhân này. --</i>
                 </p>
             )}
         </div>

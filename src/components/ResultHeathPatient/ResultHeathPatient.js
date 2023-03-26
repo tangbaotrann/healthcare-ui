@@ -6,7 +6,7 @@ import { Button, Modal, Table } from 'antd';
 // me
 import './ResultHeathPatient.css';
 import TitleName from '../TitleName';
-import { fetchApiResultHeathByIdPatientSelector, fetchApiScheduleDetailByIdDoctorSelector } from '~/redux/selector';
+import { fetchApiResultHeathByIdPatientSelector, scheduleDetailByIdDoctorFilters } from '~/redux/selector';
 import { fetchApiResultHeathByIdPatient } from '~/redux/features/patient/patientSlice';
 import ResultHealthMessage from './ResultHealthMessage';
 
@@ -16,11 +16,11 @@ function ResultHeathPatient() {
 
     const dispatch = useDispatch();
 
-    const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector);
+    const patients = useSelector(scheduleDetailByIdDoctorFilters); //  fetchApiScheduleDetailByIdDoctorSelector
     const resultHeath = useSelector(fetchApiResultHeathByIdPatientSelector);
 
+    console.log('patient result heath', patients);
     // console.log('resultHeath ->', resultHeath);
-    // console.log('patient result heath', patients);
 
     // cols
     const cols = [

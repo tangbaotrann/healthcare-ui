@@ -135,7 +135,7 @@ function UpdateInfoUser() {
                     <Input prefix={<SendOutlined />} placeholder="Địa chỉ..." />
                 </Form.Item>
 
-                {/* Gender */}
+                {/* work_type */}
                 <Form.Item
                     name="work_type"
                     rules={[

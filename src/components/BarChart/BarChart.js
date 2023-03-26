@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,25 +14,24 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Button, Divider, Form, Input, message, Modal, Select } from 'antd';
+import { Button, Divider, Select } from 'antd';
 
 // me
 import './BarChart.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
 import { getDoctorLoginFilter } from '~/redux/selector';
-import { fetchApiRemindPatient } from '~/redux/features/patient/patientSlice';
 import glycemicSlice from '~/redux/features/metric/glycemicSlice';
 import bmisSlice from '~/redux/features/metric/bmisSlice';
 import bloodPressureSlice from '~/redux/features/metric/bloodPressure';
 import InformationPatient from './InformationPatient';
+import ModalRemind from './ModalRemind/ModalRemind';
+import ModalStopExaminated from './ModalStopExaminated/ModalStopExaminated';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
-    const [showModal, setShowModal] = useState(false);
-
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -162,31 +161,9 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
         ],
     };
 
-    // show modal remind
-    const handleShowModalRemind = () => {
-        setShowModal(true);
-    };
-
-    // hinde modal remind
-    const handleCancel = () => {
-        setShowModal(false);
-    };
-
     // handle maps navigate
     const handleMapsNavigate = () => {
         navigate(`${endPoints.maps}/${infoPatient.address}`);
-    };
-
-    // handle submit button remind
-    const handleRemindOnFish = (values) => {
-        if (values) {
-            dispatch(fetchApiRemindPatient(values));
-            setShowModal(false);
-            message.success('Tạo nhắc nhở thành công.');
-        } else {
-            message.error('Tạo nhắc nhở không thành công!');
-            return;
-        }
     };
 
     useEffect(() => {
@@ -261,62 +238,13 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
 
             <Divider />
 
-            {/* Button remind */}
-            <div className="remind-patient">
-                <Button className="remind-patient-btn" onClick={handleShowModalRemind}>
-                    Nhắc nhở bệnh nhân
-                </Button>
+            <div className="display-btn-modal-footer">
+                {/* Modal remind */}
+                <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
+
+                {/* Modal */}
+                <ModalStopExaminated getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
             </div>
-
-            {/* Modal remind */}
-            <Modal
-                open={showModal}
-                onCancel={handleCancel}
-                cancelButtonProps={{ style: { display: 'none' } }}
-                okButtonProps={{ style: { display: 'none' } }}
-            >
-                <TitleName>Nhắc Nhở Bệnh Nhân Cần Chú Ý Đến Sức Khỏe</TitleName>
-
-                <Form
-                    onFinish={handleRemindOnFish}
-                    onFinishFailed={(error) => {
-                        console.log({ error });
-                    }}
-                    fields={[
-                        { name: ['from'], value: getIdDoctor._id },
-                        { name: ['idPatient'], value: infoPatient._id },
-                    ]}
-                >
-                    {/* content */}
-                    <Form.Item
-                        name="content"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Bạn cần phải nhập nội dung để nhắc nhở bệnh nhân.',
-                            },
-                        ]}
-                        hasFeedback
-                    >
-                        <Input placeholder="Nhập nội dung..." />
-                    </Form.Item>
-
-                    {/* Id doctor */}
-                    <Form.Item name="from" style={{ display: 'none' }}>
-                        <Input />
-                    </Form.Item>
-
-                    {/* Id patient */}
-                    <Form.Item name="idPatient" style={{ display: 'none' }}>
-                        <Input />
-                    </Form.Item>
-
-                    {/* Button confirm remind */}
-                    <Button type="primary" htmlType="submit" block>
-                        Tạo nhắc nhở
-                    </Button>
-                </Form>
-            </Modal>
         </>
     );
 }
