@@ -39,6 +39,7 @@ import {
 import ChatBot from '~/components/ChatBot/ChatBot';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 import { LoadingOutlined } from '@ant-design/icons';
+import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting/TableListScheduleMedicalMeeting';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -119,7 +120,7 @@ function DoctorManager() {
                 ) : changeLayout === constants.layoutScheduleMedical ? (
                     <TableListScheduleMedical infoUser={infoUser} />
                 ) : changeLayout === constants.layoutScheduleMedicalMeeting ? (
-                    <h2>te</h2>
+                    <TableListScheduleMedicalMeeting />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutResultHealthPatient ? (

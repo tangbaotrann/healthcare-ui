@@ -49,6 +49,7 @@ export const btnOptionSelectedBloodPressure = (state) => state.bloodPressureSlic
 
 // get all schedule medical appointment
 export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
+export const btnOptionSelectedMeetingSelector = (state) => state.patientSlice.btnOptionSelectedMeeting;
 
 // get all notification by id doctor
 export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
@@ -302,45 +303,106 @@ export const cleanConversationListSelector = createSelector(
     },
 );
 
-// filter -> day (Thứ) + time (Ca làm) of doctor
+// filter -> day (Thứ) + time (Ca làm) of doctor (LỊCH HẸN KHÁM)
 export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiScheduleMedicalAppointmentSelector,
     fetchApiAllCreateDaysDoctorSelector,
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        // console.log('listScheduleMedical', listScheduleMedical);
+        console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
 
-        const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
-            const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
-            const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
-            const conversations = cleanConversation.find(
-                (_conversation) => _conversation.member._id === _scheduleMedical.patient,
-            );
+        const scheduleMedicals = listScheduleMedical
+            .filter((_status) => _status.status === false)
+            .map((_scheduleMedical) => {
+                const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
+                const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+                const conversations = cleanConversation.find(
+                    (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+                );
 
-            // console.log('conversations ->', conversations);
-            // console.log('days', days);
-            // console.log('shifts', shifts);
-
-            return {
-                status: _scheduleMedical.status,
-                content_exam: _scheduleMedical.content_exam,
-                createdAt: _scheduleMedical.createdAt,
-                doctor: _scheduleMedical.doctor,
-                patient: _scheduleMedical.patient,
-                schedule: _scheduleMedical.schedule,
-                updatedAt: _scheduleMedical.updatedAt,
-                days,
-                shifts,
-                conversations,
-                _id: _scheduleMedical._id,
-            };
-        });
+                return {
+                    status: _scheduleMedical.status,
+                    content_exam: _scheduleMedical.content_exam,
+                    result_exam: _scheduleMedical.result_exam,
+                    createdAt: _scheduleMedical.createdAt,
+                    doctor: _scheduleMedical.doctor,
+                    patient: _scheduleMedical.patient,
+                    schedule: _scheduleMedical.schedule,
+                    updatedAt: _scheduleMedical.updatedAt,
+                    days,
+                    shifts,
+                    conversations,
+                    _id: _scheduleMedical._id,
+                };
+            });
 
         return scheduleMedicals;
+    },
+);
+
+// filter -> day (Thứ) + time (Ca làm) of doctor (LỊCH HẸN KHÁM)
+export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
+    fetchApiScheduleMedicalAppointmentSelector,
+    fetchApiAllCreateDaysDoctorSelector,
+    fetchApiAllShiftsDoctorSelector,
+    cleanConversationListSelector,
+    (listScheduleMedical, listDay, listShift, cleanConversation) => {
+        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listDay', listDay);
+        // console.log('listShift', listShift);
+        // console.log('cleanConversationListSelector', cleanConversation);
+
+        const scheduleMedicals = listScheduleMedical
+            .filter((_status) => _status.status === true && _status.result_exam === null)
+            .map((_scheduleMedical) => {
+                const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
+                const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+                const conversations = cleanConversation.find(
+                    (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+                );
+
+                return {
+                    status: _scheduleMedical.status,
+                    content_exam: _scheduleMedical.content_exam,
+                    result_exam: _scheduleMedical.result_exam,
+                    createdAt: _scheduleMedical.createdAt,
+                    doctor: _scheduleMedical.doctor,
+                    patient: _scheduleMedical.patient,
+                    schedule: _scheduleMedical.schedule,
+                    updatedAt: _scheduleMedical.updatedAt,
+                    days,
+                    shifts,
+                    conversations,
+                    _id: _scheduleMedical._id,
+                };
+            });
+
+        return scheduleMedicals;
+    },
+);
+
+// getDayAndTimeScheduleMedicalMeetingFilterOfDoctor + filter meeting week
+export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
+    getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
+    btnOptionSelectedMeetingSelector,
+    (listMeeting, option) => {
+        console.log('listMeeting', listMeeting);
+        const now = new Date();
+        if (listMeeting.length > 0) {
+            if (option === 'all') {
+                return listMeeting;
+            } else if (option === 'week') {
+                const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _listMeeting;
+            }
+        }
+
+        return [];
     },
 );
 

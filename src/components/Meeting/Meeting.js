@@ -33,6 +33,7 @@ function Meeting() {
 
         // socket call id room id to user
         // socket.emit('call_id_room_to_user', { roomId: roomId });
+        // socket.emit('send_username_when_call', { username });
     };
 
     return (
