@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './PatientList.css';
 import TitleName from '../TitleName';
 import {
-    fetchApiScheduleDetailByIdDoctorSelector,
+    scheduleDetailByIdDoctorFilters,
     userBMIListSelectorFilter,
     userBloodPressureListSelectorFilter,
     userGlycemicListSelectorFilter,
@@ -26,7 +26,7 @@ function PatientList() {
 
     const dispatch = useDispatch();
 
-    const patients = useSelector(fetchApiScheduleDetailByIdDoctorSelector); //   scheduleDetailByIdDoctorFilters
+    const patients = useSelector(scheduleDetailByIdDoctorFilters); // fetchApiScheduleDetailByIdDoctorSelector
     const bmis = useSelector(userBMIListSelectorFilter);
     const glycemics = useSelector(userGlycemicListSelectorFilter);
     const bloodPressures = useSelector(userBloodPressureListSelectorFilter);

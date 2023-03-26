@@ -125,12 +125,20 @@
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }
 
+/* Footer buttons */
+.display-btn-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* remind */
 .remind-patient {
     display: flex;
     justify-content: center;
 }
 
+/* Button remind */
 .remind-patient-btn {
     border: none;
     outline: none;
@@ -150,5 +158,29 @@
     opacity: 0.8;
     color: var(--white) !important;
     background-color: var(--btn-primary-hover);
+    box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}
+
+/* Button stop exam */
+.stop-examinated-patient-btn {
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background: var(--orange-gradient);
+    margin-left: 6px;
+}
+
+.stop-examinated-patient-btn:hover {
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    color: var(--white) !important;
+    background: var(--orange-gradient);
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }

@@ -12,6 +12,7 @@ import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import Conversation from '../Conversation';
+import callSlice from '~/redux/features/call/callSlice';
 
 function TableListScheduleMedical({ infoUser }) {
     const [showModal, setShowModal] = useState(false);
@@ -222,6 +223,7 @@ function TableListScheduleMedical({ infoUser }) {
         setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
         dispatch(fetchApiMessages(record.conversation._id));
+        dispatch(callSlice.actions.arrivalUsername(null)); // clear modal
     };
 
     // hide

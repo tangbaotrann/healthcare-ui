@@ -213,14 +213,21 @@ export const getIdDoctorFilter = createSelector(
     },
 );
 
-// list schedule detail -> return patient id
+// list schedule detail -> return patient id (HIDE)
 export const scheduleDetailByIdDoctorFilters = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     (listScheduleDetail) => {
+        // console.log('listScheduleDetail selector ->', listScheduleDetail);
         if (listScheduleDetail) {
-            return listScheduleDetail.map((_list) => {
-                return _list;
-            });
+            const listScheduleDetailFilter = listScheduleDetail.filter(
+                (_listScheduleDetail) =>
+                    _listScheduleDetail.patient.doctor_glycemic_id !== null ||
+                    _listScheduleDetail.patient.doctor_blood_id !== null,
+            );
+
+            // console.log('listScheduleDetailFilter selector ->', listScheduleDetailFilter);
+
+            return listScheduleDetailFilter;
         } else {
             return [];
         }

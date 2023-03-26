@@ -57,14 +57,12 @@ function DoctorManager() {
     const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
     const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
 
-    // console.log(changeLayout);
+    console.log(changeLayout);
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     console.log('awaitAccept', awaitAccept);
     console.log('checkAwaitAccept', checkAwaitAccept);
-    console.log('isLoadingScheduleDoctor', isLoadingScheduleDoctor);
-    console.log('isLoadingNotification', isLoadingNotification);
     // console.log('schedules 46 ->', schedules);
 
     useEffect(() => {
@@ -120,6 +118,8 @@ function DoctorManager() {
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />
                 ) : changeLayout === constants.layoutScheduleMedical ? (
                     <TableListScheduleMedical infoUser={infoUser} />
+                ) : changeLayout === constants.layoutScheduleMedicalMeeting ? (
+                    <h2>te</h2>
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutResultHealthPatient ? (

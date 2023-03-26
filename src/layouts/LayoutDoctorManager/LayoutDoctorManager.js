@@ -32,6 +32,7 @@ import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/featu
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
+import callSlice from '~/redux/features/call/callSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -74,16 +75,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Bảng điều khiển',
                         },
                         {
-                            key: constants.layoutListRegisterSchedule,
-                            icon: <ClockCircleOutlined />,
-                            label: 'Đăng ký ca làm',
-                        },
-                        {
-                            key: constants.layoutScheduleMedical,
-                            icon: <ScheduleOutlined />,
-                            label: 'Lịch hẹn khám bệnh',
-                        },
-                        {
                             key: constants.layoutListNotification,
                             icon: (
                                 <>
@@ -106,9 +97,18 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Thông báo',
                         },
                         {
-                            key: constants.layoutListConversation,
-                            icon: <CommentOutlined />,
-                            label: 'Cuộc trò chuyện',
+                            key: constants.layoutListRegisterSchedule,
+                            icon: <ClockCircleOutlined />,
+                            label: 'Đăng ký ca làm',
+                        },
+                        {
+                            key: '3',
+                            icon: <ScheduleOutlined />,
+                            label: 'Quản lý lịch khám',
+                            children: [
+                                { label: 'Lịch hẹn khám', key: constants.layoutScheduleMedical },
+                                { label: 'Cuộc hẹn khám', key: constants.layoutScheduleMedicalMeeting },
+                            ],
                         },
                         {
                             key: '4',
@@ -118,6 +118,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                                 { label: 'Danh sách bệnh nhân', key: constants.layoutListPatient },
                                 { label: 'Kết quả khám', key: constants.layoutResultHealthPatient },
                             ],
+                        },
+                        {
+                            key: constants.layoutListConversation,
+                            icon: <CommentOutlined />,
+                            label: 'Cuộc trò chuyện',
                         },
                         {
                             key: constants.layoutChatBot,
@@ -135,12 +140,16 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutScheduleMedicalMeeting) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            // here
                         } else if (item.key === constants.layoutListNotification) {
                             dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListConversation) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            dispatch(callSlice.actions.arrivalUsername(null)); // clear modal
                         } else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));

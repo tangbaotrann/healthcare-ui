@@ -348,13 +348,13 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
                 </div>
             </div>
 
-            {checkLeavedRoom && (
+            {checkLeavedRoom !== null ? (
                 <ContentAfterExaminated
                     conversation={conversation}
                     infoDoctor={infoDoctor}
                     recordConversation={recordConversation}
                 />
-            )}
+            ) : null}
         </>
     );
 }

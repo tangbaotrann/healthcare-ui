@@ -6,6 +6,7 @@ const constants = {
     layoutListNotification: 'listNotification',
     layoutListConversation: 'listConversation',
     layoutScheduleMedical: 'scheduleMedical',
+    layoutScheduleMedicalMeeting: 'scheduleMedicalMeeting',
     layoutMeeting: 'meeting',
     layoutChatBot: 'chatbot',
 };
