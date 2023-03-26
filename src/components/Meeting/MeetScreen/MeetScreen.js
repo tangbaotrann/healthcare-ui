@@ -39,7 +39,6 @@ function MeetScreen() {
             onLeaveRoom: () => {
                 console.log('users leaved ->', username);
                 // dispatch(callSlice.actions.arrivalUsername(username));
-
                 socket.emit('user_leave_room_call', { username, roomId });
             },
         });

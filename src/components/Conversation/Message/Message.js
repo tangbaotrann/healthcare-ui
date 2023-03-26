@@ -38,6 +38,7 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     const [openPopover, setOpenPopover] = useState(false);
     const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
     const [newImageMessage, setNewImageMessage] = useState([]);
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
     // const [audio, setAudio] = useState(null);
     // const [transcription, setTranscription] = useState('');
@@ -54,10 +55,11 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     console.log('checkLeavedRoom', checkLeavedRoom);
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
-    // console.log('infoDoctor ->', infoDoctor);
-    // console.log('conversation ->', conversation);
+    console.log('infoDoctor ->', infoDoctor);
+    console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
-    // console.log('recordConversation ->', recordConversation);
+    console.log('recordConversation ->', recordConversation);
+    console.log('onlineUsers ->', onlineUsers);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {
@@ -69,10 +71,11 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     // user join room
     useEffect(() => {
         socket.emit('join_room', conversation); // obj
-        socket.emit('status_user', infoMember.member._id);
+        socket.emit('status_user', infoDoctor._id);
 
         socket.on('get_users', (users) => {
             console.log('USER - ONLINE -', users);
+            setOnlineUsers(users.filter((_user) => _user.userId === conversation.member._id));
         });
 
         // joined_room

@@ -223,7 +223,6 @@ function TableListScheduleMedical({ infoUser }) {
         setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
         dispatch(fetchApiMessages(record.conversation._id));
-        dispatch(callSlice.actions.arrivalUsername(null)); // clear modal
     };
 
     // hide
@@ -250,22 +249,22 @@ function TableListScheduleMedical({ infoUser }) {
                 dataSource={scheduleMedicalsFilter.map((scheduleMedical, index) => ({
                     index: index + 1,
                     day: moment(scheduleMedical?.days?.day).format('dddd'),
-                    createdAt: moment(scheduleMedical.createdAt).format('DD-MM-YYYY'),
+                    createdAt: moment(scheduleMedical?.createdAt).format('DD/MM/YYYY'),
                     time: `${scheduleMedical?.shifts?.name} (${moment(
                         new Date(scheduleMedical?.shifts?.time_start),
                     ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
-                    time_per_conversation: `${scheduleMedical.schedule.time_per_conversation} phút`,
-                    fee: `${scheduleMedical.schedule.fee} VNĐ`,
-                    content_exam: scheduleMedical.content_exam,
+                    time_per_conversation: `${scheduleMedical?.schedule?.time_per_conversation} phút`,
+                    fee: `${scheduleMedical?.schedule?.fee} VNĐ`,
+                    content_exam: scheduleMedical?.content_exam,
                     status:
-                        scheduleMedical.status === false ? (
+                        scheduleMedical?.status === false ? (
                             <p style={{ color: 'blue' }}>Chờ xác nhận</p>
                         ) : (
                             <p style={{ color: 'green' }}>Đã xác nhận</p>
                         ),
-                    _id: scheduleMedical._id,
-                    idDoctor: scheduleMedical.doctor._id,
-                    conversation: scheduleMedical.conversations,
+                    _id: scheduleMedical?._id,
+                    idDoctor: scheduleMedical?.doctor?._id,
+                    conversation: scheduleMedical?.conversations,
                 }))}
                 rowKey="index"
                 pagination={{

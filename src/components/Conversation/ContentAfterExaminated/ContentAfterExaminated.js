@@ -7,6 +7,7 @@ import { Button, Form, Input, Modal, Select, message } from 'antd';
 import './ContentAfterExaminated.css';
 import TitleName from '~/components/TitleName';
 import { fetchApiResponseContentAfterExamiation } from '~/redux/features/patient/patientSlice';
+import callSlice from '~/redux/features/call/callSlice';
 
 function ContentAfterExaminated({ recordConversation }) {
     const [openModal, setOpenModal] = useState(false);
@@ -32,8 +33,9 @@ function ContentAfterExaminated({ recordConversation }) {
                     scheduleDetailId: recordConversation._id, // get id schedule-detail
                 }),
             );
-            message.success('Đã gửi phản hồi cho bệnh nhân.');
+            dispatch(callSlice.actions.arrivalUsername(null)); // clear modal
             setOpenModal(false);
+            message.success('Đã gửi phản hồi cho bệnh nhân.');
         } else {
             message.error('Gửi phản hồi không thành công!');
             return;

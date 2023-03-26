@@ -227,7 +227,13 @@ const patientSlice = createSlice({
         // confirmScheduleMedical: [],
         deleteScheduleMedical: [],
         resultHealthMessage: [],
+        btnOptionSelectedMeeting: null,
         isLoading: false,
+    },
+    reducers: {
+        arrivalFilterMeeting: (state, action) => {
+            state.btnOptionSelectedMeeting = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
