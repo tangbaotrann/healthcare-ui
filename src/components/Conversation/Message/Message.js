@@ -52,14 +52,14 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     const scrollMessage = useRef();
     const focusInputMessage = useRef();
 
-    console.log('checkLeavedRoom', checkLeavedRoom);
+    // console.log('checkLeavedRoom', checkLeavedRoom);
     // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
-    console.log('infoDoctor ->', infoDoctor);
-    console.log('conversation ->', conversation);
+    // console.log('infoDoctor ->', infoDoctor);
+    // console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
     console.log('recordConversation ->', recordConversation);
-    console.log('onlineUsers ->', onlineUsers);
+    // console.log('onlineUsers ->', onlineUsers);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {

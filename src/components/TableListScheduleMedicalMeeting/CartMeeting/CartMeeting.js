@@ -81,6 +81,10 @@ function CartMeeting() {
 
                             <div className="schedule-medical-meeting-cart-info">
                                 <div className="schedule-medical-meeting-cart-info-item">
+                                    <img className="icon-item" src={icons.iconUser} alt="icon-user" />
+                                    <p className="desc-item">{_scheduleMedicalMeeting.conversations.member.username}</p>
+                                </div>
+                                <div className="schedule-medical-meeting-cart-info-item">
                                     <img className="icon-item-time" src={icons.iconTime} alt="icon-time" />
                                     <p className="desc-item">
                                         {moment(_scheduleMedicalMeeting?.days?.day).format('dddd')} -{' '}

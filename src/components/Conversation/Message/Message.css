@@ -32,6 +32,7 @@
     border-radius: 6px;
     background-color: var(--white);
     z-index: 2;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
 }
 
 .message-header-avt {

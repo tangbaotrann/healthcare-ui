@@ -41,6 +41,36 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
     }
 });
 
+// move patient
+export const fetchApiMovePatient = createAsyncThunk('user/fetchApiMovePatient', async (values) => {
+    try {
+        const { doctor_id, patient_id, reason, work_type } = values;
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        const res = await axios.put(
+            `${process.env.REACT_APP_BASE_URL}doctors/move/patient/${patient_id}`,
+            {
+                doctor_id: doctor_id,
+                reason: reason,
+                work_type: work_type,
+            },
+            {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            },
+        );
+
+        console.log('res move patient ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 // find user Doctor by token
 export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoctorByToken', async (token) => {
     try {

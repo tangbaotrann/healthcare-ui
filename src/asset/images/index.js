@@ -37,6 +37,8 @@ export const icons = {
         'https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/header_sub_menu/general_care.svg',
     iconPrice:
         'https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/header_sub_menu/annual_health_check_up.svg',
+    iconUser:
+        'https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/header_sub_menu/pediatrics.svg',
 };
 
 export default images;

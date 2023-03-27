@@ -111,7 +111,7 @@ function ResultHeathPatient() {
                 onCancel={handleCancel}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
-                width={1000}
+                width={1200}
             >
                 <TitleName>Kết Quả Khám Gần Nhất</TitleName>
 

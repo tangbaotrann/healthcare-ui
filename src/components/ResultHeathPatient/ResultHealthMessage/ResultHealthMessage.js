@@ -30,6 +30,14 @@ function ResultHealthMessage({ resultHeath, information }) {
             key: 'day_exam',
             title: 'Ngày khám',
             dataIndex: 'day_exam',
+            sorter: {
+                compare: (a, b) => moment(a.day_exam, 'DD-MM-YYYY') - moment(b.day_exam, 'DD-MM-YYYY'),
+            },
+        },
+        {
+            key: 'time_exam',
+            title: 'Thời gian',
+            dataIndex: 'time_exam',
         },
     ];
 
@@ -65,9 +73,8 @@ function ResultHealthMessage({ resultHeath, information }) {
                             index: index + 1,
                             content_exam: result.content_exam,
                             result_exam: result.result_exam,
-                            day_exam:
-                                moment(result.day_exam).format('DD/MM/YYYY') +
-                                ` (${moment(result.day_exam).format('HH:mm a')})`,
+                            day_exam: moment(result.day_exam).format('DD/MM/YYYY'),
+                            time_exam: moment(result.day_exam).format('HH:mm a'),
                         }))}
                         rowKey="index"
                     ></Table>
