@@ -27,6 +27,7 @@ import bloodPressureSlice from '~/redux/features/metric/bloodPressure';
 import InformationPatient from './InformationPatient';
 import ModalRemind from './ModalRemind/ModalRemind';
 import ModalStopExaminated from './ModalStopExaminated/ModalStopExaminated';
+import ModalMovePatient from './ModalMovePatient/ModalMovePatient';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -242,8 +243,11 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
                 {/* Modal remind */}
                 <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
 
-                {/* Modal */}
+                {/* Modal stop examinated */}
                 <ModalStopExaminated getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
+
+                {/* Modal move patient */}
+                <ModalMovePatient infoPatient={infoPatient} />
             </div>
         </>
     );

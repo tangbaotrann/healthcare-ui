@@ -15,7 +15,7 @@ function MetricPieChart() {
 
     // console.log('patientStatusAlarmChart ->', patientStatusAlarmChart.length);
     // console.log('patientStatusWarningChart ->', patientStatusWarningChart.length);
-    // console.log('patientStatusNormalChart ->', patientStatusNormalChart.length);
+    console.log('patientStatusNormalChart ->', patientStatusNormalChart.length);
 
     const option = {
         color: [

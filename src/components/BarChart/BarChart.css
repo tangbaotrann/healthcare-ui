@@ -184,3 +184,27 @@
     background: var(--orange-gradient);
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }
+
+/* Button move patient */
+.move-patient-btn {
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--blu);
+    margin-left: 6px;
+}
+
+.move-patient-btn:hover {
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    color: var(--white) !important;
+    background-color: var(--blu);
+    box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}

@@ -31,7 +31,7 @@ function PatientList() {
     const glycemics = useSelector(userGlycemicListSelectorFilter);
     const bloodPressures = useSelector(userBloodPressureListSelectorFilter);
 
-    // console.log('patients', patients);
+    console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
     // console.log('bloodPressures', bloodPressures);

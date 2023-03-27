@@ -214,16 +214,19 @@ export const getIdDoctorFilter = createSelector(
     },
 );
 
-// list schedule detail -> return patient id (HIDE)
+// list schedule detail -> return patient id (Patients list)
 export const scheduleDetailByIdDoctorFilters = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
-    (listScheduleDetail) => {
+    fetchApiUserDoctorByTokenSelector,
+    (listScheduleDetail, userDoctorCurrent) => {
         // console.log('listScheduleDetail selector ->', listScheduleDetail);
         if (listScheduleDetail) {
             const listScheduleDetailFilter = listScheduleDetail.filter(
                 (_listScheduleDetail) =>
-                    _listScheduleDetail.patient.doctor_glycemic_id !== null ||
-                    _listScheduleDetail.patient.doctor_blood_id !== null,
+                    (_listScheduleDetail.patient.doctor_glycemic_id !== null &&
+                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                    (_listScheduleDetail.patient.doctor_blood_id !== null &&
+                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent.doctor._id),
             );
 
             // console.log('listScheduleDetailFilter selector ->', listScheduleDetailFilter);
@@ -238,9 +241,18 @@ export const scheduleDetailByIdDoctorFilters = createSelector(
 // filter status health of patient -> Chart (Normal)
 export const filterStatusHealthNormalOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
-    (listPatient) => {
+    fetchApiUserDoctorByTokenSelector,
+    (listPatient, userDoctorCurrent) => {
+        console.log('listPatient selector ->', listPatient);
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 0);
+            const patient = listPatient.filter(
+                (_patient) =>
+                    ((_patient.patient.doctor_glycemic_id !== null &&
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        (_patient.patient.doctor_blood_id !== null &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                    _patient.status.message?.code === 0,
+            );
 
             return patient;
         }
@@ -250,9 +262,17 @@ export const filterStatusHealthNormalOfPatientForChart = createSelector(
 // filter status health of patient -> Chart (Alarm)
 export const filterStatusHealthAlarmOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
-    (listPatient) => {
+    fetchApiUserDoctorByTokenSelector,
+    (listPatient, userDoctorCurrent) => {
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 2);
+            const patient = listPatient.filter(
+                (_patient) =>
+                    ((_patient.patient.doctor_glycemic_id !== null &&
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        (_patient.patient.doctor_blood_id !== null &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                    _patient.status.message?.code === 2,
+            );
 
             return patient;
         }
@@ -262,9 +282,17 @@ export const filterStatusHealthAlarmOfPatientForChart = createSelector(
 // filter status health of patient -> Chart (Warning)
 export const filterStatusHealthWarningOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
-    (listPatient) => {
+    fetchApiUserDoctorByTokenSelector,
+    (listPatient, userDoctorCurrent) => {
         if (listPatient) {
-            const patient = listPatient.filter((_patient) => _patient.status.message?.code === 1);
+            const patient = listPatient.filter(
+                (_patient) =>
+                    ((_patient.patient.doctor_glycemic_id !== null &&
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        (_patient.patient.doctor_blood_id !== null &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                    _patient.status.message?.code === 1,
+            );
 
             return patient;
         }
@@ -351,7 +379,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -516,5 +544,23 @@ export const userBloodPressureListSelectorFilter = createSelector(
         }
 
         return [];
+    },
+);
+
+// filter doctors -> handle move patient
+export const filterDoctorForMovePatient = createSelector(
+    fetchApiUserDoctorsSelector,
+    fetchApiUserDoctorByTokenSelector,
+    (userDoctors, userDoctorCurrent) => {
+        // console.log('userDoctors ->', userDoctors);
+        // console.log('userDoctorCurrent ->', userDoctorCurrent);
+
+        if (userDoctors.length > 0) {
+            const _userDoctors = userDoctors.filter((_userDoctor) => _userDoctor._id !== userDoctorCurrent.doctor._id);
+
+            // console.log('_userDoctors ->', _userDoctors);
+
+            return _userDoctors;
+        }
     },
 );
