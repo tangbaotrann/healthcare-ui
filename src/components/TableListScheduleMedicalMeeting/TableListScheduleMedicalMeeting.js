@@ -8,7 +8,7 @@ import CartMeeting from './CartMeeting';
 import { Select } from 'antd';
 import patientSlice from '~/redux/features/patient/patientSlice';
 
-function TableListScheduleMedicalMeeting() {
+function TableListScheduleMedicalMeeting({ infoUser }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -35,7 +35,7 @@ function TableListScheduleMedicalMeeting() {
                 />
             </div>
             <div className="wrapper-schedule-medical-meeting">
-                <CartMeeting />
+                <CartMeeting infoUser={infoUser} />
             </div>
         </>
     );

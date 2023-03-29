@@ -1,23 +1,58 @@
 // lib
 import moment from 'moment';
-import { Button, Table } from 'antd';
+import { useState } from 'react';
+import { Button, Modal, Table, message } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import './TableListNotification.css';
 import TitleName from '../TitleName';
 import { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
+import { filterNotificationGetConversationId } from '~/redux/selector';
+import Conversation from '../Conversation/Conversation';
+import conversationSlice from '~/redux/features/conversation/conversationSlice';
+import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 
-function TableListNotification({ notifications }) {
+function TableListNotification({ notifications, infoUser }) {
+    const [record, setRecord] = useState({});
+    const [showModalConversation, setShowModalConversation] = useState(false);
     const dispatch = useDispatch();
 
+    const getConversationFromNotification = useSelector(filterNotificationGetConversationId);
+    // const checkConversation = useSelector(btnClickedRecordGetIdConversationSelector);
+
+    // console.log('notifications ->', notifications);
+    // console.log('getConversationFromNotification ->', getConversationFromNotification);
     // console.log('seenNotification', seenNotification);
     // console.log('updateHasSeen ->', updateHasSeen);
+    // console.log('checkConversation ->', checkConversation);
 
     // handle update seen notification
     const handleUpdateSeenNotification = (record) => {
         dispatch(fetchApiUpdateSeenNotification(record));
+    };
+
+    // handle show modal
+    const handleShowModalConversation = (record) => {
+        console.log('rec', record);
+
+        if (record.conversation === undefined) {
+            message.error('Chưa có cuộc trò chuyện!');
+            return;
+        }
+
+        if (record.conversation.conversation._id) {
+            dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation.conversation)); //arrivalFromRecordIdConversation obj conversation filter
+            dispatch(fetchApiMessages(record.conversation.conversation._id));
+            setRecord(record);
+            setShowModalConversation(true);
+        }
+    };
+
+    // hide modal
+    const hideModalConversation = () => {
+        setShowModalConversation(false);
     };
 
     // cols
@@ -32,7 +67,7 @@ function TableListNotification({ notifications }) {
             key: 'content',
             title: 'Nội dung thông báo',
             dataIndex: 'content',
-            width: '60%',
+            width: '50%',
         },
         {
             key: 'createdAt',
@@ -64,28 +99,75 @@ function TableListNotification({ notifications }) {
                 return record.hasSeen === value;
             },
         },
+        {
+            key: 'show-message',
+            render: (record) => {
+                return (
+                    <Button
+                        onClick={() => handleShowModalConversation(record)}
+                        className="notification-show-message-btn"
+                    >
+                        Nhắn tin
+                    </Button>
+                );
+            },
+        },
     ];
 
     return (
         <>
+            {/* Modal conversation */}
+            <Modal
+                open={showModalConversation}
+                onCancel={hideModalConversation}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+                width={1200}
+            >
+                {record ? (
+                    <Conversation
+                        infoUser={infoUser}
+                        // checkConversation={checkConversation}
+                        // recordConversation={record.conversation.conversation}
+                    />
+                ) : null}
+            </Modal>
+
             <TitleName>Danh Sách Các Thông Báo Hiện Có Của Bác Sĩ</TitleName>
 
             {/* Table list */}
             <Table
                 columns={cols}
-                dataSource={notifications.map((notification, index) => ({
+                dataSource={getConversationFromNotification.map((_notification, index) => ({
                     index: index + 1,
-                    content: notification.content,
-                    createdAt: `${moment(notification.createdAt).format('DD-MM-YYYY')} lúc ${moment(
-                        notification.createdAt,
-                    ).format('HH:mm')}`,
-                    hasSeen: notification.hasSeen,
-                    _id: notification._id,
+                    content: _notification.content,
+                    createdAt: `${moment(_notification.createdAt).format('DD-MM-YYYY')} lúc ${moment(
+                        _notification.createdAt,
+                    ).format('HH:mm a')}`,
+                    hasSeen: _notification.hasSeen,
+                    _id: _notification._id,
+                    rule: _notification.rule,
+                    conversation: _notification.conversation,
                 }))}
                 rowKey="index"
                 pagination={{
                     pageSize: 8,
                 }}
+                rowClassName={(record, index) =>
+                    record.rule === 'RULE_DOCTOR_REMIND'
+                        ? 'custom-row-rule-doctor-remind'
+                        : record.rule === 'RULE_NOTIFICATION_REGISTER_SCHEDULE'
+                        ? 'custom-row-noti-reg-schedule'
+                        : record.rule === 'RULE_NOTIFICATION_CANCEL_SCHEDULE'
+                        ? 'custom-row-noti-cancel-schedule'
+                        : record.rule === 'RULE_SYSTEM'
+                        ? 'custom-row-rule-system'
+                        : record.rule === 'RULE_WARNING'
+                        ? 'custom-row-rule-warning'
+                        : record.rule === 'type.RULE_SOS'
+                        ? 'custom-row-rule-sos'
+                        : 'custom-row-else'
+                }
                 style={{ height: '300px' }}
                 scroll={{ y: 440 }}
             ></Table>

@@ -33,6 +33,7 @@ import { fetchApiConversations } from '~/redux/features/conversation/conversatio
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
 import callSlice from '~/redux/features/call/callSlice';
+import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -44,6 +45,7 @@ function LayoutDoctorManager({ children, infoUser }) {
 
     const dispatch = useDispatch();
 
+    // const getToken = JSON.parse(localStorage.getItem('token_user_login'));
     const getIdDoctor = useSelector(getDoctorLoginFilter);
     const notificationNotHasSeen = useSelector(filterNotificationNotHasSeen);
     // const totalNotifications = useSelector(getTotalNotifications);
@@ -145,6 +147,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
+                            // dispatch(fetchApiUserDoctorByToken(getToken));
+                            dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
+                            dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListConversation) {

@@ -64,6 +64,8 @@ export const isLoadingConversationsSelector = (state) => state.conversationSlice
 
 // get id conversation when clicked
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
+export const btnClickedRecordGetIdConversationSelector = (state) =>
+    state.conversationSlice.btnClickedRecordGetIdConversation;
 
 // get id user when clicked button call
 export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide
@@ -72,6 +74,7 @@ export const btnClickGetUsernameLeavedRoomSelector = (state) => state.callSlice.
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;
 export const isLoadingMessagesSelector = (state) => state.messageSlice.isLoading;
+export const isLoadingWhenSendMessageSelector = (state) => state.messageSlice.isLoadingWhenSend;
 
 export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
 
@@ -100,11 +103,23 @@ export const totalAppointmentScheduleOfDoctor = createSelector(
 );
 
 // Tổng số bệnh nhân
-export const totalPatients = createSelector(fetchApiScheduleDetailByIdDoctorSelector, (listPatient) => {
-    if (listPatient) {
-        return listPatient.length;
-    }
-});
+export const totalPatients = createSelector(
+    fetchApiScheduleDetailByIdDoctorSelector,
+    fetchApiUserDoctorByTokenSelector,
+    (listPatient, userDoctorCurrent) => {
+        if (listPatient) {
+            const listScheduleDetailFilter = listPatient.filter(
+                (_listScheduleDetail) =>
+                    (_listScheduleDetail.patient.doctor_glycemic_id !== null &&
+                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                    (_listScheduleDetail.patient.doctor_blood_id !== null &&
+                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent.doctor._id),
+            );
+
+            return listScheduleDetailFilter.length;
+        }
+    },
+);
 
 // filter notification not has seen
 export const filterNotificationNotHasSeen = createSelector(
@@ -120,7 +135,7 @@ export const filterNotificationNotHasSeen = createSelector(
     },
 );
 
-// filter notification
+// filter notification (HIDED)
 export const filterNotifications = createSelector(
     fetchApiNotificationByDoctorIdSelector,
     fetchApiUpdateSeenNotificationSelector,
@@ -331,6 +346,47 @@ export const cleanConversationListSelector = createSelector(
     },
 );
 
+// filter -> day (Thứ) + time (Ca làm) of doctor (TẤT CẢ LỊCH HẸN KHÁM)
+export const getDayAndTimeScheduleMedicalALLFilterOfDoctor = createSelector(
+    fetchApiScheduleMedicalAppointmentSelector,
+    fetchApiAllCreateDaysDoctorSelector,
+    fetchApiAllShiftsDoctorSelector,
+    cleanConversationListSelector,
+    (listScheduleMedical, listDay, listShift, cleanConversation) => {
+        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listDay', listDay);
+        // console.log('listShift', listShift);
+        // console.log('cleanConversationListSelector', cleanConversation);
+
+        const scheduleMedicals = listScheduleMedical.map((_scheduleMedical) => {
+            const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
+            const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+            const conversation = cleanConversation.find(
+                (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+            );
+
+            return {
+                status: _scheduleMedical.status,
+                content_exam: _scheduleMedical.content_exam,
+                result_exam: _scheduleMedical.result_exam,
+                createdAt: _scheduleMedical.createdAt,
+                doctor: _scheduleMedical.doctor,
+                patient: _scheduleMedical.patient,
+                schedule: _scheduleMedical.schedule,
+                updatedAt: _scheduleMedical.updatedAt,
+                days,
+                shifts,
+                conversation,
+                _id: _scheduleMedical._id,
+            };
+        });
+
+        console.log('scheduleMedicals ->', scheduleMedicals);
+
+        return scheduleMedicals;
+    },
+);
+
 // filter -> day (Thứ) + time (Ca làm) of doctor (LỊCH HẸN KHÁM)
 export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiScheduleMedicalAppointmentSelector,
@@ -338,7 +394,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -431,6 +487,40 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
         }
 
         return [];
+    },
+);
+
+// filter notification -> get id conversation -> show screen
+export const filterNotificationGetConversationId = createSelector(
+    fetchApiNotificationByDoctorIdSelector,
+    getDayAndTimeScheduleMedicalALLFilterOfDoctor,
+    (notifications, listSchedule) => {
+        console.log('notifications ->', notifications);
+        console.log('listSchedule ->', listSchedule);
+
+        const _notifications = notifications.map((_notification) => {
+            // conversation
+            const _conversations = listSchedule.find(
+                (_conversation) => _conversation?.conversation?._id === _notification?.conversation_id,
+            );
+
+            // console.log('_conversations ->', _conversations);
+
+            return {
+                content: _notification.content,
+                createdAt: _notification.createdAt,
+                from: _notification.from,
+                hasSeen: _notification.hasSeen,
+                rule: _notification.rule,
+                to: _notification.to,
+                updatedAt: _notification.updatedAt,
+                _id: _notification._id,
+                conversation: _conversations,
+            };
+        });
+
+        console.log('_notifications ->', _notifications);
+        return _notifications;
     },
 );
 

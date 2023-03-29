@@ -66,6 +66,7 @@ const messageSlice = createSlice({
     initialState: {
         data: [],
         isLoading: false,
+        isLoadingWhenSend: false,
     },
     reducers: {
         arrivalMessageFromSocket: (state, action) => {
@@ -90,7 +91,11 @@ const messageSlice = createSlice({
                 state.isLoading = false;
                 state.data = action.payload;
             })
+            .addCase(fetchApiCreateMessage.pending, (state, action) => {
+                state.isLoadingWhenSend = true;
+            })
             .addCase(fetchApiCreateMessage.fulfilled, (state, action) => {
+                state.isLoadingWhenSend = false;
                 state.data.push(action.payload);
 
                 // socket

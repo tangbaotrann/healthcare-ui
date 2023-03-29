@@ -19,11 +19,15 @@ const conversationSlice = createSlice({
     initialState: {
         data: [],
         btnClickGetIdConversation: null,
+        btnClickedRecordGetIdConversation: null,
         isLoading: false,
     },
     reducers: {
         arrivalIdConversation: (state, action) => {
             state.btnClickGetIdConversation = action.payload;
+        },
+        arrivalFromRecordIdConversation: (state, action) => {
+            state.btnClickedRecordGetIdConversation = action.payload;
         },
     },
     extraReducers: (builder) => {

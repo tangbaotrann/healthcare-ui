@@ -3,13 +3,12 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Image, Skeleton, Typography } from 'antd';
+import { Button, Image, Modal, Skeleton, Typography } from 'antd';
 
 // me
 import { icons, logo } from '~/asset/images';
 import {
     btnClickGetUsernameLeavedRoomSelector,
-    getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
     getDoctorLoginFilter,
     isLoadingScheduleDetailByIdDoctorSelector,
     scheduleMedicalMeetingFilterOfDoctor,
@@ -18,12 +17,16 @@ import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import callSlice from '~/redux/features/call/callSlice';
 import ContentAfterExaminated from '~/components/Conversation/ContentAfterExaminated/ContentAfterExaminated';
+import Conversation from '~/components/Conversation';
+import conversationSlice from '~/redux/features/conversation/conversationSlice';
+import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 
 const { Paragraph } = Typography;
 
-function CartMeeting() {
+function CartMeeting({ infoUser }) {
     const [conversation, setConversation] = useState('');
     const [record, setRecord] = useState({}); // get id schedule detail
+    const [showModalConversation, setShowModalConversation] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -32,16 +35,16 @@ function CartMeeting() {
     const infoDoctor = useSelector(getDoctorLoginFilter);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
-    // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
+    console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
-    // console.log('conversation ->', conversation);
-    // console.log('record ->', record);
+    console.log('conversation ->', conversation);
+    console.log('record ->', record);
 
     // user join room
     useEffect(() => {
         socket.emit('join_room', conversation); // obj
-        socket.emit('status_user', infoDoctor._id);
+        socket.emit('add_user', infoDoctor._id);
 
         socket.on('get_users', (users) => {
             // console.log('USER - ONLINE -', users);
@@ -64,13 +67,37 @@ function CartMeeting() {
     const handleCallGetInfoUser = (_scheduleMedicalMeeting) => {
         const conversation = _scheduleMedicalMeeting.conversations;
 
-        socket.emit('call_id_room_to_users', { conversation, infoDoctor });
+        socket.emit('call_id_room_to_user', { conversation, infoDoctor });
         setConversation(conversation);
         setRecord(_scheduleMedicalMeeting);
     };
 
+    // show modal conversation
+    const handleShowModalConversation = (_scheduleMedicalMeeting) => {
+        console.log('record ->', _scheduleMedicalMeeting);
+        setShowModalConversation(true);
+        dispatch(conversationSlice.actions.arrivalIdConversation(_scheduleMedicalMeeting.conversations)); // obj conversation filter
+        dispatch(fetchApiMessages(_scheduleMedicalMeeting.conversations._id));
+    };
+
+    // hide
+    const hideModalConversation = () => {
+        setShowModalConversation(false);
+    };
+
     return (
         <>
+            {/* Show modal conversation */}
+            <Modal
+                open={showModalConversation}
+                onCancel={hideModalConversation}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+                width={1200}
+            >
+                {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
+            </Modal>
+
             {isLoading ? (
                 <Skeleton active />
             ) : (
@@ -117,6 +144,7 @@ function CartMeeting() {
                                 <Link
                                     to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor.person.username}`}
                                     target="_blank"
+                                    style={{ width: '100%' }}
                                 >
                                     <Button
                                         className="schedule-medical-meeting-cart-btn"
@@ -125,6 +153,25 @@ function CartMeeting() {
                                         Tham gia ngay
                                     </Button>
                                 </Link>
+
+                                {/* Nhắn tin */}
+                                <Button
+                                    className="cart-meeting-show-conversation-message"
+                                    onClick={() => handleShowModalConversation(_scheduleMedicalMeeting)}
+                                >
+                                    Nhắn tin
+                                </Button>
+
+                                {/* Modal conversation */}
+                                {/* <Modal
+                                    open={showModalConversation}
+                                    onCancel={hideModalConversation}
+                                    cancelButtonProps={{ style: { display: 'none' } }}
+                                    okButtonProps={{ style: { display: 'none' } }}
+                                    width={1200}
+                                >
+                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
+                                </Modal> */}
                             </div>
                         </div>
                     );
@@ -133,8 +180,6 @@ function CartMeeting() {
 
             {checkLeavedRoom !== null ? (
                 <ContentAfterExaminated
-                    conversation={conversation}
-                    infoDoctor={infoDoctor}
                     recordConversation={record} // get id schedule detail
                 />
             ) : null}

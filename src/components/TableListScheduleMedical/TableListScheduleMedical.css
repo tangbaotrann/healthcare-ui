@@ -25,14 +25,14 @@
 .show-conversation-message {
     border-radius: 4px;
     margin-left: 4px;
-    border: 1px solid var(--orange-gradient);
+    border: 1px solid var(--blu);
     color: var(--white);
-    background: var(--orange-gradient);
+    background: var(--blu);
 }
 
 .show-conversation-message:hover {
     opacity: 0.8;
     color: var(--white) !important;
-    border: 1px solid var(--orange-gradient);
-    outline: var(--orange-gradient);
+    border: 1px solid var(--blu);
+    outline: var(--blu);
 }

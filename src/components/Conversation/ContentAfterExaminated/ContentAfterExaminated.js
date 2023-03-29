@@ -1,6 +1,6 @@
 // lib
 import { useState, useEffect, memo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 
 // me
@@ -8,13 +8,17 @@ import './ContentAfterExaminated.css';
 import TitleName from '~/components/TitleName';
 import { fetchApiResponseContentAfterExamiation } from '~/redux/features/patient/patientSlice';
 import callSlice from '~/redux/features/call/callSlice';
+import { btnClickGetIdConversationSelector } from '~/redux/selector';
 
 function ContentAfterExaminated({ recordConversation }) {
     const [openModal, setOpenModal] = useState(false);
 
+    const conversation = useSelector(btnClickGetIdConversationSelector);
+
     const dispatch = useDispatch();
 
     console.log('recordConversation ->', recordConversation); // get id schedule-detail
+    console.log('conversation ->', conversation); // get id schedule-detail
 
     useEffect(() => {
         setOpenModal(true);
@@ -87,6 +91,7 @@ function ContentAfterExaminated({ recordConversation }) {
                             { value: '1', label: 'Típ 1' },
                             { value: '2', label: 'Típ 2' },
                         ]}
+                        placeholder="Chọn loại bệnh"
                     />
                 </Form.Item>
 
