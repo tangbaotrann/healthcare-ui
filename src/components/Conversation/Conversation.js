@@ -7,6 +7,7 @@ import './Conversation.css';
 import { logo } from '~/asset/images';
 import {
     btnClickGetIdConversationSelector,
+    btnClickedRecordGetIdConversationSelector,
     cleanConversationListSelector,
     isLoadingConversationsSelector,
     messageOfUserFilter,
@@ -15,6 +16,7 @@ import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import Message from './Message';
 import { LoadingOutlined } from '@ant-design/icons';
+import { memo } from 'react';
 
 function Conversation({ infoUser, recordConversation }) {
     const dispatch = useDispatch();
@@ -22,14 +24,18 @@ function Conversation({ infoUser, recordConversation }) {
     const conversations = useSelector(cleanConversationListSelector);
     const isLoadingConversation = useSelector(isLoadingConversationsSelector);
     const conversation = useSelector(btnClickGetIdConversationSelector);
+    // const checkConversation = useSelector(btnClickedRecordGetIdConversationSelector);
     const messages = useSelector(messageOfUserFilter);
 
     // console.log('conversations', conversations);
     // console.log('conversation info user patient ->', conversation);
     // console.log('messages', messages);
+    console.log('recordConversation', recordConversation);
+    // console.log('checkConversation', checkConversation);
 
     // handle click conversation -> get id conversation
     const handleClickConversation = (conversation) => {
+        console.log('con', conversation);
         dispatch(conversationSlice.actions.arrivalIdConversation(conversation));
         dispatch(fetchApiMessages(conversation._id));
     };
@@ -37,43 +43,41 @@ function Conversation({ infoUser, recordConversation }) {
     return (
         <div className="wrapper-messenger">
             {/* Conversation */}
-            {recordConversation ? null : (
-                <>
-                    <div className="container-conversation">
-                        <strong>Cuộc trò chuyện của bạn</strong>
+            {/* {checkConversation ? null : ( */}
+            <>
+                <div className="container-conversation">
+                    <strong>Cuộc trò chuyện của bạn</strong>
 
-                        {isLoadingConversation ? (
-                            <p className="display-icon-loading-conversations">
-                                <LoadingOutlined className="loading-conversations" />
-                            </p>
-                        ) : (
-                            conversations.map((conversation) => {
-                                return (
-                                    <div
-                                        className="conversation-item"
-                                        key={conversation._id}
-                                        onClick={() => handleClickConversation(conversation)}
-                                    >
-                                        <img
-                                            src={conversation.member ? conversation.member.avatar : logo.iconHeart}
-                                            className="conversation-avatar"
-                                            alt="img-conversation-avt"
-                                        />
+                    {isLoadingConversation ? (
+                        <p className="display-icon-loading-conversations">
+                            <LoadingOutlined className="loading-conversations" />
+                        </p>
+                    ) : (
+                        conversations.map((conversation) => {
+                            return (
+                                <div
+                                    className="conversation-item"
+                                    key={conversation._id}
+                                    onClick={() => handleClickConversation(conversation)}
+                                >
+                                    <img
+                                        src={conversation.member ? conversation.member.avatar : logo.iconHeart}
+                                        className="conversation-avatar"
+                                        alt="img-conversation-avt"
+                                    />
 
-                                        <div className="conversation-info">
-                                            <h4>{conversation.member ? conversation.member.username : null}</h4>
-                                            <p>
-                                                {conversation.last_message ? conversation.last_message.content : null}
-                                            </p>
-                                        </div>
+                                    <div className="conversation-info">
+                                        <h4>{conversation.member ? conversation.member.username : null}</h4>
+                                        <p>{conversation.last_message ? conversation.last_message.content : null}</p>
                                     </div>
-                                );
-                            })
-                        )}
-                    </div>
-                    <Divider type="vertical" className="divider-vertical" />
-                </>
-            )}
+                                </div>
+                            );
+                        })
+                    )}
+                </div>
+                <Divider type="vertical" className="divider-vertical" />
+            </>
+            {/* )} */}
 
             {/* Message */}
             {conversation ? (
@@ -81,7 +85,7 @@ function Conversation({ infoUser, recordConversation }) {
                     messages={messages}
                     conversation={conversation}
                     infoUser={infoUser}
-                    recordConversation={recordConversation}
+                    // recordConversation={recordConversation}
                 />
             ) : (
                 <div className="wrapper-message">
@@ -94,4 +98,4 @@ function Conversation({ infoUser, recordConversation }) {
     );
 }
 
-export default Conversation;
+export default memo(Conversation);

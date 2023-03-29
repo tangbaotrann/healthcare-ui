@@ -2,3 +2,49 @@
     font-size: 2.4rem;
     color: green;
 }
+
+/* RULE_DOCTOR_REMIND */
+.custom-row-rule-doctor-remind {
+    background-color: orange;
+}
+
+.custom-row-noti-reg-schedule {
+    background-color: #a8dadc;
+}
+
+.custom-row-noti-cancel-schedule {
+    background-color: #fec89a;
+}
+
+.custom-row-rule-system {
+    background-color: #ccc;
+}
+
+.custom-row-rule-warning {
+    background-color: #fca311;
+}
+
+.custom-row-rule-sos {
+    background-color: #e63946;
+}
+
+.custom-row-else {
+    background-color: #f6bd60;
+}
+
+/* Button */
+.notification-show-message-btn {
+    border-radius: 4px;
+    margin-left: 4px;
+    border: 1px solid var(--blu);
+    color: var(--white);
+    background: var(--blu);
+}
+
+.notification-show-message-btn:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+    border: 1px solid var(--blu);
+    outline: var(--blu);
+    transition: all 0.3s;
+}

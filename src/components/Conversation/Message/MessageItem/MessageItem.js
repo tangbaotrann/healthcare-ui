@@ -11,8 +11,10 @@ import { isLoadingMessagesSelector } from '~/redux/selector';
 
 function MessageItem({ messages, infoUser, scrollMessage }) {
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
+    // const isLoadingWhenSended = useSelector(isLoadingWhenSendMessageSelector);
 
     // console.log('infoUserDoctor ->', infoUser);
+    // console.log('isLoadingWhenSended ->', isLoadingWhenSended);
 
     return (
         <>

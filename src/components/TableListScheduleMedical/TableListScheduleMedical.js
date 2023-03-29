@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form, Input, message, Modal, Table } from 'antd';
 
@@ -15,6 +15,7 @@ import Conversation from '../Conversation';
 import callSlice from '~/redux/features/call/callSlice';
 
 function TableListScheduleMedical({ infoUser }) {
+    const [record, setRecord] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [showModalConversation, setShowModalConversation] = useState(false);
 
@@ -106,7 +107,7 @@ function TableListScheduleMedical({ infoUser }) {
                                     className="show-conversation-message"
                                     onClick={() => handleShowModalConversation(record)}
                                 >
-                                    Trò chuyện
+                                    Nhắn tin
                                 </Button>
 
                                 {/* Modal conversation */}
@@ -133,7 +134,7 @@ function TableListScheduleMedical({ infoUser }) {
                                     className="show-conversation-message"
                                     onClick={() => handleShowModalConversation(record)}
                                 >
-                                    Trò chuyện
+                                    Nhắn tin
                                 </Button>
 
                                 {/* Modal confirm delete request schedule */}
@@ -181,16 +182,6 @@ function TableListScheduleMedical({ infoUser }) {
                                         </Button>
                                     </Form>
                                 </Modal>
-
-                                {/* Modal conversation */}
-                                <Modal
-                                    open={showModalConversation}
-                                    onCancel={hideModalConversation}
-                                    cancelButtonProps={{ style: { display: 'none' } }}
-                                    okButtonProps={{ style: { display: 'none' } }}
-                                >
-                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
-                                </Modal>
                             </>
                         )}
                     </div>
@@ -221,8 +212,9 @@ function TableListScheduleMedical({ infoUser }) {
     const handleShowModalConversation = (record) => {
         console.log('record ->', record);
         setShowModalConversation(true);
-        dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation));
+        dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation)); // obj conversation filter
         dispatch(fetchApiMessages(record.conversation._id));
+        setRecord(record);
     };
 
     // hide
@@ -241,6 +233,17 @@ function TableListScheduleMedical({ infoUser }) {
 
     return (
         <>
+            {/* Modal conversation */}
+            <Modal
+                open={showModalConversation}
+                onCancel={hideModalConversation}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+                width={1200}
+            >
+                {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
+            </Modal>
+
             <TitleName>Danh Sách Lịch Khám Của Bác Sĩ</TitleName>
 
             {/* return: { info patient } -> get info */}

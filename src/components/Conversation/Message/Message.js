@@ -1,5 +1,5 @@
 // lib
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
@@ -31,7 +31,8 @@ import axios from 'axios';
 import callSlice from '~/redux/features/call/callSlice';
 import ContentAfterExaminated from '../ContentAfterExaminated';
 
-function Message({ messages, conversation, infoUser, recordConversation }) {
+function Message({ messages, conversation, infoUser }) {
+    // recordConversation
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
     const [muteRecording, setMuteRecording] = useState(false);
@@ -53,12 +54,12 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     const focusInputMessage = useRef();
 
     // console.log('checkLeavedRoom', checkLeavedRoom);
-    // console.log('infoMember ->', infoMember);
+    console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
-    console.log('recordConversation ->', recordConversation);
+    // console.log('recordConversation ->', recordConversation);
     // console.log('onlineUsers ->', onlineUsers);
 
     useEffect(() => {
@@ -71,10 +72,10 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
     // user join room
     useEffect(() => {
         socket.emit('join_room', conversation); // obj
-        socket.emit('status_user', infoDoctor._id);
+        socket.emit('add_user', infoDoctor._id);
 
         socket.on('get_users', (users) => {
-            console.log('USER - ONLINE -', users);
+            // console.log('USER - ONLINE -', users);
             setOnlineUsers(users.filter((_user) => _user.userId === conversation.member._id));
         });
 
@@ -82,7 +83,7 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
         socket.on('joined_room', (conversationId) => {
             // console.log('[conversation - id] ->', conversationId);
         });
-    }, [conversation, infoMember.member._id]);
+    }, [conversation, infoDoctor._id]);
 
     // socket when send message
     useEffect(() => {
@@ -351,15 +352,9 @@ function Message({ messages, conversation, infoUser, recordConversation }) {
                 </div>
             </div>
 
-            {checkLeavedRoom !== null ? (
-                <ContentAfterExaminated
-                    conversation={conversation}
-                    infoDoctor={infoDoctor}
-                    recordConversation={recordConversation}
-                />
-            ) : null}
+            {/* {checkLeavedRoom !== null ? <ContentAfterExaminated recordConversation={recordConversation} /> : null} */}
         </>
     );
 }
 
-export default Message;
+export default memo(Message);

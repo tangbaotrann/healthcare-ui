@@ -120,13 +120,13 @@ function DoctorManager() {
                 ) : changeLayout === constants.layoutScheduleMedical ? (
                     <TableListScheduleMedical infoUser={infoUser} />
                 ) : changeLayout === constants.layoutScheduleMedicalMeeting ? (
-                    <TableListScheduleMedicalMeeting />
+                    <TableListScheduleMedicalMeeting infoUser={infoUser} />
                 ) : changeLayout === constants.layoutListPatient ? (
                     <PatientList />
                 ) : changeLayout === constants.layoutResultHealthPatient ? (
                     <ResultHeathPatient />
                 ) : changeLayout === constants.layoutListNotification ? (
-                    <TableListNotification notifications={notifications} />
+                    <TableListNotification notifications={notifications} infoUser={infoUser} />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation infoUser={infoUser} />
                 ) : changeLayout === constants.layoutChatBot ? (
