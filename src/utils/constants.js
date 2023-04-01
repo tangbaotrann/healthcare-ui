@@ -8,6 +8,7 @@ const constants = {
     layoutScheduleMedical: 'scheduleMedical',
     layoutScheduleMedicalMeeting: 'scheduleMedicalMeeting',
     layoutMeeting: 'meeting',
+    layoutBlog: 'blog',
     layoutChatBot: 'chatbot',
 };
 

@@ -12,6 +12,7 @@ import {
     OrderedListOutlined,
     RobotOutlined,
     ScheduleOutlined,
+    SolutionOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
 import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
@@ -32,8 +33,6 @@ import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/featu
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
-import callSlice from '~/redux/features/call/callSlice';
-import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -127,6 +126,11 @@ function LayoutDoctorManager({ children, infoUser }) {
                             label: 'Cuộc trò chuyện',
                         },
                         {
+                            key: constants.layoutBlog,
+                            icon: <SolutionOutlined />,
+                            label: 'Blog',
+                        },
+                        {
                             key: constants.layoutChatBot,
                             icon: <RobotOutlined />,
                             label: 'Chatbot',
@@ -162,6 +166,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutMeeting) {
+                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                        } else if (item.key === constants.layoutBlog) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutChatBot) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
