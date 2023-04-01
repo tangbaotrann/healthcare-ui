@@ -39,7 +39,9 @@ import {
 import ChatBot from '~/components/ChatBot/ChatBot';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 import { LoadingOutlined } from '@ant-design/icons';
-import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting/TableListScheduleMedicalMeeting';
+import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting';
+import Blog from '~/components/Blog';
+import { fetchApiGetAllPost } from '~/redux/features/blog/blogSlice';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -91,6 +93,11 @@ function DoctorManager() {
     }, []);
 
     useEffect(() => {
+        dispatch(fetchApiGetAllPost());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor?._id));
     }, [getIdDoctor?._id]);
 
@@ -131,6 +138,8 @@ function DoctorManager() {
                     <Conversation infoUser={infoUser} />
                 ) : changeLayout === constants.layoutChatBot ? (
                     <ChatBot />
+                ) : changeLayout === constants.layoutBlog ? (
+                    <Blog infoUser={infoUser} />
                 ) : null}
             </LayoutDoctorManager>
         </>

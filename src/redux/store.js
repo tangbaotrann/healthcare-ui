@@ -13,6 +13,8 @@ import scheduleDoctor from './features/scheduleDoctor/scheduleDoctorSlice';
 // me
 import userSlice from './features/user/userSlice';
 import bloodPressureSlice from './features/metric/bloodPressure';
+import blogSlice from './features/blog/blogSlice';
+import commentSlice from './features/comment/commentSlice';
 
 const store = configureStore({
     reducer: {
@@ -27,6 +29,8 @@ const store = configureStore({
         conversationSlice: conversationSlice.reducer,
         messageSlice: messageSlice.reducer,
         callSlice: callSlice.reducer,
+        blogSlice: blogSlice.reducer,
+        commentSlice: commentSlice.reducer,
     },
 });
 

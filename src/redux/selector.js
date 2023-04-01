@@ -78,7 +78,67 @@ export const isLoadingWhenSendMessageSelector = (state) => state.messageSlice.is
 
 export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
 
+// get all post
+export const fetchApiGetAllPostSelector = (state) => state.blogSlice.data;
+export const btnOptionSelectedBlogSelector = (state) => state.blogSlice.btnOptionSelectedBlog;
+// get post by id
+export const fetchApiGetPostByIdSelector = (state) => state.blogSlice.getPost;
+// isLoading
+export const isLoadingGetAllPostSelector = (state) => state.blogSlice.isLoading;
+
 /* -- Handle Selector -- */
+
+// get all post
+export const getAllPostSelector = createSelector(
+    fetchApiGetAllPostSelector,
+    fetchApiUserDoctorByTokenSelector,
+    (posts, userDoctor) => {
+        // console.log('posts', posts);
+        // console.log('userDoctor', userDoctor);
+
+        const _posts = posts.map((_post) => {
+            const _userDoctor =
+                userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
+                    ? userDoctor
+                    : null;
+
+            return {
+                author: _userDoctor,
+                comments: _post.comments,
+                content: _post.content,
+                createdAt: _post.createdAt,
+                images: _post.images,
+                updatedAt: _post.updatedAt,
+                title: _post.title,
+                likes: _post.likes,
+                _id: _post._id,
+            };
+        });
+
+        return _posts;
+    },
+);
+
+// filter blog btnOptionSelectedBlogSelector
+export const blogOptionSelectedFilter = createSelector(
+    getAllPostSelector,
+    btnOptionSelectedBlogSelector,
+    (posts, option) => {
+        console.log('posts selector ->', posts);
+        const now = new Date();
+        if (posts.length > 0) {
+            if (option === 'all') {
+                return posts;
+            } else if (option === 'week') {
+                const _posts = posts.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _posts;
+            }
+        }
+
+        return [];
+    },
+);
 
 // Tổng lịch khám
 export const totalScheduleOfDoctor = createSelector(
