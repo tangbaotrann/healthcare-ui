@@ -1,7 +1,7 @@
 // lib
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Modal, Select } from 'antd';
+import { Button, Modal, Select, Tooltip } from 'antd';
 
 // me
 import './Blog.css';
@@ -55,9 +55,11 @@ function Blog({ infoUser }) {
             <div className="wrapper-blog">
                 {/* Left */}
                 <div className="blog-create-btn">
-                    <Button className="create-btn-write" onClick={handleOpenModal}>
-                        Viết blog
-                    </Button>
+                    <Tooltip title="Viết blog" placement="bottom">
+                        <Button className="create-btn-write" onClick={handleOpenModal}>
+                            +
+                        </Button>
+                    </Tooltip>
                 </div>
 
                 {/* Modal  */}

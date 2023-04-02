@@ -20,7 +20,6 @@ function Meeting() {
     // const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
     // console.log('checkLeavedRoom', checkLeavedRoom);
-
     // console.log('roomId meeting', roomId);
     // console.log('infoMember params ->', infoMember);
     // console.log('getIdDoctor ->', getIdDoctor);

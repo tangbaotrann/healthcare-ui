@@ -18,7 +18,7 @@
 /* Left */
 .blog-create-btn {
     flex: 1;
-    margin-right: 22px;
+    /* margin-right: 22px; */
 }
 
 /* Mid */
@@ -45,12 +45,11 @@
 .create-btn-write {
     border: none;
     outline: none;
-    font-size: 1.8rem;
-    font-weight: 500;
-    max-width: 240px;
-    padding: 24px;
+    font-size: 2rem;
+    font-weight: 800;
+    padding: 20px;
     line-height: 0;
-    border-radius: 100px;
+    border-radius: 999px;
     margin-top: 6px;
     margin-left: 6px;
     color: var(--white);
@@ -486,7 +485,7 @@
 
 /* input */
 .input-comments {
-    margin-top: 10px;
+    margin-top: 4px;
     padding: 10px;
     width: 100%;
     border-radius: 6px;
@@ -564,4 +563,36 @@
     font-size: 1rem;
     font-weight: 500;
     color: var(--BA50);
+}
+
+/* Option select image */
+.comment-input-option-file-image-container {
+    position: relative;
+}
+
+.comment-input-option-file-image-icon {
+    margin-top: 10px;
+    font-size: 1.8rem;
+    color: var(--black);
+    object-fit: cover;
+}
+
+.comment-input-opt-file-label-hide {
+    display: none;
+}
+
+/* Preview image */
+.comments-container-option {
+    display: flex;
+    align-items: center;
+}
+
+.comments-preview-image-container {
+    display: flex;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    margin: 0 10px;
+    border-radius: 6px;
+    object-fit: cover;
 }
