@@ -1,13 +1,15 @@
 // lib
 import moment from 'moment';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Divider, Image } from 'antd';
 import { ArrowLeftOutlined, HeartOutlined, MessageOutlined } from '@ant-design/icons';
 
 // me
 import { fetchApiGetPostById } from '~/redux/features/blog/blogSlice';
-import Comment from '../Coment';
+import Comment from '../Comment';
+import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
+import { fetchApiCommentByIdPostSelector } from '~/redux/selector';
 
 function BlogItem({ posts }) {
     const [blogPost, setBlogPost] = useState({});
@@ -20,7 +22,14 @@ function BlogItem({ posts }) {
     // const isLoading = useSelector(isLoadingGetAllPostSelector);
 
     // console.log('getPost', getPost);
+    // console.log('blogPost', blogPost);
+    // console.log('posts', posts);
     // console.log('isLoading', isLoading);
+
+    const comments = useSelector(fetchApiCommentByIdPostSelector);
+    // const idPost = useSelector(btnClickedCommentByIdPostSelector);
+    // console.log('comments ->', comments);
+    // console.log('idPost ->', idPost);
 
     // handle show modal blog detail
     const handleOpenModalBlogDetail = (post) => {
@@ -33,11 +42,13 @@ function BlogItem({ posts }) {
     // back to blog
     const handleBackToBlog = () => {
         setPostDetail(false);
+        setOpenComments(false);
     };
 
     // handle open comments
     const handleOpenComments = () => {
         setOpenComments(true);
+        dispatch(fetchApiCommentByIdPost(blogPost._id));
     };
 
     // handle hide comments
@@ -79,7 +90,11 @@ function BlogItem({ posts }) {
 
                                 {/* Show comments */}
                                 {openComments ? (
-                                    <Comment blogPost={blogPost} onHideComment={handleHideComments} />
+                                    <Comment
+                                        blogPost={blogPost}
+                                        onHideComment={handleHideComments}
+                                        comments={comments}
+                                    />
                                 ) : null}
                             </div>
                         </div>

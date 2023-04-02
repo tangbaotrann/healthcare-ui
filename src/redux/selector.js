@@ -86,6 +86,10 @@ export const fetchApiGetPostByIdSelector = (state) => state.blogSlice.getPost;
 // isLoading
 export const isLoadingGetAllPostSelector = (state) => state.blogSlice.isLoading;
 
+// get comment by id post
+export const fetchApiCommentByIdPostSelector = (state) => state.commentSlice.data;
+export const btnClickedCommentByIdPostSelector = (state) => state.commentSlice.btnClickedComment;
+
 /* -- Handle Selector -- */
 
 // get all post
@@ -116,6 +120,19 @@ export const getAllPostSelector = createSelector(
         });
 
         return _posts;
+    },
+);
+
+// get all comment of post
+export const getAllCommentOfPost = createSelector(
+    fetchApiCommentByIdPostSelector,
+    fetchApiGetPostByIdSelector,
+    (allComment, allPost) => {
+        console.log('all comment ->', allComment);
+        console.log('all post ->', allPost);
+
+        if (allPost.length > 0) {
+        }
     },
 );
 

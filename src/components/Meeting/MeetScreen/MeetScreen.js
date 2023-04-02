@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 // me
 import './MeetScreen.css';
 import socket from '~/utils/socket';
+import parserUTF8Config from '~/utils/parserUTF8Config';
 
 function MeetScreen() {
     const { roomId, username } = useParams();
@@ -14,14 +15,14 @@ function MeetScreen() {
     // console.log('userId', userId);
 
     const myMeeting = async (element) => {
-        const appID = 1659484907;
+        const appID = 1406738560;
         const serverSecret = process.env.REACT_APP_SERVER_SECRET;
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
             appID,
             serverSecret,
             roomId,
             Date.now().toString(),
-            `${username ? btoa(unescape(encodeURIComponent(username))) : 'BOT'}`,
+            `${username ? parserUTF8Config(username) : 'BOT'}`,
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
