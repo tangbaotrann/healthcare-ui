@@ -61,8 +61,28 @@ export const fetchApiGetAllPost = createAsyncThunk('blog/fetchApiGetAllPost', as
 // fetch api get post by id
 export const fetchApiGetPostById = createAsyncThunk('blog/fetchApiGetPostById', async (idPost) => {
     try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts/${idPost}`);
-        console.log('res get post by id ->', res.data.data);
+        console.log('idPost ->', idPost);
+        if (idPost) {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts/${idPost}`);
+            console.log('res get post by id ->', res.data.data);
+
+            return res.data.data;
+        }
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
+// fetch api like post
+export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async ({ user_id, post_id }) => {
+    try {
+        console.log('user_id', user_id);
+        console.log('post_id', post_id);
+
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/like`, {
+            user_id: user_id,
+        });
+        console.log('res like post ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -77,10 +97,15 @@ const blogSlice = createSlice({
         getPost: [],
         btnOptionSelectedBlog: null,
         isLoading: false,
+        likes: [],
+        btnClickedPost: null,
     },
     reducers: {
         arrivalFilterBlog: (state, action) => {
             state.btnOptionSelectedBlog = action.payload;
+        },
+        arrivalBtnClickedPost: (state, action) => {
+            state.btnClickedPost = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -97,8 +122,13 @@ const blogSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchApiGetPostById.fulfilled, (state, action) => {
+                console.log('-->', action.payload);
                 state.getPost = action.payload;
             });
+        // like post
+        // .addCase(fetchApiLikePost.fulfilled, (state, action) => {
+        //     state.likes.push(action.payload); // action.payload
+        // })
     },
 });
 
