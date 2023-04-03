@@ -81,6 +81,7 @@ export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSl
 // get all post
 export const fetchApiGetAllPostSelector = (state) => state.blogSlice.data;
 export const btnOptionSelectedBlogSelector = (state) => state.blogSlice.btnOptionSelectedBlog;
+export const btnClickedPostSelector = (state) => state.blogSlice.btnClickedPost;
 // get post by id
 export const fetchApiGetPostByIdSelector = (state) => state.blogSlice.getPost;
 // isLoading
@@ -89,6 +90,8 @@ export const isLoadingGetAllPostSelector = (state) => state.blogSlice.isLoading;
 // get comment by id post
 export const fetchApiCommentByIdPostSelector = (state) => state.commentSlice.data;
 export const btnClickedCommentByIdPostSelector = (state) => state.commentSlice.btnClickedComment;
+// liked
+export const fetchApiLikePostSelector = (state) => state.blogSlice.likes;
 
 /* -- Handle Selector -- */
 
@@ -97,41 +100,30 @@ export const getAllPostSelector = createSelector(
     fetchApiGetAllPostSelector,
     fetchApiUserDoctorByTokenSelector,
     (posts, userDoctor) => {
-        // console.log('posts', posts);
-        // console.log('userDoctor', userDoctor);
+        console.log('posts', posts);
+        console.log('userDoctor', userDoctor);
 
-        const _posts = posts.map((_post) => {
-            const _userDoctor =
-                userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
-                    ? userDoctor
-                    : null;
+        if (posts.length > 0) {
+            const _posts = posts.map((_post) => {
+                const _userDoctor =
+                    userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
+                        ? userDoctor
+                        : null;
 
-            return {
-                author: _userDoctor,
-                comments: _post.comments,
-                content: _post.content,
-                createdAt: _post.createdAt,
-                images: _post.images,
-                updatedAt: _post.updatedAt,
-                title: _post.title,
-                likes: _post.likes,
-                _id: _post._id,
-            };
-        });
+                return {
+                    author: _userDoctor,
+                    comments: _post.comments,
+                    content: _post.content,
+                    createdAt: _post.createdAt,
+                    images: _post.images,
+                    updatedAt: _post.updatedAt,
+                    title: _post.title,
+                    likes: _post.likes,
+                    _id: _post._id,
+                };
+            });
 
-        return _posts;
-    },
-);
-
-// get all comment of post
-export const getAllCommentOfPost = createSelector(
-    fetchApiCommentByIdPostSelector,
-    fetchApiGetPostByIdSelector,
-    (allComment, allPost) => {
-        console.log('all comment ->', allComment);
-        console.log('all post ->', allPost);
-
-        if (allPost.length > 0) {
+            return _posts;
         }
     },
 );

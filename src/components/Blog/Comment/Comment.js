@@ -29,7 +29,7 @@ function Comment({ blogPost, onHideComment, comments }) {
             fetchApiCreateComment({
                 content: value,
                 image: newImage, // arrays
-                doctor_id: blogPost.author.doctor._id,
+                doctor_id: blogPost.author._id, // .doctor
                 post_id: blogPost._id,
             }),
         );
