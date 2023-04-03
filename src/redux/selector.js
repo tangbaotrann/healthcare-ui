@@ -1,4 +1,5 @@
 // lib
+import jwt_decode from 'jwt-decode';
 import { createSelector } from '@reduxjs/toolkit';
 import moment from 'moment';
 
@@ -94,7 +95,31 @@ export const btnClickedCommentByIdPostSelector = (state) => state.commentSlice.b
 // liked
 export const fetchApiLikePostSelector = (state) => state.blogSlice.likes;
 
+// Patient info
+export const fetchApiAllPatientsSelector = (state) => state.userSlice.patient;
+export const fetchApiCreateInfoPatientSelector = (state) => state.userSlice.patientInfo;
+
 /* -- Handle Selector -- */
+
+// get Patient info
+export const filterGetInfoPatientByAccountId = createSelector(fetchApiAllPatientsSelector, (listPatient) => {
+    const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+    const decodedToken = jwt_decode(getToken);
+
+    // console.log('getToken', getToken);
+    console.log('listPatient', listPatient);
+    console.log('decodedToken', decodedToken);
+
+    if (listPatient.length > 0) {
+        const patients = listPatient.map((_patient) => {
+            const patientCurrent = _patient.patient.person.account === decodedToken.account_id ? _patient : null;
+
+            return patientCurrent;
+        });
+
+        return patients;
+    }
+});
 
 // get all post
 // export const getAllPostSelector = createSelector(

@@ -3,6 +3,7 @@ export const logo = {
     logo: require('~/asset/images/logo.jpg'),
     iconHeart: require('~/asset/images/icon-heart.png'),
     imgMeeting: require('~/asset/images/image-meeting.png'),
+    iconChatbotLogo: require('~/asset/images/favicon-32x32.png'),
 };
 
 // fake avatar chat-bot ai

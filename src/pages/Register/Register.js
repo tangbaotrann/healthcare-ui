@@ -18,6 +18,7 @@ function Register() {
     const [number, setNumber] = useState('');
     const [flag, setFlag] = useState(false);
     const [confirmOTP, setConfirmOTP] = useState('');
+    const [rules, setRules] = useState('');
 
     const dispatch = useDispatch();
 
@@ -25,9 +26,11 @@ function Register() {
 
     const navigate = useNavigate();
 
+    console.log('rules ->', rules);
+
     // handle send otp
     const handleOnFinishSendOTP = async (values) => {
-        const { phone_number } = values;
+        const { phone_number, rule } = values;
 
         console.log('phone_number', phone_number);
 
@@ -39,6 +42,7 @@ function Register() {
             const res = await setUpRecaptcha(phone_number);
             console.log(res);
             setConfirmOTP(res);
+            setRules(rule);
             setFlag(true);
         } catch (err) {
             console.log({ err });
@@ -53,7 +57,12 @@ function Register() {
 
         try {
             await confirmOTP.confirm(basic_otp);
-            navigate(`${endPoints.createInfo}`);
+
+            if (rules === 'doctor') {
+                navigate(`${endPoints.createInfo}`);
+            } else if (rules === 'patient') {
+                navigate(`${endPoints.createInfoPatient}`);
+            }
         } catch (err) {
             console.log({ err });
         }
@@ -176,7 +185,6 @@ function Register() {
                     <Input prefix={<PhoneOutlined />} placeholder="Mã OTP của bạn..." />
                 </Form.Item>
 
-                {/* Confirm otp button */}
                 <div className="register-footer">
                     <Link to="/login">Quay lại</Link>
                     <Button type="primary" htmlType="submit">

@@ -140,3 +140,41 @@
 .section-right-register {
     font-size: 1.6rem;
 }
+
+/* header */
+.home-intro-header {
+    display: flex;
+    align-items: center;
+}
+
+.home-intro-header-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.home-intro-header-username {
+    margin-left: 6px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.info-patient-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-patient-item-label {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.info-patient-item-desc {
+    margin-left: 6px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--black);
+}
