@@ -13,9 +13,10 @@ import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
 import Maps from './components/Maps';
-import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
+import { fetchApiAllPatients, fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 import Meeting from './components/Meeting';
+import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
 
 function App() {
     const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
         <Router>
             <Routes>
                 {/* Login */}
-                <Route path={endPoints.login} element={<Login />} />
+                <Route path={endPoints.login} element={<Login getToken={getToken} />} />
                 <Route
                     path={endPoints.root}
                     element={
@@ -78,6 +79,9 @@ function App() {
 
                 {/* Maps */}
                 <Route path={`${endPoints.maps}/:address`} element={<Maps />} />
+
+                {/* -- Patient --  */}
+                <Route path={`${endPoints.createInfoPatient}`} element={<CreateInfoPatient />} />
             </Routes>
         </Router>
     );

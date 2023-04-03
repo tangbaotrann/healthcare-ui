@@ -21,6 +21,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
     const comments = useSelector(fetchApiCommentByIdPostSelector);
 
     // console.log('blogPost', blogPost);
+    console.log('posts', posts);
     // console.log('post', post);
     // console.log('likes', likes);
 
@@ -176,8 +177,8 @@ function BlogItem({ posts, blogPost, infoUser }) {
             ) : (
                 <>
                     <div className="blog-middle-content-header-fix-to-top">
-                        <h2 className="blog-title">Bài viết nổi bậc</h2>
-                        <p className="blog-sub-title">Tổng hợp các bài viết chia sẻ về bệnh đáy tháo đường.</p>
+                        <h2 className="blog-title">Bài viết nổi bật</h2>
+                        <p className="blog-sub-title">Tổng hợp các bài viết chia sẻ về bệnh đái tháo đường.</p>
                     </div>
                     <>
                         {posts.map((post) => {
@@ -192,12 +193,12 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                             {/* Header */}
                                             <div className="blog-header">
                                                 <img
-                                                    src={post.author.person.avatar}
+                                                    src={post?.author?.person?.avatar}
                                                     className="blog-header-avatar"
                                                     alt="avatar"
                                                 />
                                                 <p className="blog-header-username">
-                                                    BS. {post.author.person.username}
+                                                    BS. {post?.author?.person?.username}
                                                 </p>
                                             </div>
                                             {/* Content */}

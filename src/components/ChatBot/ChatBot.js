@@ -3,9 +3,15 @@ import { useState, useEffect, useRef } from 'react';
 
 // me
 import './ChatBot.css';
-import MesageItemChatBot from './MesageItemChatBot';
+import { AudioMutedOutlined, AudioOutlined, CloseOutlined, CommentOutlined } from '@ant-design/icons';
+import { logo } from '~/asset/images';
+import MessageItemChatBot from './MesageItemChatBot';
+import { Popover, Tooltip } from 'antd';
+import { ReactMic } from 'react-mic';
+import axios from 'axios';
 
-function ChatBot() {
+function ChatBot({ patients }) {
+    const [openModal, setOpenModal] = useState(false);
     const [value, setValue] = useState('');
     const [chatLog, setChatLog] = useState([
         {
@@ -15,15 +21,12 @@ function ChatBot() {
         },
     ]);
     const [typing, setTyping] = useState(false);
+    const [muteRecording, setMuteRecording] = useState(false);
+    const [openPopover, setOpenPopover] = useState(false);
+    const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
 
     const scrollChat = useRef();
-
-    // handle change input
-    const handleChangeInput = (e) => {
-        const message = e.target.value;
-
-        setValue(message);
-    };
+    const focusInputMessage = useRef();
 
     // handle submit form
     const handleSubmitForm = async (e) => {
@@ -104,22 +107,83 @@ function ChatBot() {
         chatLog && scrollChat.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatLog]);
 
-    return (
-        <div className="wrapper-chatbot">
-            <div className="content-chatbot">
-                {/* message */}
-                <div className="wrapper-chatbot-message">
-                    {chatLog.map((message, index) => {
-                        return (
-                            <div key={index} ref={scrollChat}>
-                                <MesageItemChatBot message={message} />
-                            </div>
-                        );
-                    })}
-                </div>
+    // handle change input
+    const handleChangeInput = (e) => {
+        const message = e.target.value;
 
-                {/* Input */}
-                <div className="wrapper-chat-bot-footer">
+        setValue(message);
+    };
+
+    const handleOpenModalChatbot = () => {
+        setOpenModal(true);
+    };
+
+    const handleHideModalChatbot = () => {
+        setOpenModal(false);
+    };
+
+    // handle start recording
+    const handleStartRecording = () => {
+        setMuteRecording(true);
+        setOpenPopover(true);
+    };
+
+    // handle stop recording
+    const handleStopRecording = async (recordedBlob) => {
+        setMuteRecording(false);
+        setOpenPopover(false);
+
+        console.log('recordedBlob is: ', recordedBlob);
+        // setAudio(recordedBlob);
+
+        setIsLoadingSpeech(true);
+
+        if (recordedBlob) {
+            const apiKey = process.env.REACT_APP_OPEN_AI_API_KEY;
+            const formData = new FormData();
+            formData.append('file', recordedBlob.blob, recordedBlob.startTime.toString() + '.mp3');
+            formData.append('model', 'whisper-1');
+
+            const response = await axios.post(`${process.env.REACT_APP_OPEN_AI_API}audio/transcriptions`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${apiKey}`,
+                },
+            });
+
+            setValue(response.data.text);
+            focusInputMessage.current.focus();
+            setIsLoadingSpeech(false);
+        }
+    };
+
+    return (
+        <div className="home-sp-chatbot-container">
+            {openModal ? (
+                <CloseOutlined onClick={handleHideModalChatbot} className="home-sp-chatbot-icon" />
+            ) : (
+                <CommentOutlined onClick={handleOpenModalChatbot} className="home-sp-chatbot-icon" />
+            )}
+
+            {openModal && (
+                <div className="chatbot-container">
+                    <div className="chatbot-header">
+                        <img className="chatbot-header-avatar" src={logo.iconChatbotLogo} alt="iconChatbotLogo" />
+                        <span className="chatbot-header-username">T&T HEALTHCARE</span>
+                    </div>
+
+                    {/* Chat log */}
+                    <div className="chatbot-body-fix-scroll">
+                        {chatLog.map((message, index) => {
+                            return (
+                                <div key={index} ref={scrollChat}>
+                                    <MessageItemChatBot message={message} patients={patients} />
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Input */}
                     <form onSubmit={handleSubmitForm}>
                         {typing ? (
                             <div className="loading-listen-message-inner">
@@ -127,19 +191,56 @@ function ChatBot() {
                             </div>
                         ) : null}
 
+                        {isLoadingSpeech && (
+                            <div className="loading-listen-message-inner">
+                                <span className="loading-listen-message-chat-bot">Đang xử lý</span>
+                            </div>
+                        )}
+
                         <input
+                            ref={focusInputMessage}
                             type="text"
                             value={value}
                             onChange={(e) => handleChangeInput(e)}
-                            className="input-message-text-chat-bot"
+                            className="chatbot-footer-input"
                             rows="1"
                             placeholder="Nhập tin nhắn..."
                             spellCheck="false"
                         />
-                        {value && <button className="btn-submit-footer">GỬI</button>}
+                        {value && <button className="chatbot-footer-btn-submit">GỬI</button>}
                     </form>
+
+                    {/* Mic */}
+                    <div className="chatbot-speech-to-text-container">
+                        {muteRecording ? (
+                            <Popover
+                                title={() => {
+                                    return <p className="loading-listen">Đang nhận diện bằng giọng nói</p>;
+                                }}
+                                trigger="click"
+                                open={openPopover}
+                            >
+                                <AudioOutlined className="chatbot-audio-un-mute" onClick={handleStopRecording} />
+                            </Popover>
+                        ) : (
+                            <>
+                                <Tooltip title="Nhận diện bằng giọng nói">
+                                    <AudioMutedOutlined className="chatbot-audio-mute" onClick={handleStartRecording} />
+                                </Tooltip>
+                            </>
+                        )}
+
+                        <ReactMic
+                            record={muteRecording}
+                            className="sound-wave"
+                            onStop={handleStopRecording}
+                            mimeType="wav"
+                            strokeColor="#000000"
+                            backgroundColor="#FF4081"
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

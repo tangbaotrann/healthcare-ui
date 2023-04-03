@@ -88,9 +88,6 @@ export const fetchApiGetPostById = createAsyncThunk('blog/fetchApiGetPostById', 
 // fetch api like post
 export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async ({ user_id, post_id }) => {
     try {
-        console.log('user_id', user_id);
-        console.log('post_id', post_id);
-
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/like`, {
             user_id: user_id,
         });
@@ -105,9 +102,6 @@ export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async 
 // fetch api dislike post
 export const fetchApiDisLikePost = createAsyncThunk('blog/fetchApiDisLikePost', async ({ user_id, post_id }) => {
     try {
-        console.log('user_id', user_id);
-        console.log('post_id', post_id);
-
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/dislike`, {
             user_id: user_id,
         });

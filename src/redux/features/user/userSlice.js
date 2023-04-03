@@ -230,6 +230,63 @@ export const fetchApiCreateProfileForDoctor = createAsyncThunk(
     },
 );
 
+// -- Patient --
+export const fetchApiAllPatients = createAsyncThunk('patient/fetchApiAllPatients', async () => {
+    try {
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients`, {
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                Authorization: `Bearer ${getToken}`,
+                ContentType: 'application/json',
+            },
+        });
+        console.log('res all patients ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
+const createFormDataForPatient = (values, fileList) => {
+    const { username, dob, address, gender, blood, avatar, anamnesis } = values;
+
+    const formData = new FormData();
+
+    formData.append('username', username);
+    formData.append('dob', dob);
+    formData.append('address', address);
+    formData.append('gender', gender);
+    formData.append('avatar', fileList[0].originFileObj);
+    formData.append('blood', blood);
+    formData.append('anamnesis', anamnesis);
+
+    return formData;
+};
+export const fetchApiCreateInfoPatient = createAsyncThunk(
+    'patient/fetchApiCreateInfoPatient',
+    async ({ values, fileList, tokenCurrent }) => {
+        try {
+            let formData = createFormDataForPatient(values, fileList);
+
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}patients`, formData, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${tokenCurrent}`,
+                    ContentType: 'multipart/form-data',
+                },
+            });
+            console.log('res create info patient ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -240,6 +297,8 @@ const userSlice = createSlice({
         profileForDoctor: [],
         userLogin: [],
         isLoading: false,
+        patient: [],
+        patientInfo: [],
     },
     extraReducers: (builder) => {
         builder
@@ -274,6 +333,12 @@ const userSlice = createSlice({
             // create profile for doctor
             .addCase(fetchApiCreateProfileForDoctor.fulfilled, (state, action) => {
                 state.profileForDoctor = action.payload;
+            })
+            .addCase(fetchApiAllPatients.fulfilled, (state, action) => {
+                state.patient = action.payload;
+            })
+            .addCase(fetchApiCreateInfoPatient.fulfilled, (state, action) => {
+                state.patientInfo = action.payload;
             });
     },
 });

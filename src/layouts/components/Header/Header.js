@@ -8,19 +8,16 @@ import './Header.css';
 import { endPoints } from '~/routers';
 import { MenuGeneralExaminationIcon } from '~/components/Icons';
 import { logo } from '~/asset/images';
+import InformationPatient from './InformationPatient';
 
-function Header({ checkUserLogin }) {
-    console.log('checkUserLogin', checkUserLogin);
+function Header({ checkUserLogin, patients }) {
+    // console.log('checkUserLogin', checkUserLogin);
+
     return (
         <div className="wrapper-header">
             <div className="container-header">
                 {/* Logo */}
                 <Link to={endPoints.homeIntro}>
-                    {/* <img
-                        className="logo-image"
-                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/logo.svg"
-                        alt="img-logo"
-                    /> */}
                     <img className="logo-image" src={logo.logo} alt="logo" />
                 </Link>
 
@@ -52,9 +49,9 @@ function Header({ checkUserLogin }) {
                         </Popover> */}
 
                         {/* Đội ngũ bác sĩ */}
-                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/team-of-doctors">
+                        {/* <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/team-of-doctors">
                             Đội ngũ bác sĩ
-                        </NavLink>
+                        </NavLink> */}
 
                         {/* Thống kê (chart) */}
                         {/* <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/statistics">
@@ -70,7 +67,18 @@ function Header({ checkUserLogin }) {
 
                 {/* Section right */}
                 <div className="section-right">
-                    {checkUserLogin === null || checkUserLogin === undefined || checkUserLogin.length < 0 ? (
+                    {patients ? (
+                        <div className="home-intro-header">
+                            <Popover content={<InformationPatient patients={patients} />}>
+                                <img
+                                    className="home-intro-header-avatar"
+                                    src={patients?.patient?.person?.avatar}
+                                    alt="avatar-patient"
+                                />
+                            </Popover>
+                            <p className="home-intro-header-username">{patients?.patient?.person?.username}</p>
+                        </div>
+                    ) : checkUserLogin === null || checkUserLogin === undefined || checkUserLogin.length < 0 ? (
                         <>
                             <h4 className="section-right-login">
                                 <Link to={endPoints.login} className="login">

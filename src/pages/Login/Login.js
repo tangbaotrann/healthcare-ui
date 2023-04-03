@@ -6,6 +6,7 @@ import { Form, Input, Button } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 // me
 import './Login.css';
@@ -13,19 +14,29 @@ import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiLogin } from '~/redux/features/user/userSlice';
 import { endPoints } from '~/routers';
 
-function Login() {
+function Login({ getToken }) {
     const [number, setNumber] = useState('');
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
+    const decodedToken = jwt_decode(getToken);
+
+    // console.log('token login ->', getToken);
+    // console.log('decodedToken ->', decodedToken);
+
     // handle submit login
     const handleOnFishSubmitLogin = (values) => {
         try {
             if (values) {
                 dispatch(fetchApiLogin(values));
-                navigate(`${endPoints.doctorManager}`);
+
+                if (decodedToken.rule === 'patient') {
+                    navigate(`${endPoints.homeIntro}`);
+                } else {
+                    navigate(`${endPoints.doctorManager}`);
+                }
             }
         } catch (err) {
             console.log({ err });
