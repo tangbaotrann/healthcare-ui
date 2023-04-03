@@ -8,6 +8,7 @@ import constants from '~/utils/constants';
 import LayoutDoctorManager from '~/layouts/LayoutDoctorManager';
 import {
     btnSelectMenuChangeLayoutSelector,
+    fetchApiAllPostByIdDoctorSelector,
     fetchApiNotificationByDoctorIdSelector,
     fetchApiUpdateInfoUserSelector,
     fetchApiUserDoctorByTokenSelector,
@@ -41,7 +42,6 @@ import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatie
 import { LoadingOutlined } from '@ant-design/icons';
 import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting';
 import Blog from '~/components/Blog';
-import { fetchApiGetAllPost } from '~/redux/features/blog/blogSlice';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -64,8 +64,8 @@ function DoctorManager() {
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
-    console.log('awaitAccept', awaitAccept);
-    console.log('checkAwaitAccept', checkAwaitAccept);
+    // console.log('awaitAccept', awaitAccept);
+    // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
 
     useEffect(() => {
@@ -89,11 +89,6 @@ function DoctorManager() {
 
     useEffect(() => {
         dispatch(fetchApiUserDoctors());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        dispatch(fetchApiGetAllPost());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

@@ -7,7 +7,11 @@ import { Button, Modal, Select, Tooltip } from 'antd';
 import './Blog.css';
 import TextEditor from './TextEditor';
 import BlogItem from './BlogItem';
-import { blogOptionSelectedFilter, fetchApiGetPostByIdSelector } from '~/redux/selector';
+import {
+    blogOptionSelectedFilter,
+    fetchApiGetAllPostByIdDoctorSelector,
+    fetchApiGetPostByIdSelector,
+} from '~/redux/selector';
 import blogSlice from '~/redux/features/blog/blogSlice';
 
 function Blog({ infoUser }) {
@@ -15,11 +19,11 @@ function Blog({ infoUser }) {
 
     const dispatch = useDispatch();
 
-    const posts = useSelector(blogOptionSelectedFilter);
+    const posts = useSelector(blogOptionSelectedFilter); //
     const blogPost = useSelector(fetchApiGetPostByIdSelector);
 
-    console.log('posts', posts);
-    console.log('blogPost', blogPost);
+    // console.log('posts', posts);
+    // console.log('blogPost', blogPost);
 
     // handle open modal
     const handleOpenModal = () => {

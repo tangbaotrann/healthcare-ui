@@ -1,19 +1,17 @@
 // lib
 import moment from 'moment';
-import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Divider, Image } from 'antd';
 import { ArrowLeftOutlined, HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons';
 
 // me
-import { fetchApiGetPostById } from '~/redux/features/blog/blogSlice';
+import { fetchApiDisLikePost, fetchApiGetPostById, fetchApiLikePost } from '~/redux/features/blog/blogSlice';
 import Comment from '../Comment';
 import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
 import { fetchApiCommentByIdPostSelector } from '~/redux/selector';
 
 function BlogItem({ posts, blogPost, infoUser }) {
-    const [post, setPost] = useState({});
     const [postDetail, setPostDetail] = useState(false);
     const [openComments, setOpenComments] = useState(false);
     const [likes, setLikes] = useState(false);
@@ -22,14 +20,16 @@ function BlogItem({ posts, blogPost, infoUser }) {
 
     const comments = useSelector(fetchApiCommentByIdPostSelector);
 
-    console.log('blogPost', blogPost);
-    console.log('post', post);
+    // console.log('blogPost', blogPost);
+    // console.log('post', post);
+    // console.log('likes', likes);
 
     // handle show modal blog detail
     const handleOpenModalBlogDetail = async (post) => {
         // console.log('post ->', post);
         await dispatch(fetchApiGetPostById(post._id));
         setPostDetail(true);
+        setLikes(false);
     };
 
     // back to blog
@@ -51,35 +51,23 @@ function BlogItem({ posts, blogPost, infoUser }) {
     };
 
     // handle dislike post
-    const handleDisLikePost = async () => {
-        axios
-            .post(`${process.env.REACT_APP_BASE_URL}posts/${blogPost._id}/dislike`, {
+    const handleDisLikePost = () => {
+        dispatch(
+            fetchApiDisLikePost({
                 user_id: infoUser.doctor._id,
-            })
-            .then((res) => {
-                console.log(res.data.data);
-                setPost(res.data.data);
-                setLikes(false);
-            })
-            .catch((err) => {
-                console.error({ err });
-            });
+                post_id: blogPost._id,
+            }),
+        );
     };
 
     // handle like post
-    const handleLikePost = async () => {
-        axios
-            .post(`${process.env.REACT_APP_BASE_URL}posts/${blogPost._id}/like`, {
+    const handleLikePost = () => {
+        dispatch(
+            fetchApiLikePost({
                 user_id: infoUser.doctor._id,
-            })
-            .then((res) => {
-                console.log(res.data.data);
-                setPost(res.data.data);
-                setLikes(true);
-            })
-            .catch((err) => {
-                console.error({ err });
-            });
+                post_id: blogPost._id,
+            }),
+        );
     };
 
     return (
@@ -95,15 +83,16 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                     <p>Quay lại</p>
                                 </div>
                                 <p className="post-detail-content-left-username">
-                                    Bs: {blogPost.author?.doctor?.person?.username ?? blogPost.author.person.username}
+                                    Bs: {blogPost.author.person.username}
                                 </p>
                                 <Divider className="separator-username" />
 
                                 <div className="post-detail-interacts">
-                                    <div className="interacts-inner">
-                                        {likes || (blogPost.likes && blogPost.likes.includes(infoUser.doctor._id)) ? (
+                                    <div className="interacts-inner-liked">
+                                        {likes === true ||
+                                        (blogPost.likes && blogPost.likes.includes(infoUser.doctor._id)) ? (
                                             <HeartFilled
-                                                className="post-detail-icon-heart"
+                                                className="post-detail-icon-heart-liked"
                                                 onClick={handleDisLikePost}
                                             />
                                         ) : (
@@ -113,17 +102,11 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                             />
                                         )}
                                         <p className="post-detail-icon-heart-number">
-                                            {post._id
-                                                ? post._id === blogPost._id
-                                                    ? post.likes.length
-                                                    : blogPost.likes.length
-                                                : blogPost._id
-                                                ? blogPost.likes.length
-                                                : 0}
+                                            {blogPost.likes ? blogPost.likes.length : 0}
                                         </p>
                                     </div>
 
-                                    <div className="interacts-inner">
+                                    <div className="interacts-inner-comment">
                                         <MessageOutlined
                                             className="post-detail-icon-mess"
                                             onClick={handleOpenComments}
@@ -150,15 +133,14 @@ function BlogItem({ posts, blogPost, infoUser }) {
                             {/* Header */}
                             <div className="post-detail-content-right-header">
                                 <img
-                                    src={blogPost.author?.doctor?.person?.avatar ?? blogPost.author.person.avatar}
+                                    src={blogPost.author.person.avatar}
                                     className="post-detail-content-right-avatar"
                                     alt="avatar"
                                 />
 
                                 <div className="post-detail-content-righ-info">
                                     <h4 className="post-detail-content-right-username">
-                                        BS:{' '}
-                                        {blogPost.author?.doctor?.person?.username ?? blogPost.author.person.username}
+                                        BS: {blogPost.author.person.username}
                                     </h4>
                                     <p className="post-detail-content-right-time">
                                         <span>·</span> {moment(blogPost.createdAt).format('HH:mm a')}
@@ -210,12 +192,12 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                             {/* Header */}
                                             <div className="blog-header">
                                                 <img
-                                                    src={post.author.doctor.person.avatar}
+                                                    src={post.author.person.avatar}
                                                     className="blog-header-avatar"
                                                     alt="avatar"
                                                 />
                                                 <p className="blog-header-username">
-                                                    BS. {post.author.doctor.person.username}
+                                                    BS. {post.author.person.username}
                                                 </p>
                                             </div>
                                             {/* Content */}
@@ -253,7 +235,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                     {/* Footer */}
                                     <div className="blog-footer">
                                         <p className="blog-footer-time">
-                                            {moment(blogPost.createdAt).format('DD/MM/YYYY')}{' '}
+                                            {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
                                             <span className="blog-footer-icon-time">·</span>{' '}
                                             {moment(post.createdAt).format('HH:mm a')}
                                         </p>

@@ -79,7 +79,8 @@ export const isLoadingWhenSendMessageSelector = (state) => state.messageSlice.is
 export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
 
 // get all post
-export const fetchApiGetAllPostSelector = (state) => state.blogSlice.data;
+// export const fetchApiGetAllPostSelector = (state) => state.blogSlice.data;
+export const fetchApiAllPostByIdDoctorSelector = (state) => state.blogSlice.data;
 export const btnOptionSelectedBlogSelector = (state) => state.blogSlice.btnOptionSelectedBlog;
 export const btnClickedPostSelector = (state) => state.blogSlice.btnClickedPost;
 // get post by id
@@ -96,41 +97,41 @@ export const fetchApiLikePostSelector = (state) => state.blogSlice.likes;
 /* -- Handle Selector -- */
 
 // get all post
-export const getAllPostSelector = createSelector(
-    fetchApiGetAllPostSelector,
-    fetchApiUserDoctorByTokenSelector,
-    (posts, userDoctor) => {
-        console.log('posts', posts);
-        console.log('userDoctor', userDoctor);
+// export const getAllPostSelector = createSelector(
+//     fetchApiGetAllPostSelector,
+//     fetchApiUserDoctorByTokenSelector,
+//     (posts, userDoctor) => {
+//         console.log('posts', posts);
+//         console.log('userDoctor', userDoctor);
 
-        if (posts.length > 0) {
-            const _posts = posts.map((_post) => {
-                const _userDoctor =
-                    userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
-                        ? userDoctor
-                        : null;
+//         if (posts.length > 0) {
+//             const _posts = posts.map((_post) => {
+//                 const _userDoctor =
+//                     userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
+//                         ? userDoctor
+//                         : null;
 
-                return {
-                    author: _userDoctor,
-                    comments: _post.comments,
-                    content: _post.content,
-                    createdAt: _post.createdAt,
-                    images: _post.images,
-                    updatedAt: _post.updatedAt,
-                    title: _post.title,
-                    likes: _post.likes,
-                    _id: _post._id,
-                };
-            });
+//                 return {
+//                     author: _userDoctor,
+//                     comments: _post.comments,
+//                     content: _post.content,
+//                     createdAt: _post.createdAt,
+//                     images: _post.images,
+//                     updatedAt: _post.updatedAt,
+//                     title: _post.title,
+//                     likes: _post.likes,
+//                     _id: _post._id,
+//                 };
+//             });
 
-            return _posts;
-        }
-    },
-);
+//             return _posts;
+//         }
+//     },
+// );
 
 // filter blog btnOptionSelectedBlogSelector
 export const blogOptionSelectedFilter = createSelector(
-    getAllPostSelector,
+    fetchApiAllPostByIdDoctorSelector,
     btnOptionSelectedBlogSelector,
     (posts, option) => {
         console.log('posts selector ->', posts);
