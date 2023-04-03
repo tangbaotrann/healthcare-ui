@@ -401,6 +401,18 @@
     align-items: center;
 }
 
+.interacts-inner-liked {
+    display: flex;
+    align-items: center;
+    flex: 2;
+}
+
+.interacts-inner-comment {
+    display: flex;
+    align-items: center;
+    flex: 10;
+}
+
 .interacts-inner {
     display: flex;
     align-items: center;
@@ -412,6 +424,25 @@
     font-weight: 600;
     color: var(--BA50);
     margin-right: 4px;
+}
+
+.post-detail-icon-heart-liked {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--status-alarm);
+    margin-right: 4px;
+    transition: all 0.2s;
+    animation: heart-liked 2s ease-out;
+}
+
+@keyframes heart-liked {
+    from {
+        color: var(--BA50);
+    }   
+    
+    to {
+        color: var(--status-alarm);
+    }
 }
 
 .post-detail-icon-heart-number {

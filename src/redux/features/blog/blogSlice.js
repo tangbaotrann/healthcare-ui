@@ -58,6 +58,18 @@ export const fetchApiGetAllPost = createAsyncThunk('blog/fetchApiGetAllPost', as
     }
 });
 
+// fetch all post by id doctor
+export const fetchApiAllPostByIdDoctor = createAsyncThunk('blog/fetchApiAllPostByIdDoctor', async (doctor_id) => {
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts/doctor/${doctor_id} `);
+        console.log('res all post by id doctor ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 // fetch api get post by id
 export const fetchApiGetPostById = createAsyncThunk('blog/fetchApiGetPostById', async (idPost) => {
     try {
@@ -90,6 +102,23 @@ export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async 
     }
 });
 
+// fetch api dislike post
+export const fetchApiDisLikePost = createAsyncThunk('blog/fetchApiDisLikePost', async ({ user_id, post_id }) => {
+    try {
+        console.log('user_id', user_id);
+        console.log('post_id', post_id);
+
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/dislike`, {
+            user_id: user_id,
+        });
+        console.log('res dislike post ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 const blogSlice = createSlice({
     name: 'blog',
     initialState: {
@@ -113,22 +142,23 @@ const blogSlice = createSlice({
             .addCase(fetchApiCreatePost.fulfilled, (state, action) => {
                 state.data.push(action.payload);
             })
-            .addCase(fetchApiGetAllPost.pending, (state, action) => {
-                state.isLoading = true;
-                state.data = action.payload;
-            })
-            .addCase(fetchApiGetAllPost.fulfilled, (state, action) => {
-                state.isLoading = false;
+            .addCase(fetchApiAllPostByIdDoctor.fulfilled, (state, action) => {
                 state.data = action.payload;
             })
             .addCase(fetchApiGetPostById.fulfilled, (state, action) => {
-                console.log('-->', action.payload);
                 state.getPost = action.payload;
+            })
+            // like post
+            .addCase(fetchApiLikePost.fulfilled, (state, action) => {
+                if (state.getPost._id === action.payload._id) {
+                    state.getPost = action.payload;
+                }
+            })
+            .addCase(fetchApiDisLikePost.fulfilled, (state, action) => {
+                if (state.getPost._id === action.payload._id) {
+                    state.getPost = action.payload;
+                }
             });
-        // like post
-        // .addCase(fetchApiLikePost.fulfilled, (state, action) => {
-        //     state.likes.push(action.payload); // action.payload
-        // })
     },
 });
 
