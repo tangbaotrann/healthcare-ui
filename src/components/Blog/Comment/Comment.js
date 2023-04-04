@@ -17,6 +17,7 @@ function Comment({ blogPost, onHideComment, comments }) {
     const focusInputRef = useRef();
 
     // console.log('blogPost comment->', blogPost);
+    // console.log('comments comment->', comments);
 
     // handle input comment
     const handleChangeInputComment = (e) => {

@@ -19,7 +19,7 @@ function Blog({ infoUser }) {
     const blogPost = useSelector(fetchApiGetPostByIdSelector);
 
     // console.log('posts', posts);
-    // console.log('blogPost', blogPost);
+    console.log('blogPost ->>>', blogPost);
 
     // handle open modal
     const handleOpenModal = () => {

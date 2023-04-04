@@ -627,3 +627,10 @@
     border-radius: 6px;
     object-fit: cover;
 }
+
+.content-comments-item-time-separator {
+    margin: 0 4px;
+    color: var(--black);
+    font-size: 1.4rem;
+    font-weight: 600;
+}

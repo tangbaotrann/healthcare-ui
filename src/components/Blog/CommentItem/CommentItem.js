@@ -36,6 +36,8 @@ function CommentItem({ comments }) {
                                 </div>
                                 <span className="content-comments-item-time">
                                     {moment(comment.createdAt).format('HH:mm a')}
+                                    <span className="content-comments-item-time-separator">·</span>
+                                    {moment(comment.createdAt).format('DD/MM/YYYY')}
                                 </span>
                             </div>
                         );
