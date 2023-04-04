@@ -44,7 +44,7 @@ export const fetchApiCreateComment = createAsyncThunk('comment/fetchApiCreateCom
 // fetch api comment by id post
 export const fetchApiCommentByIdPost = createAsyncThunk('blog/fetchApiCommentByIdPost', async (post_id) => {
     try {
-        if (post_id) {
+        if (post_id !== null || post_id !== undefined) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}comments/${post_id}`);
             console.log('res comment by id post ->', res.data.data);
 
@@ -72,7 +72,11 @@ const commentSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchApiCreateComment.fulfilled, (state, action) => {
-                state.data.push(action.payload);
+                const newComments = state.data.filter((_comment) => _comment.post_id === action.payload.post_id);
+
+                if (newComments) {
+                    state.data.push(action.payload);
+                }
             });
     },
 });

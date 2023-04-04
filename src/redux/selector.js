@@ -101,6 +101,24 @@ export const fetchApiCreateInfoPatientSelector = (state) => state.userSlice.pati
 
 /* -- Handle Selector -- */
 
+// get comments
+export const filterGetCommentPost = createSelector(
+    fetchApiGetPostByIdSelector,
+    fetchApiCommentByIdPostSelector,
+    (posts, comments) => {
+        console.log('posts 106 ->', posts);
+        console.log('comments 106 ->', comments);
+
+        const _comments = comments.map((_comment) => {
+            const _posts = _comment.post_id === posts._id ? _comment : null;
+
+            return _posts;
+        });
+
+        return _comments;
+    },
+);
+
 // get Patient info
 export const filterGetInfoPatientByAccountId = createSelector(fetchApiAllPatientsSelector, (listPatient) => {
     const getToken = JSON.parse(localStorage.getItem('token_user_login'));

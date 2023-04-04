@@ -18,10 +18,12 @@ function BlogItem({ posts, blogPost, infoUser }) {
 
     const dispatch = useDispatch();
 
-    const comments = useSelector(fetchApiCommentByIdPostSelector);
+    const comments = useSelector(fetchApiCommentByIdPostSelector); // filterGetCommentPost
 
-    // console.log('blogPost', blogPost);
-    console.log('posts', posts);
+    // console.log('blogPost item', blogPost);
+    console.log('comments', comments);
+    // console.log('posts', posts);
+    // console.log('infoUser', infoUser);
     // console.log('post', post);
     // console.log('likes', likes);
 
@@ -38,6 +40,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
         setPostDetail(false);
         setOpenComments(false);
         setLikes(false);
+        // dispatch(fetchApiCommentByIdPost(null));
     };
 
     // handle open comments
@@ -112,7 +115,10 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                             className="post-detail-icon-mess"
                                             onClick={handleOpenComments}
                                         />
-                                        <p className="post-detail-icon-mess-number">{blogPost.comments.length}</p>
+                                        <p className="post-detail-icon-mess-number">
+                                            {/* comments.length > 0 ? comments.length : */}
+                                            {blogPost.comments.length}
+                                        </p>
                                     </div>
                                 </div>
 
