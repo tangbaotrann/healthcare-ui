@@ -31,6 +31,7 @@ export const isLoadingScheduleDoctorSelector = (state) => state.scheduleDoctor.i
 export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoctor.days;
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
+export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
@@ -80,7 +81,7 @@ export const isLoadingWhenSendMessageSelector = (state) => state.messageSlice.is
 export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSlice.resultHealthMessage;
 
 // get all post
-// export const fetchApiGetAllPostSelector = (state) => state.blogSlice.data;
+export const fetchApiGetAllPostSelector = (state) => state.blogSlice.blogAllPostForPatient;
 export const fetchApiAllPostByIdDoctorSelector = (state) => state.blogSlice.data;
 export const btnOptionSelectedBlogSelector = (state) => state.blogSlice.btnOptionSelectedBlog;
 export const btnClickedPostSelector = (state) => state.blogSlice.btnClickedPost;
@@ -98,6 +99,9 @@ export const fetchApiLikePostSelector = (state) => state.blogSlice.likes;
 // Patient info
 export const fetchApiAllPatientsSelector = (state) => state.userSlice.patient;
 export const fetchApiCreateInfoPatientSelector = (state) => state.userSlice.patientInfo;
+
+export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
+    state.patientSlice.patientRegisterSchedule;
 
 /* -- Handle Selector -- */
 
@@ -138,39 +142,6 @@ export const filterGetInfoPatientByAccountId = createSelector(fetchApiAllPatient
         return patients;
     }
 });
-
-// get all post
-// export const getAllPostSelector = createSelector(
-//     fetchApiGetAllPostSelector,
-//     fetchApiUserDoctorByTokenSelector,
-//     (posts, userDoctor) => {
-//         console.log('posts', posts);
-//         console.log('userDoctor', userDoctor);
-
-//         if (posts.length > 0) {
-//             const _posts = posts.map((_post) => {
-//                 const _userDoctor =
-//                     userDoctor.doctor._id === _post.author._id || userDoctor.doctor._id === _post.author
-//                         ? userDoctor
-//                         : null;
-
-//                 return {
-//                     author: _userDoctor,
-//                     comments: _post.comments,
-//                     content: _post.content,
-//                     createdAt: _post.createdAt,
-//                     images: _post.images,
-//                     updatedAt: _post.updatedAt,
-//                     title: _post.title,
-//                     likes: _post.likes,
-//                     _id: _post._id,
-//                 };
-//             });
-
-//             return _posts;
-//         }
-//     },
-// );
 
 // filter blog btnOptionSelectedBlogSelector
 export const blogOptionSelectedFilter = createSelector(
@@ -600,6 +571,39 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
         }
 
         return [];
+    },
+);
+
+// Lấy lịch đã khám rồi -> hide
+export const filterGetScheduleAppointmentAndHide = createSelector(
+    fetchApiAllCreateScheduleDoctorSelector,
+    fetchApiAllScheduleDetailsSelector,
+    (schedules, scheduleDetails) => {
+        console.log('schedules', schedules);
+        console.log('schedules details', scheduleDetails);
+
+        // const _schedules = schedules.map((_schedule) => {
+        //     const _scheduleDetails = scheduleDetails.filter(
+        //         (_scheduleDetail) => _scheduleDetail.schedule === _schedule._id && _scheduleDetail.result_exam !== null,
+        //     );
+        //     console.log('_scheduleDetails after ->', _scheduleDetails);
+        // });
+
+        const _scheduleDetails = scheduleDetails
+            .filter((_scheduleDetail) => _scheduleDetail.result_exam === null)
+            .map((_scheduleDetail) => {
+                const _schedules = schedules.filter((_schedule) => _schedule._id === _scheduleDetail.schedule);
+
+                return {
+                    result_exam: _scheduleDetail.result_exam,
+                    _id: _scheduleDetail._id,
+                    _schedules,
+                };
+            });
+
+        console.log('_scheduleDetails', _scheduleDetails);
+
+        return _scheduleDetails;
     },
 );
 

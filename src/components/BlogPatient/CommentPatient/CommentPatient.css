@@ -1,0 +1,54 @@
+.patient-input-comments {
+    width: 100%;
+    margin-left: 10px;
+    margin-top: 4px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+.patient-input-comments:focus {
+    border-color: 1px solid var(--primary);
+    outline: 1px solid var(--primary);
+}
+
+.patient-btn-comments {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    margin-left: 4px;
+    font-weight: 600;
+    border: 1px solid var(--blu);
+    color: var(--white);
+    background: var(--blu);
+}
+
+.patient-btn-comments:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+    border: 1px solid var(--blu);
+    outline: var(--blu);
+}
+
+.patient-comments-display-preview-images {
+    display: flex;
+    align-items: center;
+}
+
+/* preview image */
+.patient-comments-preview-image-container {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin: 0 10px;
+}
+
+.patient-comments-preview-image {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    object-fit: cover;
+}
