@@ -1,12 +1,11 @@
 // lib
-import { DownOutlined, RightOutlined } from '@ant-design/icons';
+import { RightOutlined } from '@ant-design/icons';
 import { Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
 
 // me
 import './Header.css';
 import { endPoints } from '~/routers';
-import { MenuGeneralExaminationIcon } from '~/components/Icons';
 import { logo } from '~/asset/images';
 import InformationPatient from './InformationPatient';
 
@@ -33,12 +32,15 @@ function Header({ checkUserLogin, patients }) {
                         </NavLink>
 
                         {/* Dịch vụ tại phòng khám */}
-                        <Popover content={<MenuGeneralExaminationIcon />}>
-                            <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/service-all">
-                                Dịch vụ tại phòng khám
-                                <DownOutlined className="menu-item-icon" />
-                            </NavLink>
-                        </Popover>
+                        {/* <Popover content={<MenuGeneralExaminationIcon />}> */}
+                        <NavLink
+                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                            to={endPoints.registerScheduleAppointment}
+                        >
+                            Đặt lịch khám
+                            {/* <DownOutlined className="menu-item-icon" /> */}
+                        </NavLink>
+                        {/* </Popover> */}
 
                         {/* Dịch vụ tại nhà */}
                         {/* <Popover content={<MenuPeriodicHealthExaminationIcon />}>

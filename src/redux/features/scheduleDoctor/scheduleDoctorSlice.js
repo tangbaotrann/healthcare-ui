@@ -107,6 +107,22 @@ export const fetchApiScheduleByIdDoctor = createAsyncThunk(
     },
 );
 
+export const fetchApiAllScheduleDetails = createAsyncThunk('scheduleDoctor/fetchApiAllScheduleDetails', async () => {
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedule-details`, {
+            headers: {
+                Accept: 'application/json, text/plain, */*',
+                ContentType: 'application/json',
+            },
+        });
+        console.log('res all schedule details ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 const scheduleDoctor = createSlice({
     name: 'scheduleDoctor',
     initialState: {
@@ -116,6 +132,7 @@ const scheduleDoctor = createSlice({
         createSchedule: [],
         idDoctor: [],
         isLoading: false,
+        scheduleDetails: [],
     },
     extraReducers: (builder) => {
         builder
@@ -145,6 +162,9 @@ const scheduleDoctor = createSlice({
             })
             .addCase(fetchApiScheduleByIdDoctor.fulfilled, (state, action) => {
                 state.idDoctor = action.payload;
+            })
+            .addCase(fetchApiAllScheduleDetails.fulfilled, (state, action) => {
+                state.scheduleDetails = action.payload;
             });
     },
 });

@@ -11,6 +11,7 @@
     border-radius: 50%;
     background-color: var(--primary);
     z-index: 10;
+    box-shadow: 0 0 24px 0 var(--primary);
 }
 
 .home-sp-chatbot-icon {

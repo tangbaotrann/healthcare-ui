@@ -13,10 +13,12 @@ import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
 import Maps from './components/Maps';
-import { fetchApiAllPatients, fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
+import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 import Meeting from './components/Meeting';
 import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
+import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
+import BlogPage from './pages/BlogPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -82,6 +84,8 @@ function App() {
 
                 {/* -- Patient --  */}
                 <Route path={`${endPoints.createInfoPatient}`} element={<CreateInfoPatient />} />
+                <Route path={`${endPoints.registerScheduleAppointment}`} element={<RegisterScheduleAppointment />} />
+                <Route path={`${endPoints.blog}`} element={<BlogPage />} />
             </Routes>
         </Router>
     );

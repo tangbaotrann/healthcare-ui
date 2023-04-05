@@ -20,6 +20,7 @@ function Home({ checkUserLogin }) {
 
     const dispatch = useDispatch();
 
+    // console.log('schedules ->', schedules);
     console.log('pat', patients);
 
     useEffect(() => {
@@ -31,20 +32,6 @@ function Home({ checkUserLogin }) {
             {/* <ChatBot /> */}
             <ChatBot patients={patients} />
 
-            {/* {patients ? (
-                patients.patient.doctor_blood_id === null || patients.patient.doctor_glycemic_id === null ? (
-                    <div className="container-updated-metric">
-                        <Modal
-                            open={openModal}
-                            onCancel={handleCancel}
-                            cancelButtonProps={{ style: { display: 'none' } }}
-                            okButtonProps={{ style: { display: 'none' } }}
-                        >
-                            <TitleName></TitleName>
-                        </Modal>
-                    </div>
-                ) : null
-            ) : null} */}
             <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
                 <ScrollToTop smooth className="scroll-to-top" />
                 <Content>

@@ -219,6 +219,40 @@ export const fetchApiResultHeathByIdPatient = createAsyncThunk(
     },
 );
 
+// Đăng ký lịch khám của bệnh nhân
+export const fetchApiRegisterScheduleAppointmentOfPatient = createAsyncThunk(
+    'patient/fetchApiRegisterScheduleAppointmentOfPatient',
+    async (values) => {
+        try {
+            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+            const { content_exam, schedule, day_exam } = values;
+
+            const res = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}schedule-details`,
+                {
+                    content_exam: content_exam,
+                    schedule: schedule,
+                    day_exam: day_exam,
+                },
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            );
+            console.log('res register schedule appointment ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+            const message = await err.response.data;
+            return message;
+        }
+    },
+);
+
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
@@ -229,6 +263,7 @@ const patientSlice = createSlice({
         resultHealthMessage: [],
         btnOptionSelectedMeeting: null,
         isLoading: false,
+        patientRegisterSchedule: [],
     },
     reducers: {
         arrivalFilterMeeting: (state, action) => {
@@ -307,6 +342,9 @@ const patientSlice = createSlice({
             })
             .addCase(fetchApiResultHeathByIdPatient.fulfilled, (state, action) => {
                 state.resultHealthMessage = action.payload;
+            })
+            .addCase(fetchApiRegisterScheduleAppointmentOfPatient.fulfilled, (state, action) => {
+                state.patientRegisterSchedule = action.payload;
             });
     },
 });

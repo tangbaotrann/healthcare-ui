@@ -122,6 +122,7 @@ const blogSlice = createSlice({
         isLoading: false,
         likes: [],
         btnClickedPost: null,
+        blogAllPostForPatient: [],
     },
     reducers: {
         arrivalFilterBlog: (state, action) => {
@@ -152,6 +153,9 @@ const blogSlice = createSlice({
                 if (state.getPost._id === action.payload._id) {
                     state.getPost = action.payload;
                 }
+            })
+            .addCase(fetchApiGetAllPost.fulfilled, (state, action) => {
+                state.blogAllPostForPatient = action.payload;
             });
     },
 });

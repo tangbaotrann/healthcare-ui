@@ -1,4 +1,5 @@
 // lib
+import { Link } from 'react-router-dom';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import { Button } from 'antd';
@@ -7,6 +8,7 @@ import { Button } from 'antd';
 import './SlideImage.css';
 import images from '~/asset/images';
 import { SlideShowBannerClinicIcon, SlideShowHeartIcon } from '~/components/Icons';
+import { endPoints } from '~/routers';
 
 function SlideImage() {
     return (
@@ -30,7 +32,9 @@ function SlideImage() {
                 </div>
 
                 {/* Click vào hiện lên modal */}
-                <Button className="appointment-btn">Đặt hẹn khám</Button>
+                <Link to={endPoints.registerScheduleAppointment}>
+                    <Button className="appointment-btn">Đặt hẹn khám</Button>
+                </Link>
             </div>
         </div>
     );

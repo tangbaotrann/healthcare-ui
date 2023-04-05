@@ -1,9 +1,9 @@
 // me
 import './Footer.css';
 
-function Footer() {
+function Footer({ className }) {
     return (
-        <div className="wrapper-footer">
+        <div className={`wrapper-footer ${className}`}>
             <div className="footer-inner">
                 <img
                     className="footer-logo"

@@ -1,0 +1,8 @@
+.patient-content-comments-container {
+    margin-top: 16px;
+}
+
+.patient-comments-display-preview-images {
+    display: flex;
+    align-items: center;
+}
