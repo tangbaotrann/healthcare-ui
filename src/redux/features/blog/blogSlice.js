@@ -171,7 +171,11 @@ const blogSlice = createSlice({
             .addCase(fetchApiCreatePost.fulfilled, (state, action) => {
                 state.data.push(action.payload);
             })
+            .addCase(fetchApiAllPostByIdDoctor.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiAllPostByIdDoctor.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.data = action.payload;
             })
             .addCase(fetchApiGetPostById.fulfilled, (state, action) => {
@@ -198,7 +202,11 @@ const blogSlice = createSlice({
                     state.getPost = action.payload;
                 }
             })
+            .addCase(fetchApiGetAllPost.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiGetAllPost.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.blogAllPostForPatient = action.payload;
             });
     },

@@ -2,26 +2,28 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Divider, Image } from 'antd';
+import { Divider, Image, Drawer, Skeleton } from 'antd';
 import { ArrowLeftOutlined, HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons';
 
 // me
 import { fetchApiDisLikePost, fetchApiGetPostById, fetchApiLikePost } from '~/redux/features/blog/blogSlice';
 import Comment from '../Comment';
 import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
-import { fetchApiCommentByIdPostSelector } from '~/redux/selector';
+import { fetchApiCommentByIdPostSelector, isLoadingAllPostByIdDoctorSelector } from '~/redux/selector';
 
 function BlogItem({ posts, blogPost, infoUser }) {
     const [postDetail, setPostDetail] = useState(false);
     const [openComments, setOpenComments] = useState(false);
     const [likes, setLikes] = useState(false);
+    const [size, setSize] = useState();
 
     const dispatch = useDispatch();
 
     const comments = useSelector(fetchApiCommentByIdPostSelector); // filterGetCommentPost
+    const isLoading = useSelector(isLoadingAllPostByIdDoctorSelector);
 
     // console.log('blogPost item', blogPost);
-    console.log('comments', comments);
+    // console.log('comments', comments);
     // console.log('posts', posts);
     // console.log('infoUser', infoUser);
     // console.log('post', post);
@@ -46,6 +48,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
     // handle open comments
     const handleOpenComments = () => {
         setOpenComments(true);
+        setSize('large');
         dispatch(fetchApiCommentByIdPost(blogPost._id));
     };
 
@@ -123,13 +126,19 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                 </div>
 
                                 {/* Show comments */}
-                                {openComments ? (
+                                <Drawer
+                                    title={`${blogPost.comments.length} bình luận`}
+                                    placement="right"
+                                    size={size}
+                                    onClose={handleHideComments}
+                                    open={openComments}
+                                >
                                     <Comment
                                         blogPost={blogPost}
                                         onHideComment={handleHideComments}
                                         comments={comments}
                                     />
-                                ) : null}
+                                </Drawer>
                             </div>
                         </div>
 
@@ -186,71 +195,77 @@ function BlogItem({ posts, blogPost, infoUser }) {
                         <h2 className="blog-title">Bài viết nổi bật</h2>
                         <p className="blog-sub-title">Tổng hợp các bài viết chia sẻ về bệnh đái tháo đường.</p>
                     </div>
-                    <>
-                        {posts.map((post) => {
-                            return (
-                                <div
-                                    className="blog-item"
-                                    key={post._id}
-                                    onClick={() => handleOpenModalBlogDetail(post)}
-                                >
-                                    <div className="blog-item-container">
-                                        <div className="content-left-container">
-                                            {/* Header */}
-                                            <div className="blog-header">
-                                                <img
-                                                    src={post?.author?.person?.avatar}
-                                                    className="blog-header-avatar"
-                                                    alt="avatar"
-                                                />
-                                                <p className="blog-header-username">
-                                                    BS. {post?.author?.person?.username}
-                                                </p>
-                                            </div>
-                                            {/* Content */}
-                                            <div className="blog-content">
-                                                {/* Description */}
-                                                <div className="blog-content-desc">
-                                                    <h3 className="blog-content-desc-title">{post.title || null}</h3>
-                                                    <div
-                                                        className="blog-content-desc-detail"
-                                                        dangerouslySetInnerHTML={{ __html: post.content }}
+                    {isLoading ? (
+                        <Skeleton active />
+                    ) : (
+                        <>
+                            {posts.map((post) => {
+                                return (
+                                    <div
+                                        className="blog-item"
+                                        key={post._id}
+                                        onClick={() => handleOpenModalBlogDetail(post)}
+                                    >
+                                        <div className="blog-item-container">
+                                            <div className="content-left-container">
+                                                {/* Header */}
+                                                <div className="blog-header">
+                                                    <img
+                                                        src={post?.author?.person?.avatar}
+                                                        className="blog-header-avatar"
+                                                        alt="avatar"
                                                     />
+                                                    <p className="blog-header-username">
+                                                        BS. {post?.author?.person?.username}
+                                                    </p>
+                                                </div>
+                                                {/* Content */}
+                                                <div className="blog-content">
+                                                    {/* Description */}
+                                                    <div className="blog-content-desc">
+                                                        <h3 className="blog-content-desc-title">
+                                                            {post.title || null}
+                                                        </h3>
+                                                        <div
+                                                            className="blog-content-desc-detail"
+                                                            dangerouslySetInnerHTML={{ __html: post.content }}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
+
+                                            {/* Image */}
+                                            <div className="blog-content-image">
+                                                {post.images.length === 0
+                                                    ? null
+                                                    : post.images.length >= 1
+                                                    ? post.images.map((_postImage, index) => {
+                                                          return (
+                                                              <Image
+                                                                  key={index}
+                                                                  className="blog-content-image-detail"
+                                                                  src={_postImage}
+                                                                  alt="image-content"
+                                                              />
+                                                          );
+                                                      })
+                                                    : null}
+                                            </div>
                                         </div>
 
-                                        {/* Image */}
-                                        <div className="blog-content-image">
-                                            {post.images.length === 0
-                                                ? null
-                                                : post.images.length >= 1
-                                                ? post.images.map((_postImage, index) => {
-                                                      return (
-                                                          <Image
-                                                              key={index}
-                                                              className="blog-content-image-detail"
-                                                              src={_postImage}
-                                                              alt="image-content"
-                                                          />
-                                                      );
-                                                  })
-                                                : null}
+                                        {/* Footer */}
+                                        <div className="blog-footer">
+                                            <p className="blog-footer-time">
+                                                {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
+                                                <span className="blog-footer-icon-time">·</span>{' '}
+                                                {moment(post.createdAt).format('HH:mm a')}
+                                            </p>
                                         </div>
                                     </div>
-
-                                    {/* Footer */}
-                                    <div className="blog-footer">
-                                        <p className="blog-footer-time">
-                                            {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
-                                            <span className="blog-footer-icon-time">·</span>{' '}
-                                            {moment(post.createdAt).format('HH:mm a')}
-                                        </p>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </>
+                                );
+                            })}
+                        </>
+                    )}
                 </>
             )}
         </>

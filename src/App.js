@@ -19,6 +19,7 @@ import Meeting from './components/Meeting';
 import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
 import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
 import BlogPage from './pages/BlogPage';
+import Chat from './pages/Chat';
 
 function App() {
     const dispatch = useDispatch();
@@ -83,6 +84,7 @@ function App() {
                 <Route path={`${endPoints.maps}/:address`} element={<Maps />} />
 
                 {/* -- Patient --  */}
+                <Route path={`${endPoints.chatMessage}`} element={<Chat />} />
                 <Route path={`${endPoints.createInfoPatient}`} element={<CreateInfoPatient />} />
                 <Route path={`${endPoints.registerScheduleAppointment}`} element={<RegisterScheduleAppointment />} />
                 <Route path={`${endPoints.blog}`} element={<BlogPage />} />

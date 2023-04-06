@@ -63,6 +63,8 @@ export const fetchApiUpdateSeenNotificationSelector = (state) => state.notificat
 // get all conversation by id doctor
 export const fetchApiConversationsSelector = (state) => state.conversationSlice.data;
 export const isLoadingConversationsSelector = (state) => state.conversationSlice.isLoading;
+// get all conversation by id patient
+export const fetchApiConversationsOfPatientSelector = (state) => state.conversationSlice.conversationsOfPatient;
 
 // get id conversation when clicked
 export const btnClickGetIdConversationSelector = (state) => state.conversationSlice.btnClickGetIdConversation;
@@ -83,6 +85,7 @@ export const fetchApiResultHeathByIdPatientSelector = (state) => state.patientSl
 // get all post
 export const fetchApiGetAllPostSelector = (state) => state.blogSlice.blogAllPostForPatient;
 export const fetchApiAllPostByIdDoctorSelector = (state) => state.blogSlice.data;
+export const isLoadingAllPostByIdDoctorSelector = (state) => state.blogSlice.isLoading;
 export const btnOptionSelectedBlogSelector = (state) => state.blogSlice.btnOptionSelectedBlog;
 export const btnClickedPostSelector = (state) => state.blogSlice.btnClickedPost;
 // get post by id
@@ -427,6 +430,62 @@ export const cleanConversationListSelector = createSelector(
 
         // console.log(conversationList);
         return conversationList;
+    },
+);
+
+// get conversation of Patient
+export const cleanConversationOfPatientListSelector = createSelector(
+    fetchApiAllPatientsSelector,
+    fetchApiConversationsOfPatientSelector,
+    (user, conversations) => {
+        console.log('user ->', user);
+        console.log('conversations selector ->', conversations);
+
+        if (conversations.length > 0) {
+            const conversationList = conversations.map((conversation) => {
+                const member =
+                    conversation.members[0]._id === user.patient._id
+                        ? conversation.members[1]
+                        : conversation.members[0];
+
+                console.log('member ->>', member);
+
+                return {
+                    _id: conversation._id,
+                    member: {
+                        username: member.person.username,
+                        avatar: member.person.avatar,
+                        _id: member._id,
+                    },
+                    last_message: {
+                        content: conversation?.last_message?.content,
+                        createdAt: conversation?.last_message?.createdAt,
+                    },
+                };
+            });
+            // console.log(conversationList);
+            return conversationList;
+        }
+
+        // const conversationList = conversations.map((conversation) => {
+        //     const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
+
+        //     return {
+        //         _id: conversation._id,
+        //         member: {
+        //             _id: member._id,
+        //             username: member.person.username,
+        //             // avatar: member.person.avatar !== '' ? member.person.avatar : AVATAR_DEFAULT,
+        //         },
+        //         last_message: {
+        //             content: conversation.last_message?.content ?? '',
+        //             createdAt: conversation.last_message?.createdAt ?? '',
+        //         },
+        //     };
+        // });
+
+        // // console.log(conversationList);
+        // return conversationList;
     },
 );
 

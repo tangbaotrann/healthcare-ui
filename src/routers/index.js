@@ -11,6 +11,7 @@ export const endPoints = {
     doctorManagerJoinIdRoom: '/doctor-manager/room',
     meetingRoom: '/meeting-room',
     maps: '/maps',
+    chatMessage: '/chat',
     registerScheduleAppointment: '/register-schedule-appointment',
     blog: '/blog',
 };
