@@ -99,6 +99,40 @@ export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async 
     }
 });
 
+// fetch api like post of Patient
+export const fetchApiLikePostOfPatient = createAsyncThunk(
+    'blog/fetchApiLikePostOfPatient',
+    async ({ user_id, post_id }) => {
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/like`, {
+                user_id: user_id,
+            });
+            console.log('res like post from patient ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
+// fetch api un-like post of Patient
+export const fetchApiUnLikePostOfPatient = createAsyncThunk(
+    'blog/fetchApiUnLikePostOfPatient',
+    async ({ user_id, post_id }) => {
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/dislike`, {
+                user_id: user_id,
+            });
+            console.log('res un-like post from patient ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 // fetch api dislike post
 export const fetchApiDisLikePost = createAsyncThunk('blog/fetchApiDisLikePost', async ({ user_id, post_id }) => {
     try {
@@ -149,7 +183,17 @@ const blogSlice = createSlice({
                     state.getPost = action.payload;
                 }
             })
+            .addCase(fetchApiLikePostOfPatient.fulfilled, (state, action) => {
+                if (state.getPost._id === action.payload._id) {
+                    state.getPost = action.payload;
+                }
+            })
             .addCase(fetchApiDisLikePost.fulfilled, (state, action) => {
+                if (state.getPost._id === action.payload._id) {
+                    state.getPost = action.payload;
+                }
+            })
+            .addCase(fetchApiUnLikePostOfPatient.fulfilled, (state, action) => {
                 if (state.getPost._id === action.payload._id) {
                     state.getPost = action.payload;
                 }

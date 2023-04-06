@@ -8,6 +8,7 @@ import {
     fetchApiAllCreateScheduleDoctorSelector,
     fetchApiAllPatientsSelector,
     fetchApiRegisterScheduleAppointmentOfPatientSelector,
+    filterGetScheduleAppointmentAndHide,
 } from '~/redux/selector';
 import { icons } from '~/asset/images';
 import { Button, Form, Input, Modal, message } from 'antd';

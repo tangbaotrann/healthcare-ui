@@ -67,15 +67,27 @@
 .patient-interacts-inner-liked {
     display: flex;
     align-items: center;
-    margin-right: 24px;
+    flex: 1;
 }
 
 .patient-interacts-inner-comment {
     display: flex;
     align-items: center;
+    flex: 8;
 }
 
 /* Right */
 .patient-post-detail-content-right {
     flex: 8;
+}
+
+.patient-blog-footer-display {
+    position: relative;
+    width: 100%;
+    margin-top: 62px;
+}
+
+.patient-blog-footer {
+    top: 0;
+    width: 100%;
 }
