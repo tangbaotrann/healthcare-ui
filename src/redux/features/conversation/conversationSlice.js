@@ -14,10 +14,26 @@ export const fetchApiConversations = createAsyncThunk('conversation/fetchApiConv
     }
 });
 
+// fetch api all conversation of patient
+export const fetchApiConversationsOfPatient = createAsyncThunk(
+    'conversation/fetchApiConversationsOfPatient',
+    async (idPatient) => {
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}conversations/patient/${idPatient}`);
+            console.log('res conversation', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const conversationSlice = createSlice({
     name: 'conversation',
     initialState: {
         data: [],
+        conversationsOfPatient: [],
         btnClickGetIdConversation: null,
         btnClickedRecordGetIdConversation: null,
         isLoading: false,
@@ -38,6 +54,13 @@ const conversationSlice = createSlice({
             .addCase(fetchApiConversations.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.data = action.payload;
+            })
+            .addCase(fetchApiConversationsOfPatient.pending, (state, action) => {
+                state.isLoading = true;
+            })
+            .addCase(fetchApiConversationsOfPatient.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.conversationsOfPatient = action.payload;
             });
     },
 });

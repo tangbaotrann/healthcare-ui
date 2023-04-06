@@ -8,7 +8,6 @@ import {
     fetchApiAllCreateScheduleDoctorSelector,
     fetchApiAllPatientsSelector,
     fetchApiRegisterScheduleAppointmentOfPatientSelector,
-    filterGetScheduleAppointmentAndHide,
 } from '~/redux/selector';
 import { icons } from '~/asset/images';
 import { Button, Form, Input, Modal, message } from 'antd';
@@ -128,7 +127,7 @@ function RegisterScheduleAppointment() {
                                         />
                                         <h2 className="content-cart-item-username">
                                             BS:{' '}
-                                            {schedule?.doctor?.person?.avatar ||
+                                            {schedule?.doctor?.person?.username ||
                                                 schedule?._schedules[0]?.doctor?.person?.username}
                                         </h2>
                                     </div>

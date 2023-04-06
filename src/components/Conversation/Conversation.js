@@ -27,7 +27,7 @@ function Conversation({ infoUser, recordConversation }) {
     // const checkConversation = useSelector(btnClickedRecordGetIdConversationSelector);
     const messages = useSelector(messageOfUserFilter);
 
-    // console.log('conversations', conversations);
+    console.log('conversations', conversations);
     // console.log('conversation info user patient ->', conversation);
     // console.log('messages', messages);
     console.log('recordConversation', recordConversation);

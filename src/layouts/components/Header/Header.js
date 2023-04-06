@@ -31,6 +31,14 @@ function Header({ checkUserLogin, patients }) {
                             Trang chủ
                         </NavLink>
 
+                        {/* Chat message */}
+                        <NavLink
+                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                            to={endPoints.chatMessage}
+                        >
+                            Trò chuyện
+                        </NavLink>
+
                         {/* Dịch vụ tại phòng khám */}
                         {/* <Popover content={<MenuGeneralExaminationIcon />}> */}
                         <NavLink
