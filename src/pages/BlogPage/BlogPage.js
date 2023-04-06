@@ -1,8 +1,6 @@
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Divider, Image, Drawer } from 'antd';
-import { ArrowLeftOutlined, HeartOutlined, MessageOutlined } from '@ant-design/icons';
+import { Image } from 'antd';
 import ScrollToTop from 'react-scroll-to-top';
 
 import './BlogPage.css';
@@ -13,14 +11,21 @@ import {
     fetchApiGetAllPostSelector,
     fetchApiGetPostByIdSelector,
 } from '~/redux/selector';
-import { fetchApiGetAllPost, fetchApiGetPostById } from '~/redux/features/blog/blogSlice';
+import {
+    fetchApiGetAllPost,
+    fetchApiGetPostById,
+    fetchApiLikePostOfPatient,
+    fetchApiUnLikePostOfPatient,
+} from '~/redux/features/blog/blogSlice';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
-import CommentPatient from '~/components/BlogPatient/CommentPatient/CommentPatient';
 import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
 import ChatBot from '~/components/ChatBot';
+import BlogPatient from '~/components/BlogPatient/BlogPatient';
+import Footer from '~/layouts/components/Footer/Footer';
 
 function BlogPage() {
     const [openBlogDetail, setOpenBlogDetail] = useState(false);
+    const [likes, setLikes] = useState(false);
     const [size, setSize] = useState();
     const [openComments, setOpenComments] = useState(false);
 
@@ -48,13 +53,14 @@ function BlogPage() {
         console.log('post ->', post);
         await dispatch(fetchApiGetPostById(post._id));
         setOpenBlogDetail(true);
+        setLikes(false);
     };
 
     // back to blog
     const handleBackToBlog = () => {
         setOpenBlogDetail(false);
         setOpenComments(false);
-        // setLikes(false);
+        setLikes(false);
         // dispatch(fetchApiCommentByIdPost(null));
     };
 
@@ -69,6 +75,26 @@ function BlogPage() {
         setOpenComments(false);
     };
 
+    // handle like post
+    const handleLikePostOfPatient = () => {
+        dispatch(
+            fetchApiLikePostOfPatient({
+                user_id: patients.patient._id,
+                post_id: blogPost._id,
+            }),
+        );
+    };
+
+    // handle dislike post
+    const handleUnLikePostOfPatient = () => {
+        dispatch(
+            fetchApiUnLikePostOfPatient({
+                user_id: patients.patient._id,
+                post_id: blogPost._id,
+            }),
+        );
+    };
+
     return (
         <DefaultLayout patients={patients}>
             <ChatBot />
@@ -76,105 +102,19 @@ function BlogPage() {
             <div className="wrapper-blog-patient">
                 {/* Left */}
                 {openBlogDetail ? (
-                    <div className="patient-post-detail-container">
-                        <div className="patient-post-detail-container-display">
-                            {/* Left */}
-                            <div className="patient-post-detail-content-left">
-                                <div className="post-detail-back-icon" onClick={handleBackToBlog}>
-                                    <ArrowLeftOutlined className="icon-arrow-back" />
-                                    <p>Quay lại</p>
-                                </div>
-                                <p className="patient-post-detail-content-left-username">
-                                    Bs: {blogPost?.author?.person?.username}
-                                </p>
-                                <Divider className="separator-username" />
-
-                                <div className="patient-post-detail-interacts">
-                                    <div className="patient-interacts-inner-liked">
-                                        <HeartOutlined className="post-detail-icon-heart" />
-                                        <p className="post-detail-icon-heart-number">
-                                            {blogPost.likes ? blogPost.likes.length : 0}
-                                        </p>
-                                    </div>
-
-                                    <div className="patient-interacts-inner-comment">
-                                        <MessageOutlined
-                                            className="post-detail-icon-mess"
-                                            onClick={handleOpenComments}
-                                        />
-                                        <p className="post-detail-icon-mess-number">
-                                            {/* comments.length > 0 ? comments.length : */}
-                                            {blogPost.comments.length}
-                                        </p>
-
-                                        {/* Show comments */}
-                                        <Drawer
-                                            title={`${blogPost.comments.length} bình luận`}
-                                            placement="right"
-                                            size={size}
-                                            onClose={handleHideComments}
-                                            open={openComments}
-                                        >
-                                            <CommentPatient
-                                                comments={comments}
-                                                blogPost={blogPost}
-                                                patients={patients}
-                                            />
-                                        </Drawer>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right */}
-                            <div className="patient-post-detail-content-right">
-                                <h2 className="post-detail-content-right-title">{blogPost.title || ''}</h2>
-
-                                {/* Header */}
-                                <div className="post-detail-content-right-header">
-                                    <img
-                                        src={blogPost.author.person.avatar}
-                                        className="post-detail-content-right-avatar"
-                                        alt="avatar"
-                                    />
-
-                                    <div className="post-detail-content-righ-info">
-                                        <h4 className="post-detail-content-right-username">
-                                            BS: {blogPost.author.person.username}
-                                        </h4>
-                                        <p className="post-detail-content-right-time">
-                                            <span>·</span> {moment(blogPost.createdAt).format('HH:mm a')}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="post-detail-content-right-content">
-                                    <div
-                                        className="post-detail-content-right-content-desc"
-                                        dangerouslySetInnerHTML={{ __html: blogPost.content }}
-                                    />
-                                    {blogPost.images.length === 0
-                                        ? null
-                                        : blogPost.images.length >= 1
-                                        ? blogPost.images.map((_postImage, index) => {
-                                              return (
-                                                  <div
-                                                      className="post-detail-content-right-content-image-item"
-                                                      key={index}
-                                                  >
-                                                      <Image
-                                                          className="post-detail-content-right-content-image"
-                                                          src={_postImage}
-                                                          alt="image-content"
-                                                      />
-                                                  </div>
-                                              );
-                                          })
-                                        : null}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <BlogPatient
+                        blogPost={blogPost}
+                        comments={comments}
+                        patients={patients}
+                        openComments={openComments}
+                        size={size}
+                        handleBackToBlog={handleBackToBlog}
+                        handleOpenComments={handleOpenComments}
+                        handleHideComments={handleHideComments}
+                        likes={likes}
+                        handleLikePostOfPatient={handleLikePostOfPatient}
+                        handleUnLikePostOfPatient={handleUnLikePostOfPatient}
+                    />
                 ) : (
                     <>
                         <div className="blog-patient-middle-content-header-fix-to-top">
@@ -241,6 +181,9 @@ function BlogPage() {
                         </div>
                     </>
                 )}
+            </div>
+            <div className="patient-blog-footer-display">
+                <Footer className="patient-blog-footer" />
             </div>
         </DefaultLayout>
     );
