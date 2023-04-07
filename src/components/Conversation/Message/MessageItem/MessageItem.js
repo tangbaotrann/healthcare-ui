@@ -13,7 +13,8 @@ function MessageItem({ messages, infoUser, scrollMessage }) {
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
     // const isLoadingWhenSended = useSelector(isLoadingWhenSendMessageSelector);
 
-    // console.log('infoUserDoctor ->', infoUser);
+    // console.log('infoUser ->', infoUser);
+    // console.log('messages ->', messages);
     // console.log('isLoadingWhenSended ->', isLoadingWhenSended);
 
     return (
@@ -82,7 +83,7 @@ function MessageItem({ messages, infoUser, scrollMessage }) {
                                     // Content
                                     <p className="message-info-content">{message.content}</p>
                                 )}
-                                <p className="message-info-time">{moment(message.createdAt).format('HH:mm')}</p>
+                                <p className="message-info-time">{moment(message.createdAt).format('HH:mm a')}</p>
                             </div>
                         </div>
                     );

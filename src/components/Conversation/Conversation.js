@@ -90,7 +90,7 @@ function Conversation({ infoUser, recordConversation }) {
             ) : (
                 <div className="wrapper-message">
                     <strong className="message-welcome">
-                        XIN CHÀO, BẠN CÓ THỂ NHẮN TIN VỚI BÁC SĨ ĐỂ ĐƯỢC TƯ VẤN THÊM VỀ BỆNH NHÉ !
+                        XIN CHÀO, BẠN CÓ THỂ NHẮN TIN ĐỂ CÓ THỂ TƯ VẤN THÊM VỀ BỆNH CHO BỆNH NHÂN NHÉ !
                     </strong>
                 </div>
             )}

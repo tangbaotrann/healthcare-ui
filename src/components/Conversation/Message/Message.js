@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
-import { Image, Popover, Tooltip } from 'antd';
+import { Popover, Tooltip } from 'antd';
 import { ReactMic } from 'react-mic';
 
 // me
@@ -29,7 +29,7 @@ import { endPoints } from '~/routers';
 import MessageItem from './MessageItem';
 import axios from 'axios';
 import callSlice from '~/redux/features/call/callSlice';
-import ContentAfterExaminated from '../ContentAfterExaminated';
+import MessageChatPreviewImage from '~/components/MessageChat/MessageChatPreviewImage/MessageChatPreviewImage';
 
 function Message({ messages, conversation, infoUser }) {
     // recordConversation
@@ -48,7 +48,7 @@ function Message({ messages, conversation, infoUser }) {
 
     const infoMember = useSelector(btnClickGetIdConversationSelector);
     const infoDoctor = useSelector(getDoctorLoginFilter);
-    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+    // const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
     const scrollMessage = useRef();
     const focusInputMessage = useRef();
@@ -295,21 +295,10 @@ function Message({ messages, conversation, infoUser }) {
                     <div className="container-emoji-picker">
                         <div className="preview-images">
                             {/* render preview images  */}
-                            {newImageMessage.length > 0
-                                ? newImageMessage.map((_image, index) => {
-                                      return (
-                                          <div key={index} className="preview-images-item">
-                                              <span
-                                                  className="btn-delete-preview-image"
-                                                  onClick={() => handleDeletePreviewImage(_image)}
-                                              >
-                                                  X
-                                              </span>
-                                              <Image className="preview-new-image" src={_image.preview} />
-                                          </div>
-                                      );
-                                  })
-                                : null}
+                            <MessageChatPreviewImage
+                                newImageMessage={newImageMessage}
+                                handleDeletePreviewImage={handleDeletePreviewImage}
+                            />
                         </div>
 
                         {muteRecording ? (

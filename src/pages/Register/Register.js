@@ -39,11 +39,16 @@ function Register() {
         }
 
         try {
-            const res = await setUpRecaptcha(phone_number);
-            console.log(res);
-            setConfirmOTP(res);
-            setRules(rule);
-            setFlag(true);
+            // const res = await setUpRecaptcha(phone_number);
+            // console.log(res);
+            // setConfirmOTP(res);
+            // setRules(rule);
+            // setFlag(true);
+            if (rule === 'doctor') {
+                navigate(`${endPoints.createInfo}`);
+            } else if (rules === 'patient') {
+                navigate(`${endPoints.createInfoPatient}`);
+            }
         } catch (err) {
             console.log({ err });
         }
@@ -153,7 +158,7 @@ function Register() {
                 </Form.Item>
 
                 {/* reCaptcha */}
-                <div id="recaptcha-container" />
+                {/* <div id="recaptcha-container" /> */}
 
                 {/* Register button */}
                 <div className="register-footer">
@@ -165,7 +170,7 @@ function Register() {
             </Form>
 
             {/* Verify captcha (otp) */}
-            <Form
+            {/* <Form
                 onFinish={handleOnFinishVerifyOTP}
                 onFinishFailed={(error) => {
                     console.log({ error });
@@ -191,7 +196,7 @@ function Register() {
                         Xác nhận mã OTP
                     </Button>
                 </div>
-            </Form>
+            </Form> */}
         </BackgroundOutSite>
     );
 }
