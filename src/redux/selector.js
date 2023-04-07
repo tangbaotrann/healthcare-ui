@@ -700,14 +700,15 @@ export const filterNotificationGetConversationId = createSelector(
     },
 );
 
-// get message theo user
+// get message theo user (Doctor)
 export const messageOfUserFilter = createSelector(
     fetchApiUserDoctorByTokenSelector,
     fetchApiMessagesSelector,
     fetchApiConversationsSelector,
     (user, listMessage, conversations) => {
-        // console.log('user ->', user);
-        // console.log('listMessage ->', listMessage);
+        console.log('user ->', user);
+        console.log('listMessage ->', listMessage);
+        console.log('conversations ->', conversations);
 
         const messages = listMessage.map((_message) => {
             const getMember = conversations.map((_conversation) => {
@@ -718,10 +719,12 @@ export const messageOfUserFilter = createSelector(
 
                 return member;
             });
-            // console.log('getMember ->', getMember);
+            console.log('getMember ->', getMember);
 
-            const _user = _message?.senderId === user?.doctor?._id ? user : getMember[0];
-            // console.log('_user ->', _user);
+            const test = getMember.find((_member) => _member._id === _message.senderId);
+
+            const _user = _message?.senderId === user?.doctor?._id ? user : test; //getMember[0];
+            console.log('_user ->', _user);
 
             return {
                 _id: _message?._id,
@@ -738,6 +741,52 @@ export const messageOfUserFilter = createSelector(
         });
 
         // console.log('message selector ->', messages);
+
+        return messages;
+    },
+);
+
+// get message theo user (Patient)
+export const patientMessageOfUserFilter = createSelector(
+    fetchApiAllPatientsSelector,
+    fetchApiMessagesSelector,
+    fetchApiConversationsOfPatientSelector,
+    (user, listMessage, conversations) => {
+        // console.log('user ->', user);
+        // console.log('listMessage ->', listMessage);
+        // console.log('conversations ->', conversations);
+
+        const messages = listMessage.map((_message) => {
+            const getMember = conversations.map((_conversation) => {
+                const member =
+                    _conversation.members[0]._id === user.patient._id
+                        ? _conversation.members[1]
+                        : _conversation.members[0];
+
+                return member;
+            });
+            // console.log('getMember ->', getMember);
+
+            const test = getMember.find((_member) => _member._id === _message.senderId);
+
+            const _user = _message?.senderId === user?.patient?._id ? user : test;
+            // console.log('_user ->>>>', _user);
+
+            return {
+                _id: _message?._id,
+                content: _message?.content,
+                conversation: _message?.conversation,
+                createdAt: _message?.createdAt,
+                images: _message?.images,
+                updatedAt: _message?.updatedAt,
+                senderId: _message?.senderId,
+                user: {
+                    patient: _user,
+                },
+            };
+        });
+
+        // // console.log('message selector ->', messages);
 
         return messages;
     },
