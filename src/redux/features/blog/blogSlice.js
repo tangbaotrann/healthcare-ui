@@ -169,7 +169,8 @@ const blogSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchApiCreatePost.fulfilled, (state, action) => {
-                state.data.push(action.payload);
+                // state.data.push(action.payload);
+                state.data.unshift(action.payload);
             })
             .addCase(fetchApiAllPostByIdDoctor.pending, (state, action) => {
                 state.isLoading = true;

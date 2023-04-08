@@ -117,14 +117,14 @@ const commentSlice = createSlice({
                 const newComments = state.data.filter((_comment) => _comment.post_id === action.payload.post_id);
 
                 if (newComments) {
-                    state.data.push(action.payload);
+                    state.data.unshift(action.payload);
                 }
             })
             .addCase(fetchApiCreateCommentOfPatient.fulfilled, (state, action) => {
                 const newComments = state.data.filter((_comment) => _comment.post_id === action.payload.post_id);
 
                 if (newComments) {
-                    state.data.push(action.payload);
+                    state.data.unshift(action.payload);
                 }
             });
     },

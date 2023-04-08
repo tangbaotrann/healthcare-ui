@@ -20,6 +20,7 @@ import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
 import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
 import BlogPage from './pages/BlogPage';
 import Chat from './pages/Chat';
+import NotificationsPage from './pages/NotificationsPage';
 
 function App() {
     const dispatch = useDispatch();
@@ -88,6 +89,7 @@ function App() {
                 <Route path={`${endPoints.createInfoPatient}`} element={<CreateInfoPatient />} />
                 <Route path={`${endPoints.registerScheduleAppointment}`} element={<RegisterScheduleAppointment />} />
                 <Route path={`${endPoints.blog}`} element={<BlogPage />} />
+                <Route path={`${endPoints.notificationPatient}`} element={<NotificationsPage />} />
             </Routes>
         </Router>
     );

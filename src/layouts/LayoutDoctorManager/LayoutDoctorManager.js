@@ -33,7 +33,7 @@ import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/featu
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
-import { fetchApiAllPostByIdDoctor, fetchApiGetAllPost } from '~/redux/features/blog/blogSlice';
+import { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
 
 const { Header, Sider, Content } = Layout;
 
