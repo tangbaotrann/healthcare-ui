@@ -55,6 +55,7 @@ export const btnOptionSelectedMeetingSelector = (state) => state.patientSlice.bt
 
 // get all notification by id doctor
 export const fetchApiNotificationByDoctorIdSelector = (state) => state.notificationSlice.data;
+export const fetchApiNotificationByPatientIdSelector = (state) => state.notificationSlice.dataPatient;
 export const isLoadingNotificationSelector = (state) => state.notificationSlice.isLoading;
 export const getTotalNotifications = (state) => state.notificationSlice.notifications;
 // update seen notification
@@ -208,9 +209,23 @@ export const totalPatients = createSelector(
     },
 );
 
-// filter notification not has seen
+// filter notification not has seen (Doctor)
 export const filterNotificationNotHasSeen = createSelector(
     fetchApiNotificationByDoctorIdSelector,
+    (listNotification) => {
+        if (listNotification) {
+            const getNotificationNotHasSeen = listNotification.filter(
+                (_notification) => _notification.hasSeen === false,
+            );
+
+            return getNotificationNotHasSeen;
+        }
+    },
+);
+
+// filter notification not has seen (Doctor)
+export const filterNotificationPatientNotHasSeen = createSelector(
+    fetchApiNotificationByPatientIdSelector,
     (listNotification) => {
         if (listNotification) {
             const getNotificationNotHasSeen = listNotification.filter(
@@ -412,7 +427,7 @@ export const cleanConversationListSelector = createSelector(
         const conversationList = conversations.map((conversation) => {
             const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
 
-            console.log('member', member);
+            // console.log('member', member);
 
             return {
                 _id: conversation._id,
@@ -438,8 +453,8 @@ export const cleanConversationOfPatientListSelector = createSelector(
     fetchApiAllPatientsSelector,
     fetchApiConversationsOfPatientSelector,
     (user, conversations) => {
-        console.log('user ->', user);
-        console.log('conversations selector ->', conversations);
+        // console.log('user ->', user);
+        // console.log('conversations selector ->', conversations);
 
         if (conversations.length > 0) {
             const conversationList = conversations.map((conversation) => {
@@ -448,7 +463,7 @@ export const cleanConversationOfPatientListSelector = createSelector(
                         ? conversation.members[1]
                         : conversation.members[0];
 
-                console.log('member ->>', member);
+                // console.log('member ->>', member);
 
                 return {
                     _id: conversation._id,
@@ -466,26 +481,6 @@ export const cleanConversationOfPatientListSelector = createSelector(
             // console.log(conversationList);
             return conversationList;
         }
-
-        // const conversationList = conversations.map((conversation) => {
-        //     const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
-
-        //     return {
-        //         _id: conversation._id,
-        //         member: {
-        //             _id: member._id,
-        //             username: member.person.username,
-        //             // avatar: member.person.avatar !== '' ? member.person.avatar : AVATAR_DEFAULT,
-        //         },
-        //         last_message: {
-        //             content: conversation.last_message?.content ?? '',
-        //             createdAt: conversation.last_message?.createdAt ?? '',
-        //         },
-        //     };
-        // });
-
-        // // console.log(conversationList);
-        // return conversationList;
     },
 );
 
@@ -666,7 +661,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
     },
 );
 
-// filter notification -> get id conversation -> show screen
+// filter notification -> get id conversation -> show screen (Doctor)
 export const filterNotificationGetConversationId = createSelector(
     fetchApiNotificationByDoctorIdSelector,
     getDayAndTimeScheduleMedicalALLFilterOfDoctor,

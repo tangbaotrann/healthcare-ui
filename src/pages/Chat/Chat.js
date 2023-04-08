@@ -8,7 +8,6 @@ import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import {
     cleanConversationOfPatientListSelector,
     fetchApiAllPatientsSelector,
-    messageOfUserFilter,
     patientMessageOfUserFilter,
 } from '~/redux/selector';
 import { logo } from '~/asset/images';
@@ -26,7 +25,7 @@ function Chat() {
     const dispatch = useDispatch();
 
     // console.log('conversations', conversations);
-    console.log('messages', messages);
+    // console.log('messages', messages);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());

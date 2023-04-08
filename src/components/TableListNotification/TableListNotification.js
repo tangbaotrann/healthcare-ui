@@ -101,6 +101,7 @@ function TableListNotification({ notifications, infoUser }) {
         },
         {
             key: 'show-message',
+            title: 'Lọc',
             render: (record) => {
                 return (
                     <Button
@@ -110,6 +111,17 @@ function TableListNotification({ notifications, infoUser }) {
                         Nhắn tin
                     </Button>
                 );
+            },
+            filters: [
+                { text: 'Bác sĩ nhắc nhở', value: 'RULE_DOCTOR_REMIND' },
+                { text: 'Đăng ký lịch', value: 'RULE_NOTIFICATION_REGISTER_SCHEDULE' },
+                { text: 'Hủy lịch', value: 'RULE_NOTIFICATION_CANCEL_SCHEDULE' },
+                { text: 'Hệ thống', value: 'RULE_SYSTEM' },
+                { text: 'Cảnh báo', value: 'RULE_WARNING' },
+                { text: 'Báo động', value: 'RULE_SOS' },
+            ],
+            onFilter: (value, record) => {
+                return record.rule === value;
             },
         },
     ];
@@ -164,7 +176,7 @@ function TableListNotification({ notifications, infoUser }) {
                         ? 'custom-row-rule-system'
                         : record.rule === 'RULE_WARNING'
                         ? 'custom-row-rule-warning'
-                        : record.rule === 'type.RULE_SOS'
+                        : record.rule === 'RULE_SOS'
                         ? 'custom-row-rule-sos'
                         : 'custom-row-else'
                 }

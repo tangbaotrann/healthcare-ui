@@ -1,16 +1,22 @@
 // lib
-import { RightOutlined } from '@ant-design/icons';
-import { Popover } from 'antd';
 import { Link, NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Badge, Popover, Space } from 'antd';
+import { RightOutlined } from '@ant-design/icons';
 
 // me
 import './Header.css';
 import { endPoints } from '~/routers';
 import { logo } from '~/asset/images';
 import InformationPatient from './InformationPatient';
+import { filterNotificationPatientNotHasSeen } from '~/redux/selector';
 
 function Header({ checkUserLogin, patients }) {
     // console.log('checkUserLogin', checkUserLogin);
+
+    const notificationNotHasSeen = useSelector(filterNotificationPatientNotHasSeen);
+
+    console.log('notificationNotHasSeen', notificationNotHasSeen);
 
     return (
         <div className="wrapper-header">
@@ -31,6 +37,35 @@ function Header({ checkUserLogin, patients }) {
                             Trang chủ
                         </NavLink>
 
+                        {/* Đặt lịch khám*/}
+                        <NavLink
+                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                            to={endPoints.registerScheduleAppointment}
+                        >
+                            Đặt lịch khám
+                        </NavLink>
+
+                        {/* Thông báo */}
+                        <NavLink
+                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                            to={endPoints.notificationPatient}
+                        >
+                            {notificationNotHasSeen.length > 0 ? (
+                                <Space size="small">
+                                    <Badge
+                                        count={notificationNotHasSeen.length}
+                                        overflowCount={99}
+                                        size="small"
+                                        offset={[4, -1]}
+                                    >
+                                        Thông báo
+                                    </Badge>
+                                </Space>
+                            ) : (
+                                'Thông báo'
+                            )}
+                        </NavLink>
+
                         {/* Chat message */}
                         <NavLink
                             className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -38,17 +73,6 @@ function Header({ checkUserLogin, patients }) {
                         >
                             Trò chuyện
                         </NavLink>
-
-                        {/* Dịch vụ tại phòng khám */}
-                        {/* <Popover content={<MenuGeneralExaminationIcon />}> */}
-                        <NavLink
-                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
-                            to={endPoints.registerScheduleAppointment}
-                        >
-                            Đặt lịch khám
-                            {/* <DownOutlined className="menu-item-icon" /> */}
-                        </NavLink>
-                        {/* </Popover> */}
 
                         {/* Dịch vụ tại nhà */}
                         {/* <Popover content={<MenuPeriodicHealthExaminationIcon />}>

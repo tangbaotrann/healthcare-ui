@@ -18,9 +18,43 @@ export const fetchApiNotificationByDoctorId = createAsyncThunk(
     },
 );
 
-// fetch api update field seen notification
+// fetch api all notification by id patient
+export const fetchApiNotificationByPatientId = createAsyncThunk(
+    'notification/fetchApiNotificationByPatientId',
+    async (idPatient) => {
+        // console.log('id doctor', idDoctor);
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}notifications/${idPatient}`);
+            console.log('res', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
+// fetch api update field seen notification (Doctor)
 export const fetchApiUpdateSeenNotification = createAsyncThunk(
     'notification/fetchApiUpdateSeenNotification',
+    async (record) => {
+        try {
+            const { _id } = record;
+
+            const res = await axios.put(`${process.env.REACT_APP_BASE_URL}notifications`, {
+                ids: [_id],
+            });
+            console.log('res update seen', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+// fetch api update field seen notification (Patient)
+export const fetchApiUpdateSeenNotificationPatient = createAsyncThunk(
+    'notification/fetchApiUpdateSeenNotificationPatient',
     async (record) => {
         try {
             const { _id } = record;
@@ -41,6 +75,7 @@ const notificationSlice = createSlice({
     name: 'notification',
     initialState: {
         data: [],
+        dataPatient: [],
         seen: [], // hide
         notifications: [],
         isLoading: false,
@@ -69,6 +104,9 @@ const notificationSlice = createSlice({
                 state.isLoading = false;
                 state.data = action.payload;
             })
+            .addCase(fetchApiNotificationByPatientId.fulfilled, (state, action) => {
+                state.dataPatient = action.payload;
+            })
             .addCase(fetchApiUpdateSeenNotification.fulfilled, (state, action) => {
                 // state.seen = action.payload;
 
@@ -83,6 +121,22 @@ const notificationSlice = createSlice({
 
                 if (allHasSeen) {
                     state.data.push(hasSeen[0]);
+                }
+            })
+            .addCase(fetchApiUpdateSeenNotificationPatient.fulfilled, (state, action) => {
+                // state.seen = action.payload;
+
+                const hasSeen = action.payload;
+
+                const spliceHasSeen = state.dataPatient.findIndex((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
+                const allHasSeen = state.dataPatient.find((_hasSeen) => _hasSeen._id === hasSeen[0]._id);
+
+                if (spliceHasSeen > -1) {
+                    state.dataPatient.splice(spliceHasSeen, 1);
+                }
+
+                if (allHasSeen) {
+                    state.dataPatient.push(hasSeen[0]);
                 }
             });
     },

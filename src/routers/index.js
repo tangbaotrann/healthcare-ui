@@ -14,4 +14,5 @@ export const endPoints = {
     chatMessage: '/chat',
     registerScheduleAppointment: '/register-schedule-appointment',
     blog: '/blog',
+    notificationPatient: '/notifications',
 };
