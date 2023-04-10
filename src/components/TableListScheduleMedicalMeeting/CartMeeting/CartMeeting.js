@@ -3,7 +3,7 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Image, Modal, Skeleton, Typography } from 'antd';
+import { Button, Image, Modal, Skeleton, Typography, message } from 'antd';
 
 // me
 import { icons, logo } from '~/asset/images';
@@ -38,8 +38,8 @@ function CartMeeting({ infoUser }) {
     console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
-    console.log('conversation ->', conversation);
-    console.log('record ->', record);
+    // console.log('conversation ->', conversation);
+    // console.log('record ->', record);
 
     // user join room
     useEffect(() => {
@@ -75,6 +75,11 @@ function CartMeeting({ infoUser }) {
     // show modal conversation
     const handleShowModalConversation = (_scheduleMedicalMeeting) => {
         console.log('record ->', _scheduleMedicalMeeting);
+        if (_scheduleMedicalMeeting.conversations === null || _scheduleMedicalMeeting.conversations === undefined) {
+            message.error('Bạn chưa có cuộc trò chuyện!');
+            return;
+        }
+
         setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(_scheduleMedicalMeeting.conversations)); // obj conversation filter
         dispatch(fetchApiMessages(_scheduleMedicalMeeting.conversations._id));
@@ -109,7 +114,9 @@ function CartMeeting({ infoUser }) {
                             <div className="schedule-medical-meeting-cart-info">
                                 <div className="schedule-medical-meeting-cart-info-item">
                                     <img className="icon-item" src={icons.iconUser} alt="icon-user" />
-                                    <p className="desc-item">{_scheduleMedicalMeeting.conversations.member.username}</p>
+                                    <p className="desc-item">
+                                        {_scheduleMedicalMeeting?.conversations?.member?.username}
+                                    </p>
                                 </div>
                                 <div className="schedule-medical-meeting-cart-info-item">
                                     <img className="icon-item-time" src={icons.iconTime} alt="icon-time" />
@@ -161,17 +168,6 @@ function CartMeeting({ infoUser }) {
                                 >
                                     Nhắn tin
                                 </Button>
-
-                                {/* Modal conversation */}
-                                {/* <Modal
-                                    open={showModalConversation}
-                                    onCancel={hideModalConversation}
-                                    cancelButtonProps={{ style: { display: 'none' } }}
-                                    okButtonProps={{ style: { display: 'none' } }}
-                                    width={1200}
-                                >
-                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
-                                </Modal> */}
                             </div>
                         </div>
                     );

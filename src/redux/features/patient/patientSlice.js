@@ -24,7 +24,7 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
     },
 );
 
-// get all schedule medical appointment (5. Lấy danh sách lịch khám hẹn khám của bác sĩ)
+// get all schedule medical appointment (Đổi từ api số 7 sang 11)
 export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     'patient/fetchApiScheduleMedicalAppointment',
     async (getIdDoctor) => {
@@ -32,7 +32,8 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
         if (getIdDoctor) {
             try {
                 const res = await axios.get(
-                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
+                    // `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list-waiting/${getIdDoctor}`,
                 );
                 console.log('res schedule-medical-appointment -> ', res.data.data);
 
@@ -40,6 +41,26 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
             } catch (err) {
                 console.log({ err });
             }
+        }
+    },
+);
+
+// Lịch đợi khám
+export const fetchApiScheduleMedicalAppointmentAwait = createAsyncThunk(
+    'patient/fetchApiScheduleMedicalAppointmentAwait',
+    async (getIdDoctor) => {
+        try {
+            if (getIdDoctor) {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}?filter=view_wating_exam`,
+                );
+
+                console.log('res lịch chờ khám ->', res.data.data);
+
+                return res.data.data;
+            }
+        } catch (err) {
+            console.log({ err });
         }
     },
 );
@@ -258,6 +279,7 @@ const patientSlice = createSlice({
     initialState: {
         data: [],
         scheduleMedicalAppointment: [],
+        scheduleMedicalAppointmentAwait: [],
         // confirmScheduleMedical: [],
         deleteScheduleMedical: [],
         resultHealthMessage: [],
@@ -285,6 +307,10 @@ const patientSlice = createSlice({
             .addCase(fetchApiScheduleMedicalAppointment.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.scheduleMedicalAppointment = action.payload;
+            })
+            // lịch chờ khám
+            .addCase(fetchApiScheduleMedicalAppointmentAwait.fulfilled, (state, action) => {
+                state.scheduleMedicalAppointmentAwait = action.payload;
             })
             .addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {
                 const schedule = action.payload;

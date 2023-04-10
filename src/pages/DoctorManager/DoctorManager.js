@@ -36,6 +36,7 @@ import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/no
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
+    fetchApiScheduleMedicalAppointmentAwait,
 } from '~/redux/features/patient/patientSlice';
 import ChatBot from '~/components/ChatBot/ChatBot';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
@@ -60,7 +61,7 @@ function DoctorManager() {
     const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
     const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
 
-    console.log(changeLayout);
+    // console.log(changeLayout);
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
@@ -94,6 +95,10 @@ function DoctorManager() {
 
     useEffect(() => {
         dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor?._id));
+    }, [getIdDoctor?._id]);
+
+    useEffect(() => {
+        dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor?._id));
     }, [getIdDoctor?._id]);
 
     useEffect(() => {

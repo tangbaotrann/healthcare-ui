@@ -80,12 +80,12 @@ function RegisterScheduleAppointment() {
 
         if (values) {
             dispatch(fetchApiRegisterScheduleAppointmentOfPatient(values));
-            if (checkRegisterSchedule.message) {
-                message.error('Ca khám này của bác sĩ đã có người đăng ký vui lòng chọn ca khác');
-                return;
-            } else if (checkRegisterSchedule.schedule_detail) {
-                message.success('Bạn đã đăng ký thành công lịch khám này.');
-            }
+            // if (checkRegisterSchedule.message) {
+            //     message.error('Ca khám này của bác sĩ đã có người đăng ký vui lòng chọn ca khác');
+            //     return;
+            // } else if (checkRegisterSchedule.schedule_detail) {
+            // }
+            message.success('Bạn đã đăng ký thành công lịch khám này.');
             // setOpenModalConfirm(false);
         } else {
             message.error('Đăng ký lịch khám không thành công!');

@@ -12,7 +12,6 @@ import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import Conversation from '../Conversation';
-import callSlice from '~/redux/features/call/callSlice';
 
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
@@ -211,6 +210,11 @@ function TableListScheduleMedical({ infoUser }) {
     // show modal conversation
     const handleShowModalConversation = (record) => {
         console.log('record ->', record);
+        if (record.conversations === null || record.conversations === undefined) {
+            message.error('Bạn chưa có cuộc trò chuyện nào!');
+            return;
+        }
+
         setShowModalConversation(true);
         dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation)); // obj conversation filter
         dispatch(fetchApiMessages(record.conversation._id));

@@ -27,6 +27,7 @@ import { filterNotificationNotHasSeen, getDoctorLoginFilter } from '~/redux/sele
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
+    fetchApiScheduleMedicalAppointmentAwait,
 } from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
 import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
@@ -167,6 +168,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutMeeting) {
+                            dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutBlog) {
                             dispatch(fetchApiAllPostByIdDoctor(getIdDoctor._id));
