@@ -51,6 +51,8 @@ export const btnOptionSelectedBloodPressure = (state) => state.bloodPressureSlic
 
 // get all schedule medical appointment
 export const fetchApiScheduleMedicalAppointmentSelector = (state) => state.patientSlice.scheduleMedicalAppointment;
+export const fetchApiScheduleMedicalAppointmentAwaitSelector = (state) =>
+    state.patientSlice.scheduleMedicalAppointmentAwait;
 export const btnOptionSelectedMeetingSelector = (state) => state.patientSlice.btnOptionSelectedMeeting;
 
 // get all notification by id doctor
@@ -532,18 +534,18 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        // console.log('listScheduleMedical', listScheduleMedical);
+        console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical
-            .filter((_status) => _status.status === false)
+            // .filter((_status) => _status.status === false)
             .map((_scheduleMedical) => {
                 const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
                 const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
                 const conversations = cleanConversation.find(
-                    (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+                    (_conversation) => _conversation.member._id === _scheduleMedical.patient._id,
                 );
 
                 return {
@@ -566,25 +568,25 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     },
 );
 
-// filter -> day (Thứ) + time (Ca làm) of doctor (LỊCH HẸN KHÁM)
+// filter -> day (Thứ) + time (Ca làm) of doctor (CUỘC HẸN KHÁM)
 export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
-    fetchApiScheduleMedicalAppointmentSelector,
+    fetchApiScheduleMedicalAppointmentAwaitSelector,
     fetchApiAllCreateDaysDoctorSelector,
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        // console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('fetchApiScheduleMedicalAppointmentAwaitSelector ->', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical
-            .filter((_status) => _status.status === true && _status.result_exam === null)
+            // .filter((_status) => _status.status === true && _status.result_exam === null)
             .map((_scheduleMedical) => {
                 const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
                 const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
                 const conversations = cleanConversation.find(
-                    (_conversation) => _conversation.member._id === _scheduleMedical.patient,
+                    (_conversation) => _conversation.member._id === _scheduleMedical.patient._id,
                 );
 
                 return {
@@ -612,7 +614,8 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
     getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
     btnOptionSelectedMeetingSelector,
     (listMeeting, option) => {
-        console.log('listMeeting', listMeeting);
+        // console.log('listMeeting', listMeeting);
+
         const now = new Date();
         if (listMeeting.length > 0) {
             if (option === 'all') {
@@ -664,7 +667,8 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
 // filter notification -> get id conversation -> show screen (Doctor)
 export const filterNotificationGetConversationId = createSelector(
     fetchApiNotificationByDoctorIdSelector,
-    getDayAndTimeScheduleMedicalALLFilterOfDoctor,
+    // getDayAndTimeScheduleMedicalALLFilterOfDoctor,
+    getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
     (notifications, listSchedule) => {
         console.log('notifications ->', notifications);
         console.log('listSchedule ->', listSchedule);
@@ -672,7 +676,7 @@ export const filterNotificationGetConversationId = createSelector(
         const _notifications = notifications.map((_notification) => {
             // conversation
             const _conversations = listSchedule.find(
-                (_conversation) => _conversation?.conversation?._id === _notification?.conversation_id,
+                (_conversation) => _conversation?.conversations?._id === _notification?.conversation_id, // notification chưa có conversation_id
             );
 
             // console.log('_conversations ->', _conversations);
@@ -701,9 +705,9 @@ export const messageOfUserFilter = createSelector(
     fetchApiMessagesSelector,
     fetchApiConversationsSelector,
     (user, listMessage, conversations) => {
-        console.log('user ->', user);
-        console.log('listMessage ->', listMessage);
-        console.log('conversations ->', conversations);
+        // console.log('user ->', user);
+        // console.log('listMessage ->', listMessage);
+        // console.log('conversations ->', conversations);
 
         const messages = listMessage.map((_message) => {
             const getMember = conversations.map((_conversation) => {
@@ -714,12 +718,12 @@ export const messageOfUserFilter = createSelector(
 
                 return member;
             });
-            console.log('getMember ->', getMember);
+            // console.log('getMember ->', getMember);
 
             const test = getMember.find((_member) => _member._id === _message.senderId);
 
             const _user = _message?.senderId === user?.doctor?._id ? user : test; //getMember[0];
-            console.log('_user ->', _user);
+            // console.log('_user ->', _user);
 
             return {
                 _id: _message?._id,
