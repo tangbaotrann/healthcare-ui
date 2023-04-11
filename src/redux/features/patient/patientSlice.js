@@ -267,9 +267,10 @@ export const fetchApiRegisterScheduleAppointmentOfPatient = createAsyncThunk(
 
             return res.data.data;
         } catch (err) {
-            console.log({ err });
-            const message = await err.response.data;
-            return message;
+            console.log(err);
+            return err.response.data;
+            // const message = await err.response.data;
+            // return message;
         }
     },
 );

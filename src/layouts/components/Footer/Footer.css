@@ -17,7 +17,9 @@
 }
 
 .footer-logo {
-    width: 270px;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
 
 .footer-info ul {

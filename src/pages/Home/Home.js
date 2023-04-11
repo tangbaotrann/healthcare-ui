@@ -14,6 +14,7 @@ import { fetchApiAllPatientsSelector } from '~/redux/selector';
 import ChatBot from '~/components/ChatBot';
 import { useEffect } from 'react';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
+import { fetchApiNotificationByPatientId } from '~/redux/features/notification/notificationSlice';
 
 function Home({ checkUserLogin }) {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -21,11 +22,15 @@ function Home({ checkUserLogin }) {
     const dispatch = useDispatch();
 
     // console.log('schedules ->', schedules);
-    console.log('pat', patients);
+    // console.log('pat', patients);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
     }, []);
+
+    useEffect(() => {
+        dispatch(fetchApiNotificationByPatientId(patients?.patient?._id));
+    }, [patients?.patient?._id]);
 
     return (
         <div className="home-wrapper">

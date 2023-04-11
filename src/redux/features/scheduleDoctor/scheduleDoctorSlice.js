@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -133,6 +134,14 @@ const scheduleDoctor = createSlice({
         idDoctor: [],
         isLoading: false,
         scheduleDetails: [],
+        day_of_week: new Date(),
+    },
+    reducers: {
+        btnOptionSelectDayOfWeek: (state, action) => {
+            if (action.payload) {
+                state.day_of_week = action.payload;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder

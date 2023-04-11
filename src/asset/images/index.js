@@ -4,6 +4,7 @@ export const logo = {
     iconHeart: require('~/asset/images/icon-heart.png'),
     imgMeeting: require('~/asset/images/image-meeting.png'),
     iconChatbotLogo: require('~/asset/images/favicon-32x32.png'),
+    iconLogo192x192: require('~/asset/images/android-chrome-192x192.png'),
 };
 
 // fake avatar chat-bot ai
