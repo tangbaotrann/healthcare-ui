@@ -37,14 +37,9 @@ function TableListNotification({ notifications, infoUser }) {
     const handleShowModalConversation = (record) => {
         console.log('rec', record);
 
-        if (record.conversation === undefined) {
-            message.error('Chưa có cuộc trò chuyện!');
-            return;
-        }
-
-        if (record.conversation.conversation._id) {
-            dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation.conversation)); //arrivalFromRecordIdConversation obj conversation filter
-            dispatch(fetchApiMessages(record.conversation.conversation._id));
+        if (record.conversation.conversations._id) {
+            dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation.conversations)); //arrivalFromRecordIdConversation obj conversation filter
+            dispatch(fetchApiMessages(record.conversation.conversations._id));
             setRecord(record);
             setShowModalConversation(true);
         }
@@ -104,12 +99,18 @@ function TableListNotification({ notifications, infoUser }) {
             title: 'Lọc',
             render: (record) => {
                 return (
-                    <Button
-                        onClick={() => handleShowModalConversation(record)}
-                        className="notification-show-message-btn"
-                    >
-                        Nhắn tin
-                    </Button>
+                    <>
+                        {record.conversation.conversations === undefined ? (
+                            ''
+                        ) : (
+                            <Button
+                                onClick={() => handleShowModalConversation(record)}
+                                className="notification-show-message-btn"
+                            >
+                                Nhắn tin
+                            </Button>
+                        )}
+                    </>
                 );
             },
             filters: [

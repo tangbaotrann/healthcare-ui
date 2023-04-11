@@ -356,14 +356,14 @@ const patientSlice = createSlice({
 
                 state.deleteScheduleMedical = action.payload;
 
-                // socket
-                socket.emit('notification_confirm_cancel_schedule', {
+                // socket (notification_confirm_cancel_schedule)
+                socket.emit('notification_confirm_register_schedule', {
                     data: action.payload.data,
                 });
             })
             .addCase(fetchApiRemindPatient.fulfilled, (state, action) => {
-                // socket
-                socket.emit('notification_doctor_remind', {
+                // socket (notification_doctor_remind)
+                socket.emit('notification_confirm_register_schedule', {
                     data: action.payload.data,
                 });
             })

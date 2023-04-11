@@ -8,7 +8,6 @@ import constants from '~/utils/constants';
 import LayoutDoctorManager from '~/layouts/LayoutDoctorManager';
 import {
     btnSelectMenuChangeLayoutSelector,
-    fetchApiAllPostByIdDoctorSelector,
     fetchApiNotificationByDoctorIdSelector,
     fetchApiUpdateInfoUserSelector,
     fetchApiUserDoctorByTokenSelector,
@@ -38,7 +37,6 @@ import {
     fetchApiScheduleMedicalAppointment,
     fetchApiScheduleMedicalAppointmentAwait,
 } from '~/redux/features/patient/patientSlice';
-import ChatBot from '~/components/ChatBot/ChatBot';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 import { LoadingOutlined } from '@ant-design/icons';
 import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting';
@@ -136,8 +134,6 @@ function DoctorManager() {
                     <TableListNotification notifications={notifications} infoUser={infoUser} />
                 ) : changeLayout === constants.layoutListConversation ? (
                     <Conversation infoUser={infoUser} />
-                ) : changeLayout === constants.layoutChatBot ? (
-                    <ChatBot />
                 ) : changeLayout === constants.layoutBlog ? (
                     <Blog infoUser={infoUser} />
                 ) : null}

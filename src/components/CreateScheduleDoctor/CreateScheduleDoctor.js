@@ -9,7 +9,11 @@ import './CreateScheduleDoctor.css';
 import TitleName from '../TitleName';
 import TableListSchedule from './TableListSchedule';
 import { fetchApiCreateScheduleDoctor } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
-import { fetchApiAllCreateDaysDoctorSelector, fetchApiAllShiftsDoctorSelector } from '~/redux/selector';
+import {
+    fetchApiAllCreateDaysDoctorSelector,
+    fetchApiAllShiftsDoctorSelector,
+    fetchApiCreateScheduleDoctorSelector,
+} from '~/redux/selector';
 
 function CreateScheduleDoctor({ infoUser, schedules }) {
     const [showModal, setShowModal] = useState(false);
@@ -18,10 +22,12 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
 
     const days = useSelector(fetchApiAllCreateDaysDoctorSelector);
     const shifts = useSelector(fetchApiAllShiftsDoctorSelector);
+    // const checkExist = useSelector(fetchApiCreateScheduleDoctorSelector);
 
     // console.log(days);
     // console.log('-->', shifts);
     // console.log('-->', schedules);
+    // console.log('checkeExist -->', checkExist);
 
     // show modal
     const handleOpenModal = () => {

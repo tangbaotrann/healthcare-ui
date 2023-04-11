@@ -160,7 +160,7 @@ const scheduleDoctor = createSlice({
                 state.shifts = action.payload;
             })
             .addCase(fetchApiCreateScheduleDoctor.fulfilled, (state, action) => {
-                state.createSchedule = action.payload;
+                state.data.push(action.payload);
             })
             .addCase(fetchApiAllCreateScheduleDoctor.pending, (state, action) => {
                 state.isLoading = true;
