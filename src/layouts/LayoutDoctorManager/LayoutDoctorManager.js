@@ -10,7 +10,6 @@ import {
     MenuUnfoldOutlined,
     NotificationOutlined,
     OrderedListOutlined,
-    RobotOutlined,
     ScheduleOutlined,
     SolutionOutlined,
     TableOutlined,
@@ -132,11 +131,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                             icon: <SolutionOutlined />,
                             label: 'Blog',
                         },
-                        {
-                            key: constants.layoutChatBot,
-                            icon: <RobotOutlined />,
-                            label: 'Chatbot',
-                        },
                     ]}
                     // Change layout
                     onSelect={(item) => {
@@ -172,8 +166,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutBlog) {
                             dispatch(fetchApiAllPostByIdDoctor(getIdDoctor._id));
-                            dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                        } else if (item.key === constants.layoutChatBot) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         }
                     }}

@@ -33,6 +33,7 @@ export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.s
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
 export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.day_of_week;
+export const fetchApiCreateScheduleDoctorSelector = (state) => state.scheduleDoctor.createSchedule;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
@@ -173,7 +174,8 @@ export const blogOptionSelectedFilter = createSelector(
 
 // Tổng lịch khám
 export const totalScheduleOfDoctor = createSelector(
-    fetchApiScheduleMedicalAppointmentSelector,
+    // fetchApiScheduleMedicalAppointmentSelector,
+    fetchApiScheduleMedicalAppointmentAwaitSelector,
     (listScheduleMedical) => {
         if (listScheduleMedical) {
             return listScheduleMedical.length;

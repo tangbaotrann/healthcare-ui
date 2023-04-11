@@ -31,6 +31,18 @@ function TableListSchedule({ schedules }) {
             key: 'day',
             title: 'Thứ',
             dataIndex: 'day',
+            filters: [
+                { text: 'Monday', value: 'Monday' },
+                { text: 'Tuesday', value: 'Tuesday' },
+                { text: 'Wednesday', value: 'Wednesday' },
+                { text: 'Thursday', value: 'Thursday' },
+                { text: 'Friday', value: 'Friday' },
+                { text: 'Saturday', value: 'Saturday' },
+                { text: 'Sunday', value: 'Sunday' },
+            ],
+            onFilter: (value, record) => {
+                return record.day === value;
+            },
         },
         {
             key: 'time',

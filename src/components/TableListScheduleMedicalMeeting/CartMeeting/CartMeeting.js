@@ -65,9 +65,10 @@ function CartMeeting({ infoUser }) {
 
     // get info user
     const handleCallGetInfoUser = (_scheduleMedicalMeeting) => {
+        console.log('_scheduleMedicalMeeting', _scheduleMedicalMeeting);
         const conversation = _scheduleMedicalMeeting.conversations;
 
-        socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+        socket.emit('call_id_room_to_user', { conversation, infoDoctor, _scheduleMedicalMeeting });
         setConversation(conversation);
         setRecord(_scheduleMedicalMeeting);
     };
