@@ -1,4 +1,5 @@
 // me
+import { logo } from '~/asset/images';
 import './Footer.css';
 
 function Footer({ className }) {
@@ -7,7 +8,8 @@ function Footer({ className }) {
             <div className="footer-inner">
                 <img
                     className="footer-logo"
-                    src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/footer-logo-white.svg"
+                    // src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/footer-logo-white.svg"
+                    src={logo.iconLogo192x192}
                     alt="logo-footer"
                 />
             </div>

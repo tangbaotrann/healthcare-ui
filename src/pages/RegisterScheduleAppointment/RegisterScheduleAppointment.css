@@ -163,3 +163,26 @@
     background-color: var(--blu);
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }
+
+/* test */
+.events {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.events .ant-badge-status {
+    width: 100%;
+    overflow: hidden;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.notification-schedule-register {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 12px;
+    color: var(--black);
+}

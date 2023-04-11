@@ -32,6 +32,7 @@ export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoct
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
+export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.day_of_week;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
@@ -635,32 +636,77 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
 export const filterGetScheduleAppointmentAndHide = createSelector(
     fetchApiAllCreateScheduleDoctorSelector,
     fetchApiAllScheduleDetailsSelector,
-    (schedules, scheduleDetails) => {
-        console.log('schedules', schedules);
-        console.log('schedules details', scheduleDetails);
+    btnOptionSelectDayOfWeekSelector,
+    (schedules, scheduleDetails, day) => {
+        console.log('all schedules', schedules);
+        console.log('all schedules details', scheduleDetails);
+        console.log('day', day);
 
-        // const _schedules = schedules.map((_schedule) => {
-        //     const _scheduleDetails = scheduleDetails.filter(
-        //         (_scheduleDetail) => _scheduleDetail.schedule === _schedule._id && _scheduleDetail.result_exam !== null,
-        //     );
-        //     console.log('_scheduleDetails after ->', _scheduleDetails);
-        // });
+        if (schedules.length > 0) {
+            const now = new Date();
 
-        const _scheduleDetails = scheduleDetails
-            .filter((_scheduleDetail) => _scheduleDetail.result_exam === null)
-            .map((_scheduleDetail) => {
-                const _schedules = schedules.filter((_schedule) => _schedule._id === _scheduleDetail.schedule);
+            //Lấy tất cả lịch ngày hôm nay
+            const _schedules = schedules.filter((_schedule) => {
+                return now.getDay() === day.getDay() && now.getMonth() === day.getMonth()
+                    ? new Date(_schedule['day']['day']).getDay() === day.getDay() &&
+                          now.getHours() < new Date(_schedule['time']['time_start']).getHours()
+                    : new Date(_schedule['day']['day']).getDay() === day.getDay();
+            });
+            console.log('_schedules ->', _schedules);
+            // console.log('now ->', now);
+            // console.log('now.getDay() ->', typeof now.getDay());
+            // console.log('now.getMonth() ->', now.getMonth());
 
+            // Lấy tất cả chi tiết lịch ngày hôm nay(lịch đã đăng ký)
+            const _scheduleDetails = scheduleDetails.filter(
+                (_scheduleDetail) => new Date(_scheduleDetail.day_exam).getDay() === day.getDay(),
+            );
+
+            // Lấy mảng ngày ra để so sánh
+            const schedule_details_day_exams = _scheduleDetails.map((_schedule) => {
                 return {
-                    result_exam: _scheduleDetail.result_exam,
-                    _id: _scheduleDetail._id,
-                    _schedules,
+                    day_exam: _schedule.day_exam,
+                    doctor_id: _schedule.doctor,
                 };
             });
 
-        console.log('_scheduleDetails', _scheduleDetails);
+            // Tạo thêm date_compare để so sánh
+            const __schedules = _schedules.map((_schedule) => {
+                const time = `${new Date(_schedule['time']['time_start']).getHours()}: ${new Date(
+                    _schedule['time']['time_start'],
+                ).getMinutes()}`;
 
-        return _scheduleDetails;
+                const dateStr = moment(day).format('DD/MM/YYYY');
+                const date = moment(dateStr);
+                const date_time = moment(time, 'HH:mm');
+                date.set({
+                    hour: date_time.get('hour'),
+                    minute: date_time.get('minute'),
+                    second: date_time.get('second'),
+                });
+
+                return {
+                    ..._schedule,
+                    date_compare: date,
+                    doctor_id: _schedule.doctor._id,
+                };
+            });
+
+            // Tiến hành so sánh
+            const final_schedule = __schedules.filter((_finalSchedule) => {
+                return !schedule_details_day_exams.some(
+                    (_schedule) =>
+                        moment(_schedule.day_exam).isSame(_finalSchedule.date_compare) &&
+                        _schedule.doctor_id === _finalSchedule.doctor_id,
+                );
+            });
+
+            console.log(final_schedule);
+
+            return final_schedule;
+        }
+
+        return [];
     },
 );
 
