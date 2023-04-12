@@ -1,6 +1,6 @@
 // lib
-import { KeyOutlined, PhoneOutlined } from '@ant-design/icons/lib/icons';
-import { Form, Input, Button, Select } from 'antd';
+import { KeyOutlined } from '@ant-design/icons/lib/icons';
+import { Form, Input, Button, Select, Alert } from 'antd';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { useState } from 'react';
@@ -11,14 +11,15 @@ import { useDispatch } from 'react-redux';
 import './Register.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
-import { fetchApiRegister } from '~/redux/features/user/userSlice';
 import { useUserAuth } from '~/context/UserAuthContext';
+import axios from 'axios';
 
 function Register() {
     const [number, setNumber] = useState('');
     const [flag, setFlag] = useState(false);
     const [confirmOTP, setConfirmOTP] = useState('');
     const [rules, setRules] = useState('');
+    const [messageError, setMessageError] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -26,16 +27,40 @@ function Register() {
 
     const navigate = useNavigate();
 
-    console.log('rules ->', rules);
+    // console.log('rules ->', rules);
 
     // handle send otp
     const handleOnFinishSendOTP = async (values) => {
-        const { phone_number, rule } = values;
-
-        console.log('phone_number', phone_number);
+        const { phone_number, rule, password } = values;
 
         if (values) {
-            dispatch(fetchApiRegister(values));
+            const formatPhone = phone_number.replace('+84', '0');
+            await axios
+                .post(
+                    `${process.env.REACT_APP_BASE_URL}auth/register`,
+                    {
+                        phone_number: formatPhone,
+                        password: password,
+                        rule: rule,
+                    },
+                    {
+                        headers: { Authorization: '***' },
+                    },
+                )
+                .then((res) => {
+                    // dispatch(fetchApiRegister(values));
+                    // console.log('res ->', res.data.data);
+                    localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
+
+                    if (rule === 'doctor') {
+                        navigate(`${endPoints.createInfo}`);
+                    } else if (rule === 'patient') {
+                        navigate(`${endPoints.createInfoPatient}`);
+                    }
+                })
+                .catch((err) => {
+                    setMessageError(true);
+                });
         }
 
         try {
@@ -44,11 +69,11 @@ function Register() {
             // setConfirmOTP(res);
             // setRules(rule);
             // setFlag(true);
-            if (rule === 'doctor') {
-                navigate(`${endPoints.createInfo}`);
-            } else if (rules === 'patient') {
-                navigate(`${endPoints.createInfoPatient}`);
-            }
+            // if (rule === 'doctor') {
+            //     navigate(`${endPoints.createInfo}`);
+            // } else if (rules === 'patient') {
+            //     navigate(`${endPoints.createInfoPatient}`);
+            // }
         } catch (err) {
             console.log({ err });
         }
@@ -75,6 +100,13 @@ function Register() {
 
     return (
         <BackgroundOutSite>
+            {messageError && (
+                <Alert
+                    message="Số điện thoại đã có người đăng ký. Vui lòng nhập số khác!"
+                    type="error"
+                    style={{ marginBottom: '12px' }}
+                />
+            )}
             <Form
                 onFinish={handleOnFinishSendOTP}
                 onFinishFailed={(error) => {

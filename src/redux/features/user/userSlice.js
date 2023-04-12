@@ -287,6 +287,25 @@ export const fetchApiCreateInfoPatient = createAsyncThunk(
     },
 );
 
+// check user exits (phone_number)
+export const fetchApiCheckExistUserByNumberPhone = createAsyncThunk(
+    'user/fetchApiCheckExistUserByNumberPhone',
+    async (values) => {
+        try {
+            const { phone_number } = values;
+
+            const formatPhone = phone_number.replace('+84', '0');
+
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`);
+            console.log('res check exits ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -299,6 +318,7 @@ const userSlice = createSlice({
         isLoading: false,
         patient: [],
         patientInfo: [],
+        checkExits: [],
     },
     extraReducers: (builder) => {
         builder
@@ -339,6 +359,9 @@ const userSlice = createSlice({
             })
             .addCase(fetchApiCreateInfoPatient.fulfilled, (state, action) => {
                 state.patientInfo = action.payload;
+            })
+            .addCase(fetchApiCheckExistUserByNumberPhone.fulfilled, (state, action) => {
+                state.checkExits = action.payload;
             });
     },
 });

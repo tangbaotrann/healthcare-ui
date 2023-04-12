@@ -12,6 +12,7 @@ export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
 
 // login
 export const fetchApiLoginSelector = (state) => state.userSlice.userLogin;
+export const fetchApiCheckExistUserByNumberPhoneSelector = (state) => state.userSlice.checkExits;
 
 // register
 export const fetchApiRegisterSelector = (state) => state.userSlice.userRegister;

@@ -110,7 +110,7 @@ function CartMeeting({ infoUser }) {
                 scheduleMedicalsMeetingFilter.map((_scheduleMedicalMeeting) => {
                     return (
                         <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
-                            <Image src={logo.iconChatbotLogo} className="schedule-medical-meeting-cart-image" />
+                            <Image src={logo.iconLogo192x192} className="schedule-medical-meeting-cart-image" />
 
                             <div className="schedule-medical-meeting-cart-info">
                                 <div className="schedule-medical-meeting-cart-info-item">

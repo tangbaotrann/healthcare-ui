@@ -2,41 +2,49 @@
 import { KeyOutlined } from '@ant-design/icons/lib/icons';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message, Alert } from 'antd';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 
 // me
 import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
-import { fetchApiLogin } from '~/redux/features/user/userSlice';
+import { fetchApiAllPatients, fetchApiLogin } from '~/redux/features/user/userSlice';
 import { endPoints } from '~/routers';
+import axios from 'axios';
 
 function Login({ getToken }) {
     const [number, setNumber] = useState('');
+    const [messageError, setMessageError] = useState(false);
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
-    const decodedToken = jwt_decode(getToken);
-
     // console.log('token login ->', getToken);
     // console.log('decodedToken ->', decodedToken);
+    // console.log('messageError ->', messageError);
 
     // handle submit login
-    const handleOnFishSubmitLogin = (values) => {
+    const handleOnFishSubmitLogin = async (values) => {
         try {
             if (values) {
-                dispatch(fetchApiLogin(values));
+                const formatPhone = values.phone_number.replace('+84', '0');
+                await axios
+                    .get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`)
+                    .then((res) => {
+                        dispatch(fetchApiLogin(values));
 
-                if (decodedToken.rule === 'patient') {
-                    navigate(`${endPoints.homeIntro}`);
-                } else {
-                    navigate(`${endPoints.doctorManager}`);
-                }
+                        if (res.data.data.rule === 'patient') {
+                            navigate(`${endPoints.homeIntro}`);
+                        } else {
+                            navigate(`${endPoints.doctorManager}`);
+                        }
+                    })
+                    .catch((err) => {
+                        setMessageError(true);
+                    });
             }
         } catch (err) {
             console.log({ err });
@@ -45,6 +53,13 @@ function Login({ getToken }) {
 
     return (
         <BackgroundOutSite>
+            {messageError && (
+                <Alert
+                    message="Tài khoản chưa được đăng ký. Vui lòng thử lại!"
+                    type="error"
+                    style={{ marginBottom: '12px' }}
+                />
+            )}
             <Form
                 onFinish={handleOnFishSubmitLogin}
                 onFinishFailed={(error) => {

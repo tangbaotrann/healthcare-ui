@@ -40,7 +40,7 @@ function Home({ checkUserLogin }) {
             <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
                 <ScrollToTop smooth className="scroll-to-top" />
                 <Content>
-                    <SlideImage />
+                    <SlideImage patients={patients} />
                     <ExploreClinic />
                     <HealthInformation />
                 </Content>
