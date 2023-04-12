@@ -1,7 +1,7 @@
 // lib
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Badge, Popover, Space } from 'antd';
+import { Badge, Popover, Space, message } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 
 // me
@@ -12,11 +12,11 @@ import InformationPatient from './InformationPatient';
 import { filterNotificationPatientNotHasSeen } from '~/redux/selector';
 
 function Header({ checkUserLogin, patients }) {
-    // console.log('checkUserLogin', checkUserLogin);
-
     const notificationNotHasSeen = useSelector(filterNotificationPatientNotHasSeen);
 
-    console.log('notificationNotHasSeen', notificationNotHasSeen);
+    // console.log('checkUserLogin', checkUserLogin);
+    // console.log('patients', patients);
+    // console.log('notificationNotHasSeen', notificationNotHasSeen);
 
     return (
         <div className="wrapper-header">
@@ -38,81 +38,76 @@ function Header({ checkUserLogin, patients }) {
                         </NavLink>
 
                         {/* Đặt lịch khám*/}
-                        <NavLink
-                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
-                            to={endPoints.registerScheduleAppointment}
-                        >
-                            Đặt lịch khám
-                        </NavLink>
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Đặt lịch khám</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.registerScheduleAppointment}
+                            >
+                                Đặt lịch khám
+                            </NavLink>
+                        )}
 
                         {/* Thông báo */}
-                        <NavLink
-                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
-                            to={endPoints.notificationPatient}
-                        >
-                            {notificationNotHasSeen.length > 0 ? (
-                                <Space size="small">
-                                    <Badge
-                                        count={notificationNotHasSeen.length}
-                                        overflowCount={99}
-                                        size="small"
-                                        offset={[4, -1]}
-                                    >
-                                        Thông báo
-                                    </Badge>
-                                </Space>
-                            ) : (
-                                'Thông báo'
-                            )}
-                        </NavLink>
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Thông báo</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.notificationPatient}
+                            >
+                                {notificationNotHasSeen.length > 0 ? (
+                                    <Space size="small">
+                                        <Badge
+                                            count={notificationNotHasSeen.length}
+                                            overflowCount={99}
+                                            size="small"
+                                            offset={[4, -1]}
+                                        >
+                                            Thông báo
+                                        </Badge>
+                                    </Space>
+                                ) : (
+                                    'Thông báo'
+                                )}
+                            </NavLink>
+                        )}
 
                         {/* Chat message */}
-                        <NavLink
-                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}
-                            to={endPoints.chatMessage}
-                        >
-                            Trò chuyện
-                        </NavLink>
-
-                        {/* Dịch vụ tại nhà */}
-                        {/* <Popover content={<MenuPeriodicHealthExaminationIcon />}>
-                            <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/service-all">
-                                Dịch vụ tại nhà
-                                <DownOutlined className="menu-item-icon" />
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Trò chuyện</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.chatMessage}
+                            >
+                                Trò chuyện
                             </NavLink>
-                        </Popover> */}
-
-                        {/* Đội ngũ bác sĩ */}
-                        {/* <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/team-of-doctors">
-                            Đội ngũ bác sĩ
-                        </NavLink> */}
-
-                        {/* Thống kê (chart) */}
-                        {/* <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/statistics">
-                            Chỉ số thống kê
-                        </NavLink> */}
+                        )}
 
                         {/* Blogger */}
-                        <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/blog">
-                            Blog
-                        </NavLink>
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Blog</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/blog">
+                                Blog
+                            </NavLink>
+                        )}
                     </ul>
                 </div>
 
                 {/* Section right */}
                 <div className="section-right">
-                    {patients ? (
-                        <div className="home-intro-header">
-                            <Popover content={<InformationPatient patients={patients} />}>
-                                <img
-                                    className="home-intro-header-avatar"
-                                    src={patients?.patient?.person?.avatar}
-                                    alt="avatar-patient"
-                                />
-                            </Popover>
-                            <p className="home-intro-header-username">{patients?.patient?.person?.username}</p>
-                        </div>
-                    ) : checkUserLogin === null || checkUserLogin === undefined || checkUserLogin.length < 0 ? (
+                    {patients?.length === 0 || patients === undefined ? (
                         <>
                             <h4 className="section-right-login">
                                 <Link to={endPoints.login} className="login">
@@ -126,9 +121,16 @@ function Header({ checkUserLogin, patients }) {
                             </h4>
                         </>
                     ) : (
-                        <Link className="section-right-back" to={endPoints.doctorManager}>
-                            Quay lại <RightOutlined />
-                        </Link>
+                        <div className="home-intro-header">
+                            <Popover content={<InformationPatient patients={patients} />}>
+                                <img
+                                    className="home-intro-header-avatar"
+                                    src={patients?.patient?.person?.avatar}
+                                    alt="avatar-patient"
+                                />
+                            </Popover>
+                            <p className="home-intro-header-username">{patients?.patient?.person?.username}</p>
+                        </div>
                     )}
 
                     {/* Khi click vào nút thì hiện lên Modal */}

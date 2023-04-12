@@ -10,7 +10,9 @@ import images from '~/asset/images';
 import { SlideShowBannerClinicIcon, SlideShowHeartIcon } from '~/components/Icons';
 import { endPoints } from '~/routers';
 
-function SlideImage() {
+function SlideImage({ patients }) {
+    // console.log('patients slide image ->', patients);
+
     return (
         <div className="wrapper-slide-image">
             <Slide duration={1500} indicators={true} pauseOnHover={false} arrows={false}>
@@ -32,9 +34,15 @@ function SlideImage() {
                 </div>
 
                 {/* Click vào hiện lên modal */}
-                <Link to={endPoints.registerScheduleAppointment}>
-                    <Button className="appointment-btn">Đặt hẹn khám</Button>
-                </Link>
+                {patients?.length === 0 || patients === undefined ? (
+                    <Link to={endPoints.login}>
+                        <Button className="appointment-btn">Đặt hẹn khám</Button>
+                    </Link>
+                ) : (
+                    <Link to={endPoints.registerScheduleAppointment}>
+                        <Button className="appointment-btn">Đặt hẹn khám</Button>
+                    </Link>
+                )}
             </div>
         </div>
     );

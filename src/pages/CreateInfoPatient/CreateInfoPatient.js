@@ -20,7 +20,7 @@ function CreateInfoPatient() {
 
     const navigate = useNavigate();
 
-    const tokenCurrent = useSelector(fetchApiRegisterSelector);
+    // const tokenCurrent = useSelector(fetchApiRegisterSelector);
 
     // preview avatar
     const handleChangeAvatar = ({ fileList: newFileList }) => {
@@ -32,12 +32,14 @@ function CreateInfoPatient() {
             <Form
                 onFinish={(values) => {
                     console.log('create info patient ->', values);
-                    if (values && tokenCurrent.accessToken) {
+                    const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+                    if (values && getToken) {
                         dispatch(
                             fetchApiCreateInfoPatient({
                                 values: values,
                                 fileList: fileList,
-                                tokenCurrent: tokenCurrent.accessToken,
+                                tokenCurrent: getToken,
                             }),
                         );
 

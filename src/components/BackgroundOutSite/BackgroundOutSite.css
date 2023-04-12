@@ -17,7 +17,7 @@
 }
 
 .container {
-    width: 500px;
+    width: 500px !important;
     margin: 0 auto;
     border-radius: 6px;
     padding: 12px;
