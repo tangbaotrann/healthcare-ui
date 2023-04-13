@@ -32,7 +32,6 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
         if (getIdDoctor) {
             try {
                 const res = await axios.get(
-                    // `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}`,
                     `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list-waiting/${getIdDoctor}`,
                 );
                 console.log('res schedule-medical-appointment -> ', res.data.data);
@@ -116,7 +115,7 @@ export const fetchApiDeleteScheduleMedical = createAsyncThunk(
                 },
             });
 
-            // console.log('res del ->', res.data);
+            console.log('res del ->', res.data);
 
             return res.data;
         } catch (err) {
@@ -316,7 +315,7 @@ const patientSlice = createSlice({
             .addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {
                 const schedule = action.payload;
 
-                // console.log('schedule slice ->', schedule);
+                console.log('schedule confirm slice ->', schedule);
 
                 const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_detail._id,
@@ -341,9 +340,9 @@ const patientSlice = createSlice({
                 });
             })
             .addCase(fetchApiDeleteScheduleMedical.fulfilled, (state, action) => {
-                const schedule = action.payload;
+                const schedule = action.payload.data;
 
-                // console.log('schedule del slice ->', schedule);
+                console.log('schedule del slice ->', schedule);
 
                 const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_detail_id,
@@ -361,8 +360,15 @@ const patientSlice = createSlice({
                     data: action.payload.data,
                 });
             })
+            // Nhắc nhở
             .addCase(fetchApiRemindPatient.fulfilled, (state, action) => {
                 // socket (notification_doctor_remind)
+                socket.emit('notification_confirm_register_schedule', {
+                    data: action.payload.data,
+                });
+            })
+            .addCase(fetchApiStopExaminatedByPatientId.fulfilled, (state, action) => {
+                console.log('stop slice ->', action.payload);
                 socket.emit('notification_confirm_register_schedule', {
                     data: action.payload.data,
                 });

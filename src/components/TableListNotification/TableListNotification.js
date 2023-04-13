@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Modal, Table, message } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 // me
 import './TableListNotification.css';
 import TitleName from '../TitleName';
-import { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
+import notificationSlice, { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
 import { filterNotificationGetConversationId } from '~/redux/selector';
 import Conversation from '../Conversation/Conversation';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
+import socket from '~/utils/socket';
 
 function TableListNotification({ notifications, infoUser }) {
     const [record, setRecord] = useState({});
@@ -27,6 +28,27 @@ function TableListNotification({ notifications, infoUser }) {
     // console.log('seenNotification', seenNotification);
     // console.log('updateHasSeen ->', updateHasSeen);
     // console.log('checkConversation ->', checkConversation);
+    // console.log('infoUser ->', infoUser);
+
+    // useEffect(() => {
+    //     socket.on('notification_confirm_register_schedule_success', (notification) => {
+    //         console.log('notification_confirm_register_schedule_success ->', notification);
+    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+    //     });
+    // }, []);
+
+    useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', (notification) => {
+            console.log('notification_register_schedule_from_patient_success', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('get_users', (users) => {
+            console.log('user ->', users);
+        });
+    }, []);
 
     // handle update seen notification
     const handleUpdateSeenNotification = (record) => {
@@ -100,7 +122,7 @@ function TableListNotification({ notifications, infoUser }) {
             render: (record) => {
                 return (
                     <>
-                        {record.conversation.conversations === undefined ? (
+                        {record?.conversation?.conversations === undefined ? (
                             ''
                         ) : (
                             <Button

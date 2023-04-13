@@ -1,5 +1,5 @@
 // lib
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
@@ -29,7 +29,7 @@ import {
     fetchApiScheduleMedicalAppointmentAwait,
 } from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
-import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
+import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
@@ -54,12 +54,19 @@ function LayoutDoctorManager({ children, infoUser }) {
     // console.log('totalNotifications', totalNotifications);
     // console.log('notificationNotHasSeen', notificationNotHasSeen);
 
-    useEffect(() => {
-        socket.on('notification_register_schedule_from_patient_success', (data) => {
-            console.log('notification_register_schedule_from_patient_success', data);
-            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(data));
-        });
-    }, []);
+    // useEffect(() => {
+    //     socket.on('notification_register_schedule_from_patient_success', (data) => {
+    //         console.log('notification_register_schedule_from_patient_success', data);
+    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(data));
+    //     });
+    // }, []);
+
+    // useEffect(() => {
+    //     socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
+    //         console.log('notification_confirm_register_schedule_success ->', notification);
+    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+    //     });
+    // }, []);
 
     return (
         <Layout>
@@ -80,10 +87,10 @@ function LayoutDoctorManager({ children, infoUser }) {
                             key: constants.layoutListNotification,
                             icon: (
                                 <>
-                                    {notificationNotHasSeen.length > 0 ? (
+                                    {notificationNotHasSeen?.length > 0 ? (
                                         <Space size="small">
                                             <Badge
-                                                count={notificationNotHasSeen.length}
+                                                count={notificationNotHasSeen?.length}
                                                 overflowCount={99}
                                                 size="default"
                                                 offset={[155, 6]}
@@ -136,28 +143,31 @@ function LayoutDoctorManager({ children, infoUser }) {
                     onSelect={(item) => {
                         if (item.key === constants.layoutDashboard) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutScheduleMedicalMeeting) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
-                            dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
+                            dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
-                            // dispatch(fetchApiUserDoctorByToken(getToken));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListConversation) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutResultHealthPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
@@ -167,6 +177,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                         } else if (item.key === constants.layoutBlog) {
                             dispatch(fetchApiAllPostByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
+                            socket.emit('add_user', getIdDoctor._id);
                         }
                     }}
                 />

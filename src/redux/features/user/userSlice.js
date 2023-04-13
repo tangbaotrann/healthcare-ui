@@ -1,6 +1,7 @@
 // lib
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import socket from '~/utils/socket';
 
 // login
 export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (values) => {
@@ -362,6 +363,13 @@ const userSlice = createSlice({
             })
             .addCase(fetchApiCheckExistUserByNumberPhone.fulfilled, (state, action) => {
                 state.checkExits = action.payload;
+            })
+            // Chuyển bệnh nhân
+            .addCase(fetchApiMovePatient.fulfilled, (state, action) => {
+                console.log('Move patient slice ->', action.payload);
+                socket.emit('notification_confirm_register_schedule', {
+                    data: action.payload.data,
+                });
             });
     },
 });

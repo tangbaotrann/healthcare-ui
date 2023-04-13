@@ -3,7 +3,7 @@ export const endPoints = {
     login: '/login',
     register: '/register',
     forgotPassword: '/forgot-password',
-    createInfo: '/create/info',
+    createInfo: '/create/info-doctor',
     createProfileDoctor: '/create/profile-doctor',
     createInfoPatient: '/create/info-patient',
     homeIntro: '/home-intro',

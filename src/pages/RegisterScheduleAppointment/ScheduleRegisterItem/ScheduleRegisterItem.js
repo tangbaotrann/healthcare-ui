@@ -22,9 +22,8 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                     <div className="content-cart-item-body-time">
                         <img className="content-cart-item-time-icon" src={icons.iconTime} alt="iconTime" />
                         <p className="content-cart-item-time">
-                            Thứ: {moment(schedule?.day?.day).format('dddd')} - Ngày:{' '}
-                            {moment(schedule?.day?.day).format('DD/MM/YYYY')} - Thời gian:{' '}
-                            {moment(new Date(schedule?.time?.time_start)).format('HH:mm a')} {' - '}
+                            Thứ: {moment(schedule?.day?.day).format('dddd')} - Ngày: {schedule.date_compare._i} - Thời
+                            gian: {moment(new Date(schedule?.time?.time_start)).format('HH:mm a')} {' - '}
                             {moment(new Date(schedule?.time?.time_end)).format('HH:mm a')}
                         </p>
                     </div>

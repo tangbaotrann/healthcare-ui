@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
+import { Alert, Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
 
 import TitleName from '~/components/TitleName';
 import scheduleDoctor from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
@@ -11,20 +11,28 @@ import {
 } from '~/redux/selector';
 import { fetchApiRegisterScheduleAppointmentOfPatient } from '~/redux/features/patient/patientSlice';
 import ScheduleRegisterItem from '../ScheduleRegisterItem/ScheduleRegisterItem';
+import axios from 'axios';
+import moment from 'moment';
 
 function ScheduleRegister() {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
+    const [dateTime, setDateTime] = useState();
     const [scheduleAppointment, setScheduleAppointment] = useState({});
+    const [messageError, setMessageError] = useState(false);
+    const [messageSuccess, setMessageSuccess] = useState(false);
+    const [checked, setChecked] = useState();
+
     const dispatch = useDispatch();
 
     const schedules = useSelector(filterGetScheduleAppointmentAndHide);
     const isLoading = useSelector(isLoadingScheduleDoctorSelector);
-    const checkRegisterSchedule = useSelector(fetchApiRegisterScheduleAppointmentOfPatientSelector);
+    // const checkRegisterSchedule = useSelector(fetchApiRegisterScheduleAppointmentOfPatientSelector);
     // const dateOfWeek = useSelector(btnOptionSelectDayOfWeekSelector);
 
     // console.log('checkRegisterSchedule', checkRegisterSchedule);
-    // console.log('dateOfWeek ->', dateOfWeek.getDay()); // thứ
-    // console.log('s--->', moment(dateOfWeek).format('DD/MM/YYYY'));
+    // console.log('schedules --->', schedules);
+    // console.log('scheduleAppointment --->', scheduleAppointment);
+    console.log('dateTime --->', dateTime);
 
     // handle change option
     const handleOptionSelect = (date) => {
@@ -43,6 +51,15 @@ function ScheduleRegister() {
     // handle button
     const handleRegisterScheduleAppointment = (schedule) => {
         console.log('->', schedule);
+
+        // giờ
+        const timeStart = moment(schedule.time.time_start).format('HH:mm');
+
+        // ngày
+        const scheduleDateStart = moment(schedule.date_compare._i.split('/').reverse().join('/') + ' ' + timeStart);
+
+        setDateTime(new Date(scheduleDateStart));
+
         setOpenModalConfirm(true);
         setScheduleAppointment(schedule);
     };
@@ -55,20 +72,38 @@ function ScheduleRegister() {
     const handleSubmitForm = async (values) => {
         console.log('value', values);
 
-        if (values || checkRegisterSchedule) {
-            await dispatch(fetchApiRegisterScheduleAppointmentOfPatient(values));
-            if (checkRegisterSchedule.message) {
-                message.error('Ca khám này của bác sĩ đã có người đăng ký vui lòng chọn ca khác');
-                return;
-            }
-            //else if (checkRegisterSchedule.schedule_detail) {
-            // }
-            message.success('Bạn đã đăng ký thành công lịch khám này.');
-            setOpenModalConfirm(false);
-        } else {
-            message.error('Đăng ký lịch khám không thành công!');
-            return;
-        }
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+        const { content_exam, schedule, day_exam } = values;
+
+        await axios
+            .post(
+                `${process.env.REACT_APP_BASE_URL}schedule-details`,
+                {
+                    content_exam: content_exam,
+                    schedule: schedule,
+                    day_exam: day_exam, // day_exam
+                },
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            )
+            .then((res) => {
+                console.log('res ->', res.data.data);
+                setChecked(res.data.data);
+                setMessageSuccess(true);
+                setMessageError(false);
+                setOpenModalConfirm(false);
+            })
+            .catch((err) => {
+                console.log({ err });
+                setMessageSuccess(false);
+                setMessageError(true);
+                setOpenModalConfirm(false);
+            });
     };
 
     return (
@@ -80,6 +115,27 @@ function ScheduleRegister() {
                 <Skeleton active />
             ) : (
                 <>
+                    {messageError ? (
+                        <Alert
+                            message="Ca khám này của Bác sĩ đã có người đăng ký. Vui lòng chọn ca khác!"
+                            type="error"
+                            style={{ marginBottom: '12px' }}
+                        />
+                    ) : messageSuccess ? (
+                        <Alert
+                            message={`Bạn đã đăng ký thành công ca khám vào ngày ${moment(
+                                checked.schedule_detail.day_exam,
+                            ).format('DD/MM/YYYY')} (${moment(checked.schedule_detail.day_exam).format(
+                                'dddd',
+                            )}) lúc ${moment(checked.schedule_detail.schedule.time.time_start).format(
+                                'HH:mm',
+                            )} - ${moment(checked.schedule_detail.schedule.time.time_end).format(
+                                'HH:mm',
+                            )}. Vui lòng chờ thông báo thêm từ Bác sĩ nhé!`}
+                            type="success"
+                            style={{ marginBottom: '12px' }}
+                        />
+                    ) : null}
                     {schedules.length === 0 ? (
                         <p className="notification-schedule-register">
                             <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
@@ -117,7 +173,7 @@ function ScheduleRegister() {
                     fields={[
                         {
                             name: ['day_exam'],
-                            value: scheduleAppointment?.day?.day,
+                            value: dateTime, // schedule.date_compare._i
                         },
                         {
                             name: ['schedule'],

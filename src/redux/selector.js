@@ -514,6 +514,7 @@ export const getDayAndTimeScheduleMedicalALLFilterOfDoctor = createSelector(
                 content_exam: _scheduleMedical.content_exam,
                 result_exam: _scheduleMedical.result_exam,
                 createdAt: _scheduleMedical.createdAt,
+                day_exam: _scheduleMedical.day_exam,
                 doctor: _scheduleMedical.doctor,
                 patient: _scheduleMedical.patient,
                 schedule: _scheduleMedical.schedule,
@@ -544,7 +545,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
         // console.log('cleanConversationListSelector', cleanConversation);
 
         const scheduleMedicals = listScheduleMedical
-            // .filter((_status) => _status.status === false)
+            .filter((_status) => _status.status === false)
             .map((_scheduleMedical) => {
                 const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
                 const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
@@ -557,6 +558,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
                     content_exam: _scheduleMedical.content_exam,
                     result_exam: _scheduleMedical.result_exam,
                     createdAt: _scheduleMedical.createdAt,
+                    day_exam: _scheduleMedical.day_exam,
                     doctor: _scheduleMedical.doctor,
                     patient: _scheduleMedical.patient,
                     schedule: _scheduleMedical.schedule,
@@ -598,6 +600,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
                     content_exam: _scheduleMedical.content_exam,
                     result_exam: _scheduleMedical.result_exam,
                     createdAt: _scheduleMedical.createdAt,
+                    day_exam: _scheduleMedical.day_exam,
                     doctor: _scheduleMedical.doctor,
                     patient: _scheduleMedical.patient,
                     schedule: _scheduleMedical.schedule,
@@ -644,6 +647,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
         console.log('all schedules', schedules);
         console.log('all schedules details', scheduleDetails);
         console.log('day', day);
+        console.log('day.getDay', day.getDay());
 
         if (schedules.length > 0) {
             const now = new Date();
@@ -704,7 +708,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
                 );
             });
 
-            console.log(final_schedule);
+            console.log('final_schedule', final_schedule);
 
             return final_schedule;
         }

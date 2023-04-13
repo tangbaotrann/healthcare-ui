@@ -87,8 +87,8 @@ const notificationSlice = createSlice({
 
             const getNotification = state.data.find((_notification) => _notification._id === notification._id);
 
-            if (getNotification) {
-                state.notifications.push(notification);
+            if (!getNotification) {
+                state.data.unshift(notification);
             } else {
                 console.log('err notification!');
                 return;

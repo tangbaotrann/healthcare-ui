@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form, Input, message, Modal, Table } from 'antd';
 
@@ -9,14 +9,11 @@ import './TableListScheduleMedical.css';
 import TitleName from '../TitleName';
 import { fetchApiConfirmScheduleMedical, fetchApiDeleteScheduleMedical } from '~/redux/features/patient/patientSlice';
 import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
-import conversationSlice from '~/redux/features/conversation/conversationSlice';
-import { fetchApiMessages } from '~/redux/features/message/messageSlice';
-import Conversation from '../Conversation';
 
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
     const [showModal, setShowModal] = useState(false);
-    const [showModalConversation, setShowModalConversation] = useState(false);
+    // const [showModalConversation, setShowModalConversation] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -43,6 +40,12 @@ function TableListScheduleMedical({ infoUser }) {
             key: 'createdAt',
             title: 'Ngày đăng ký',
             dataIndex: 'createdAt',
+            width: '10%',
+        },
+        {
+            key: 'day_exam',
+            title: 'Ngày khám',
+            dataIndex: 'day_exam',
             width: '10%',
         },
         {
@@ -100,89 +103,14 @@ function TableListScheduleMedical({ infoUser }) {
             render: (record) => {
                 return (
                     <div className="status-tbl-schedule-medical">
-                        {record.status.props.children === 'Đã xác nhận' ? (
-                            <>
-                                <Button
-                                    className="show-conversation-message"
-                                    onClick={() => handleShowModalConversation(record)}
-                                >
-                                    Nhắn tin
-                                </Button>
-
-                                {/* Modal conversation */}
-                                <Modal
-                                    open={showModalConversation}
-                                    onCancel={hideModalConversation}
-                                    cancelButtonProps={{ style: { display: 'none' } }}
-                                    okButtonProps={{ style: { display: 'none' } }}
-                                >
-                                    {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
-                                </Modal>
-                            </>
-                        ) : (
-                            <>
-                                <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
-                                    Xác nhận
-                                </Button>
-                                <Button className="btn-delete-schedule" onClick={handleShowModal}>
-                                    Hủy
-                                </Button>
-
-                                {/* Button show Chat */}
-                                <Button
-                                    className="show-conversation-message"
-                                    onClick={() => handleShowModalConversation(record)}
-                                >
-                                    Nhắn tin
-                                </Button>
-
-                                {/* Modal confirm delete request schedule */}
-                                <Modal
-                                    open={showModal}
-                                    onCancel={handleCancel}
-                                    cancelButtonProps={{ style: { display: 'none' } }}
-                                    okButtonProps={{ style: { display: 'none' } }}
-                                >
-                                    <TitleName>Hủy lịch khám của bệnh nhân</TitleName>
-
-                                    <Form
-                                        onFinish={handleDeleteScheduleMedicalOnFish}
-                                        onFinishFailed={(error) => {
-                                            console.log({ error });
-                                        }}
-                                        fields={[{ name: ['record'], value: record }]}
-                                    >
-                                        {/* reason */}
-                                        <Form.Item
-                                            name="reason"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Bạn cần phải nhập lý do hủy lịch khám.',
-                                                },
-                                            ]}
-                                            hasFeedback
-                                        >
-                                            <Input placeholder="Nhập lý do hủy lịch khám..." />
-                                        </Form.Item>
-
-                                        {/* Obj record */}
-                                        <Form.Item name="record" style={{ display: 'none' }}>
-                                            <Input />
-                                        </Form.Item>
-
-                                        {/* Button */}
-                                        <Button
-                                            style={{ backgroundColor: 'red', color: 'white', marginLeft: '4px' }}
-                                            htmlType="submit"
-                                            block
-                                        >
-                                            Xác nhận hủy lịch
-                                        </Button>
-                                    </Form>
-                                </Modal>
-                            </>
-                        )}
+                        <>
+                            <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
+                                Xác nhận
+                            </Button>
+                            <Button className="btn-delete-schedule" onClick={() => handleShowModal(record)}>
+                                Hủy
+                            </Button>
+                        </>
                     </div>
                 );
             },
@@ -198,32 +126,15 @@ function TableListScheduleMedical({ infoUser }) {
     };
 
     // show modal
-    const handleShowModal = () => {
+    const handleShowModal = (record) => {
+        console.log('re', record);
         setShowModal(true);
+        setRecord(record);
     };
 
     // hide modal
     const handleCancel = () => {
         setShowModal(false);
-    };
-
-    // show modal conversation
-    const handleShowModalConversation = (record) => {
-        console.log('record ->', record);
-        if (record.conversations === null || record.conversations === undefined) {
-            message.error('Bạn chưa có cuộc trò chuyện nào!');
-            return;
-        }
-
-        setShowModalConversation(true);
-        dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation)); // obj conversation filter
-        dispatch(fetchApiMessages(record.conversation._id));
-        setRecord(record);
-    };
-
-    // hide
-    const hideModalConversation = () => {
-        setShowModalConversation(false);
     };
 
     // handle confirm del request schedule
@@ -237,15 +148,50 @@ function TableListScheduleMedical({ infoUser }) {
 
     return (
         <>
-            {/* Modal conversation */}
+            {/* Modal confirm delete request schedule */}
             <Modal
-                open={showModalConversation}
-                onCancel={hideModalConversation}
+                open={showModal}
+                onCancel={handleCancel}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
-                width={1200}
             >
-                {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
+                <TitleName>Hủy lịch khám của bệnh nhân</TitleName>
+
+                <Form
+                    onFinish={handleDeleteScheduleMedicalOnFish}
+                    onFinishFailed={(error) => {
+                        console.log({ error });
+                    }}
+                    fields={[{ name: ['record'], value: record }]}
+                >
+                    {/* reason */}
+                    <Form.Item
+                        name="reason"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Bạn cần phải nhập lý do hủy lịch khám.',
+                            },
+                        ]}
+                        hasFeedback
+                    >
+                        <Input placeholder="Nhập lý do hủy lịch khám..." />
+                    </Form.Item>
+
+                    {/* Obj record */}
+                    <Form.Item name="record" style={{ display: 'none' }}>
+                        <Input />
+                    </Form.Item>
+
+                    {/* Button */}
+                    <Button
+                        style={{ backgroundColor: 'red', color: 'white', marginLeft: '4px' }}
+                        htmlType="submit"
+                        block
+                    >
+                        Xác nhận hủy lịch
+                    </Button>
+                </Form>
             </Modal>
 
             <TitleName>Danh Sách Lịch Khám Của Bác Sĩ</TitleName>
@@ -256,7 +202,8 @@ function TableListScheduleMedical({ infoUser }) {
                 dataSource={scheduleMedicalsFilter.map((scheduleMedical, index) => ({
                     index: index + 1,
                     day: moment(scheduleMedical?.days?.day).format('dddd'),
-                    createdAt: moment(scheduleMedical?.createdAt).format('DD/MM/YYYY'),
+                    createdAt: moment(scheduleMedical?.createdAt).format('HH:mm a - DD/MM/YYYY'),
+                    day_exam: moment(scheduleMedical?.day_exam).format('HH:mm a - DD/MM/YYYY'),
                     time: `${scheduleMedical?.shifts?.name} (${moment(
                         new Date(scheduleMedical?.shifts?.time_start),
                     ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
