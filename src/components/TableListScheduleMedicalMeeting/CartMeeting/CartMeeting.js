@@ -123,7 +123,7 @@ function CartMeeting({ infoUser }) {
                                     <img className="icon-item-time" src={icons.iconTime} alt="icon-time" />
                                     <p className="desc-item">
                                         {moment(_scheduleMedicalMeeting?.days?.day).format('dddd')} -{' '}
-                                        {moment(_scheduleMedicalMeeting?.createdAt).format('DD/MM/YYYY')} -{' '}
+                                        {moment(_scheduleMedicalMeeting?.day_exam).format('DD/MM/YYYY')} -{' '}
                                         {_scheduleMedicalMeeting?.shifts?.name} (
                                         {moment(new Date(_scheduleMedicalMeeting?.shifts?.time_start)).format('HH:mm')}
                                         {' -> '}
