@@ -49,6 +49,7 @@ function App() {
                             <Navigate replace to={endPoints.homeIntro} />
                         ) : (
                             <Navigate replace to={endPoints.doctorManager} />
+                            // patient
                         )
                     }
                 />
