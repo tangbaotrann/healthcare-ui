@@ -1,0 +1,15 @@
+.patient-list-chart {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.patient-list-chart-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 4px;
+    margin-top: 110px;
+}

@@ -1,0 +1,9 @@
+.title-name {
+    text-align: center;
+    font-size: 3rem;
+    background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 20px;
+    margin-top: 12px;
+}

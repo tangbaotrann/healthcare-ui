@@ -1,0 +1,117 @@
+.home-wrapper {
+    position: relative;
+}
+
+.home-sp-chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    z-index: 10;
+    box-shadow: 0 0 24px 0 var(--primary);
+}
+
+.home-sp-chatbot-icon {
+    font-size: 3.6rem;
+    margin-left: 13px;
+    margin-top: 12px;
+    color: var(--white);
+    z-index: 12;
+    transition: all 0.3s;
+}
+
+.home-sp-chatbot-icon:hover {
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* Modal chatbot */
+.chatbot-container {
+    position: absolute;
+    bottom: 26px;
+    right: 64px;
+    background-color: var(--white);
+    width: 600px;
+    height: 600px;
+    border-radius: 12px;
+    box-shadow: 0 0 22px rgba(0, 0, 0, 0.25);
+}
+
+/* Header */
+.chatbot-header {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 60px;
+}
+
+.chatbot-header-avatar {
+    background-color: var(--white);
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 12px;
+    margin-right: 10px;
+}
+
+.chatbot-header-username {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--white);
+}
+
+/* Body */
+.chatbot-body-fix-scroll {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+/* Footer */
+.chatbot-footer-input {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: none;
+    outline: 1px solid var(--primary);
+}
+
+.chatbot-footer-input:focus {
+    outline: 1px solid var(--primary);
+    box-shadow: 0 0 10px 0 var(--primary);
+    transition: all 0.3s;
+}
+
+.chatbot-footer-btn-submit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom-right-radius: 12px;
+    border: none;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.scroll-to-top {
+    margin-right: -10px;
+    margin-bottom: 60px;
+}
+
+.scroll-to-top:hover {
+    opacity: 0.8;
+    background-color: var(--primary);
+    transition: 0.4s linear;
+}
+
+.container-updated-metric {
+    width: 100%;
+}

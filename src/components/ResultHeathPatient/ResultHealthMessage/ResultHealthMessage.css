@@ -1,0 +1,26 @@
+.result-health-message-item {
+    display: flex;
+    align-items: center;
+}
+
+.result-health-message-item strong {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-right: 6px;
+}
+
+.result-health-message-item p {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.result-health-message-list {
+    margin-top: 10px;
+}
+
+.result-health-message-none {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 12px;
+}

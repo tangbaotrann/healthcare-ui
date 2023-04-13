@@ -1,0 +1,57 @@
+/* Messages */
+.chat-message-item {
+    display: flex;
+    padding: 10px;
+    margin-top: 12px;
+    /* margin-left: 10px; */
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.chat-messages-body {
+    height: 470px;
+    overflow-y: scroll;
+}
+
+.chat-messages-body-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages-body-info-content {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--black);
+}
+
+.chat-message-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.emoji-picker-open-btn.chat-emoji-picker-open-btn {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.emoji-picker-close-btn.chat-emoji-picker-close-btn {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+/* MIC */
+.audio-mute-message.chat-audio-mute-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.audio-un-mute-message.chat-audio-un-mute-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2px;
+}

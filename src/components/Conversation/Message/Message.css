@@ -1,0 +1,379 @@
+/* Message */
+.wrapper-message {
+    display: flex;
+    flex-direction: column;
+    flex: 9;
+}
+
+.container-message {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 530px;
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background-color: var(--modal-out-site);
+    box-shadow: 0 0 18px 0 var(--modal-out-site);
+    overflow-y: scroll;
+}
+
+.message-header {
+    position: absolute;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 6px;
+    background-color: var(--white);
+    z-index: 2;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+}
+
+.message-header-avt {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.message-body {
+    /* width: 100%;
+    overflow-y: scroll; */
+}
+
+/* Footer Input send message */
+.message-footer {
+    position: relative;
+    top: 78px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.loading-listen-message {
+    position: absolute;
+    left: 12px;
+    top: -40px;
+    font-size: 2rem;
+    z-index: 1;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/*  */
+.loading-listen-message {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.loading-listen-message:after {
+    content: "...";
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ellipsis-dot-message 1s infinite .3s;
+    animation-fill-mode: fowards;
+    width: 1.2rem;
+    font-size: 1rem;
+}
+
+@keyframes ellipsis-dot-message {
+    25% {
+        content: "";
+    }
+
+    50% {
+        content: ".";
+    }
+
+    75% {
+        content: "...";
+    }
+
+    100% {
+        content: "....";
+    }
+}
+/*  */
+
+.input-message-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 6px;
+    padding: 10px;
+    padding-right: 100px;
+    font-size: 1.4rem;
+    border: none;
+    outline: none;
+    color: var(--white);
+    background-color: #40414f;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Button submit */
+.btn-submit {
+    position: absolute;
+    right: 0;
+    bottom: 0px;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    background-color: #40414f;
+    color: var(--white);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.btn-submit:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.message-header-info {
+    display: flex;
+    align-items: center;
+}
+
+.message-header-info {
+    color: var(--black);
+}
+
+.message-header-info p {
+    margin-top: 4px;
+    font-size: 1.2rem;
+    color: #ccc;
+}
+
+.btn-submit-icon {
+    font-size: 1.4rem;
+    transform: rotate(-20deg);
+}
+
+.badge {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    bottom: 8px;
+    left: 34px;
+    /* right: 12px; */
+    background-color: var(--status-online);
+}
+
+/* Emoji picker */
+.container-emoji-picker {
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+    color: var(--white);
+}
+
+.emoji-picker-close-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+.emoji-picker-close-btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+/* Call video */
+.icon-call-video-btn {
+    position: absolute;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 6px;
+    margin-right: 16px;
+}
+
+.icon-call-video {
+    font-size: 1.8rem;
+    color: var(--black);
+}
+
+.icon-call-video:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    animation: animationVideoMeetingIcon 2s infinite;
+    transition: all 0.3s;
+    color: var(--primary);
+}
+
+@keyframes animationVideoMeetingIcon {
+    0% {
+        transform:rotate(0deg);
+    }
+
+    50% {
+        transform:rotate(45deg);
+    }
+}
+
+.emoji-picker-open-btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.audio-mute-message {
+    margin-right: 12px;
+}
+
+.audio-mute-message:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.audio-un-mute-message {
+    margin-right: 12px;
+}
+
+.audio-un-mute-message {
+    opacity: 0.8;
+    cursor: pointer;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.ant-popover-inner {
+    padding: 6px !important;
+}
+
+.ant-popover-title {
+    font-size: 0.6rem !important;
+    margin-bottom: 0 !important;
+}
+
+/* animation loading await listen */
+.loading-listen {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.loading-listen:after {
+    content: "...";
+    text-align: center;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ellipsis-dot 1s infinite .3s;
+    animation-fill-mode: fowards;
+    width: 1.4rem;
+    font-size: 1.2rem;
+}
+
+@keyframes ellipsis-dot {
+    25% {
+        content: "";
+    }
+
+    50% {
+        content: ".";
+    }
+
+    75% {
+        content: "..";
+    }
+
+    100% {
+        content: "...";
+    }
+}
+
+/* Mic recording */
+.sound-wave {
+    display: none !important;
+}
+
+/* Option file image */
+.option-file-image {
+    color: #40414f;
+}
+
+.message-footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: -65px;
+}
+
+.opt-file-label-hide {
+    display: none;
+}
+
+.option-file-image-icon {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.option-file-image-icon:hover {
+    color: var(--primary);
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+/* Preview image footer */
+.preview-images {
+    position: absolute;
+    bottom: -12px;
+    right: 46px;
+    /* left: -55px; */
+    display: flex;
+    align-items: center;
+    /* margin-right: 260px; */
+}
+
+.preview-new-image {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 10px;
+    object-fit: cover;
+    padding: 6px;
+}
+
+.ant-image-mask {
+    padding: 10px;
+}
+
+.preview-images-item {
+    display: flex;
+    align-items: center;
+}
+
+/* Button del preview image */
+.btn-delete-preview-image {
+    font-size: 1rem;
+    color: var(--white);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-delete-preview-image:hover {
+    color: var(--primary);
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.2s;
+}

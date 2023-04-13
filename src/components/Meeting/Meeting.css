@@ -1,0 +1,59 @@
+.meeting-wrapper {
+    position: relative;
+    top: 10%;
+    height: 200px;
+}
+
+.meeting-container {
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 6px;
+    padding: 12px;
+    background-color: var(--modal-meeting);
+    box-shadow: 0 0 22px 0 var(--modal-meeting-box-shadow);
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+}
+
+.meeting-generator-id-room {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.meeting-copy-icons {
+    position: relative;
+}
+
+.meeting-copy-icon {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 2rem;
+}
+
+/* Button */
+.meeting-join-btn {
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.meeting-join-btn:hover {
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    color: var(--white) !important;
+    background-color: var(--btn-primary-hover);
+    box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}

@@ -1,0 +1,18 @@
+export const endPoints = {
+    root: '/',
+    login: '/login',
+    register: '/register',
+    forgotPassword: '/forgot-password',
+    createInfo: '/create/info-doctor',
+    createProfileDoctor: '/create/profile-doctor',
+    createInfoPatient: '/create/info-patient',
+    homeIntro: '/home',
+    doctorManager: '/doctor-manager',
+    doctorManagerJoinIdRoom: '/doctor-manager/room',
+    meetingRoom: '/meeting-room',
+    maps: '/maps',
+    chatMessage: '/chat',
+    registerScheduleAppointment: '/register-schedule-appointment',
+    blog: '/blogs',
+    notificationPatient: '/notifications',
+};

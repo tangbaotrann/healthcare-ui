@@ -1,0 +1,188 @@
+.s {
+    position: relative;
+    margin-top: 62px;
+}
+
+.test-g {
+    top: 0px;
+}
+
+.register-schedule-appointment-banner {
+    width: 100%;
+    height: 462px;
+    background-image: url(https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/book-appointment-bg.png);
+    background-size: cover;
+    background-position: center center;
+    padding-top: 107px;
+    z-index: 1;
+}
+
+.register-schedule-appointment-title-name {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--white);
+    text-align: center;
+}
+
+.register-schedule-appointment-container {
+    margin: 0 auto;
+    max-width: 1000px;
+    position: relative;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 25%;
+    height: 5px;
+    background: #1dcbb6;
+    border-radius: 100px;
+    z-index: 2;
+}
+
+.register-schedule-appointment-content-container {
+    background: #fff;
+    border-radius: 30px 30px 0 0;
+    padding: 30px 50px 40px;
+    margin-top: -240px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Header */
+.content-header {
+    display: flex;
+}
+
+.content-header-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 10px;
+}
+
+/* Cart */
+.content-cart-item {
+    border-radius: 20px;
+    padding: 30px 17px;
+    background-color: var(--white);
+    position: relative;
+    margin: 2px;
+    z-index: 2;
+    box-shadow: 0 0 22px 0 rgba(29, 203, 182, 0.25);
+    outline: none;
+    margin: 12px 0;
+}
+
+.content-cart-item-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.content-cart-item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.content-cart-item-username {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-left: 12px;
+}
+
+.content-cart-item-body-time {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-left: 16px;
+    margin-bottom: 10px;
+}
+
+.content-cart-item-time {
+    margin-left: 8px;
+}
+
+.content-cart-item-time-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+}
+
+.content-cart-item-body-price {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-left: 13px;
+    margin-bottom: 10px;
+}
+
+.content-cart-item-price {
+    margin-left: 6px;
+}
+
+.display-content-cart-item-body {
+    display: flex;
+    margin-top: 20px;
+}
+
+.content-cart-item-footer {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.content-cart-item-footer-btn {
+    margin-top: 12px;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--blu);
+}
+
+.content-cart-item-footer-btn:hover {
+    border: none;
+    outline: none;
+    opacity: 0.8;
+    color: var(--white) !important;
+    background-color: var(--blu);
+    box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}
+
+/* test */
+.events {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.events .ant-badge-status {
+    width: 100%;
+    overflow: hidden;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.notification-schedule-register {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 12px;
+    color: var(--black);
+}

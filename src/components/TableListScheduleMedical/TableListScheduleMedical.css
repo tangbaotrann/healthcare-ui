@@ -1,0 +1,38 @@
+.tbl-schedule-medical {
+    height: 300px;
+    overflow-x: 1px !important;
+}
+
+.status-tbl-schedule-medical {
+    display: flex;
+    align-items: center;
+}
+
+.btn-delete-schedule {
+    margin-left: 4px;
+    border: 1px solid red;
+    color: var(--white);
+    background-color: red;
+}
+
+.btn-delete-schedule:hover {
+    opacity: 0.6 !important;
+    color: var(--white) !important;
+    border: 1px solid red !important;
+    outline: red;
+}
+
+.show-conversation-message {
+    border-radius: 4px;
+    margin-left: 4px;
+    border: 1px solid var(--blu);
+    color: var(--white);
+    background: var(--blu);
+}
+
+.show-conversation-message:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+    border: 1px solid var(--blu);
+    outline: var(--blu);
+}

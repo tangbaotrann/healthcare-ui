@@ -1,0 +1,85 @@
+.wrapper-health-information {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1110px;
+    display: flex;
+    align-items: center;
+    margin-left: 42px;
+}
+
+/* Section left */
+.health-information-section-left {
+    display: flex;
+    flex: 5;
+}
+
+.health-information-section-left-inner {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+}
+
+.health-information-section-left-title {
+    font-size: 4.8rem;
+    line-height: 54px;
+    color: var(--black);
+}
+
+.separator {
+    width: 70px;
+    height: 8px;
+    border-radius: 10px;
+    outline: 0;
+    margin-top: 30px;
+    background-color: var(--blu);
+}
+
+.health-information-section-left-desc {
+    font-size: 1.8rem;
+    line-height: 24px;
+    margin-top: 18px;
+    color: var(--black);
+}
+
+/* Section right */
+.health-information-section-right {
+    display: flex;
+    justify-content: center;
+    flex: 7;
+}
+
+.health-information-section-right-img {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    z-index: -1;
+    object-fit: cover;
+}
+
+.health-information-section-right-box {
+    padding: 14px;
+}
+
+.health-information-section-right-box-endocrinology {
+    display: flex;
+    align-items: center;
+    height: 80px;
+    width: auto;
+    padding: 16px;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgb(0 0 0 / 10%);
+    transition: all .6s cubic-bezier(.165,.84,.44,1);
+}
+
+.health-information-section-right-box-endocrinology:hover {
+    transform: scale(1.25, 1.25);
+    z-index: 2;
+}
+
+.endocrinology-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-left: 10px;
+}

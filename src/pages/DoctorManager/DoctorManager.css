@@ -1,0 +1,15 @@
+.ant-table-thead .ant-table-cell {
+    font-size: 1.6rem;
+    font-weight: 700 !important;
+}
+
+.ant-table-body .ant-table-cell {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.icon-loading-dashboard {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--await-loading);
+}

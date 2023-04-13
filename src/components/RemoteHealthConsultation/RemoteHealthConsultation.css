@@ -1,0 +1,62 @@
+.wrapper-remote-health-consultation {
+    position: absolute;
+    left: -42px;
+    right: 0;
+    top: 380px;
+    display: flex;
+    align-items: center;
+    z-index: -1;
+}
+
+/* Section left */
+.remote-health-consultation-section-left {
+    display: flex;
+    flex: 4;
+}
+
+.remote-health-consultation-img {
+    width: 65vw;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Section right */
+.remote-health-consultation-section-right {
+    display: flex;
+    flex: 8;
+}
+
+.remote-health-consultation-section-right-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.remote-health-consultation-section-right-name {
+    font-size: 4.8rem;
+    line-height: 53px;
+    white-space: pre-wrap;
+    color: var(--black);
+}
+
+.remote-health-consultation-section-right-desc {
+    font-size: 1.8rem;
+    line-height: 24px;
+    margin-top: 18px;
+    margin-right: 12px;
+    color: var(--black);
+}
+
+/* Icon */
+.remote-health-consultation-section-right-icon {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.remote-health-consultation-section-right-icon-text {
+    font-size: 1.4rem;
+    line-height: 18px;
+    margin-left: 10px;
+    margin-right: 42px;
+    color: var(--black);
+}

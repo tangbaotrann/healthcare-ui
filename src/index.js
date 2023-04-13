@@ -3,16 +3,32 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 // me
 import GlobalStyles from './components/GlobalStyles';
+import { UserAuthContextProvider } from './context/UserAuthContext';
+import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <GlobalStyles>
-            <App />
-        </GlobalStyles>
+        <ConfigProvider
+            theme={{
+                token: {
+                    fontFamily: `Quicksand !important`,
+                },
+            }}
+        >
+            <GlobalStyles>
+                <Provider store={store}>
+                    <UserAuthContextProvider>
+                        <App />
+                    </UserAuthContextProvider>
+                </Provider>
+            </GlobalStyles>
+        </ConfigProvider>
     </React.StrictMode>,
 );
 

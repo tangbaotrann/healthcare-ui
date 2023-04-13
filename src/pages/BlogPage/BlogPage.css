@@ -1,0 +1,93 @@
+.wrapper-blog-patient {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 12px;
+    margin-top: 12px;
+}
+
+.blog-patient-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.blog-patient-sub-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 10px;
+    color: var(--black);
+}
+
+.blog-patient-middle-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 22px;
+}
+
+.blog-patient-item-container {
+    display: flex;
+    border-radius: 16px;
+    border: 2px solid #e8e8e8;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.blog-patient-item-container:hover {
+    opacity: 0.9;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.patient-post-detail-content-left-username {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--black);
+    margin: 22px 0;
+}
+
+.patient-post-detail-container {
+    width: 100%;
+}
+
+.patient-post-detail-container-display {
+    display: flex;
+}
+
+.patient-post-detail-interacts {
+    display: flex;
+    align-items: center;
+}
+
+/* Left */
+.patient-post-detail-content-left {
+    flex: 4;
+}
+
+.patient-interacts-inner-liked {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.patient-interacts-inner-comment {
+    display: flex;
+    align-items: center;
+    flex: 8;
+}
+
+/* Right */
+.patient-post-detail-content-right {
+    flex: 8;
+}
+
+.patient-blog-footer-display {
+    position: relative;
+    width: 100%;
+    margin-top: 62px;
+}
+
+.patient-blog-footer {
+    top: 0;
+    width: 100%;
+}
