@@ -183,10 +183,13 @@ function Register() {
                     ]}
                     hasFeedback
                 >
-                    <Select placeholder="Lựa chọn">
-                        <Select.Option value="doctor" />
-                        <Select.Option value="patient" />
-                    </Select>
+                    <Select
+                        options={[
+                            { label: 'Bác sĩ', value: 'doctor' },
+                            { label: 'Bệnh nhân', value: 'patient' },
+                        ]}
+                        placeholder="Lựa chọn"
+                    />
                 </Form.Item>
 
                 {/* reCaptcha */}

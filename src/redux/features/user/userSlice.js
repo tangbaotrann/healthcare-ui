@@ -163,35 +163,42 @@ export const fetchApiUpdateInfoUser = createAsyncThunk(
 );
 
 // update info for doctor
-export const fetchApiUpdateInfoForDoctor = createAsyncThunk('user/fetchApiUpdateInfoForDoctor', async (values) => {
-    try {
-        const { username, dob, address, gender, doctor_id } = values;
-        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+const createFormDataUpdateInfoPatient = (values, fileList) => {
+    const { username, dob, address, gender, avatar } = values;
+    console.log('->', new Date(dob));
+    const formData = new FormData();
 
-        const res = await axios.put(
-            `${process.env.REACT_APP_BASE_URL}doctors/profile`,
-            {
-                username: username,
-                dob: dob,
-                address: address,
-                gender: gender,
-                doctor_id: doctor_id,
-            },
-            {
+    formData.append('username', username);
+    formData.append('dob', new Date(dob));
+    formData.append('address', address);
+    formData.append('gender', gender);
+    formData.append('avatar', fileList);
+
+    return formData;
+};
+export const fetchApiUpdateInfoForDoctor = createAsyncThunk(
+    'user/fetchApiUpdateInfoForDoctor',
+    async ({ values, fileList }) => {
+        try {
+            const { doctor_id } = values;
+            let formData = createFormDataUpdateInfoPatient(values, fileList);
+            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+            const res = await axios.put(`${process.env.REACT_APP_BASE_URL}doctors/${doctor_id}`, formData, {
                 headers: {
                     Accept: 'application/json, text/plain, */*',
                     Authorization: `Bearer ${getToken}`,
-                    ContentType: 'application/json',
+                    ContentType: 'multipart/form-data',
                 },
-            },
-        );
-        // console.log('update info doctor - ', res.data);
+            });
+            console.log('update info doctor - ', res.data);
 
-        return res.data;
-    } catch (err) {
-        console.log({ err });
-    }
-});
+            return res.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
 
 // create profile for doctor
 export const fetchApiCreateProfileForDoctor = createAsyncThunk(
@@ -236,16 +243,19 @@ export const fetchApiAllPatients = createAsyncThunk('patient/fetchApiAllPatients
     try {
         const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients`, {
-            headers: {
-                Accept: 'application/json, text/plain, */*',
-                Authorization: `Bearer ${getToken}`,
-                ContentType: 'application/json',
-            },
-        });
-        console.log('res all patients ->', res.data.data);
+        if (getToken) {
+            console.log('1111111111111');
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients`, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            });
+            console.log('res all patients ->', res.data.data);
 
-        return res.data.data;
+            return res.data.data;
+        }
     } catch (err) {
         console.log({ err });
     }
@@ -355,7 +365,11 @@ const userSlice = createSlice({
             .addCase(fetchApiCreateProfileForDoctor.fulfilled, (state, action) => {
                 state.profileForDoctor = action.payload;
             })
+            .addCase(fetchApiAllPatients.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiAllPatients.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.patient = action.payload;
             })
             .addCase(fetchApiCreateInfoPatient.fulfilled, (state, action) => {
