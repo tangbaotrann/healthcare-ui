@@ -36,22 +36,21 @@ function Home({ checkUserLogin }) {
 
     return (
         <div className="home-wrapper">
-            {isLoading ? (
-                <Skeleton active />
-            ) : (
-                <>
-                    <ChatBot patients={patients} />
+            <ChatBot patients={patients} />
 
-                    <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
-                        <ScrollToTop smooth className="scroll-to-top" />
-                        <Content>
-                            <SlideImage patients={patients} />
-                            <ExploreClinic />
-                            <HealthInformation />
-                        </Content>
-                    </DefaultLayout>
-                </>
-            )}
+            <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
+                <ScrollToTop smooth className="scroll-to-top" />
+
+                {isLoading ? (
+                    <Skeleton active />
+                ) : (
+                    <Content>
+                        <SlideImage patients={patients} />
+                        <ExploreClinic />
+                        <HealthInformation />
+                    </Content>
+                )}
+            </DefaultLayout>
         </div>
     );
 }
