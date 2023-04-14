@@ -17,14 +17,15 @@ import './UpdateProfileDoctor.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
 import { fetchApiCreateProfileForDoctor } from '~/redux/features/user/userSlice';
-import { fetchApiRegisterSelector, fetchApiUpdateInfoUserSelector } from '~/redux/selector';
+import { fetchApiUpdateInfoUserSelector } from '~/redux/selector';
 
 function UpdateProfileDoctor() {
     const dispatch = useDispatch();
 
-    const tokenCurrent = useSelector(fetchApiRegisterSelector);
+    const tokenCurrent = JSON.parse(localStorage.getItem('token_user_login'));
     const getIdInfoDoctor = useSelector(fetchApiUpdateInfoUserSelector);
 
+    console.log(tokenCurrent);
     console.log('getIdInfoDoctor', getIdInfoDoctor);
 
     const navigate = useNavigate();
@@ -33,11 +34,11 @@ function UpdateProfileDoctor() {
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    if (values && tokenCurrent.accessToken) {
+                    if (values && tokenCurrent) {
                         dispatch(
                             fetchApiCreateProfileForDoctor({
                                 values: values,
-                                tokenCurrent: tokenCurrent.accessToken,
+                                tokenCurrent: tokenCurrent,
                             }),
                         );
                         navigate(`${endPoints.doctorManager}`);
