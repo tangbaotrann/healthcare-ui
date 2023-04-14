@@ -13,7 +13,7 @@ import UpdateProfileDoctor from './pages/UpdateProfileDoctor';
 import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
 import Maps from './components/Maps';
-import { fetchApiAllPatients, fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
+import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
 import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 import Meeting from './components/Meeting';
 import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
@@ -33,7 +33,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchApiUserDoctorByToken(getToken));
-        dispatch(fetchApiAllPatients());
+        // dispatch(fetchApiAllPatients());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -49,7 +49,6 @@ function App() {
                             <Navigate replace to={endPoints.homeIntro} />
                         ) : (
                             <Navigate replace to={endPoints.doctorManager} />
-                            // patient
                         )
                     }
                 />

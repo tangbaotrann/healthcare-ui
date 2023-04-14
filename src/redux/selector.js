@@ -1,6 +1,6 @@
 // lib
 import jwt_decode from 'jwt-decode';
-import { createSelector } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import moment from 'moment';
 
 // find user doctor by token
@@ -107,6 +107,7 @@ export const fetchApiLikePostSelector = (state) => state.blogSlice.likes;
 
 // Patient info
 export const fetchApiAllPatientsSelector = (state) => state.userSlice.patient;
+export const isLoadingApiAllPatientsSelector = (state) => state.userSlice.isLoading;
 export const fetchApiCreateInfoPatientSelector = (state) => state.userSlice.patientInfo;
 
 export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
