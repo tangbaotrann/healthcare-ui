@@ -1,13 +1,23 @@
 // lib
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { SendOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
+import { Button, DatePicker, Divider, Form, Input, Modal, Select, message } from 'antd';
 
 // me
 import './InformationOfDoctor.css';
+import moment from 'moment';
+import { fetchApiUpdateInfoForDoctor } from '~/redux/features/user/userSlice';
+import RatingOfDoctor from '../RatingOfDoctor/RatingOfDoctor';
 
 function InformationOfDoctor({ infoUser }) {
     const [modalInfoDoctor, setModalInfoDoctor] = useState(false);
+    const [fileList, setFileList] = useState({});
+
+    const dispatch = useDispatch();
+
+    console.log('infoUser', infoUser);
+    // console.log('fileList', fileList);
 
     // show modal info doctor
     const handleShowModalInfoDoctor = () => {
@@ -16,6 +26,14 @@ function InformationOfDoctor({ infoUser }) {
     // hide modal info doctor
     const handleCancel = () => {
         setModalInfoDoctor(false);
+    };
+
+    // preview avatar
+    const handleChangeAvatar = (e) => {
+        const file = e.target.files[0];
+
+        file.previews = URL.createObjectURL(file);
+        setFileList(file);
     };
 
     return (
@@ -34,19 +52,29 @@ function InformationOfDoctor({ infoUser }) {
                     okButtonProps={{ style: { display: 'none' } }}
                     onCancel={handleCancel}
                 >
-                    <h1 className="information-of-doctor-title">Thông tin cá nhân</h1>
+                    <h1 className="information-of-doctor-title">Thông Tin Cá Nhân</h1>
 
                     <Form
                         onFinish={(values) => {
-                            console.log(values);
-                            // if (values) {
-                            //     dispatch(fetchApiUpdateInfoForDoctor(values));
-                            // }
+                            console.log('values ->', values);
+                            if (values) {
+                                dispatch(
+                                    fetchApiUpdateInfoForDoctor({
+                                        values: values,
+                                        fileList: fileList,
+                                    }),
+                                );
+                                message.success('Bạn đã cập nhật thành công thông tin mới.');
+                            }
                         }}
                         onFinishFailed={(error) => {
                             console.log({ error });
                         }}
                         fields={[
+                            {
+                                name: ['avatar'],
+                                value: fileList,
+                            },
                             {
                                 name: ['username'],
                                 value: infoUser?.doctor.person.username,
@@ -55,10 +83,10 @@ function InformationOfDoctor({ infoUser }) {
                                 name: ['gender'],
                                 value: infoUser?.doctor.person.gender,
                             },
-                            // {
-                            //     name: ['dob'],
-                            //     value: moment(userLogin?.doctor.person.dob).format('YYYY-MM-DD'),
-                            // },
+                            {
+                                name: ['dob'],
+                                value: moment(infoUser?.doctor.person.dob.split('/').reverse().join('/')),
+                            },
                             {
                                 name: ['address'],
                                 value: infoUser?.doctor.person.address,
@@ -69,6 +97,30 @@ function InformationOfDoctor({ infoUser }) {
                             },
                         ]}
                     >
+                        {/* avatar */}
+                        <Form.Item
+                            name="avatar"
+                            style={{ display: 'flex', justifyContent: 'center' }}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Bạn cần phải chọn ảnh đại diện.',
+                                },
+                            ]}
+                            hasFeedback
+                        >
+                            <>
+                                <div style={{ width: '100%', margin: '0 auto' }}>
+                                    <img
+                                        src={fileList.previews || infoUser?.doctor.person.avatar}
+                                        className="display-img-update"
+                                        alt="avatar-update"
+                                    />
+                                </div>
+                                <Input type="file" name="avatar" onChange={handleChangeAvatar} />
+                            </>
+                        </Form.Item>
+
                         {/* username */}
                         <Form.Item
                             name="username"
@@ -112,7 +164,7 @@ function InformationOfDoctor({ infoUser }) {
                             hasFeedback
                         >
                             <DatePicker
-                                format="YYYY-MM-DD"
+                                format="YYYY/MM/DD"
                                 style={{ width: '100%' }}
                                 picker="date"
                                 placeholder="Năm sinh..."
@@ -153,6 +205,11 @@ function InformationOfDoctor({ infoUser }) {
                             Cập nhật thông tin
                         </Button>
                     </Form>
+
+                    <Divider />
+
+                    {/* View Rating */}
+                    <RatingOfDoctor infoUser={infoUser} />
                 </Modal>
             </div>
         </div>

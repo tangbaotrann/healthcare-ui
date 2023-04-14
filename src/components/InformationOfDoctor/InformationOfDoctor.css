@@ -23,3 +23,11 @@
     -webkit-text-fill-color: transparent;
     margin-bottom: 14px;
 }
+
+.display-img-update {
+    width: 62px;
+    height: 62px;
+    border-radius: 10px;
+    margin-left: 124px;
+    object-fit: cover;
+}

@@ -1,6 +1,8 @@
 // lib
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ScrollToTop from 'react-scroll-to-top';
+import { Skeleton } from 'antd';
 
 // me
 import './Home.css';
@@ -9,20 +11,20 @@ import Content from '~/layouts/components/Content';
 import ExploreClinic from '~/components/ExploreClinic';
 import SlideImage from '~/components/SlideImage';
 import HealthInformation from '~/components/HealthInformation';
-import { useSelector } from 'react-redux';
-import { fetchApiAllPatientsSelector } from '~/redux/selector';
 import ChatBot from '~/components/ChatBot';
-import { useEffect } from 'react';
+import { fetchApiAllPatientsSelector, isLoadingApiAllPatientsSelector } from '~/redux/selector';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiNotificationByPatientId } from '~/redux/features/notification/notificationSlice';
 
 function Home({ checkUserLogin }) {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
+    const isLoading = useSelector(isLoadingApiAllPatientsSelector);
 
     const dispatch = useDispatch();
 
     // console.log('schedules ->', schedules);
-    // console.log('pat', patients);
+    // console.log('patients home', patients);
+    // console.log('isLoading', isLoading);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -34,17 +36,22 @@ function Home({ checkUserLogin }) {
 
     return (
         <div className="home-wrapper">
-            {/* <ChatBot /> */}
-            <ChatBot patients={patients} />
+            {isLoading ? (
+                <Skeleton active />
+            ) : (
+                <>
+                    <ChatBot patients={patients} />
 
-            <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
-                <ScrollToTop smooth className="scroll-to-top" />
-                <Content>
-                    <SlideImage patients={patients} />
-                    <ExploreClinic />
-                    <HealthInformation />
-                </Content>
-            </DefaultLayout>
+                    <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
+                        <ScrollToTop smooth className="scroll-to-top" />
+                        <Content>
+                            <SlideImage patients={patients} />
+                            <ExploreClinic />
+                            <HealthInformation />
+                        </Content>
+                    </DefaultLayout>
+                </>
+            )}
         </div>
     );
 }

@@ -2,7 +2,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Badge, Popover, Space, message } from 'antd';
-import { RightOutlined } from '@ant-design/icons';
 
 // me
 import './Header.css';
@@ -98,7 +97,10 @@ function Header({ checkUserLogin, patients }) {
                                 <NavLink>Blog</NavLink>
                             </div>
                         ) : (
-                            <NavLink className={({ isActive }) => (isActive ? 'active' : 'inactive')} to="/blog">
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.blog}
+                            >
                                 Blog
                             </NavLink>
                         )}
