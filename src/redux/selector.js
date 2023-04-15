@@ -920,8 +920,8 @@ export const filterDoctorForMovePatient = createSelector(
     fetchApiUserDoctorsSelector,
     fetchApiUserDoctorByTokenSelector,
     (userDoctors, userDoctorCurrent) => {
-        // console.log('userDoctors ->', userDoctors);
-        // console.log('userDoctorCurrent ->', userDoctorCurrent);
+        console.log('userDoctors ->', userDoctors);
+        console.log('userDoctorCurrent ->', userDoctorCurrent);
 
         if (userDoctors.length > 0) {
             const _userDoctors = userDoctors.filter((_userDoctor) => _userDoctor._id !== userDoctorCurrent.doctor._id);

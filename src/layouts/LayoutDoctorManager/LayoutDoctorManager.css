@@ -1,3 +1,9 @@
+/* fix on top */
+.ant-layout-sider.ant-layout-sider-dark.sidebar {
+    position: sticky;
+    top: 0;
+}
+
 .ant-layout-sider-children {
     background-color: var(--white);
 }

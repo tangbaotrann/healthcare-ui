@@ -5,10 +5,10 @@ import { Button, Form, Input, Modal, Select, message } from 'antd';
 
 // me
 import TitleName from '~/components/TitleName';
-import { fetchApiMovePatient } from '~/redux/features/user/userSlice';
 import { filterDoctorForMovePatient } from '~/redux/selector';
+import { fetchApiMovePatient } from '~/redux/features/patient/patientSlice';
 
-function ModalMovePatient({ infoPatient }) {
+function ModalMovePatient({ getIdDoctor, infoPatient, handleCancel }) {
     const [openModal, setOpenModal] = useState(false);
 
     const dispatch = useDispatch();
@@ -16,6 +16,8 @@ function ModalMovePatient({ infoPatient }) {
     const movePatientForDoctors = useSelector(filterDoctorForMovePatient);
 
     console.log('movePatientForDoctors ->', movePatientForDoctors);
+    // console.log('getIdDoctor ->', getIdDoctor);
+    // console.log('infoPatient ->', infoPatient);
 
     // handle open modal
     const handleOpenModal = () => {
@@ -30,8 +32,10 @@ function ModalMovePatient({ infoPatient }) {
     // handle move patient
     const handleMovePatientOnFish = (values) => {
         if (values) {
+            console.log('values', values);
             dispatch(fetchApiMovePatient(values));
             setOpenModal(false);
+            handleCancel();
             message.success('Chuyển thành công bệnh nhân cho Bác sĩ khác đảm nhận.');
         } else {
             message.error('Chuyển bệnh nhân không thành công!');
@@ -57,7 +61,10 @@ function ModalMovePatient({ infoPatient }) {
                     onFinishFailed={(error) => {
                         console.log({ error });
                     }}
-                    fields={[{ name: ['patient_id'], value: infoPatient._id }]}
+                    fields={[
+                        { name: ['patient_id'], value: infoPatient._id },
+                        { name: ['doctor_old_id'], value: getIdDoctor._id },
+                    ]}
                 >
                     <TitleName>Chuyển Bệnh Nhân Cho Bác Sĩ Khác</TitleName>
 
@@ -78,9 +85,9 @@ function ModalMovePatient({ infoPatient }) {
                         </Select>
                     </Form.Item>
 
-                    {/* to doctor_id */}
+                    {/* to doctor_new_id */}
                     <Form.Item
-                        name="doctor_id"
+                        name="doctor_new_id"
                         rules={[
                             {
                                 required: true,
@@ -116,6 +123,10 @@ function ModalMovePatient({ infoPatient }) {
 
                     {/* patient_id */}
                     <Form.Item name="patient_id" style={{ display: 'none' }}>
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item name="doctor_old_id" style={{ display: 'none' }}>
                         <Input />
                     </Form.Item>
 

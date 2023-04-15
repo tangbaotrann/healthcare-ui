@@ -16,7 +16,7 @@ function InformationOfDoctor({ infoUser }) {
 
     const dispatch = useDispatch();
 
-    console.log('infoUser', infoUser);
+    // console.log('infoUser', infoUser);
     // console.log('fileList', fileList);
 
     // show modal info doctor
@@ -38,7 +38,6 @@ function InformationOfDoctor({ infoUser }) {
 
     return (
         <div className="wrapper-information-of-doctor">
-            {/* Có thể click vào hiện modal */}
             <div className="information-of-doctor-item">
                 <UserOutlined />
 
@@ -51,6 +50,7 @@ function InformationOfDoctor({ infoUser }) {
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { display: 'none' } }}
                     onCancel={handleCancel}
+                    className="display-modal-update-info-doctor"
                 >
                     <h1 className="information-of-doctor-title">Thông Tin Cá Nhân</h1>
 
