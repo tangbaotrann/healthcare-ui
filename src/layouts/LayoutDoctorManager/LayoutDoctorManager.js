@@ -1,11 +1,10 @@
 // lib
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import {
     CommentOutlined,
-    LeftOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     NotificationOutlined,
@@ -22,7 +21,7 @@ import constants from '~/utils/constants';
 import { endPoints } from '~/routers';
 import InformationOfDoctor from '~/components/InformationOfDoctor';
 import layoutSlice from '~/redux/features/layout/layoutSlice';
-import { filterNotificationNotHasSeen, getDoctorLoginFilter } from '~/redux/selector';
+import { fetchApiLoginSelector, filterNotificationNotHasSeen, getDoctorLoginFilter } from '~/redux/selector';
 import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
@@ -34,6 +33,7 @@ import { fetchApiConversations } from '~/redux/features/conversation/conversatio
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
 import { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
+import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -48,11 +48,13 @@ function LayoutDoctorManager({ children, infoUser }) {
     // const getToken = JSON.parse(localStorage.getItem('token_user_login'));
     const getIdDoctor = useSelector(getDoctorLoginFilter);
     const notificationNotHasSeen = useSelector(filterNotificationNotHasSeen);
+    const token = useSelector(fetchApiLoginSelector);
     // const totalNotifications = useSelector(getTotalNotifications);
 
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('totalNotifications', totalNotifications);
     // console.log('notificationNotHasSeen', notificationNotHasSeen);
+    // console.log('token', token);
 
     // useEffect(() => {
     //     socket.on('notification_register_schedule_from_patient_success', (data) => {
@@ -67,6 +69,12 @@ function LayoutDoctorManager({ children, infoUser }) {
     //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
     //     });
     // }, []);
+
+    useEffect(() => {
+        if (token.accessToken) {
+            dispatch(fetchApiUserDoctorByToken(token.accessToken));
+        }
+    }, [token.accessToken]);
 
     return (
         <Layout>

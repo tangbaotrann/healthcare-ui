@@ -4,18 +4,17 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { Form, Input, Button, Alert } from 'antd';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // me
 import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
-import { fetchApiAllPatients, fetchApiLogin } from '~/redux/features/user/userSlice';
+import { fetchApiLogin } from '~/redux/features/user/userSlice';
 import { endPoints } from '~/routers';
-import { fetchApiAllPatientsSelector, fetchApiLoginSelector } from '~/redux/selector';
 
-function Login({ getToken }) {
+function Login() {
     const [number, setNumber] = useState('');
     const [messageError, setMessageError] = useState(false);
 
@@ -23,13 +22,9 @@ function Login({ getToken }) {
 
     const navigate = useNavigate();
 
-    // const token = useSelector(fetchApiLoginSelector);
-    // const patients = useSelector(fetchApiAllPatientsSelector);
-
-    // console.log('token login ->', getToken);
     // console.log('decodedToken ->', decodedToken);
     // console.log('messageError ->', messageError);
-    // console.log('patients ->', patients);
+    // console.log('token login ->', token);
 
     // handle submit login
     const handleOnFishSubmitLogin = (values) => {
@@ -39,12 +34,11 @@ function Login({ getToken }) {
                 axios
                     .get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`)
                     .then((res) => {
+                        dispatch(fetchApiLogin(values));
+
                         if (res.data.data.rule === 'patient') {
-                            dispatch(fetchApiLogin(values));
-                            dispatch(fetchApiAllPatients());
                             navigate(`${endPoints.homeIntro}`);
                         } else {
-                            dispatch(fetchApiLogin(values));
                             navigate(`${endPoints.doctorManager}`);
                         }
                     })

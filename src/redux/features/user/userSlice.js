@@ -16,7 +16,7 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
             phone_number: formatPhone, //phone_number,
             password: password,
         });
-        // console.log(res.data.data);
+        console.log('res login', res.data.data);
 
         localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
