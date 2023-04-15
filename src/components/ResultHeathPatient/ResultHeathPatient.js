@@ -103,6 +103,9 @@ function ResultHeathPatient() {
                     _id: patient?._id,
                 }))}
                 rowKey="index"
+                pagination={{
+                    pageSize: 8,
+                }}
             ></Table>
 
             {/* Modal */}

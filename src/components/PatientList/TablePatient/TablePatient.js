@@ -35,7 +35,7 @@ function TablePatient({ cols, patients }) {
             }))}
             rowKey="index"
             pagination={{
-                pageSize: 4,
+                pageSize: 5,
             }}
         ></Table>
     );

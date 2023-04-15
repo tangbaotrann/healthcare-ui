@@ -7,7 +7,7 @@ import { Button, Form, Input, Modal, Select, message } from 'antd';
 import TitleName from '~/components/TitleName';
 import { fetchApiStopExaminatedByPatientId } from '~/redux/features/patient/patientSlice';
 
-function ModalStopExaminated({ getIdDoctor, infoPatient }) {
+function ModalStopExaminated({ getIdDoctor, infoPatient, handleCancel }) {
     const [openModal, setOpenModal] = useState(false);
 
     const dispatch = useDispatch();
@@ -30,6 +30,7 @@ function ModalStopExaminated({ getIdDoctor, infoPatient }) {
         if (values) {
             dispatch(fetchApiStopExaminatedByPatientId(values));
             setOpenModal(false);
+            handleCancel();
             message.success('Bạn đã dừng điều trị cho bệnh nhân này.');
         } else {
             message.error('Không thể dừng điều trị cho bệnh nhân này!');

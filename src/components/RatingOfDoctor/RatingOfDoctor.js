@@ -3,7 +3,8 @@ import { Rate, Table } from 'antd';
 import './RatingOfDoctor.css';
 import TitleName from '../TitleName';
 
-function RatingOfDoctor() {
+function RatingOfDoctor({ infoUser }) {
+    // cols
     const cols = [
         {
             key: 'index',
@@ -21,9 +22,22 @@ function RatingOfDoctor() {
             dataIndex: 'content',
         },
         {
-            key: 'feedback',
+            key: 'rating',
             title: 'Lượt đánh giá',
-            dataIndex: 'feedback',
+            dataIndex: 'rating',
+            render: (record) => {
+                return <Rate defaultValue={record} disabled />;
+            },
+            filters: [
+                { text: '1 Sao', value: 1 },
+                { text: '2 Sao', value: 2 },
+                { text: '3 Sao', value: 3 },
+                { text: '4 Sao', value: 4 },
+                { text: '5 Sao', value: 5 },
+            ],
+            onFilter: (value, record) => {
+                return record.rating === value;
+            },
         },
     ];
 
@@ -31,8 +45,20 @@ function RatingOfDoctor() {
         <div className="wrapper-ratings">
             <TitleName>Đánh Giá Của Bệnh Nhân</TitleName>
 
-            {/* <Rate defaultValue={4} /> */}
-            <Table columns={cols}></Table>
+            <Table
+                columns={cols}
+                dataSource={infoUser.doctor.ratings.map((_patient, index) => ({
+                    index: index + 1,
+                    username: _patient.patient_id.person.username,
+                    content: _patient.content,
+                    rating: _patient.rating,
+                }))}
+                rowKey="index"
+                pagination={{
+                    pageSize: 5,
+                }}
+                style={{ width: 650 }}
+            ></Table>
         </div>
     );
 }

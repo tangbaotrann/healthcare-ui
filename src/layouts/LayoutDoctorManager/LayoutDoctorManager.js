@@ -186,8 +186,8 @@ function LayoutDoctorManager({ children, infoUser }) {
                 <Header className="site-layout-header" style={{ padding: 0, marginBottom: '12px', height: '0px' }}>
                     <div className="site-layout-header-info-user">
                         <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
-                            <LeftOutlined />
-                            Trang giới thiệu
+                            {/* <LeftOutlined />
+                            Trang giới thiệu */}
                         </Link>
 
                         <div className="site-layout-header-right">
