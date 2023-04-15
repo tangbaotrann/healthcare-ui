@@ -12,23 +12,26 @@ import ExploreClinic from '~/components/ExploreClinic';
 import SlideImage from '~/components/SlideImage';
 import HealthInformation from '~/components/HealthInformation';
 import ChatBot from '~/components/ChatBot';
-import { fetchApiAllPatientsSelector, isLoadingApiAllPatientsSelector } from '~/redux/selector';
+import { fetchApiAllPatientsSelector, fetchApiLoginSelector, isLoadingApiAllPatientsSelector } from '~/redux/selector';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiNotificationByPatientId } from '~/redux/features/notification/notificationSlice';
 
 function Home({ checkUserLogin }) {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
     const isLoading = useSelector(isLoadingApiAllPatientsSelector);
-
+    const token = useSelector(fetchApiLoginSelector);
     const dispatch = useDispatch();
 
     // console.log('schedules ->', schedules);
     // console.log('patients home', patients);
     // console.log('isLoading', isLoading);
+    // console.log('token', token);
 
     useEffect(() => {
-        dispatch(fetchApiAllPatients());
-    }, []);
+        if (token.accessToken) {
+            dispatch(fetchApiAllPatients());
+        }
+    }, [token.accessToken]);
 
     useEffect(() => {
         dispatch(fetchApiNotificationByPatientId(patients?.patient?._id));
