@@ -32,7 +32,7 @@ import ModalMovePatient from './ModalMovePatient/ModalMovePatient';
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
+function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }) {
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -244,10 +244,10 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient }) {
                 <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
 
                 {/* Modal stop examinated */}
-                <ModalStopExaminated getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
+                <ModalStopExaminated getIdDoctor={getIdDoctor} infoPatient={infoPatient} handleCancel={handleCancel} />
 
                 {/* Modal move patient */}
-                <ModalMovePatient infoPatient={infoPatient} />
+                <ModalMovePatient getIdDoctor={getIdDoctor} infoPatient={infoPatient} handleCancel={handleCancel} />
             </div>
         </>
     );

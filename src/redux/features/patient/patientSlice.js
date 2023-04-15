@@ -115,9 +115,9 @@ export const fetchApiDeleteScheduleMedical = createAsyncThunk(
                 },
             });
 
-            console.log('res del ->', res.data);
+            console.log('res del ->', res.data.data);
 
-            return res.data;
+            return res.data.data;
         } catch (err) {
             console.log({ err });
         }
@@ -145,9 +145,9 @@ export const fetchApiRemindPatient = createAsyncThunk('patient/fetchApiRemindPat
             },
         );
 
-        // console.log('res remind ->', res.data);
+        console.log('res remind ->', res.data.data);
 
-        return res.data;
+        return res.data.data;
     } catch (err) {
         console.log({ err });
     }
@@ -274,6 +274,37 @@ export const fetchApiRegisterScheduleAppointmentOfPatient = createAsyncThunk(
     },
 );
 
+// move patient
+export const fetchApiMovePatient = createAsyncThunk('user/fetchApiMovePatient', async (values) => {
+    try {
+        const { doctor_new_id, doctor_old_id, patient_id, reason, work_type } = values;
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+        const res = await axios.put(
+            `${process.env.REACT_APP_BASE_URL}doctors/move/patient/${patient_id}`,
+            {
+                doctor_new_id: doctor_new_id,
+                doctor_old_id: doctor_old_id,
+                reason: reason,
+                work_type: work_type,
+            },
+            {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
+                },
+            },
+        );
+
+        console.log('res move patient ->', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
@@ -340,7 +371,7 @@ const patientSlice = createSlice({
                 });
             })
             .addCase(fetchApiDeleteScheduleMedical.fulfilled, (state, action) => {
-                const schedule = action.payload.data;
+                const schedule = action.payload;
 
                 console.log('schedule del slice ->', schedule);
 
@@ -357,20 +388,26 @@ const patientSlice = createSlice({
 
                 // socket (notification_confirm_cancel_schedule)
                 socket.emit('notification_confirm_register_schedule', {
-                    data: action.payload.data,
+                    data: action.payload,
                 });
             })
             // Nhắc nhở
             .addCase(fetchApiRemindPatient.fulfilled, (state, action) => {
                 // socket (notification_doctor_remind)
                 socket.emit('notification_confirm_register_schedule', {
-                    data: action.payload.data,
+                    data: action.payload,
                 });
             })
             .addCase(fetchApiStopExaminatedByPatientId.fulfilled, (state, action) => {
                 console.log('stop slice ->', action.payload);
+                const slicePatient = state.data.findIndex(({ patient }) => patient._id === action.payload.patient._id);
+
+                if (slicePatient > -1) {
+                    state.data.splice(slicePatient, 1);
+                }
+
                 socket.emit('notification_confirm_register_schedule', {
-                    data: action.payload.data,
+                    data: action.payload,
                 });
             })
             .addCase(fetchApiResultHeathByIdPatient.fulfilled, (state, action) => {
@@ -378,6 +415,19 @@ const patientSlice = createSlice({
             })
             .addCase(fetchApiRegisterScheduleAppointmentOfPatient.fulfilled, (state, action) => {
                 state.patientRegisterSchedule = action.payload;
+            })
+            // Chuyển bệnh nhân
+            .addCase(fetchApiMovePatient.fulfilled, (state, action) => {
+                console.log('Move patient slice ->', action.payload);
+                const slicePatient = state.data.findIndex(({ patient }) => patient._id === action.payload.patient._id);
+
+                if (slicePatient > -1) {
+                    state.data.splice(slicePatient, 1);
+                }
+
+                socket.emit('notification_confirm_register_schedule', {
+                    data: action.payload,
+                });
             });
     },
 });

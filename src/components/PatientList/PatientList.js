@@ -151,7 +151,13 @@ function PatientList() {
                 okButtonProps={{ style: { display: 'none' } }}
                 width={1000}
             >
-                <BarChart bmis={bmis} glycemics={glycemics} bloodPressures={bloodPressures} infoPatient={infoPatient} />
+                <BarChart
+                    bmis={bmis}
+                    glycemics={glycemics}
+                    bloodPressures={bloodPressures}
+                    infoPatient={infoPatient}
+                    handleCancel={handleCancel}
+                />
             </Modal>
         </>
     );
