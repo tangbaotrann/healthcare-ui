@@ -38,7 +38,7 @@ function TableListNotification({ notifications, infoUser }) {
     // }, []);
 
     useEffect(() => {
-        socket.on('notification_register_schedule_from_patient_success', (notification) => {
+        socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
             console.log('notification_register_schedule_from_patient_success', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });

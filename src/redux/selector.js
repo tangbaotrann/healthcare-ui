@@ -35,6 +35,7 @@ export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDocto
 export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
 export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.day_of_week;
 export const fetchApiCreateScheduleDoctorSelector = (state) => state.scheduleDoctor.createSchedule;
+export const fetchApiGetAllScheduleDetailOfPatientSelector = (state) => state.scheduleDoctor.allScheduleDetailOfPatient;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
@@ -114,6 +115,33 @@ export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
     state.patientSlice.patientRegisterSchedule;
 
 /* -- Handle Selector -- */
+
+// get all schedule of patient (lấy hết lịch khám của bệnh nhân)
+export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
+    fetchApiGetAllScheduleDetailOfPatientSelector,
+    (lists) => {
+        if (lists) {
+            const _lists = lists.filter((_schedule) => _schedule.status === false && _schedule.result_exam === null);
+
+            return _lists;
+        }
+    },
+);
+export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
+    fetchApiGetAllScheduleDetailOfPatientSelector,
+    (lists) => {
+        if (lists) {
+            // console.log('list', lists);
+            const _lists = lists
+                .filter((_schedule) => _schedule.status === true && _schedule.result_exam === null)
+                .map((_schedule) => {
+                    return _schedule;
+                });
+
+            return _lists;
+        }
+    },
+);
 
 // get comments
 export const filterGetCommentPost = createSelector(

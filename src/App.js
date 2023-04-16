@@ -21,6 +21,7 @@ import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
 import BlogPage from './pages/BlogPage';
 import Chat from './pages/Chat';
 import NotificationsPage from './pages/NotificationsPage';
+import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment/ListRegisterScheduleAppointment';
 
 function App() {
     const dispatch = useDispatch();
@@ -32,10 +33,11 @@ function App() {
     // console.log('userLogin - app', checkUserLogin);
 
     useEffect(() => {
-        dispatch(fetchApiUserDoctorByToken(getToken));
-        // dispatch(fetchApiAllPatients());
+        if (getToken) {
+            dispatch(fetchApiUserDoctorByToken(getToken));
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [getToken]);
 
     return (
         <Router>
@@ -89,6 +91,10 @@ function App() {
                 <Route path={`${endPoints.chatMessage}`} element={<Chat />} />
                 <Route path={`${endPoints.createInfoPatient}`} element={<CreateInfoPatient />} />
                 <Route path={`${endPoints.registerScheduleAppointment}`} element={<RegisterScheduleAppointment />} />
+                <Route
+                    path={`${endPoints.registerScheduleAppointmentList}`}
+                    element={<ListRegisterScheduleAppointment />}
+                />
                 <Route path={`${endPoints.blog}`} element={<BlogPage />} />
                 <Route path={`${endPoints.notificationPatient}`} element={<NotificationsPage />} />
             </Routes>

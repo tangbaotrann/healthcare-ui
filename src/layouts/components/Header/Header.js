@@ -50,6 +50,20 @@ function Header({ checkUserLogin, patients }) {
                             </NavLink>
                         )}
 
+                        {/* Danh sách đã đăng ký lịch khám */}
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Danh sách lịch khám</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.registerScheduleAppointmentList}
+                            >
+                                Danh sách lịch khám
+                            </NavLink>
+                        )}
+
                         {/* Thông báo */}
                         {patients?.length === 0 || patients === undefined ? (
                             <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
@@ -66,7 +80,7 @@ function Header({ checkUserLogin, patients }) {
                                             count={notificationNotHasSeen.length}
                                             overflowCount={99}
                                             size="small"
-                                            offset={[4, -1]}
+                                            offset={[4, -4]}
                                         >
                                             Thông báo
                                         </Badge>
