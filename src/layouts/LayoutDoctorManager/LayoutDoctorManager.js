@@ -73,6 +73,8 @@ function LayoutDoctorManager({ children, infoUser }) {
     useEffect(() => {
         if (token.accessToken) {
             dispatch(fetchApiUserDoctorByToken(token.accessToken));
+        } else {
+            dispatch(fetchApiUserDoctorByToken(token.accessToken));
         }
     }, [token.accessToken]);
 

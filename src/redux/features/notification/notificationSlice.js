@@ -94,6 +94,19 @@ const notificationSlice = createSlice({
                 return;
             }
         },
+        notificationRegisterScheduleFromDoctorSuccess: (state, action) => {
+            const notification = action.payload;
+            console.log('act pay', notification);
+
+            const getNotification = state.dataPatient.find((_notification) => _notification._id === notification._id);
+
+            if (!getNotification) {
+                state.dataPatient.unshift(notification);
+            } else {
+                console.log('err notification!');
+                return;
+            }
+        },
     },
     extraReducers: (builder) => {
         builder

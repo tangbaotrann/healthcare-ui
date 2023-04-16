@@ -124,6 +124,22 @@ export const fetchApiAllScheduleDetails = createAsyncThunk('scheduleDoctor/fetch
     }
 });
 
+export const fetchApiGetAllScheduleDetailOfPatient = createAsyncThunk(
+    'scheduleDoctor/fetchApiGetAllScheduleDetailOfPatient',
+    async (patient_id) => {
+        try {
+            if (patient_id) {
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedule-details/patient/${patient_id}`);
+                console.log('res =>', res.data.data);
+
+                return res.data.data;
+            }
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const scheduleDoctor = createSlice({
     name: 'scheduleDoctor',
     initialState: {
@@ -135,6 +151,7 @@ const scheduleDoctor = createSlice({
         isLoading: false,
         scheduleDetails: [],
         day_of_week: new Date(),
+        allScheduleDetailOfPatient: [],
     },
     reducers: {
         btnOptionSelectDayOfWeek: (state, action) => {
@@ -174,6 +191,9 @@ const scheduleDoctor = createSlice({
             })
             .addCase(fetchApiAllScheduleDetails.fulfilled, (state, action) => {
                 state.scheduleDetails = action.payload;
+            })
+            .addCase(fetchApiGetAllScheduleDetailOfPatient.fulfilled, (state, action) => {
+                state.allScheduleDetailOfPatient = action.payload;
             });
     },
 });

@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Table } from 'antd';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import './NotificationsPage.css';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiAllPatientsSelector, fetchApiNotificationByPatientIdSelector } from '~/redux/selector';
 import TitleName from '~/components/TitleName';
-import {
+import notificationSlice, {
     fetchApiNotificationByPatientId,
     fetchApiUpdateSeenNotificationPatient,
 } from '~/redux/features/notification/notificationSlice';
 import { CheckOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import socket from '~/utils/socket';
 
 function NotificationsPage() {
     const dispatch = useDispatch();
@@ -20,7 +23,22 @@ function NotificationsPage() {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
     const notifications = useSelector(fetchApiNotificationByPatientIdSelector);
 
-    console.log('notifications', notifications);
+    // console.log('notifications', notifications);
+    // console.log('patients', patients);
+
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', (notification) => {
+            console.log('notification_confirm_register_schedule_success', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromDoctorSuccess(notification));
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.emit('add_user', patients?.patient?._id);
+        socket.on('get_users', (users) => {
+            console.log('user ->', users);
+        });
+    }, [patients?.patient?._id]);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -137,6 +155,9 @@ function NotificationsPage() {
                     scroll={{ y: 440 }}
                 ></Table>
             </div>
+
+            {/* Show toast notification */}
+            {/* <ToastContainer position="top-right" autoClose={4000} closeOnClick={false} /> */}
         </DefaultLayout>
     );
 }
