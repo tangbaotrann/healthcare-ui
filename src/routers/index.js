@@ -13,6 +13,7 @@ export const endPoints = {
     maps: '/maps',
     chatMessage: '/chat',
     registerScheduleAppointment: '/register-schedule-appointment',
+    registerScheduleAppointmentList: '/register-schedule-appointment-list',
     blog: '/blogs',
     notificationPatient: '/notifications',
 };

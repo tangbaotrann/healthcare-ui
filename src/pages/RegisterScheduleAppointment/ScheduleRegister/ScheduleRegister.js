@@ -1,18 +1,14 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
+import { Alert, Button, Calendar, Form, Input, Modal, Skeleton } from 'antd';
 
 import TitleName from '~/components/TitleName';
 import scheduleDoctor from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
-import {
-    fetchApiRegisterScheduleAppointmentOfPatientSelector,
-    filterGetScheduleAppointmentAndHide,
-    isLoadingScheduleDoctorSelector,
-} from '~/redux/selector';
-import { fetchApiRegisterScheduleAppointmentOfPatient } from '~/redux/features/patient/patientSlice';
+import { filterGetScheduleAppointmentAndHide, isLoadingScheduleDoctorSelector } from '~/redux/selector';
 import ScheduleRegisterItem from '../ScheduleRegisterItem/ScheduleRegisterItem';
 import axios from 'axios';
 import moment from 'moment';
+import socket from '~/utils/socket';
 
 function ScheduleRegister() {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
@@ -32,7 +28,7 @@ function ScheduleRegister() {
     // console.log('checkRegisterSchedule', checkRegisterSchedule);
     // console.log('schedules --->', schedules);
     // console.log('scheduleAppointment --->', scheduleAppointment);
-    console.log('dateTime --->', dateTime);
+    // console.log('dateTime --->', dateTime);
 
     // handle change option
     const handleOptionSelect = (date) => {
@@ -97,6 +93,7 @@ function ScheduleRegister() {
                 setMessageSuccess(true);
                 setMessageError(false);
                 setOpenModalConfirm(false);
+                socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
             })
             .catch((err) => {
                 console.log({ err });
