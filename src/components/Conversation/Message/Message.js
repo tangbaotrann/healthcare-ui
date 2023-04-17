@@ -10,11 +10,7 @@ import { ReactMic } from 'react-mic';
 import './Message.css';
 import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
-import {
-    btnClickGetIdConversationSelector,
-    btnClickGetUsernameLeavedRoomSelector,
-    getDoctorLoginFilter,
-} from '~/redux/selector';
+import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
 import {
     AudioMutedOutlined,
     AudioOutlined,

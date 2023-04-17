@@ -21,10 +21,8 @@ function TableListRegisterSchedule({ patients }) {
     console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
 
     useEffect(() => {
-        if (patients.patient._id) {
-            dispatch(fetchApiGetAllScheduleDetailOfPatient(patients.patient._id));
-        }
-    }, [patients.patient._id]);
+        dispatch(fetchApiGetAllScheduleDetailOfPatient(patients?.patient?._id));
+    }, [patients?.patient?._id]);
 
     const cols = [
         {
