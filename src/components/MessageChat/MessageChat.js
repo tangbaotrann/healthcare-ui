@@ -205,7 +205,12 @@ function MessageChat({ conversationClick, messages, patients }) {
                     <>
                         {messages.map((message) => {
                             return (
-                                <MessageChatItem message={message} patients={patients} scrollMessage={scrollMessage} />
+                                <MessageChatItem
+                                    message={message}
+                                    patients={patients}
+                                    scrollMessage={scrollMessage}
+                                    key={message._id}
+                                />
                             );
                         })}
                     </>

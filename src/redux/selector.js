@@ -124,6 +124,8 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
             const _lists = lists.filter((_schedule) => _schedule.status === false && _schedule.result_exam === null);
 
             return _lists;
+        } else {
+            return [];
         }
     },
 );
@@ -139,6 +141,8 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
                 });
 
             return _lists;
+        } else {
+            return [];
         }
     },
 );

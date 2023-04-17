@@ -35,3 +35,38 @@
     opacity: 0.9;
     transition: all 0.3s;
 }
+
+/* Calls */
+.display-calls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.call-title-name-from {
+    color: var(--black);
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.call-go-to-room-awaiting {
+    margin-top: 12px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-right: 10px;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white); 
+    background-color: var(--status-normal);
+}
+
+.call-go-to-room-awaiting:hover {
+    cursor: pointer;
+    opacity: 0.9;
+    outline-color: var(--status-normal) !important;
+    border: 1px solid var(--status-normal) !important;
+    color: var(--white) !important;
+    transition: all 0.3s ;
+}
