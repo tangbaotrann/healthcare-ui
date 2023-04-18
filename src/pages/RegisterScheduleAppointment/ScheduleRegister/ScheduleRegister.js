@@ -37,6 +37,8 @@ function ScheduleRegister() {
 
     // handle disabled date
     const handleDisabledDate = (date) => {
+        // console.log('---->', new Date().getDate());
+        // console.log('---->', new Date(date).getMonth());
         if (new Date(date).getDate() < new Date().getDate() || new Date(date).getMonth() < new Date().getMonth()) {
             return true;
         } else {
@@ -105,7 +107,7 @@ function ScheduleRegister() {
 
     return (
         <>
-            <Calendar onSelect={handleOptionSelect} disabledDate={handleDisabledDate} />
+            <Calendar onSelect={handleOptionSelect} disabledDate={handleDisabledDate} fullscreen={false} />
 
             {/* Cart MAP */}
             {isLoading ? (

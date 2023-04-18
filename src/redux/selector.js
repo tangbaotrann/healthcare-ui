@@ -1,6 +1,6 @@
 // lib
 import jwt_decode from 'jwt-decode';
-import { createAsyncThunk, createSelector } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import moment from 'moment';
 
 // find user doctor by token
@@ -44,6 +44,9 @@ export const isLoadingScheduleDetailByIdDoctorSelector = (state) => state.patien
 // get patient -> bmis
 export const fetchApiBMIByIdPatientSelector = (state) => state.bmisSlice.data;
 export const btnOptionSelectedBMISelector = (state) => state.bmisSlice.btnOptionSelectedBMI;
+export const fetchApiAllBMIOfPatientSelector = (state) => state.bmisSlice.bmisPatient;
+export const fetchApiAllGlycemicOfPatientSelector = (state) => state.bmisSlice.glycemicPatient;
+export const fetchApiAllBloodOfPatientSelector = (state) => state.bmisSlice.bloodPatient;
 
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;

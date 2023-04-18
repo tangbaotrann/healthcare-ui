@@ -68,7 +68,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
             },
             title: {
                 display: true,
-                text: 'Biểu đồ thống kê chỉ số Glycemic của bệnh nhân',
+                text: 'Biểu đồ thống kê chỉ số Đường huyết của bệnh nhân',
             },
         },
     };
@@ -82,7 +82,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
             },
             title: {
                 display: true,
-                text: 'Biểu đồ thống kê chỉ số Blood Pressure của bệnh nhân',
+                text: 'Biểu đồ thống kê chỉ số Huyết áp của bệnh nhân',
             },
         },
     };
@@ -117,7 +117,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
         labels: resultsLabelsGlycemic,
         datasets: [
             {
-                label: 'Glycemic (TH 1)',
+                label: 'Đường huyết trước bữa ăn (TH 1)',
                 data: glycemics
                     .filter((filter_glycemic) => filter_glycemic.case === 1)
                     .map((glycemic) => glycemic.metric),
@@ -125,7 +125,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
-                label: 'Glycemic (TH 2)',
+                label: 'Đường huyết sau bữa ăn (TH 2)',
                 data: glycemics
                     .filter((filter_glycemic) => filter_glycemic.case === 2)
                     .map((glycemic) => glycemic.metric),
@@ -133,7 +133,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
             {
-                label: 'Glycemic (TH 3)',
+                label: 'Đường huyết trước lúc ngủ (TH 3)',
                 data: glycemics
                     .filter((filter_glycemic) => filter_glycemic.case === 3)
                     .map((glycemic) => glycemic.metric),

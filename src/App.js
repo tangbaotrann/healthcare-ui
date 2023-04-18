@@ -21,7 +21,8 @@ import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
 import BlogPage from './pages/BlogPage';
 import Chat from './pages/Chat';
 import NotificationsPage from './pages/NotificationsPage';
-import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment/ListRegisterScheduleAppointment';
+import MetricsPatient from './pages/MetricsPatient/MetricsPatient';
+import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment';
 
 function App() {
     const dispatch = useDispatch();
@@ -97,6 +98,7 @@ function App() {
                 />
                 <Route path={`${endPoints.blog}`} element={<BlogPage />} />
                 <Route path={`${endPoints.notificationPatient}`} element={<NotificationsPage />} />
+                <Route path={`${endPoints.metricsPatient}`} element={<MetricsPatient />} />
             </Routes>
         </Router>
     );

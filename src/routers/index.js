@@ -16,4 +16,5 @@ export const endPoints = {
     registerScheduleAppointmentList: '/register-schedule-appointment-list',
     blog: '/blogs',
     notificationPatient: '/notifications',
+    metricsPatient: '/metrics',
 };
