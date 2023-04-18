@@ -36,6 +36,20 @@ function Header({ checkUserLogin, patients }) {
                             Trang chủ
                         </NavLink>
 
+                        {/* Quản lý chỉ số*/}
+                        {patients?.length === 0 || patients === undefined ? (
+                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
+                                <NavLink>Quản lý chỉ số</NavLink>
+                            </div>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                to={endPoints.metricsPatient}
+                            >
+                                Quản lý chỉ số
+                            </NavLink>
+                        )}
+
                         {/* Đặt lịch khám*/}
                         {patients?.length === 0 || patients === undefined ? (
                             <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
