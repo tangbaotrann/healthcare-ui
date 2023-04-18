@@ -10,9 +10,9 @@ import ChatBot from '~/components/ChatBot';
 import Footer from '~/layouts/components/Footer';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiAllPatientsSelector } from '~/redux/selector';
-import TableListRegisterSchedule from './TableListRegisterSchedule/TableListRegisterSchedule';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
+import CardListRegisterSchedule from './CardListRegisterSchedule/CardListRegisterSchedule';
 
 function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
@@ -87,7 +87,7 @@ function ListRegisterScheduleAppointment() {
                             <h2 className="content-header-title">Lịch khám của bạn</h2>
                         </div>
 
-                        <TableListRegisterSchedule patients={patients} />
+                        <CardListRegisterSchedule patients={patients} />
                     </div>
                 </div>
             </div>

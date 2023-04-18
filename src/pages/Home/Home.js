@@ -15,6 +15,7 @@ import ChatBot from '~/components/ChatBot';
 import { fetchApiAllPatientsSelector, fetchApiLoginSelector, isLoadingApiAllPatientsSelector } from '~/redux/selector';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiNotificationByPatientId } from '~/redux/features/notification/notificationSlice';
+import socket from '~/utils/socket';
 
 function Home({ checkUserLogin }) {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -34,6 +35,10 @@ function Home({ checkUserLogin }) {
             dispatch(fetchApiAllPatients());
         }
     }, [token.accessToken]);
+
+    useEffect(() => {
+        socket.emit('add_user', patients?.patient?._id);
+    }, [patients?.patient?._id]);
 
     useEffect(() => {
         dispatch(fetchApiNotificationByPatientId(patients?.patient?._id));
