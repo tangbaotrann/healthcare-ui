@@ -1,20 +1,28 @@
-import { Button, Form, Input, Table, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import { Alert, Button, Form, Input, Table, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateBloodForPatient } from '~/redux/features/metric/bmisSlice';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
+import { fetchApiCreateBloodForPatientForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsBlood({ patients, bloodPatient }) {
     const dispatch = useDispatch();
 
-    console.log('bloodPatient', bloodPatient);
+    const messageReject = useSelector(fetchApiCreateBloodForPatientForPatientMessageRejectedSelector);
+
+    // console.log('bloodPatient', bloodPatient);
 
     const handleSubmitForm = (values) => {
         if (values) {
             dispatch(fetchApiCreateBloodForPatient(values));
-            message.success('Bạn đã tạo thành công chỉ số huyết áp.');
+
+            if (messageReject !== null || messageReject.status === 'fail') {
+                return;
+            } else {
+                message.success('Bạn đã tạo thành công chỉ số huyết áp.');
+            }
         }
     };
 
@@ -81,6 +89,10 @@ function MetricsBlood({ patients, bloodPatient }) {
         <div className="metrics-blood-wrapper">
             <TitleName>Chỉ Số Huyết Áp</TitleName>
 
+            <div className="message-rejected">
+                {messageReject !== null && <Alert type="error" message={messageReject.message} />}
+            </div>
+
             <Form
                 onFinish={handleSubmitForm}
                 onFinishFailed={(error) => {
@@ -126,7 +138,10 @@ function MetricsBlood({ patients, bloodPatient }) {
                 </div>
             </Form>
 
-            {/* List glycemics */}
+            {/* Chart */}
+            <Line options={optionBloodPressure} data={dataBloodPressure} height={120} />
+
+            {/* List blood */}
             <Table
                 columns={cols}
                 dataSource={bloodPatient?.map((_blood, index) => ({
@@ -138,10 +153,8 @@ function MetricsBlood({ patients, bloodPatient }) {
                     ).format('HH:mm a')}`,
                 }))}
                 rowKey="index"
+                style={{ marginTop: '12px' }}
             ></Table>
-
-            {/* Chart */}
-            <Line options={optionBloodPressure} data={dataBloodPressure} height={120} />
         </div>
     );
 }

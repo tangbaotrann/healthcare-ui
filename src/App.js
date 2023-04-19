@@ -1,7 +1,8 @@
 // lib
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 // me
 import { endPoints } from './routers';
@@ -23,18 +24,24 @@ import Chat from './pages/Chat';
 import NotificationsPage from './pages/NotificationsPage';
 import MetricsPatient from './pages/MetricsPatient/MetricsPatient';
 import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
+    const [rule, setRule] = useState();
+
     const dispatch = useDispatch();
     const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
     const checkUserLogin = useSelector(fetchApiUserDoctorByTokenSelector);
 
-    // console.log('getToken - app', getToken);
+    // console.log('getToken - app router', getToken);
+    // console.log('rule - app router', rule);
     // console.log('userLogin - app', checkUserLogin);
 
     useEffect(() => {
         if (getToken) {
+            let decodeUser = jwt_decode(getToken);
+            setRule(decodeUser);
             dispatch(fetchApiUserDoctorByToken(getToken));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,8 +57,12 @@ function App() {
                     element={
                         typeof getToken === 'undefined' || !getToken ? (
                             <Navigate replace to={endPoints.homeIntro} />
-                        ) : (
+                        ) : rule?.rule === 'doctor' ? (
                             <Navigate replace to={endPoints.doctorManager} />
+                        ) : rule?.rule === 'patient' ? (
+                            <Navigate replace to={endPoints.homeIntro} />
+                        ) : (
+                            <PageNotFound />
                         )
                     }
                 />
@@ -99,6 +110,9 @@ function App() {
                 <Route path={`${endPoints.blog}`} element={<BlogPage />} />
                 <Route path={`${endPoints.notificationPatient}`} element={<NotificationsPage />} />
                 <Route path={`${endPoints.metricsPatient}`} element={<MetricsPatient />} />
+
+                {/* Page not found */}
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
         </Router>
     );

@@ -79,3 +79,9 @@
     background: linear-gradient(122.43deg,#fff .04%,#d5ceff 80.04%);
     box-shadow: 5px 10px 20px #bbdef8;
 }
+
+.message-rejected {
+    width: 60%;
+    margin: 0 auto;
+    margin-bottom: 16px;
+}
