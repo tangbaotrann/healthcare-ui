@@ -1,18 +1,22 @@
 // lib
+import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { SendOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { LogoutOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Divider, Form, Input, Modal, Select, message } from 'antd';
 
 // me
 import './InformationOfDoctor.css';
-import moment from 'moment';
-import { fetchApiUpdateInfoForDoctor } from '~/redux/features/user/userSlice';
-import RatingOfDoctor from '../RatingOfDoctor/RatingOfDoctor';
+import userSlice, { fetchApiUpdateInfoForDoctor } from '~/redux/features/user/userSlice';
+import RatingOfDoctor from '../RatingOfDoctor';
+import { endPoints } from '~/routers';
 
 function InformationOfDoctor({ infoUser }) {
     const [modalInfoDoctor, setModalInfoDoctor] = useState(false);
     const [fileList, setFileList] = useState({});
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -36,14 +40,29 @@ function InformationOfDoctor({ infoUser }) {
         setFileList(file);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token_user_login');
+        dispatch(userSlice.actions.clickedLogoutDoctor([]));
+        navigate(`${endPoints.homeIntro}`);
+    };
+
     return (
         <div className="wrapper-information-of-doctor">
             <div className="information-of-doctor-item">
-                <UserOutlined />
+                <div className="info-doctor-sub-menu">
+                    <Button
+                        style={{ border: 'none', display: 'flex', alignItems: 'center' }}
+                        onClick={handleShowModalInfoDoctor}
+                    >
+                        <UserOutlined />
+                        <h4 className="information-of-doctor-item-name">Thông tin cá nhân</h4>
+                    </Button>
+                    <Button style={{ border: 'none', display: 'flex', alignItems: 'center' }} onClick={handleLogout}>
+                        <LogoutOutlined />
+                        <h4 className="information-of-doctor-item-name logout">Đăng xuất</h4>
+                    </Button>
+                </div>
 
-                <Button style={{ border: 'none' }} onClick={handleShowModalInfoDoctor}>
-                    <h4 className="information-of-doctor-item-name">Thông tin cá nhân</h4>
-                </Button>
                 {/* Show modal info doctor */}
                 <Modal
                     open={modalInfoDoctor}

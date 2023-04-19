@@ -1,3 +1,21 @@
+.list-register-schedule-appointment-banner {
+    position: relative;
+    width: 100%;
+    height: 462px;
+    background-image: url(https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/not-feeling-well.svg);
+    background-size: cover;
+    background-position: center center;
+    padding-top: 107px;
+    z-index: 1;
+}
+
+.list-register-schedule-appointment-img-left {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    background-position: center center;
+}
+
 .display-btn-filter-status-register-schedule {
     display: flex;
     align-items: center;

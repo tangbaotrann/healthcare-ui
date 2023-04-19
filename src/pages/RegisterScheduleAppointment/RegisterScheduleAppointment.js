@@ -54,6 +54,11 @@ function RegisterScheduleAppointment() {
             <div className="register-schedule-appointment-wrapper">
                 <div className="register-schedule-appointment-banner">
                     <div className="register-schedule-appointment-title-name">ĐẶT LỊCH KHÁM</div>
+                    <img
+                        className="banner-desktop-left"
+                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/personalized-bg.svg"
+                        alt="banner-desktop"
+                    />
                 </div>
 
                 {/* Content */}

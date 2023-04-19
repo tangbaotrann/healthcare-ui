@@ -1,10 +1,9 @@
 // lib
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import socket from '~/utils/socket';
 
 // login
-export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (values) => {
+export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (values, { rejectWithValue }) => {
     try {
         const { phone_number, password } = values;
 
@@ -22,7 +21,8 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
 
         return res.data.data;
     } catch (err) {
-        console.log({ err });
+        const message = err.response.data;
+        return rejectWithValue(message);
     }
 });
 
@@ -301,10 +301,24 @@ const userSlice = createSlice({
         patientInfo: [],
         checkExits: [],
     },
+    reducers: {
+        clickedLogoutPatient: (state, action) => {
+            state.patient = action.payload;
+        },
+        clickedLogoutDoctor: (state, action) => {
+            state.doctorByToken = action.payload;
+        },
+        clickedClearInfoLogin: (state, action) => {
+            state.userLogin = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             // login
             .addCase(fetchApiLogin.fulfilled, (state, action) => {
+                state.userLogin = action.payload;
+            })
+            .addCase(fetchApiLogin.rejected, (state, action) => {
                 state.userLogin = action.payload;
             })
             // find all user doctor

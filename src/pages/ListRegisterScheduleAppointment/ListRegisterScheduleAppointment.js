@@ -73,8 +73,18 @@ function ListRegisterScheduleAppointment() {
             <ScrollToTop smooth className="scroll-to-top" />
 
             <div className="register-schedule-appointment-wrapper">
-                <div className="register-schedule-appointment-banner">
+                <div className="list-register-schedule-appointment-banner">
+                    {/* <img
+                        className="list-register-schedule-appointment-img-left"
+                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/vaccination/qa-note-icon.svg"
+                        alt=""
+                    /> */}
                     <div className="register-schedule-appointment-title-name">DANH SÁCH LỊCH KHÁM CỦA BẠN</div>
+                    <img
+                        className="list-register-schedule-appointment-img-left"
+                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/schedule-bg-1.svg"
+                        alt="schedule-bg-1"
+                    />
                 </div>
 
                 {/* Content */}

@@ -1,6 +1,6 @@
 // lib
 import { Link, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Badge, Popover, Space, message } from 'antd';
 
 // me
@@ -9,9 +9,12 @@ import { endPoints } from '~/routers';
 import { logo } from '~/asset/images';
 import InformationPatient from './InformationPatient';
 import { filterNotificationPatientNotHasSeen } from '~/redux/selector';
+import userSlice from '~/redux/features/user/userSlice';
 
 function Header({ checkUserLogin, patients }) {
     const notificationNotHasSeen = useSelector(filterNotificationPatientNotHasSeen);
+
+    const dispatch = useDispatch();
 
     // console.log('checkUserLogin', checkUserLogin);
     // console.log('patients', patients);
@@ -140,7 +143,11 @@ function Header({ checkUserLogin, patients }) {
                     {patients?.length === 0 || patients === undefined ? (
                         <>
                             <h4 className="section-right-login">
-                                <Link to={endPoints.login} className="login">
+                                <Link
+                                    to={endPoints.login}
+                                    className="login"
+                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                >
                                     Đăng nhập
                                 </Link>
                             </h4>
