@@ -3,8 +3,8 @@ import { KeyOutlined } from '@ant-design/icons/lib/icons';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { Form, Input, Button, Alert } from 'antd';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,34 +13,64 @@ import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiLogin } from '~/redux/features/user/userSlice';
 import { endPoints } from '~/routers';
+import { fetchApiLoginSelector } from '~/redux/selector';
 
 function Login() {
     const [number, setNumber] = useState('');
     const [messageError, setMessageError] = useState(false);
+    const [ruleAccount, setRuleAccount] = useState({});
+
+    const messageSuccess = useSelector(fetchApiLoginSelector);
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     // console.log('decodedToken ->', decodedToken);
-    // console.log('messageError ->', messageError);
+    console.log('messageError ->', messageError);
+    console.log('messageSuccess ->', messageSuccess);
+    // console.log('ruleAccount ->', ruleAccount);
+    // console.log('messageReject ->', messageReject);
     // console.log('token login ->', token);
 
+    useEffect(() => {
+        if (ruleAccount.rule === 'patient') {
+            if (messageSuccess.length > 0 || messageSuccess.accessToken) {
+                navigate(`${endPoints.homeIntro}`);
+            }
+        } else {
+            if (messageSuccess.length > 0 || messageSuccess.accessToken) {
+                navigate(`${endPoints.doctorManager}`);
+            }
+        }
+    }, [messageSuccess.accessToken]);
+
     // handle submit login
-    const handleOnFishSubmitLogin = (values) => {
+    const handleOnFishSubmitLogin = async (values) => {
         try {
             if (values) {
                 const formatPhone = values.phone_number.replace('+84', '0');
-                axios
+                await axios
                     .get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`)
                     .then((res) => {
                         dispatch(fetchApiLogin(values));
 
                         if (res.data.data.rule === 'patient') {
-                            navigate(`${endPoints.homeIntro}`);
+                            if (messageSuccess.accessToken) {
+                                navigate(`${endPoints.homeIntro}`);
+                            }
+                            if (messageSuccess.status === 'fail') {
+                                return;
+                            }
                         } else {
-                            navigate(`${endPoints.doctorManager}`);
+                            if (messageSuccess.accessToken) {
+                                navigate(`${endPoints.doctorManager}`);
+                            }
+                            if (messageSuccess.status === 'fail') {
+                                return;
+                            }
                         }
+                        setRuleAccount(res.data.data);
                     })
                     .catch((err) => {
                         setMessageError(true);
@@ -53,13 +83,18 @@ function Login() {
 
     return (
         <BackgroundOutSite>
-            {messageError && (
+            {(messageSuccess.length > 0 || messageSuccess.status === 'fail') && !messageError ? (
+                <Alert message={`${messageSuccess.message}`} type="error" style={{ marginBottom: '12px' }} />
+            ) : null}
+
+            {messageError ? (
                 <Alert
                     message="Tài khoản chưa được đăng ký. Vui lòng thử lại!"
                     type="error"
                     style={{ marginBottom: '12px' }}
                 />
-            )}
+            ) : null}
+
             <Form
                 onFinish={handleOnFishSubmitLogin}
                 onFinishFailed={(error) => {
