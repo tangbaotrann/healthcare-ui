@@ -13,7 +13,13 @@ function MessageItemChatBot({ message, patients }) {
                 <div className="wrapper-message-item-chat-bot">
                     <img
                         className={`avatar ${message.sender === 'gpt' && 'chatgpt'}`}
-                        src={`${message.sender === 'gpt' ? logo.iconChatbotLogo : patients?.patient?.person?.avatar}`}
+                        src={`${
+                            message.sender === 'gpt'
+                                ? logo.iconChatbotLogo
+                                : patients === undefined
+                                ? logo.noAvatar
+                                : patients?.patient?.person?.avatar
+                        }`}
                         alt="avatar-img"
                     />
                     <div className={`container-message-chatbot ${message.sender === 'gpt' && 'chatgpt'}`}>

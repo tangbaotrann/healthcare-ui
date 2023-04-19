@@ -1,27 +1,29 @@
-import { Button, Form, Input, Table, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import { Line } from 'react-chartjs-2';
+import { Alert, Button, Form, Input, Table, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateBMIForPatient } from '~/redux/features/metric/bmisSlice';
-import moment from 'moment';
-import { Line } from 'react-chartjs-2';
+import { fetchApiCreateBMIForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsBMI({ patients, bmiPatient }) {
     const dispatch = useDispatch();
 
-    // const checkBMI = useSelector(fetchApiCreateBMIForPatientSelector);
+    const messageReject = useSelector(fetchApiCreateBMIForPatientMessageRejectedSelector);
 
-    // console.log('checkBMI', checkBMI);
-    console.log('bmiPatient', bmiPatient);
+    // console.log('messageReject', messageReject);
+    // console.log('bmiPatient', bmiPatient);
 
     const handleSubmitForm = (values) => {
         if (values) {
-            // if (checkBMI.length > 1) {
-            //     message.error(`${checkBMI}`);
-            //     return;
-            // }
             dispatch(fetchApiCreateBMIForPatient(values));
-            message.success('Bạn đã tạo thành công chỉ số BMI.');
+
+            if (messageReject !== null || messageReject.status === 'fail') {
+                return;
+            } else {
+                message.success('Bạn đã tạo thành công chỉ số BMI.');
+            }
         }
     };
 
@@ -73,7 +75,7 @@ function MetricsBMI({ patients, bmiPatient }) {
         labels,
         datasets: [
             {
-                label: `BMI (BMI trung bình: )`,
+                label: `BMI (BMI trung bình: ${bmiPatient?.avgBMI})`,
                 data: bmiPatient ? bmiPatient?.bmis?.map((bmi) => bmi.cal_bmi) : 0,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
@@ -84,6 +86,10 @@ function MetricsBMI({ patients, bmiPatient }) {
     return (
         <div className="metrics-bmi-wrapper">
             <TitleName>Chỉ Số BMI</TitleName>
+
+            <div className="message-rejected">
+                {messageReject !== null && <Alert type="error" message={messageReject.message} />}
+            </div>
 
             <Form
                 onFinish={handleSubmitForm}
@@ -137,6 +143,9 @@ function MetricsBMI({ patients, bmiPatient }) {
                 </div>
             </Form>
 
+            {/* Chart */}
+            <Line options={options} data={data} height={120} />
+
             {/* List bmi */}
             <Table
                 columns={cols}
@@ -150,10 +159,8 @@ function MetricsBMI({ patients, bmiPatient }) {
                     )}`,
                 }))}
                 rowKey="index"
+                style={{ marginTop: '12px' }}
             ></Table>
-
-            {/* Chart */}
-            <Line options={options} data={data} height={120} />
         </div>
     );
 }

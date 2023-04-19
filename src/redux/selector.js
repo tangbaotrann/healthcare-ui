@@ -47,6 +47,11 @@ export const btnOptionSelectedBMISelector = (state) => state.bmisSlice.btnOption
 export const fetchApiAllBMIOfPatientSelector = (state) => state.bmisSlice.bmisPatient;
 export const fetchApiAllGlycemicOfPatientSelector = (state) => state.bmisSlice.glycemicPatient;
 export const fetchApiAllBloodOfPatientSelector = (state) => state.bmisSlice.bloodPatient;
+// message error
+export const fetchApiCreateBMIForPatientMessageRejectedSelector = (state) => state.bmisSlice.messageReject;
+export const fetchApiCreateGlycemicForPatientMessageRejectedSelector = (state) => state.bmisSlice.messageGlycemicReject;
+export const fetchApiCreateBloodForPatientForPatientMessageRejectedSelector = (state) =>
+    state.bmisSlice.messageBloodReject;
 
 // get patient -> glycemic
 export const fetchApiGlycemicByIdPatientSelector = (state) => state.glycemicSlice.data;
