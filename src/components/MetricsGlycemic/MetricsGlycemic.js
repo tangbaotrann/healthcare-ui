@@ -1,20 +1,29 @@
-import { Button, Form, Input, Select, Table, message } from 'antd';
-import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import { Line } from 'react-chartjs-2';
+import { Alert, Button, Form, Input, Select, Table, message } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateGlycemicForPatient } from '~/redux/features/metric/bmisSlice';
-import moment from 'moment';
-import { Line } from 'react-chartjs-2';
+import { fetchApiCreateGlycemicForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsGlycemic({ patients, glycemicPatient }) {
     const dispatch = useDispatch();
 
-    console.log('glycemicPatient', glycemicPatient);
+    const messageReject = useSelector(fetchApiCreateGlycemicForPatientMessageRejectedSelector);
+
+    // console.log('glycemicPatient', glycemicPatient);
+    console.log('messageReject', messageReject);
 
     const handleSubmitForm = (values) => {
         if (values) {
             dispatch(fetchApiCreateGlycemicForPatient(values));
-            message.success('Bạn đã tạo thành công chỉ số đường huyết.');
+
+            if (messageReject !== null || messageReject.status === 'fail') {
+                return;
+            } else {
+                message.success('Bạn đã tạo thành công chỉ số đường huyết.');
+            }
         }
     };
 
@@ -94,6 +103,10 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
         <div className="metrics-glycemic-wrapper">
             <TitleName>Chỉ Số Đường Huyết</TitleName>
 
+            <div className="message-rejected">
+                {messageReject !== null && <Alert type="error" message={messageReject.message} />}
+            </div>
+
             <Form
                 onFinish={handleSubmitForm}
                 onFinishFailed={(error) => {
@@ -146,6 +159,9 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
                 </div>
             </Form>
 
+            {/* Chart */}
+            <Line options={options} data={dataGlycemic} height={120} />
+
             {/* List glycemics */}
             <Table
                 columns={cols}
@@ -163,10 +179,8 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
                     ).format('HH:mm a')}`,
                 }))}
                 rowKey="index"
+                style={{ marginTop: '12px' }}
             ></Table>
-
-            {/* Chart */}
-            <Line options={options} data={dataGlycemic} height={120} />
         </div>
     );
 }

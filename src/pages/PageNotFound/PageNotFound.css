@@ -1,0 +1,35 @@
+.wrapper-page-not-found {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    /* padding: 500px 0; */
+    margin-top: 20px;
+    background-image: url(https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/404-background.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.page-not-found-back {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 200px;
+    width: 16%;
+    padding: 20px;
+    margin: 0 auto;
+    line-height: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-radius: 20px;
+    background-color: var(--status-alarm);
+    color: var(--white);
+}
+
+.page-not-found-back:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    border-color: 1px solid var(--status-alarm) !important;
+    color: var(--white) !important;
+    transition: all 0.3s;
+}

@@ -16,36 +16,38 @@ export const fetchApiBMIByIdPatient = createAsyncThunk('bmi/fetchApiBMIByIdPatie
 });
 
 // create bmi for patient
-export const fetchApiCreateBMIForPatient = createAsyncThunk('bmi/fetchApiCreateBMIForPatient', async (values) => {
-    try {
-        const { patient, weight, gender, height } = values;
-        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+export const fetchApiCreateBMIForPatient = createAsyncThunk(
+    'bmi/fetchApiCreateBMIForPatient',
+    async (values, { rejectWithValue }) => {
+        try {
+            const { patient, weight, gender, height } = values;
+            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-        const res = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}bmis`,
-            {
-                patient: patient,
-                weight: weight,
-                gender: gender,
-                height: height,
-            },
-            {
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    Authorization: `Bearer ${getToken}`,
-                    ContentType: 'application/json',
+            const res = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}bmis`,
+                {
+                    patient: patient,
+                    weight: weight,
+                    gender: gender,
+                    height: height,
                 },
-            },
-        );
-        console.log('res create bmi', res.data.data);
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            );
+            console.log('res create bmi', res.data.data);
 
-        return res.data.data;
-    } catch (err) {
-        const message = await err.response.data;
-        console.log(message);
-        return message;
-    }
-});
+            return res.data.data;
+        } catch (err) {
+            const message = err.response.data;
+            return rejectWithValue(message);
+        }
+    },
+);
 
 // get all bmi for patient
 export const fetchApiAllBMIOfPatient = createAsyncThunk('bmi/fetchApiAllBMIOfPatient', async (idPatient) => {
@@ -64,7 +66,7 @@ export const fetchApiAllBMIOfPatient = createAsyncThunk('bmi/fetchApiAllBMIOfPat
 // create glycemic for patient
 export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
     'bmi/fetchApiCreateGlycemicForPatient',
-    async (values) => {
+    async (values, { rejectWithValue }) => {
         try {
             const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
@@ -87,9 +89,9 @@ export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
 
             return res.data.data;
         } catch (err) {
-            const message = await err.response.data;
+            const message = err.response.data;
             console.log(message);
-            return message;
+            return rejectWithValue(message);
         }
     },
 );
@@ -109,35 +111,37 @@ export const fetchApiAllGlycemicOfPatient = createAsyncThunk('bmi/fetchApiAllGly
 });
 
 // create blood for patient
-export const fetchApiCreateBloodForPatient = createAsyncThunk('bmi/fetchApiCreateBloodForPatient', async (values) => {
-    try {
-        const { diastole, patient, systolic } = values;
-        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+export const fetchApiCreateBloodForPatient = createAsyncThunk(
+    'bmi/fetchApiCreateBloodForPatient',
+    async (values, { rejectWithValue }) => {
+        try {
+            const { diastole, patient, systolic } = values;
+            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-        const res = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}blood-pressures`,
-            {
-                diastole: diastole,
-                patient: patient,
-                systolic: systolic,
-            },
-            {
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    Authorization: `Bearer ${getToken}`,
-                    ContentType: 'application/json',
+            const res = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}blood-pressures`,
+                {
+                    diastole: diastole,
+                    patient: patient,
+                    systolic: systolic,
                 },
-            },
-        );
-        console.log('res create blood', res.data.data);
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            );
+            console.log('res create blood', res.data.data);
 
-        return res.data.data;
-    } catch (err) {
-        const message = await err.response.data;
-        console.log(message);
-        return message;
-    }
-});
+            return res.data.data;
+        } catch (err) {
+            const message = err.response.data;
+            return rejectWithValue(message);
+        }
+    },
+);
 
 // get all blood for patient
 export const fetchApiAllBloodOfPatient = createAsyncThunk('bmi/fetchApiAllBloodOfPatient', async (idPatient) => {
@@ -161,7 +165,9 @@ const bmisSlice = createSlice({
         bmisPatient: [],
         glycemicPatient: [],
         bloodPatient: [],
-        messageReject: [],
+        messageReject: null,
+        messageGlycemicReject: null,
+        messageBloodReject: null,
     },
     reducers: {
         arrivalFilterBMI: (state, action) => {
@@ -184,6 +190,9 @@ const bmisSlice = createSlice({
                     },
                 });
             })
+            .addCase(fetchApiCreateBMIForPatient.rejected, (state, action) => {
+                state.messageReject = action.payload;
+            })
             .addCase(fetchApiAllBMIOfPatient.fulfilled, (state, action) => {
                 state.bmisPatient = action.payload;
             })
@@ -195,6 +204,9 @@ const bmisSlice = createSlice({
                     data: action.payload,
                 });
             })
+            .addCase(fetchApiCreateGlycemicForPatient.rejected, (state, action) => {
+                state.messageGlycemicReject = action.payload;
+            })
             .addCase(fetchApiAllGlycemicOfPatient.fulfilled, (state, action) => {
                 state.glycemicPatient = action.payload;
             })
@@ -205,6 +217,9 @@ const bmisSlice = createSlice({
                 socket.emit('notification_register_schedule_from_patient', {
                     data: action.payload,
                 });
+            })
+            .addCase(fetchApiCreateBloodForPatient.rejected, (state, action) => {
+                state.messageBloodReject = action.payload;
             })
             .addCase(fetchApiAllBloodOfPatient.fulfilled, (state, action) => {
                 state.bloodPatient = action.payload;
