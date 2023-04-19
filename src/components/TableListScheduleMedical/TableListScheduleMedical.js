@@ -2,7 +2,7 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Form, Input, message, Modal, Table } from 'antd';
+import { Button, Form, Image, Input, message, Modal, Table } from 'antd';
 
 // me
 import './TableListScheduleMedical.css';
@@ -13,7 +13,8 @@ import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
     const [showModal, setShowModal] = useState(false);
-    // const [showModalConversation, setShowModalConversation] = useState(false);
+    const [openModalInfoDetailPatient, setOpenModalInfoDetailPatient] = useState(false);
+    const [infoDetailPatient, setInfoDetailPatient] = useState({});
 
     const dispatch = useDispatch();
 
@@ -48,12 +49,12 @@ function TableListScheduleMedical({ infoUser }) {
             dataIndex: 'day_exam',
             width: '10%',
         },
-        {
-            key: 'time',
-            title: 'Ca làm',
-            dataIndex: 'time',
-            width: '12%',
-        },
+        // {
+        //     key: 'time',
+        //     title: 'Ca làm',
+        //     dataIndex: 'time',
+        //     width: '12%',
+        // },
         {
             key: 'time_per_conversation',
             title: 'Thời gian khám',
@@ -104,6 +105,13 @@ function TableListScheduleMedical({ infoUser }) {
                 return (
                     <div className="status-tbl-schedule-medical">
                         <>
+                            <Button
+                                className="btn-detail-info-patient"
+                                type="primary"
+                                onClick={() => handleSelectDetailInfoPatient(record)}
+                            >
+                                Xem
+                            </Button>
                             <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
                                 Xác nhận
                             </Button>
@@ -116,6 +124,13 @@ function TableListScheduleMedical({ infoUser }) {
             },
         },
     ];
+
+    // handle select detail patient
+    const handleSelectDetailInfoPatient = (record) => {
+        console.log(record);
+        setOpenModalInfoDetailPatient(true);
+        setInfoDetailPatient(record.patient);
+    };
 
     // handle status schedule
     const handleStatusScheduleMedical = (record) => {
@@ -135,6 +150,7 @@ function TableListScheduleMedical({ infoUser }) {
     // hide modal
     const handleCancel = () => {
         setShowModal(false);
+        setOpenModalInfoDetailPatient(false);
     };
 
     // handle confirm del request schedule
@@ -148,6 +164,41 @@ function TableListScheduleMedical({ infoUser }) {
 
     return (
         <>
+            {/* Modal open info detail patient */}
+            <Modal
+                open={openModalInfoDetailPatient}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+            >
+                <TitleName>Thông Tin Của Bệnh Nhân</TitleName>
+
+                <ul className="container-info-details-patient">
+                    <div className="display-info-details-patient-avatar">
+                        <Image
+                            src={infoDetailPatient?.person?.avatar}
+                            className="info-details-patient-avatar"
+                            alt="avatar-patient"
+                        />
+                    </div>
+                    <li>
+                        <i>Họ tên:</i> {infoDetailPatient?.person?.username}
+                    </li>
+                    <li>
+                        <i>Giới tính: </i> {infoDetailPatient?.person?.gender === true ? 'Nam' : 'Nữ'}
+                    </li>
+                    <li>
+                        <i>Năm sinh: </i> {moment(infoDetailPatient?.person?.dob).format('DD/MM/YYYY')}
+                    </li>
+                    <li>
+                        <i>Địa chỉ: </i> {infoDetailPatient?.person?.address}
+                    </li>
+                    <li>
+                        <i>Nhóm máu: </i> {infoDetailPatient?.blood}
+                    </li>
+                </ul>
+            </Modal>
+
             {/* Modal confirm delete request schedule */}
             <Modal
                 open={showModal}
@@ -155,7 +206,7 @@ function TableListScheduleMedical({ infoUser }) {
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
             >
-                <TitleName>Hủy lịch khám của bệnh nhân</TitleName>
+                <TitleName>Hủy Lịch Khám Của Bệnh Nhân</TitleName>
 
                 <Form
                     onFinish={handleDeleteScheduleMedicalOnFish}
@@ -204,9 +255,9 @@ function TableListScheduleMedical({ infoUser }) {
                     day: moment(scheduleMedical?.days?.day).format('dddd'),
                     createdAt: moment(scheduleMedical?.createdAt).format('HH:mm a - DD/MM/YYYY'),
                     day_exam: moment(scheduleMedical?.day_exam).format('HH:mm a - DD/MM/YYYY'),
-                    time: `${scheduleMedical?.shifts?.name} (${moment(
-                        new Date(scheduleMedical?.shifts?.time_start),
-                    ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
+                    // time: `${scheduleMedical?.shifts?.name} (${moment(
+                    //     new Date(scheduleMedical?.shifts?.time_start),
+                    // ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
                     time_per_conversation: `${scheduleMedical?.schedule?.time_per_conversation} phút`,
                     fee: `${scheduleMedical?.schedule?.fee} VNĐ`,
                     content_exam: scheduleMedical?.content_exam,
@@ -219,6 +270,7 @@ function TableListScheduleMedical({ infoUser }) {
                     _id: scheduleMedical?._id,
                     idDoctor: scheduleMedical?.doctor?._id,
                     conversation: scheduleMedical?.conversations,
+                    patient: scheduleMedical.patient,
                 }))}
                 rowKey="index"
                 pagination={{

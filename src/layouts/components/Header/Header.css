@@ -11,6 +11,26 @@
     z-index: 99; */
 }
 
+.info-patient-sub-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.information-of-doctor-item-name {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.information-of-doctor-item-name.logout {
+    color: var(--status-alarm);
+}
+
+.information-of-doctor-item-name:hover {
+    opacity: 0.6;
+    transition: all 0.3s;
+}
+
 .container-header {
     display: flex;
     align-items: center;
@@ -177,4 +197,22 @@
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--black);
+}
+
+.info-patient-display-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.info-patient-avatar-doctor {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 62px !important;
+    height: 62px !important;
+    border-radius: 20px;
+    object-fit: cover;
 }

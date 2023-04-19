@@ -4,10 +4,11 @@
 }
 
 .test-g {
-    top: 0px;
+    top: 100px;
 }
 
 .register-schedule-appointment-banner {
+    position: relative;
     width: 100%;
     height: 462px;
     background-image: url(https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/book-appointment-bg.png);
@@ -15,6 +16,15 @@
     background-position: center center;
     padding-top: 107px;
     z-index: 1;
+}
+
+.banner-desktop-left {
+    position: absolute;
+    top: 400px;
+    width: 100%;
+    height: 500px;
+    background-position: center center;
+    z-index: -2 !important;
 }
 
 .register-schedule-appointment-title-name {

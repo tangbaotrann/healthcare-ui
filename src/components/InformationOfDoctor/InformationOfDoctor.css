@@ -35,3 +35,8 @@
 .display-modal-update-info-doctor {
     width: 650px !important;
 }
+
+.info-doctor-sub-menu {
+    display: flex;
+    flex-direction: column;
+}

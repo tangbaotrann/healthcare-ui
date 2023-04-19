@@ -123,3 +123,15 @@
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }
 
+/* Message notification */
+.message-notification-cart-meeting i {
+    padding: 12px;
+    margin-left: -10px;
+    border-top-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: 0 0 12px 0 var(--primary);
+}

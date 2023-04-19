@@ -36,3 +36,41 @@
     border: 1px solid var(--blu);
     outline: var(--blu);
 }
+
+.btn-detail-info-patient {
+    margin-right: 4px;
+    background-color: var(--blu);
+}
+
+.btn-detail-info-patient:hover {
+    opacity: 0.8;
+    background-color: var(--blu) !important;
+}
+
+.container-info-details-patient {
+    margin-left: 12px;
+}
+
+.container-info-details-patient li {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--black);
+}
+
+.container-info-details-patient li i {
+    margin-right: 12px;
+}
+
+.display-info-details-patient-avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+
+}
+
+.info-details-patient-avatar {
+    width: 82px !important;
+    height: 82px !important;
+    border-radius: 20px;
+    object-fit: cover;
+}
