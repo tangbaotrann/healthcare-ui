@@ -178,7 +178,7 @@ function CreateInfoPatient() {
                 <div className="footer-update-info">
                     <Link to="/login">Quay lại</Link>
                     <Button type="primary" htmlType="submit">
-                        Cập nhật thông tin
+                        Tạo thông tin
                     </Button>
                 </div>
             </Form>

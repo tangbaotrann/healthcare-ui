@@ -185,7 +185,7 @@ function UpdateProfileDoctor() {
                 <div className="footer-update-profile-doctor">
                     <Link to="/update/info/me">Quay lại</Link>
                     <Button type="primary" htmlType="submit">
-                        Cập nhật thông tin
+                        Tạo thông tin
                     </Button>
                 </div>
             </Form>

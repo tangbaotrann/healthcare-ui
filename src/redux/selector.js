@@ -383,14 +383,15 @@ export const scheduleDetailByIdDoctorFilters = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     fetchApiUserDoctorByTokenSelector,
     (listScheduleDetail, userDoctorCurrent) => {
-        // console.log('listScheduleDetail selector ->', listScheduleDetail);
+        console.log('listScheduleDetail selector ->', listScheduleDetail);
+        console.log('userDoctorCurrent selector ->', userDoctorCurrent);
         if (listScheduleDetail) {
-            const listScheduleDetailFilter = listScheduleDetail.filter(
+            const listScheduleDetailFilter = listScheduleDetail?.filter(
                 (_listScheduleDetail) =>
                     (_listScheduleDetail.patient.doctor_glycemic_id !== null &&
-                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent?.doctor?._id) ||
                     (_listScheduleDetail.patient.doctor_blood_id !== null &&
-                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent.doctor._id),
+                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent?.doctor?._id),
             );
 
             // console.log('listScheduleDetailFilter selector ->', listScheduleDetailFilter);
@@ -412,9 +413,9 @@ export const filterStatusHealthNormalOfPatientForChart = createSelector(
             const patient = listPatient.filter(
                 (_patient) =>
                     ((_patient.patient.doctor_glycemic_id !== null &&
-                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent?.doctor?._id) ||
                         (_patient.patient.doctor_blood_id !== null &&
-                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent?.doctor?._id)) &&
                     _patient.status.message?.code === 0,
             );
 
@@ -432,9 +433,9 @@ export const filterStatusHealthAlarmOfPatientForChart = createSelector(
             const patient = listPatient.filter(
                 (_patient) =>
                     ((_patient.patient.doctor_glycemic_id !== null &&
-                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent?.doctor?._id) ||
                         (_patient.patient.doctor_blood_id !== null &&
-                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent?.doctor?._id)) &&
                     _patient.status.message?.code === 2,
             );
 
@@ -452,9 +453,9 @@ export const filterStatusHealthWarningOfPatientForChart = createSelector(
             const patient = listPatient.filter(
                 (_patient) =>
                     ((_patient.patient.doctor_glycemic_id !== null &&
-                        _patient.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        _patient.patient.doctor_glycemic_id === userDoctorCurrent?.doctor?._id) ||
                         (_patient.patient.doctor_blood_id !== null &&
-                            _patient.patient.doctor_blood_id === userDoctorCurrent.doctor._id)) &&
+                            _patient.patient.doctor_blood_id === userDoctorCurrent?.doctor?._id)) &&
                     _patient.status.message?.code === 1,
             );
 

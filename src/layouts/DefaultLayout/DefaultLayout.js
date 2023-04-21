@@ -8,7 +8,7 @@ function DefaultLayout({ children, checkUserLogin, patients }) {
             <Header checkUserLogin={checkUserLogin} patients={patients} />
 
             {/* Content */}
-            {children}
+            <div style={{ marginTop: '90px' }}>{children}</div>
         </>
     );
 }

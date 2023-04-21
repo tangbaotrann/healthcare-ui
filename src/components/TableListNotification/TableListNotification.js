@@ -30,12 +30,12 @@ function TableListNotification({ notifications, infoUser }) {
     // console.log('checkConversation ->', checkConversation);
     // console.log('infoUser ->', infoUser);
 
-    // useEffect(() => {
-    //     socket.on('notification_confirm_register_schedule_success', (notification) => {
-    //         console.log('notification_confirm_register_schedule_success ->', notification);
-    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
-    //     });
-    // }, []);
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', (notification) => {
+            console.log('notification_confirm_register_schedule_success ->', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
