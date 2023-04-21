@@ -175,6 +175,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
+                            // dispatch(fetchApiUserDoctorByToken(token.accessToken));
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                             socket.emit('add_user', getIdDoctor._id);

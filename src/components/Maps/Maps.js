@@ -4,15 +4,17 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeftOutlined, CloseOutlined, SendOutlined } from '@ant-design/icons';
 import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api';
 import { Button, Spin } from 'antd';
+import { useDispatch } from 'react-redux';
 
 // me
 import './Maps.css';
 import { endPoints } from '~/routers';
+import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 // center map
 const center = { lat: 10.832403, lng: 106.667299 };
 
-function Maps() {
+function Maps({ getToken }) {
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
     const [directionRes, setDirectionRes] = useState(null);
 
@@ -22,7 +24,10 @@ function Maps() {
     const { address } = useParams();
     // const state = location.state;
 
+    const dispatch = useDispatch();
+
     console.log('address ->', address);
+    console.log('getToken ->', getToken);
     // console.log('data ->', data);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
@@ -73,7 +78,11 @@ function Maps() {
             {/* Form */}
             <div className="maps-form">
                 <div className="back-to-doctor-manager">
-                    <Link to={endPoints.doctorManager} className="back-to-doctor-manager-link">
+                    <Link
+                        to={endPoints.doctorManager}
+                        className="back-to-doctor-manager-link"
+                        onClick={() => dispatch(fetchApiUserDoctorByToken(getToken))}
+                    >
                         <ArrowLeftOutlined className="back-to-doctor-manager-icon" />
                         Quay lại
                     </Link>
@@ -109,7 +118,7 @@ function Maps() {
                         style={{ marginLeft: '12px' }}
                         onClick={handleCalculateRoute}
                     >
-                        Tìm đường đi
+                        Tìm vị trí
                     </Button>
                     <Button className="clear-route-btn" onClick={handleClearRoute}>
                         <CloseOutlined className="icon-clear-route" />

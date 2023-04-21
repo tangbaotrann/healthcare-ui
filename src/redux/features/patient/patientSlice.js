@@ -95,7 +95,7 @@ export const fetchApiConfirmScheduleMedical = createAsyncThunk(
     },
 );
 
-// fetch api delete (3 Xác nhận khám bệnh)
+// fetch api delete (3 Xác nhận khám bệnh) - DOCTOR
 export const fetchApiDeleteScheduleMedical = createAsyncThunk(
     'patient/fetchApiDeleteScheduleMedical',
     async (values) => {
