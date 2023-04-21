@@ -97,7 +97,7 @@ function App() {
                 <Route path={endPoints.doctorManager} element={<DoctorManager />} />
 
                 {/* Maps */}
-                <Route path={`${endPoints.maps}/:address`} element={<Maps />} />
+                <Route path={`${endPoints.maps}/:address`} element={<Maps getToken={getToken} />} />
 
                 {/* -- Patient --  */}
                 <Route path={`${endPoints.chatMessage}`} element={<Chat />} />

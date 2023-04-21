@@ -15,7 +15,7 @@ function MetricPieChart() {
 
     // console.log('patientStatusAlarmChart ->', patientStatusAlarmChart.length);
     // console.log('patientStatusWarningChart ->', patientStatusWarningChart.length);
-    console.log('patientStatusNormalChart ->', patientStatusNormalChart.length);
+    // console.log('patientStatusNormalChart ->', patientStatusNormalChart.length);
 
     const option = {
         color: [
@@ -77,16 +77,16 @@ function MetricPieChart() {
                 },
                 data: [
                     {
-                        value: patientStatusNormalChart.length,
-                        name: `Bình thường (${patientStatusNormalChart.length} bệnh nhân)`,
+                        value: patientStatusNormalChart?.length,
+                        name: `Bình thường (${patientStatusNormalChart?.length} bệnh nhân)`,
                     },
                     {
-                        value: patientStatusAlarmChart.length,
-                        name: `Báo động (${patientStatusAlarmChart.length} bệnh nhân)`,
+                        value: patientStatusAlarmChart?.length,
+                        name: `Báo động (${patientStatusAlarmChart?.length} bệnh nhân)`,
                     },
                     {
-                        value: patientStatusWarningChart.length,
-                        name: `Cảnh báo (${patientStatusWarningChart.length} bệnh nhân)`,
+                        value: patientStatusWarningChart?.length,
+                        name: `Cảnh báo (${patientStatusWarningChart?.length} bệnh nhân)`,
                     },
                 ],
             },

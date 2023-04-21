@@ -57,15 +57,27 @@ function CardListRegisterSchedule({ patients }) {
 
             {status ? (
                 <>
-                    {scheduleDetailsStatusTrue.map((schedule) => {
-                        return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
-                    })}
+                    {scheduleDetailsStatusTrue.length > 0 ? (
+                        scheduleDetailsStatusTrue.map((schedule) => {
+                            return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
+                        })
+                    ) : (
+                        <p className="message-empty-schedule">
+                            <i>-- Bạn chưa có lịch khám nào --</i>
+                        </p>
+                    )}
                 </>
             ) : (
                 <>
-                    {scheduleDetailsStatusFalse.map((schedule) => {
-                        return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
-                    })}
+                    {scheduleDetailsStatusFalse.length > 0 ? (
+                        scheduleDetailsStatusFalse.map((schedule) => {
+                            return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
+                        })
+                    ) : (
+                        <p className="message-empty-schedule">
+                            <i>-- Bạn chưa có lịch chờ nào --</i>
+                        </p>
+                    )}
                 </>
             )}
         </>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
+import socket from '~/utils/socket';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -140,6 +141,36 @@ export const fetchApiGetAllScheduleDetailOfPatient = createAsyncThunk(
     },
 );
 
+// fetch api delete (3 Xác nhận khám bệnh) - PATIENT
+export const fetchApiDeleteScheduleMedicalOfPatient = createAsyncThunk(
+    'patient/fetchApiDeleteScheduleMedicalOfPatient',
+    async (values) => {
+        // console.log('idSchedule ->', idSchedule);
+        console.log('values ->', values);
+        try {
+            const { reason } = values;
+            const { patient, _id } = values.record;
+
+            const res = await axios.delete(`${process.env.REACT_APP_BASE_URL}schedule-details/${_id}`, {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    ContentType: 'application/json',
+                },
+                data: {
+                    reason: reason,
+                    from: patient,
+                },
+            });
+
+            console.log('res del register schedule patient ->', res.data.data);
+
+            return res.data.data;
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const scheduleDoctor = createSlice({
     name: 'scheduleDoctor',
     initialState: {
@@ -152,6 +183,7 @@ const scheduleDoctor = createSlice({
         scheduleDetails: [],
         day_of_week: new Date(),
         allScheduleDetailOfPatient: [],
+        deleteScheduleMedical: [],
     },
     reducers: {
         btnOptionSelectDayOfWeek: (state, action) => {
@@ -194,6 +226,27 @@ const scheduleDoctor = createSlice({
             })
             .addCase(fetchApiGetAllScheduleDetailOfPatient.fulfilled, (state, action) => {
                 state.allScheduleDetailOfPatient = action.payload;
+            })
+            .addCase(fetchApiDeleteScheduleMedicalOfPatient.fulfilled, (state, action) => {
+                const schedule = action.payload;
+
+                console.log('schedule patient del slice ->', schedule);
+
+                const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
+                    (_schedule) => _schedule._id === schedule.schedule_detail_id,
+                );
+
+                // cut
+                if (spliceSchedule > -1) {
+                    state.allScheduleDetailOfPatient.splice(spliceSchedule, 1);
+                }
+
+                state.deleteScheduleMedical = action.payload;
+
+                // socket (notification_confirm_cancel_schedule)
+                socket.emit('notification_confirm_register_schedule', {
+                    data: action.payload,
+                });
             });
     },
 });

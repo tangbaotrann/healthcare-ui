@@ -88,3 +88,14 @@
     color: var(--white) !important;
     transition: all 0.3s ;
 }
+
+.content-cart-item-footer-btn.cancel-schedule-register {
+    background-color: var(--status-alarm);
+}
+
+.message-empty-schedule {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--black);
+}
