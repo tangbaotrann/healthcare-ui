@@ -42,7 +42,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
     // console.log('filterChartGlycemic', filterChartGlycemic);
-    // console.log('infoPatient', infoPatient);
+    console.log('infoPatient', infoPatient);
     // console.log('getIdDoctor', getIdDoctor);
 
     // Option bmi
@@ -188,66 +188,87 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
 
     return (
         <>
-            <TitleName>Thông Tin Cá Nhân</TitleName>
-
-            <div className="container-bar-chart">
-                {/* Info patient */}
-                <InformationPatient infoPatient={infoPatient} />
-
-                <Button className="position-on-map-btn" onClick={handleMapsNavigate}>
-                    Xem vị trí trên maps
-                </Button>
+            <div style={{ marginTop: '-28px' }}>
+                <TitleName>Thông Tin Cá Nhân</TitleName>
             </div>
 
-            <Divider />
+            <div className="display-modal-patient-list">
+                <div className="container-modal-patient-list">
+                    <div className="container-bar-chart">
+                        {/* Info patient */}
+                        <InformationPatient infoPatient={infoPatient} />
+                    </div>
+                    <div className="display-btn-modal-footer">
+                        <Button className="position-on-map-btn" onClick={handleMapsNavigate} block>
+                            Xem vị trí trên maps
+                        </Button>
 
-            <div className="container-chart">
-                {/* Status text message notification */}
-                <p className="message-status-desc">
-                    <span className="message-status-lbl">Thông báo:</span>
-                    {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
-                </p>
-                <div className="inner-chart">
-                    <div className="filter-glycemic">
-                        <Select
-                            options={[
-                                { value: 'all', label: 'Tất cả' },
-                                { value: 'week', label: 'Theo tuần' },
-                                { value: 'month', label: 'Theo tháng' },
-                            ]}
-                            defaultValue="all"
-                            style={{ width: 140 }}
-                            onSelect={handleChangeFilterGlycemic}
+                        {/* Modal remind */}
+                        <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
+
+                        {/* Modal stop examinated */}
+                        <ModalStopExaminated
+                            getIdDoctor={getIdDoctor}
+                            infoPatient={infoPatient}
+                            handleCancel={handleCancel}
+                        />
+
+                        {/* Modal move patient */}
+                        <ModalMovePatient
+                            getIdDoctor={getIdDoctor}
+                            infoPatient={infoPatient}
+                            handleCancel={handleCancel}
                         />
                     </div>
-                    <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
                 </div>
 
-                <div className="bmi-glycemic-container">
-                    {/* BMI */}
+                <Divider type="vertical" style={{ height: '100vh' }} />
+
+                <div className="container-chart">
+                    {/* Status text message notification */}
+                    <p className="message-status-desc">
+                        <span className="message-status-lbl">Thông báo:</span>
+                        {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
+                    </p>
                     <div className="inner-chart">
-                        <Line options={options} data={data} height={260} width={400} />
+                        <div className="filter-glycemic">
+                            <Select
+                                options={[
+                                    { value: 'all', label: 'Tất cả' },
+                                    { value: 'week', label: 'Theo tuần' },
+                                    { value: 'month', label: 'Theo tháng' },
+                                ]}
+                                defaultValue="all"
+                                style={{ width: 140 }}
+                                onSelect={handleChangeFilterGlycemic}
+                            />
+                        </div>
+
+                        <div className="display-chart-gly-blood">
+                            {/* Glycemic */}
+                            <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
+
+                            {/* Huyết áp */}
+                            <div className="blood-pressures-container">
+                                <div className="inner-chart">
+                                    <Line
+                                        options={optionBloodPressure}
+                                        data={dataBloodPressure}
+                                        height={260}
+                                        width={400}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {/* Huyết áp */}
-                    <div className="blood-pressures-container">
+
+                    <div className="bmi-glycemic-container">
+                        {/* BMI */}
                         <div className="inner-chart">
-                            <Line options={optionBloodPressure} data={dataBloodPressure} height={260} width={400} />
+                            <Line options={options} data={data} height={260} width={400} />
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <Divider />
-
-            <div className="display-btn-modal-footer">
-                {/* Modal remind */}
-                <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
-
-                {/* Modal stop examinated */}
-                <ModalStopExaminated getIdDoctor={getIdDoctor} infoPatient={infoPatient} handleCancel={handleCancel} />
-
-                {/* Modal move patient */}
-                <ModalMovePatient getIdDoctor={getIdDoctor} infoPatient={infoPatient} handleCancel={handleCancel} />
             </div>
         </>
     );

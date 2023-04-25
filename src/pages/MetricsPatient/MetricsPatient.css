@@ -1,10 +1,10 @@
 .metrics-banner {
     width: 100%;
-    height: 462px;
+    height: 420px;
     background-image: url(https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/banner-care-service-right.svg);
     background-size: cover;
     background-position: right center;
-    padding-top: 100px;
+    padding-top: 75px;
     z-index: 1;
 }
 

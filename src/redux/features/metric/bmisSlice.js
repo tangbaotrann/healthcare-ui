@@ -1,4 +1,5 @@
 // lib
+import { message } from 'antd';
 import axios from 'axios';
 import socket from '~/utils/socket';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
@@ -16,38 +17,38 @@ export const fetchApiBMIByIdPatient = createAsyncThunk('bmi/fetchApiBMIByIdPatie
 });
 
 // create bmi for patient
-export const fetchApiCreateBMIForPatient = createAsyncThunk(
-    'bmi/fetchApiCreateBMIForPatient',
-    async (values, { rejectWithValue }) => {
-        try {
-            const { patient, weight, gender, height } = values;
-            const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+export const fetchApiCreateBMIForPatient = createAsyncThunk('bmi/fetchApiCreateBMIForPatient', async (values) => {
+    try {
+        const { patient, weight, gender, height } = values;
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-            const res = await axios.post(
-                `${process.env.REACT_APP_BASE_URL}bmis`,
-                {
-                    patient: patient,
-                    weight: weight,
-                    gender: gender,
-                    height: height,
+        const res = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}bmis`,
+            {
+                patient: patient,
+                weight: weight,
+                gender: gender,
+                height: height,
+            },
+            {
+                headers: {
+                    Accept: 'application/json, text/plain, */*',
+                    Authorization: `Bearer ${getToken}`,
+                    ContentType: 'application/json',
                 },
-                {
-                    headers: {
-                        Accept: 'application/json, text/plain, */*',
-                        Authorization: `Bearer ${getToken}`,
-                        ContentType: 'application/json',
-                    },
-                },
-            );
-            console.log('res create bmi', res.data.data);
+            },
+        );
+        message.success('Bạn đã tạo thành công chỉ số BMI.');
+        console.log('res create bmi', res.data.data);
 
-            return res.data.data;
-        } catch (err) {
-            const message = err.response.data;
-            return rejectWithValue(message);
-        }
-    },
-);
+        return res.data.data;
+    } catch (err) {
+        // const message = err.response.data;
+        // return rejectWithValue(message);
+        message.error(`${err.response.data.message}`);
+        return;
+    }
+});
 
 // get all bmi for patient
 export const fetchApiAllBMIOfPatient = createAsyncThunk('bmi/fetchApiAllBMIOfPatient', async (idPatient) => {
@@ -66,7 +67,7 @@ export const fetchApiAllBMIOfPatient = createAsyncThunk('bmi/fetchApiAllBMIOfPat
 // create glycemic for patient
 export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
     'bmi/fetchApiCreateGlycemicForPatient',
-    async (values, { rejectWithValue }) => {
+    async (values) => {
         try {
             const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
@@ -85,13 +86,13 @@ export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
                     },
                 },
             );
+            message.success('Bạn đã tạo thành công chỉ số đường huyết.');
             console.log('res create glycemic', res.data.data);
 
             return res.data.data;
         } catch (err) {
-            const message = err.response.data;
-            console.log(message);
-            return rejectWithValue(message);
+            message.error(`${err.response.data.message}`);
+            return;
         }
     },
 );
@@ -133,12 +134,13 @@ export const fetchApiCreateBloodForPatient = createAsyncThunk(
                     },
                 },
             );
+            message.success('Bạn đã tạo thành công chỉ số huyết áp.');
             console.log('res create blood', res.data.data);
 
             return res.data.data;
         } catch (err) {
-            const message = err.response.data;
-            return rejectWithValue(message);
+            message.error(`${err.response.data.message}`);
+            return;
         }
     },
 );
@@ -182,13 +184,15 @@ const bmisSlice = createSlice({
             .addCase(fetchApiCreateBMIForPatient.fulfilled, (state, action) => {
                 console.log('ac.pay create bmi ->', action.payload);
 
-                state.bmisPatient.bmis.push(action.payload.doc);
+                if (action.payload) {
+                    state.bmisPatient.bmis.push(action.payload.doc);
 
-                socket.emit('notification_register_schedule_from_patient', {
-                    data: {
-                        notification: action.payload.notifications[0],
-                    },
-                });
+                    socket.emit('notification_register_schedule_from_patient', {
+                        data: {
+                            notification: action.payload.notifications[0],
+                        },
+                    });
+                }
             })
             .addCase(fetchApiCreateBMIForPatient.rejected, (state, action) => {
                 state.messageReject = action.payload;
@@ -198,11 +202,14 @@ const bmisSlice = createSlice({
             })
             .addCase(fetchApiCreateGlycemicForPatient.fulfilled, (state, action) => {
                 console.log('ac.pay create glycemic', action.payload);
-                state.glycemicPatient.push(action.payload.doc);
 
-                socket.emit('notification_register_schedule_from_patient', {
-                    data: action.payload,
-                });
+                if (action.payload) {
+                    state.glycemicPatient.push(action.payload.doc);
+
+                    socket.emit('notification_register_schedule_from_patient', {
+                        data: action.payload,
+                    });
+                }
             })
             .addCase(fetchApiCreateGlycemicForPatient.rejected, (state, action) => {
                 state.messageGlycemicReject = action.payload;
@@ -212,11 +219,14 @@ const bmisSlice = createSlice({
             })
             .addCase(fetchApiCreateBloodForPatient.fulfilled, (state, action) => {
                 console.log('ac.pay create blood', action.payload);
-                state.bloodPatient.push(action.payload.doc);
 
-                socket.emit('notification_register_schedule_from_patient', {
-                    data: action.payload,
-                });
+                if (action.payload) {
+                    state.bloodPatient.push(action.payload.doc);
+
+                    socket.emit('notification_register_schedule_from_patient', {
+                        data: action.payload,
+                    });
+                }
             })
             .addCase(fetchApiCreateBloodForPatient.rejected, (state, action) => {
                 state.messageBloodReject = action.payload;

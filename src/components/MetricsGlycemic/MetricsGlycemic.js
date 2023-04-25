@@ -1,29 +1,25 @@
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
-import { Alert, Button, Form, Input, Select, Table, message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form, Input, Select, Table } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateGlycemicForPatient } from '~/redux/features/metric/bmisSlice';
-import { fetchApiCreateGlycemicForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsGlycemic({ patients, glycemicPatient }) {
     const dispatch = useDispatch();
+    const [form] = Form.useForm();
 
-    const messageReject = useSelector(fetchApiCreateGlycemicForPatientMessageRejectedSelector);
+    // const messageReject = useSelector(fetchApiCreateGlycemicForPatientMessageRejectedSelector);
 
     // console.log('glycemicPatient', glycemicPatient);
-    console.log('messageReject', messageReject);
+    // console.log('messageReject', messageReject);
 
     const handleSubmitForm = (values) => {
         if (values) {
             dispatch(fetchApiCreateGlycemicForPatient(values));
 
-            if (messageReject !== null || messageReject.status === 'fail') {
-                return;
-            } else {
-                message.success('Bạn đã tạo thành công chỉ số đường huyết.');
-            }
+            form.resetFields();
         }
     };
 
@@ -103,15 +99,16 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
         <div className="metrics-glycemic-wrapper">
             <TitleName>Chỉ Số Đường Huyết</TitleName>
 
-            <div className="message-rejected">
+            {/* <div className="message-rejected">
                 {messageReject !== null && <Alert type="error" message={messageReject.message} />}
-            </div>
+            </div> */}
 
             <Form
                 onFinish={handleSubmitForm}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
+                form={form}
                 fields={[{ name: ['patient'], value: patients?.patient?._id }]}
                 className="form-submit-metrics"
             >

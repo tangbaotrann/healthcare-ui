@@ -45,7 +45,7 @@ function CardItem({ schedules }) {
 
                 <div className="card-item-footer">
                     {/* <span className="card-item-footer-type">Hiện có là: </span> */}
-                    <span className="card-item-footer-amount">{schedules.length}</span>
+                    <span className="card-item-footer-amount">{schedules?.length}</span>
                 </div>
             </div>
 

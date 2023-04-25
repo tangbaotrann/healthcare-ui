@@ -50,7 +50,7 @@ function Blog({ infoUser }) {
                         { value: 'week', label: 'Theo tuần' },
                     ]}
                     defaultValue="all"
-                    style={{ width: 140 }}
+                    style={{ width: 140, zIndex: '2' }}
                     onSelect={handleChangeFilterBlog}
                 />
             </div>

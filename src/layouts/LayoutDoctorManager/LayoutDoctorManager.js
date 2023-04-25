@@ -97,7 +97,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             key: constants.layoutListNotification,
                             icon: (
                                 <>
-                                    {notificationNotHasSeen?.length > 0 ? (
+                                    {!collapsed && notificationNotHasSeen?.length > 0 ? (
                                         <Space size="small">
                                             <Badge
                                                 count={notificationNotHasSeen?.length}
@@ -109,16 +109,25 @@ function LayoutDoctorManager({ children, infoUser }) {
                                             </Badge>
                                         </Space>
                                     ) : (
-                                        <NotificationOutlined style={{ color: 'black' }} />
+                                        <Space size="small">
+                                            <Badge
+                                                count={notificationNotHasSeen?.length}
+                                                overflowCount={99}
+                                                size="small"
+                                                offset={[10, 8]}
+                                            >
+                                                <NotificationOutlined style={{ color: 'black', marginRight: '6px' }} />
+                                            </Badge>
+                                        </Space>
                                     )}
                                 </>
                             ),
-                            label: 'Thông báo',
+                            label: !collapsed ? 'Thông báo' : null,
                         },
                         {
                             key: constants.layoutListRegisterSchedule,
                             icon: <ClockCircleOutlined />,
-                            label: 'Đăng ký ca làm',
+                            label: 'Quản lý ca làm',
                         },
                         {
                             key: '3',
@@ -194,7 +203,18 @@ function LayoutDoctorManager({ children, infoUser }) {
                 />
             </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-header" style={{ padding: 0, marginBottom: '12px', height: '0px' }}>
+                <Header
+                    className="site-layout-header"
+                    style={{
+                        padding: 0,
+                        marginBottom: '12px',
+                        height: '0px',
+                        position: 'sticky',
+                        left: '0px',
+                        top: '0px',
+                        zIndex: '2',
+                    }}
+                >
                     <div className="site-layout-header-info-user">
                         <Link className="site-layout-header-introduce" to={endPoints.homeIntro}>
                             {/* <LeftOutlined />

@@ -24,7 +24,9 @@ export const cardsData = [
 
 //* get the value in group number format
 export const groupNumber = (number) => {
-    return parseFloat(number.toFixed(2)).toLocaleString('en', {
-        useGrouping: true,
-    });
+    if (number) {
+        return parseFloat(number.toFixed(2)).toLocaleString('en', {
+            useGrouping: true,
+        });
+    }
 };

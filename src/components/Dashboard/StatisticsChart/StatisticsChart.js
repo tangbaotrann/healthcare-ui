@@ -5,7 +5,7 @@ import * as echarts from 'echarts';
 // me
 import './StatisticsChart.css';
 
-function StatisticsChart() {
+function StatisticsChart({ feeOfPatientResultedExam }) {
     // option
     const option = {
         color: ['#FE4C00'],
@@ -67,7 +67,10 @@ function StatisticsChart() {
                     focus: 'series',
                 },
                 showSymbol: false,
-                data: [28000, 19000, 320000, 180000, 410000, 300000, 260000],
+                data:
+                    feeOfPatientResultedExam?.length > 0
+                        ? feeOfPatientResultedExam.map((_schedule) => _schedule.schedule.fee)
+                        : 0,
             },
         ],
     };
@@ -78,7 +81,9 @@ function StatisticsChart() {
 
             <div className="statistics-chart-note-text">
                 <p className="statistics-chart-note-text-title">Biểu đồ: </p>
-                <p className="statistics-chart-note-text-desc">Thống kê ...</p>
+                <p className="statistics-chart-note-text-desc">
+                    Thống kê tổng doanh thu của tất cả các lịch đã khám cho bệnh nhân
+                </p>
             </div>
         </div>
     );

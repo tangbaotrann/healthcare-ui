@@ -89,6 +89,36 @@
     transition: all 0.3s ;
 }
 
+.content-cart-item {
+    position: relative;
+}
+
+.content-cart-item-note-success-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 6px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    background-color: var(--status-normal);
+    box-shadow: 0 0 12px 0 var(--status-normal);
+}
+
+.content-cart-item-note-await-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 12px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 6px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    background-color: var(--status-alarm);
+    box-shadow: 0 0 12px 0 var(--status-alarm);
+}
+
 .content-cart-item-footer-btn.cancel-schedule-register {
     background-color: var(--status-alarm);
 }

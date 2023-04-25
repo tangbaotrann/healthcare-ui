@@ -115,6 +115,7 @@ function ResultHeathPatient() {
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
                 width={1200}
+                centered={true}
             >
                 <TitleName>Kết Quả Khám Gần Nhất</TitleName>
 

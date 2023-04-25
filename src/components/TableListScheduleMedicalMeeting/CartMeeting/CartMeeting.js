@@ -37,14 +37,14 @@ function CartMeeting({ infoUser }) {
 
     console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
-    console.log('checkLeavedRoom ->', checkLeavedRoom);
+    // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
     // console.log('record ->', record);
 
     // user join room
     useEffect(() => {
         socket.emit('join_room', conversation); // obj
-        socket.emit('add_user', infoDoctor._id);
+        socket.emit('add_user', infoDoctor?._id);
 
         socket.on('get_users', (users) => {
             // console.log('USER - ONLINE -', users);
@@ -54,7 +54,7 @@ function CartMeeting({ infoUser }) {
         socket.on('joined_room', (conversationId) => {
             // console.log('[conversation - id] ->', conversationId);
         });
-    }, [conversation, infoDoctor._id]);
+    }, [conversation, infoDoctor?._id]);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {
@@ -157,7 +157,7 @@ function CartMeeting({ infoUser }) {
 
                                         {/* Button */}
                                         <Link
-                                            to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor.person.username}`}
+                                            to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor?.person?.username}`}
                                             target="_blank"
                                             style={{ width: '100%' }}
                                         >

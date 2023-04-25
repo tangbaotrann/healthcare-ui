@@ -1,7 +1,7 @@
 // lib
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, message, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select } from 'antd';
 import moment from 'moment';
 
 // me
@@ -9,11 +9,7 @@ import './CreateScheduleDoctor.css';
 import TitleName from '../TitleName';
 import TableListSchedule from './TableListSchedule';
 import { fetchApiCreateScheduleDoctor } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
-import {
-    fetchApiAllCreateDaysDoctorSelector,
-    fetchApiAllShiftsDoctorSelector,
-    fetchApiCreateScheduleDoctorSelector,
-} from '~/redux/selector';
+import { fetchApiAllCreateDaysDoctorSelector, fetchApiAllShiftsDoctorSelector } from '~/redux/selector';
 
 function CreateScheduleDoctor({ infoUser, schedules }) {
     const [showModal, setShowModal] = useState(false);
@@ -22,7 +18,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
 
     const days = useSelector(fetchApiAllCreateDaysDoctorSelector);
     const shifts = useSelector(fetchApiAllShiftsDoctorSelector);
-    // const checkExist = useSelector(fetchApiCreateScheduleDoctorSelector);
+    // const checkExist = useSelector(fetchApiCreateScheduleDoctorMessageRejectSelector);
 
     // console.log(days);
     // console.log('-->', shifts);
@@ -43,11 +39,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     const handleCreateScheduleDoctorOnFish = (values) => {
         if (values) {
             dispatch(fetchApiCreateScheduleDoctor(values));
-            setShowModal(false);
-            message.success('Bạn đã đăng ký ca lịch thành công.');
-        } else {
-            message.error('Đăng ký ca lịch không thành công!');
-            return;
+            handleCancel();
         }
     };
 

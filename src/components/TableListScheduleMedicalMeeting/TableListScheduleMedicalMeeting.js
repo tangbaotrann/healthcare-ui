@@ -27,10 +27,12 @@ function TableListScheduleMedicalMeeting({ infoUser }) {
                 <Select
                     options={[
                         { value: 'all', label: 'Tất cả' },
+                        { value: 'date', label: 'Theo ngày (hôm nay)' },
                         { value: 'week', label: 'Theo tuần' },
+                        { value: 'month', label: 'Theo tháng' },
                     ]}
                     defaultValue="all"
-                    style={{ width: 140 }}
+                    style={{ width: 175, zIndex: 99 }}
                     onSelect={handleChangeFilterMeeting}
                 />
             </div>

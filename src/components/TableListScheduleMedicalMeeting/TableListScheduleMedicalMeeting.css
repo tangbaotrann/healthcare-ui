@@ -6,7 +6,7 @@
     border-radius: 12px;
     background-color: var(--modal-meeting);
     box-shadow: 0 0 22px 0 var(--modal-meeting-box-shadow);
-    height: 600px;
+    height: 82vh;
     overflow: scroll;
 }
 
@@ -94,9 +94,10 @@
 /* Option filter */
 .display-filter-meeting {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    margin-left: 10px;
     margin-top: -14px;
-    margin-bottom: 3px;
+    margin-bottom: 13px;
 }
 
 .cart-meeting-show-conversation-message {

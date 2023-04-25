@@ -35,6 +35,7 @@ export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDocto
 export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
 export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.day_of_week;
 export const fetchApiCreateScheduleDoctorSelector = (state) => state.scheduleDoctor.createSchedule;
+export const fetchApiCreateScheduleDoctorMessageRejectSelector = (state) => state.scheduleDoctor.messageReject;
 export const fetchApiGetAllScheduleDetailOfPatientSelector = (state) => state.scheduleDoctor.allScheduleDetailOfPatient;
 
 // schedule detail by id doctor
@@ -121,6 +122,8 @@ export const fetchApiCreateInfoPatientSelector = (state) => state.userSlice.pati
 
 export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
     state.patientSlice.patientRegisterSchedule;
+
+export const fetchApiScheduleMedicalAppointmentResultExamSelector = (state) => state.patientSlice.resultExam;
 
 /* -- Handle Selector -- */
 
@@ -243,12 +246,12 @@ export const totalPatients = createSelector(
     fetchApiUserDoctorByTokenSelector,
     (listPatient, userDoctorCurrent) => {
         if (listPatient) {
-            const listScheduleDetailFilter = listPatient.filter(
+            const listScheduleDetailFilter = listPatient?.filter(
                 (_listScheduleDetail) =>
                     (_listScheduleDetail.patient.doctor_glycemic_id !== null &&
-                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent.doctor._id) ||
+                        _listScheduleDetail.patient.doctor_glycemic_id === userDoctorCurrent?.doctor?._id) ||
                     (_listScheduleDetail.patient.doctor_blood_id !== null &&
-                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent.doctor._id),
+                        _listScheduleDetail.patient.doctor_blood_id === userDoctorCurrent?.doctor?._id),
             );
 
             return listScheduleDetailFilter.length;
@@ -344,12 +347,12 @@ export const getIdDoctorFilter = createSelector(
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
 
-        const getIdDoctorFromListSchedule = listSchedule.filter(
+        const getIdDoctorFromListSchedule = listSchedule?.filter(
             (schedule) => schedule?.doctor?._id === infoDoctor?.doctor?._id,
         );
         // console.log('getIdDoctorFromListSchedule', getIdDoctorFromListSchedule);
 
-        return getIdDoctorFromListSchedule.map((schedule) => {
+        return getIdDoctorFromListSchedule?.map((schedule) => {
             // console.log('sche -->', schedule);
             const days = listDay.find((_day) => _day._id === schedule.day._id);
             const shifts = listShift.find((_shift) => _shift._id === schedule.time._id);
@@ -472,27 +475,31 @@ export const cleanConversationListSelector = createSelector(
         // console.log('user ->', user);
         // console.log('conversations selector ->', conversations);
 
-        const conversationList = conversations.map((conversation) => {
-            const member = conversation.members[0]._id === user._id ? conversation.members[1] : conversation.members[0];
+        if (conversations?.length > 0) {
+            const conversationList = conversations?.map((conversation) => {
+                const member =
+                    conversation?.members[0]?._id === user?._id ? conversation?.members[1] : conversation?.members[0];
 
-            // console.log('member', member);
+                // console.log('member', member);
 
-            return {
-                _id: conversation._id,
-                member: {
-                    username: member.person.username,
-                    avatar: member.person.avatar,
-                    _id: member._id,
-                },
-                last_message: {
-                    content: conversation?.last_message?.content,
-                    createdAt: conversation?.last_message?.createdAt,
-                },
-            };
-        });
-
-        // console.log(conversationList);
-        return conversationList;
+                return {
+                    _id: conversation._id,
+                    member: {
+                        username: member.person.username,
+                        avatar: member.person.avatar,
+                        _id: member._id,
+                    },
+                    last_message: {
+                        content: conversation?.last_message?.content,
+                        createdAt: conversation?.last_message?.createdAt,
+                    },
+                };
+            });
+            // console.log(conversationList);
+            return conversationList;
+        } else {
+            return [];
+        }
     },
 );
 
@@ -630,7 +637,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
 
         const scheduleMedicals = listScheduleMedical
             // .filter((_status) => _status.status === true && _status.result_exam === null)
-            .map((_scheduleMedical) => {
+            ?.map((_scheduleMedical) => {
                 const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
                 const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
                 const conversations = cleanConversation.find(
@@ -658,6 +665,53 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
     },
 );
 
+// Tổng doanh thu (lịch đã khám)
+export const filterTotalFee = createSelector(fetchApiScheduleMedicalAppointmentResultExamSelector, (list) => {
+    if (list) {
+        const _listFee = list.filter((_list) => _list.schedule.fee);
+
+        const _total = _listFee.reduce((fee, curr) => {
+            return fee + curr.schedule.fee;
+        }, 0);
+
+        return _total;
+    }
+});
+
+// Lọc doanh thu (theo tuần)
+export const filterTotalFeeOfWeek = createSelector(fetchApiScheduleMedicalAppointmentResultExamSelector, (list) => {
+    const now = new Date();
+
+    if (list?.length > 0) {
+        const _filterWeek = list.filter((_list) => moment(_list.day_exam).week() === moment(now).week());
+        // console.log('_filterWeek', _filterWeek);
+
+        const _listFee = _filterWeek.filter((_list) => _list.schedule.fee);
+        const _total = _listFee.reduce((fee, curr) => {
+            return fee + curr.schedule.fee;
+        }, 0);
+
+        return _total;
+    }
+});
+
+// Lọc doanh thu (theo tháng)
+export const filterTotalFeeOfMonth = createSelector(fetchApiScheduleMedicalAppointmentResultExamSelector, (list) => {
+    const now = new Date();
+
+    if (list?.length > 0) {
+        const _filterMonth = list.filter((_list) => moment(_list.day_exam).month() === moment(now).month());
+        // console.log('_filterWeek', _filterWeek);
+
+        const _listFee = _filterMonth.filter((_list) => _list.schedule.fee);
+        const _total = _listFee.reduce((fee, curr) => {
+            return fee + curr.schedule.fee;
+        }, 0);
+
+        return _total;
+    }
+});
+
 // getDayAndTimeScheduleMedicalMeetingFilterOfDoctor + filter meeting week
 export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
     getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
@@ -666,14 +720,24 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
         // console.log('listMeeting', listMeeting);
 
         const now = new Date();
-        if (listMeeting.length > 0) {
+        console.log('day ->', moment(now).date());
+        if (listMeeting?.length > 0) {
             if (option === 'all') {
                 return listMeeting;
             } else if (option === 'week') {
                 const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).week() === moment(now).week());
 
                 return _listMeeting;
+            } else if (option === 'month') {
+                const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).month() === moment(now).month());
+
+                return _listMeeting;
             }
+            // else if (option === 'date') {
+            //     const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).date() === moment(now).day());
+
+            //     return _listMeeting;
+            // }
         }
 
         return [];
@@ -686,10 +750,10 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
     fetchApiAllScheduleDetailsSelector,
     btnOptionSelectDayOfWeekSelector,
     (schedules, scheduleDetails, day) => {
-        console.log('all schedules', schedules);
-        console.log('all schedules details', scheduleDetails);
-        console.log('day', day);
-        console.log('day.getDay', day.getDay());
+        // console.log('all schedules', schedules);
+        // console.log('all schedules details', scheduleDetails);
+        // console.log('day', day);
+        // console.log('day.getDay', day.getDay());
 
         if (schedules.length > 0) {
             const now = new Date();
@@ -701,7 +765,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
                           now.getHours() < new Date(_schedule['time']['time_start']).getHours()
                     : new Date(_schedule['day']['day']).getDay() === day.getDay();
             });
-            console.log('_schedules ->', _schedules);
+            // console.log('_schedules ->', _schedules);
             // console.log('now ->', now);
             // console.log('now.getDay() ->', typeof now.getDay());
             // console.log('now.getMonth() ->', now.getMonth());
@@ -710,6 +774,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
             const _scheduleDetails = scheduleDetails.filter(
                 (_scheduleDetail) => new Date(_scheduleDetail.day_exam).getDay() === day.getDay(),
             );
+            // console.log('_scheduleDetails', _scheduleDetails);
 
             // Lấy mảng ngày ra để so sánh
             const schedule_details_day_exams = _scheduleDetails.map((_schedule) => {
@@ -718,6 +783,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
                     doctor_id: _schedule.doctor,
                 };
             });
+            // console.log('schedule_details_day_exams', schedule_details_day_exams);
 
             // Tạo thêm date_compare để so sánh
             const __schedules = _schedules.map((_schedule) => {
@@ -740,12 +806,23 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
                     doctor_id: _schedule.doctor._id,
                 };
             });
+            // console.log('__schedules', __schedules);
 
             // Tiến hành so sánh
+
             const final_schedule = __schedules.filter((_finalSchedule) => {
+                // giờ
+                const timeStart = moment(_finalSchedule.time.time_start).format('HH:mm');
+
+                // ngày
+                const scheduleDateStart = moment(
+                    _finalSchedule.date_compare._i.split('/').reverse().join('/') + ' ' + timeStart,
+                );
+                // console.log('scheduleDateStart', scheduleDateStart);
+
                 return !schedule_details_day_exams.some(
                     (_schedule) =>
-                        moment(_schedule.day_exam).isSame(_finalSchedule.date_compare) &&
+                        moment(_schedule.day_exam).isSame(new Date(scheduleDateStart)) &&
                         _schedule.doctor_id === _finalSchedule.doctor_id,
                 );
             });

@@ -31,7 +31,8 @@ function CommentPatient({ comments, blogPost, patients }) {
             }),
         );
         setValue('');
-        // focusInputRef.current.focus();
+        setNewImage([]);
+        focusInputRef.current.focus();
     };
 
     // handle option change images
@@ -85,7 +86,7 @@ function CommentPatient({ comments, blogPost, patients }) {
                 </label>
 
                 {/* Input */}
-                <input
+                <textarea
                     className="patient-input-comments"
                     ref={focusInputRef}
                     value={value}

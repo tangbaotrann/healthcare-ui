@@ -9,14 +9,19 @@ import LayoutDoctorManager from '~/layouts/LayoutDoctorManager';
 import {
     btnSelectMenuChangeLayoutSelector,
     fetchApiNotificationByDoctorIdSelector,
+    fetchApiScheduleMedicalAppointmentResultExamSelector,
     fetchApiUpdateInfoUserSelector,
     fetchApiUserDoctorByTokenSelector,
+    filterTotalFee,
+    filterTotalFeeOfMonth,
+    filterTotalFeeOfWeek,
     getDoctorLoginFilter,
     getIdDoctorFilter,
     isLoadingNotificationSelector,
     isLoadingScheduleDetailByIdDoctorSelector,
     isLoadingScheduleDoctorSelector,
     isLoadingUserDoctorByTokenSelector,
+    scheduleMedicalMeetingFilterOfDoctor,
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
 import {
@@ -36,6 +41,7 @@ import {
     fetchApiScheduleDetailByIdDoctor,
     fetchApiScheduleMedicalAppointment,
     fetchApiScheduleMedicalAppointmentAwait,
+    fetchApiScheduleMedicalAppointmentResultExam,
 } from '~/redux/features/patient/patientSlice';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -48,6 +54,10 @@ function DoctorManager() {
     const changeLayout = useSelector(btnSelectMenuChangeLayoutSelector);
     const infoUser = useSelector(fetchApiUserDoctorByTokenSelector);
     const schedules = useSelector(getIdDoctorFilter);
+    const feeOfPatientResultedExam = useSelector(fetchApiScheduleMedicalAppointmentResultExamSelector);
+    const totalFee = useSelector(filterTotalFee);
+    const totalFeeOfWeek = useSelector(filterTotalFeeOfWeek);
+    const totalFeeOfMonth = useSelector(filterTotalFeeOfMonth);
     const awaitAccept = useSelector(fetchApiUpdateInfoUserSelector);
     const checkAwaitAccept = useSelector(getDoctorLoginFilter);
     const getIdDoctor = useSelector(getDoctorLoginFilter);
@@ -59,6 +69,12 @@ function DoctorManager() {
     const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
     const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
 
+    // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
+    // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
+    // console.log('fee', totalFee);
+    // console.log('totalFeeOfWeek', totalFeeOfWeek);
+    // console.log('totalFeeOfMonth', totalFeeOfMonth);
+    // console.log('feeOfPatientResultedExam', feeOfPatientResultedExam);
     // console.log(changeLayout);
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
@@ -100,6 +116,10 @@ function DoctorManager() {
     }, [getIdDoctor?._id]);
 
     useEffect(() => {
+        dispatch(fetchApiScheduleMedicalAppointmentResultExam(getIdDoctor?._id));
+    }, [getIdDoctor?._id]);
+
+    useEffect(() => {
         dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor?._id));
     }, [getIdDoctor?._id]);
 
@@ -117,7 +137,13 @@ function DoctorManager() {
                         isLoadingScheduleDetail ? (
                             <LoadingOutlined className="icon-loading-dashboard" spin />
                         ) : (
-                            <Dashboard schedules={schedules} />
+                            <Dashboard
+                                schedules={schedules}
+                                totalFee={totalFee}
+                                feeOfPatientResultedExam={feeOfPatientResultedExam}
+                                totalFeeOfWeek={totalFeeOfWeek}
+                                totalFeeOfMonth={totalFeeOfMonth}
+                            />
                         )}
                     </>
                 ) : changeLayout === constants.layoutListRegisterSchedule ? (

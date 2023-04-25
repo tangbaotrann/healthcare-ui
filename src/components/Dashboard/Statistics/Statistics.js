@@ -1,11 +1,11 @@
 // me
 import { ArrowUpOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
-import { groupNumber } from '~/utils/cardsData';
 import StatisticsChart from '../StatisticsChart';
 import './Statistics.css';
+import { groupNumber } from '~/utils/cardsData';
 
-function Statistics() {
+function Statistics({ totalFee, feeOfPatientResultedExam, totalFeeOfWeek, totalFeeOfMonth }) {
     return (
         <div className="statistics-wrapper">
             <h2 className="statistics-title">Thống Kê Tổng Quan</h2>
@@ -16,26 +16,26 @@ function Statistics() {
                 <div className="overview-statistics-item-side">
                     <ArrowUpOutlined className="item-side-icon" />
                     <div className="item-side-text">
-                        <p className="item-side-top">Top item this month</p>
-                        <p className="item-side-bottom">Office Comps</p>
+                        <p className="item-side-top">Tổng doanh thu</p>
+                        <p className="item-side-bottom">{groupNumber(totalFee) || 0} VNĐ</p>
                     </div>
                 </div>
 
                 <div className="overview-statistics-item">
-                    <p className="item-side-top">Items</p>
-                    <p className="item-side-bottom">400</p>
+                    <p className="item-side-top">Doanh thu theo tuần</p>
+                    <p className="item-side-bottom">{groupNumber(totalFeeOfWeek || 0)} VNĐ</p>
                 </div>
 
                 <div className="overview-statistics-item">
-                    <p className="item-side-top">Profit</p>
-                    <p className="item-side-bottom">$ {groupNumber(30000)}</p>
+                    <p className="item-side-top">Doanh thu theo tháng</p>
+                    <p className="item-side-bottom">{groupNumber(totalFeeOfMonth || 0)} VNĐ</p>
                 </div>
             </div>
 
             <Divider />
 
             {/* Chart statistics */}
-            <StatisticsChart />
+            <StatisticsChart feeOfPatientResultedExam={feeOfPatientResultedExam} />
         </div>
     );
 }

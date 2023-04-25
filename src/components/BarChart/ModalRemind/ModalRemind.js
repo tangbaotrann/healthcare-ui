@@ -37,7 +37,7 @@ function ModalRemind({ getIdDoctor, infoPatient }) {
     return (
         <>
             <div className="remind-patient">
-                <Button className="remind-patient-btn" onClick={handleShowModalRemind}>
+                <Button className="remind-patient-btn" onClick={handleShowModalRemind} block>
                     Nhắc nhở bệnh nhân
                 </Button>
             </div>
