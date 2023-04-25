@@ -2,12 +2,15 @@ import { Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchApiGetAllScheduleDetailOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
+import scheduleDoctor, {
+    fetchApiGetAllScheduleDetailOfPatient,
+} from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import {
     filterRegisterScheduleAppointmentWithStatusFalse,
     filterRegisterScheduleAppointmentWithStatusTrue,
 } from '~/redux/selector';
 import CardItemRegisterSchedule from '../CardItemRegisterSchedule';
+import socket from '~/utils/socket';
 
 function CardListRegisterSchedule({ patients }) {
     const [status, setStatus] = useState(true);
@@ -18,7 +21,14 @@ function CardListRegisterSchedule({ patients }) {
     const scheduleDetailsStatusFalse = useSelector(filterRegisterScheduleAppointmentWithStatusFalse);
 
     // console.log('patients', patients);
-    // console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
+    console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
+
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
+            console.log('notification_confirm_register_schedule_success', notification);
+            dispatch(scheduleDoctor.actions.arrivalScheduleDetailOfPatientStatusFalse(notification.schedule_detail_id));
+        });
+    }, []);
 
     useEffect(() => {
         dispatch(fetchApiGetAllScheduleDetailOfPatient(patients?.patient?._id));

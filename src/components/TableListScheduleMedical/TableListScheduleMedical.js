@@ -1,14 +1,18 @@
 // lib
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Form, Image, Input, message, Modal, Table } from 'antd';
 
 // me
 import './TableListScheduleMedical.css';
 import TitleName from '../TitleName';
-import { fetchApiConfirmScheduleMedical, fetchApiDeleteScheduleMedical } from '~/redux/features/patient/patientSlice';
+import patientSlice, {
+    fetchApiConfirmScheduleMedical,
+    fetchApiDeleteScheduleMedical,
+} from '~/redux/features/patient/patientSlice';
 import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
+import socket from '~/utils/socket';
 
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
@@ -22,6 +26,20 @@ function TableListScheduleMedical({ infoUser }) {
 
     console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
     // console.log('infoMember render', infoMember);
+
+    useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', ({ schedule_detail }) => {
+            console.log('notification_register_schedule_from_patient_success', schedule_detail);
+            dispatch(patientSlice.actions.arrivalConfirmScheduleMedicalAppointment(schedule_detail));
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', ({ schedule_detail_id }) => {
+            console.log('notification_confirm_register_schedule_success', schedule_detail_id);
+            dispatch(patientSlice.actions.arrivalDeleteScheduleMedicalAppointment(schedule_detail_id));
+        });
+    }, []);
 
     // cols
     const cols = [
@@ -129,7 +147,7 @@ function TableListScheduleMedical({ infoUser }) {
     const handleSelectDetailInfoPatient = (record) => {
         console.log(record);
         setOpenModalInfoDetailPatient(true);
-        setInfoDetailPatient(record.patient);
+        setInfoDetailPatient(record);
     };
 
     // handle status schedule
@@ -176,25 +194,36 @@ function TableListScheduleMedical({ infoUser }) {
                 <ul className="container-info-details-patient">
                     <div className="display-info-details-patient-avatar">
                         <Image
-                            src={infoDetailPatient?.person?.avatar}
+                            src={infoDetailPatient?.patient?.person?.avatar}
                             className="info-details-patient-avatar"
                             alt="avatar-patient"
                         />
                     </div>
                     <li>
-                        <i>Họ tên:</i> {infoDetailPatient?.person?.username}
+                        <i>Họ tên:</i> {infoDetailPatient?.patient?.person?.username}
                     </li>
                     <li>
-                        <i>Giới tính: </i> {infoDetailPatient?.person?.gender === true ? 'Nam' : 'Nữ'}
+                        <i>Giới tính: </i> {infoDetailPatient?.patient?.person?.gender === true ? 'Nam' : 'Nữ'}
                     </li>
                     <li>
-                        <i>Năm sinh: </i> {moment(infoDetailPatient?.person?.dob).format('DD/MM/YYYY')}
+                        <i>Năm sinh: </i> {moment(infoDetailPatient?.patient?.person?.dob).format('DD/MM/YYYY')}
                     </li>
                     <li>
-                        <i>Địa chỉ: </i> {infoDetailPatient?.person?.address}
+                        <i>Địa chỉ: </i> {infoDetailPatient?.patient?.person?.address}
                     </li>
                     <li>
-                        <i>Nhóm máu: </i> {infoDetailPatient?.blood}
+                        <i>Nhóm máu: </i> {infoDetailPatient?.patient?.blood}
+                    </li>
+                    <li>
+                        <i>Tiền sử bệnh: </i>{' '}
+                        {infoDetailPatient?.patient?.anamnesis === 0
+                            ? 'Tiền sử đường huyết - Bình thường'
+                            : infoDetailPatient?.patient?.anamnesis === 1
+                            ? 'Tiền sử đường huyết- Típ 1'
+                            : 'Tiền sử đường huyết - Típ 2'}
+                    </li>
+                    <li>
+                        <i>Nội dung khám: </i> {infoDetailPatient?.content_exam}
                     </li>
                 </ul>
             </Modal>

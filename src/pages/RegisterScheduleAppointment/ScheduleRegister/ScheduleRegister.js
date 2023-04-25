@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Button, Calendar, Form, Input, Modal, Skeleton } from 'antd';
+import { Alert, Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
 
 import TitleName from '~/components/TitleName';
 import scheduleDoctor from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
@@ -26,7 +26,7 @@ function ScheduleRegister() {
     // const dateOfWeek = useSelector(btnOptionSelectDayOfWeekSelector);
 
     // console.log('checkRegisterSchedule', checkRegisterSchedule);
-    // console.log('schedules --->', schedules);
+    console.log('schedules --->', schedules);
     // console.log('scheduleAppointment --->', scheduleAppointment);
     // console.log('dateTime --->', dateTime);
 
@@ -91,17 +91,19 @@ function ScheduleRegister() {
             )
             .then((res) => {
                 console.log('res ->', res.data.data);
-                setChecked(res.data.data);
-                setMessageSuccess(true);
-                setMessageError(false);
+                // setChecked(res.data.data);
+                // setMessageSuccess(true);
+                // setMessageError(false);
+                message.success('Bạn đã đăng ký thành công lịch khám này. Vui lòng chờ xác nhận từ bác sĩ nhé!');
                 setOpenModalConfirm(false);
                 socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
             })
             .catch((err) => {
                 console.log({ err });
-                setMessageSuccess(false);
-                setMessageError(true);
-                setOpenModalConfirm(false);
+                message.error(`${err.response.data.message}`);
+                // setMessageSuccess(false);
+                // setMessageError(true);
+                // setOpenModalConfirm(false);
             });
     };
 
@@ -114,7 +116,7 @@ function ScheduleRegister() {
                 <Skeleton active />
             ) : (
                 <>
-                    {messageError ? (
+                    {/* {messageError ? (
                         <Alert
                             message="Ca khám này của Bác sĩ đã có người đăng ký. Vui lòng chọn ca khác!"
                             type="error"
@@ -134,7 +136,8 @@ function ScheduleRegister() {
                             type="success"
                             style={{ marginBottom: '12px' }}
                         />
-                    ) : null}
+                    ) : null} */}
+
                     {schedules.length === 0 ? (
                         <p className="notification-schedule-register">
                             <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
@@ -190,7 +193,7 @@ function ScheduleRegister() {
                         ]}
                         hasFeedback
                     >
-                        <Input placeholder="Nội dung bệnh khám..." />
+                        <Input.TextArea placeholder="Nội dung bệnh khám..." />
                     </Form.Item>
 
                     <Form.Item name="schedule" style={{ display: 'none' }}>

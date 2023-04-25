@@ -27,7 +27,7 @@ function NotificationsPage() {
     // console.log('patients', patients);
 
     useEffect(() => {
-        socket.on('notification_confirm_register_schedule_success', (notification) => {
+        socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
             console.log('notification_confirm_register_schedule_success', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromDoctorSuccess(notification));
         });

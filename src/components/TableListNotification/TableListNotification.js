@@ -31,7 +31,7 @@ function TableListNotification({ notifications, infoUser }) {
     // console.log('infoUser ->', infoUser);
 
     useEffect(() => {
-        socket.on('notification_confirm_register_schedule_success', (notification) => {
+        socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
             console.log('notification_confirm_register_schedule_success ->', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });
@@ -171,41 +171,41 @@ function TableListNotification({ notifications, infoUser }) {
             <TitleName>Danh Sách Các Thông Báo Hiện Có Của Bác Sĩ</TitleName>
 
             {/* Table list */}
-            <Table
-                columns={cols}
-                dataSource={getConversationFromNotification.map((_notification, index) => ({
-                    index: index + 1,
-                    content: _notification.content,
-                    createdAt: `${moment(_notification.createdAt).format('DD-MM-YYYY')} lúc ${moment(
-                        _notification.createdAt,
-                    ).format('HH:mm a')}`,
-                    hasSeen: _notification.hasSeen,
-                    _id: _notification._id,
-                    rule: _notification.rule,
-                    conversation: _notification.conversation,
-                }))}
-                rowKey="index"
-                pagination={{
-                    pageSize: 8,
-                }}
-                rowClassName={(record, index) =>
-                    record.rule === 'RULE_DOCTOR_REMIND'
-                        ? 'custom-row-rule-doctor-remind'
-                        : record.rule === 'RULE_NOTIFICATION_REGISTER_SCHEDULE'
-                        ? 'custom-row-noti-reg-schedule'
-                        : record.rule === 'RULE_NOTIFICATION_CANCEL_SCHEDULE'
-                        ? 'custom-row-noti-cancel-schedule'
-                        : record.rule === 'RULE_SYSTEM'
-                        ? 'custom-row-rule-system'
-                        : record.rule === 'RULE_WARNING'
-                        ? 'custom-row-rule-warning'
-                        : record.rule === 'RULE_SOS'
-                        ? 'custom-row-rule-sos'
-                        : 'custom-row-else'
-                }
-                style={{ height: '300px' }}
-                scroll={{ y: 440 }}
-            ></Table>
+            <div style={{ marginBottom: '22px' }}>
+                <Table
+                    columns={cols}
+                    dataSource={getConversationFromNotification.map((_notification, index) => ({
+                        index: index + 1,
+                        content: _notification.content,
+                        createdAt: `${moment(_notification.createdAt).format('DD-MM-YYYY')} lúc ${moment(
+                            _notification.createdAt,
+                        ).format('HH:mm a')}`,
+                        hasSeen: _notification.hasSeen,
+                        _id: _notification._id,
+                        rule: _notification.rule,
+                        conversation: _notification.conversation,
+                    }))}
+                    rowKey="index"
+                    rowClassName={(record, index) =>
+                        record.rule === 'RULE_DOCTOR_REMIND'
+                            ? 'custom-row-rule-doctor-remind'
+                            : record.rule === 'RULE_NOTIFICATION_REGISTER_SCHEDULE'
+                            ? 'custom-row-noti-reg-schedule'
+                            : record.rule === 'RULE_NOTIFICATION_CANCEL_SCHEDULE'
+                            ? 'custom-row-noti-cancel-schedule'
+                            : record.rule === 'RULE_SYSTEM'
+                            ? 'custom-row-rule-system'
+                            : record.rule === 'RULE_WARNING'
+                            ? 'custom-row-rule-warning'
+                            : record.rule === 'RULE_SOS'
+                            ? 'custom-row-rule-sos'
+                            : 'custom-row-else'
+                    }
+                    pagination={{
+                        pageSize: 8,
+                    }}
+                ></Table>
+            </div>
         </>
     );
 }

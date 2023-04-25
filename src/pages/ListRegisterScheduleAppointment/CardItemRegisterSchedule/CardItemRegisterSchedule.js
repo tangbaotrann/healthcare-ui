@@ -13,7 +13,7 @@ function CardItemRegisterSchedule({ schedule }) {
 
     const dispatch = useDispatch();
 
-    // console.log('schedule ->', schedule);
+    console.log('schedule ->', schedule);
     // console.log('record ->', record);
 
     const handleOpenModal = () => {
@@ -37,6 +37,15 @@ function CardItemRegisterSchedule({ schedule }) {
 
     return (
         <div className="content-cart-item">
+            {schedule.status ? (
+                <div className="content-cart-item-note-success-right">
+                    <i>Đã xác nhận</i>
+                </div>
+            ) : (
+                <div className="content-cart-item-note-await-right">
+                    <i>Đang chờ xác nhận</i>
+                </div>
+            )}
             <div className="content-cart-item-header">
                 <img className="content-cart-item-avatar" src={schedule?.doctor?.person?.avatar} alt="avatar" />
                 <h2 className="content-cart-item-username">BS: {schedule?.doctor?.person?.username}</h2>
@@ -51,6 +60,10 @@ function CardItemRegisterSchedule({ schedule }) {
                             {moment(schedule.day_exam).format('HH:mm a')} (Thời gian khám:{' '}
                             {schedule.schedule.time_per_conversation} phút)
                         </p>
+                    </div>
+                    <div className="content-cart-item-body-price">
+                        <img src={icons.iconHealth} alt="iconPrice" />
+                        <p className="content-cart-item-price">Đăng ký khám: {schedule.content_exam}</p>
                     </div>
                     <div className="content-cart-item-body-price">
                         <img src={icons.iconPrice} alt="iconPrice" />

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function InformationPatient({ infoPatient }) {
     return (
         <div className="info-patient">
@@ -7,7 +9,7 @@ function InformationPatient({ infoPatient }) {
             </div>
             <div className="info-detail">
                 <strong>Năm sinh: </strong>
-                <p className="info-text"> {infoPatient.dob}</p>
+                <p className="info-text"> {moment(infoPatient.dob).format('DD/MM/YYYY')}</p>
             </div>
             <div className="info-detail">
                 <strong>Địa chỉ: </strong>

@@ -149,7 +149,9 @@ function PatientList() {
                 onCancel={handleCancel}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { display: 'none' } }}
-                width={1000}
+                // style={{ height: '90vh' }}
+                width={2000}
+                centered={true}
             >
                 <BarChart
                     bmis={bmis}

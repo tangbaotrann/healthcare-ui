@@ -60,25 +60,22 @@ function TableListSchedule({ schedules }) {
         <>
             <TitleName>Danh Sách Đăng Ký Ca Làm Của Bác Sĩ</TitleName>
 
-            <Table
-                columns={cols}
-                dataSource={schedules.map((schedule, index) => ({
-                    _id: index + 1,
-                    time_per_conversation: `${schedule.time_per_conversation} phút`,
-                    fee: `${schedule.fee} VNĐ`,
-                    day: moment(schedule.day.day).format('dddd'),
-                    time: `${schedule.time.name} (${moment(new Date(schedule.time.time_start)).format(
-                        'HH:mm',
-                    )} -> ${moment(new Date(schedule.time.time_end)).format('HH:mm')})`,
-                    doctor: schedule.doctor.person.username,
-                }))}
-                rowKey="_id"
-                pagination={{
-                    pageSize: 8,
-                }}
-                style={{ height: '300px' }}
-                scroll={{ y: 380 }}
-            ></Table>
+            <div style={{ marginBottom: '12px' }}>
+                <Table
+                    columns={cols}
+                    dataSource={schedules.map((schedule, index) => ({
+                        _id: index + 1,
+                        time_per_conversation: `${schedule.time_per_conversation} phút`,
+                        fee: `${schedule.fee} VNĐ`,
+                        day: moment(schedule.day.day).format('dddd'),
+                        time: `${schedule.time.name} (${moment(new Date(schedule.time.time_start)).format(
+                            'HH:mm',
+                        )} -> ${moment(new Date(schedule.time.time_end)).format('HH:mm')})`,
+                        doctor: schedule.doctor.person.username,
+                    }))}
+                    rowKey="_id"
+                ></Table>
+            </div>
         </>
     );
 }

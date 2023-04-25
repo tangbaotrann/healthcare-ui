@@ -53,7 +53,7 @@ function ResultHealthMessage({ resultHeath, information }) {
             </div>
             <div className="result-health-message-item">
                 <strong>Năm sinh:</strong>
-                <p>{information.dob}</p>
+                <p>{moment(information.dob).format('DD/MM/YYYY')}</p>
             </div>
             <div className="result-health-message-item">
                 <strong>Nhóm máu:</strong>
@@ -77,6 +77,9 @@ function ResultHealthMessage({ resultHeath, information }) {
                             time_exam: moment(result.day_exam).format('HH:mm a'),
                         }))}
                         rowKey="index"
+                        pagination={{
+                            pageSize: 5,
+                        }}
                     ></Table>
                 </div>
             ) : (

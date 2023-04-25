@@ -1,3 +1,7 @@
+.echarts-for-react {
+    height: 235px !important;
+}
+
 .patient-list-chart {
     display: flex;
     flex-direction: column;
@@ -11,5 +15,4 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     padding-bottom: 4px;
-    /* margin-top: 110px; */
 }

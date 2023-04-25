@@ -35,6 +35,7 @@ function Comment({ blogPost, onHideComment, comments }) {
             }),
         );
         setValue('');
+        setNewImage([]);
         focusInputRef.current.focus();
     };
 
@@ -106,7 +107,7 @@ function Comment({ blogPost, onHideComment, comments }) {
             </div>
 
             {/* Input */}
-            <input
+            <textarea
                 className="input-comments"
                 ref={focusInputRef}
                 value={value}

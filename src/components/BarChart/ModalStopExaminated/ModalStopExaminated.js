@@ -40,7 +40,7 @@ function ModalStopExaminated({ getIdDoctor, infoPatient, handleCancel }) {
 
     return (
         <>
-            <Button className="stop-examinated-patient-btn" onClick={handleOpenModal}>
+            <Button className="stop-examinated-patient-btn" onClick={handleOpenModal} block>
                 Dừng điều trị bệnh nhân
             </Button>
 

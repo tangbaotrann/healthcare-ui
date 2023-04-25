@@ -1,29 +1,27 @@
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
-import { Alert, Button, Form, Input, Table, message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form, Input, Table } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateBMIForPatient } from '~/redux/features/metric/bmisSlice';
-import { fetchApiCreateBMIForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsBMI({ patients, bmiPatient }) {
+    const [form] = Form.useForm();
+
     const dispatch = useDispatch();
 
-    const messageReject = useSelector(fetchApiCreateBMIForPatientMessageRejectedSelector);
+    // const messageReject = useSelector(fetchApiCreateBMIForPatientMessageRejectedSelector);
 
     // console.log('messageReject', messageReject);
     // console.log('bmiPatient', bmiPatient);
+    // console.log('inputClearHref', inputClearHref);
 
     const handleSubmitForm = (values) => {
         if (values) {
             dispatch(fetchApiCreateBMIForPatient(values));
 
-            if (messageReject !== null || messageReject.status === 'fail') {
-                return;
-            } else {
-                message.success('Bạn đã tạo thành công chỉ số BMI.');
-            }
+            form.resetFields();
         }
     };
 
@@ -87,15 +85,16 @@ function MetricsBMI({ patients, bmiPatient }) {
         <div className="metrics-bmi-wrapper">
             <TitleName>Chỉ Số BMI</TitleName>
 
-            <div className="message-rejected">
+            {/* <div className="message-rejected">
                 {messageReject !== null && <Alert type="error" message={messageReject.message} />}
-            </div>
+            </div> */}
 
             <Form
                 onFinish={handleSubmitForm}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
+                form={form}
                 fields={[
                     { name: ['patient'], value: patients?.patient?._id },
                     { name: ['gender'], value: patients?.patient?.person?.gender },

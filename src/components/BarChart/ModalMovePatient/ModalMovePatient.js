@@ -45,7 +45,7 @@ function ModalMovePatient({ getIdDoctor, infoPatient, handleCancel }) {
 
     return (
         <>
-            <Button className="move-patient-btn" onClick={handleOpenModal}>
+            <Button className="move-patient-btn" onClick={handleOpenModal} block>
                 Chuyển bệnh nhân
             </Button>
 

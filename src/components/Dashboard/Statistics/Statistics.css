@@ -41,6 +41,7 @@
 }
 
 .item-side-bottom {
+    text-align: center;
     color: var(--black);
     font-size: 1.4rem;
     font-weight: 700;
