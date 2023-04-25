@@ -1,7 +1,7 @@
 .wrapper-blog {
     display: flex;
     width: 100%;
-    height: 595px;
+    height: 82vh;
     border-radius: 6px;
     background-color: var(--modal-meeting);
     box-shadow: 0 0 22px 0 var(--modal-meeting-box-shadow);
@@ -24,7 +24,7 @@
 /* Mid */
 .blog-middle-content {
     flex: 10;
-    height: 595px;
+    height: 82vh;
     overflow-y: scroll;
     overflow-x: overlay;
 }
@@ -324,7 +324,10 @@
 
 /* Right */
 .post-detail-content-right {
-    margin-left: 24px;
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: 6px;
+    margin-left: 12px;
     flex: 8;
 }
 
@@ -522,6 +525,7 @@
     border-radius: 6px;
     border: none;
     outline: none;
+    font-family: var(--font-family) !important;
 }
 
 .input-comments:focus {

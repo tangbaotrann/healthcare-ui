@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
 import socket from '~/utils/socket';
@@ -60,10 +61,11 @@ export const fetchApiCreateScheduleDoctor = createAsyncThunk(
                 },
             );
             // console.log('res', res.data.data);
+            message.success('Bạn đã tạo thành công ca làm.');
 
             return res.data.data;
         } catch (err) {
-            console.log({ err });
+            message.error(`${err.response.data.message}`);
         }
     },
 );
@@ -184,12 +186,29 @@ const scheduleDoctor = createSlice({
         day_of_week: new Date(),
         allScheduleDetailOfPatient: [],
         deleteScheduleMedical: [],
+        messageReject: null,
     },
     reducers: {
         btnOptionSelectDayOfWeek: (state, action) => {
             if (action.payload) {
                 state.day_of_week = action.payload;
             }
+        },
+        arrivalScheduleDetailOfPatientStatusFalse: (state, action) => {
+            const id_schedule_detail = action.payload;
+
+            console.log('schedule patient del slice ->', id_schedule_detail);
+
+            const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
+                (_schedule) => _schedule._id === id_schedule_detail,
+            );
+
+            // cut
+            if (spliceSchedule > -1) {
+                state.allScheduleDetailOfPatient.splice(spliceSchedule, 1);
+            }
+
+            state.deleteScheduleMedical = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -207,6 +226,9 @@ const scheduleDoctor = createSlice({
             .addCase(fetchApiAllShiftsDoctor.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.shifts = action.payload;
+            })
+            .addCase(fetchApiCreateScheduleDoctor.rejected, (state, action) => {
+                state.messageReject = action.payload;
             })
             .addCase(fetchApiCreateScheduleDoctor.fulfilled, (state, action) => {
                 state.data.push(action.payload);

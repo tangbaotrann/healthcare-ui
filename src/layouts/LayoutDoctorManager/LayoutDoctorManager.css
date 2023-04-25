@@ -22,13 +22,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 4px;
+    margin-top: 0px;
     margin-right: 16px;
-    margin-left: 16px;
 
-    background-color: var(--modal-out-site);
-    box-shadow: 0 0 18px 0 var(--modal-out-site); 
-    border-radius: 6px;
+    background-color: var(--white);
+    box-shadow: 0 0 18px 0 var(--modal-out-site);
 }
 
 .site-layout-header-introduce {

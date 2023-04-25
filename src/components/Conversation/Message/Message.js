@@ -53,7 +53,7 @@ function Message({ messages, conversation, infoUser }) {
     console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
-    // console.log('conversation ->', conversation);
+    console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
     // console.log('recordConversation ->', recordConversation);
     // console.log('onlineUsers ->', onlineUsers);
@@ -71,7 +71,7 @@ function Message({ messages, conversation, infoUser }) {
         socket.emit('add_user', infoDoctor._id);
 
         socket.on('get_users', (users) => {
-            // console.log('USER - ONLINE -', users);
+            console.log('USER - ONLINE -', users);
             setOnlineUsers(users.filter((_user) => _user.userId === conversation.member._id));
         });
 

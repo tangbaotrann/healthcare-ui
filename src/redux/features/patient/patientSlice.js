@@ -64,6 +64,25 @@ export const fetchApiScheduleMedicalAppointmentAwait = createAsyncThunk(
     },
 );
 
+export const fetchApiScheduleMedicalAppointmentResultExam = createAsyncThunk(
+    'patient/fetchApiScheduleMedicalAppointmentResultExam',
+    async (getIdDoctor) => {
+        try {
+            if (getIdDoctor) {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}?filter=view_result_exam`,
+                );
+
+                console.log('res result exam ->', res.data.data);
+
+                return res.data.data;
+            }
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 // fetch api confirm (2 Xác nhận khám bệnh)
 export const fetchApiConfirmScheduleMedical = createAsyncThunk(
     'patient/fetchApiConfirmScheduleMedical',
@@ -317,14 +336,40 @@ const patientSlice = createSlice({
         btnOptionSelectedMeeting: null,
         isLoading: false,
         patientRegisterSchedule: [],
+        resultExam: [],
     },
     reducers: {
         arrivalFilterMeeting: (state, action) => {
             state.btnOptionSelectedMeeting = action.payload;
         },
+        arrivalConfirmScheduleMedicalAppointment: (state, action) => {
+            console.log('ac.pay 346 ->', action.payload);
+
+            const _update = state.scheduleMedicalAppointment.find(
+                (_scheduleDetail) => _scheduleDetail._id === action.payload._id,
+            );
+
+            if (!_update) {
+                state.scheduleMedicalAppointment.push(action.payload);
+            }
+        },
+        arrivalDeleteScheduleMedicalAppointment: (state, action) => {
+            console.log('ac.pay 357 ->', action.payload); // -> id
+
+            const _splice = state.scheduleMedicalAppointment.findIndex(
+                (_scheduleDetail) => _scheduleDetail._id === action.payload,
+            );
+
+            if (_splice > -1) {
+                state.scheduleMedicalAppointment.splice(_splice, 1);
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiScheduleMedicalAppointmentResultExam.fulfilled, (state, action) => {
+                state.resultExam = action.payload;
+            })
             .addCase(fetchApiScheduleDetailByIdDoctor.pending, (state, action) => {
                 state.isLoading = true;
             })

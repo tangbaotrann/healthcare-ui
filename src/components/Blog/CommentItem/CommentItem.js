@@ -1,8 +1,9 @@
 // lib
+import { Image } from 'antd';
 import moment from 'moment';
 
 function CommentItem({ comments }) {
-    // console.log('comments ->', comments);
+    console.log('comments ->', comments);
     return (
         <>
             {comments.length > 0 ? (
@@ -31,7 +32,48 @@ function CommentItem({ comments }) {
                                                 ? comment.doctor_id.person.username
                                                 : null}
                                         </p>
-                                        <p className="content-comments-item-info-content">{comment.content}</p>
+
+                                        {comment.content && comment.images.length > 0 ? (
+                                            <>
+                                                <p
+                                                    style={{ marginBottom: '10px', marginLeft: '2px' }}
+                                                    className="content-comments-item-info-content"
+                                                >
+                                                    {comment.content}
+                                                </p>
+                                                <div className="display-message-item-image">
+                                                    {comment.images.length === 1 ? (
+                                                        <Image src={comment.images[0]} className="message-item-image" />
+                                                    ) : comment.images.length > 1 ? (
+                                                        comment.images.map((_image, index) => {
+                                                            return (
+                                                                <div className="display-images" key={index}>
+                                                                    <Image
+                                                                        className="message-item-image"
+                                                                        src={_image}
+                                                                    />
+                                                                </div>
+                                                            );
+                                                        })
+                                                    ) : null}
+                                                </div>
+                                            </>
+                                        ) : comment.images.length === 1 ? (
+                                            <Image src={comment.images[0]} className="message-item-image" />
+                                        ) : comment.images.length > 1 ? (
+                                            // Image
+                                            <div className="display-message-item-image">
+                                                {comment.images.map((_image, index) => {
+                                                    return (
+                                                        <div className="display-images" key={index}>
+                                                            <Image className="message-item-image" src={_image} />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <p className="content-comments-item-info-content">{comment.content}</p>
+                                        )}
                                     </div>
                                 </div>
                                 <span className="content-comments-item-time">

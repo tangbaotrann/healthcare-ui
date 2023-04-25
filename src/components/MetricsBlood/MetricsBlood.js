@@ -1,16 +1,16 @@
-import { Alert, Button, Form, Input, Table, message } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form, Input, Table } from 'antd';
+import { useDispatch } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateBloodForPatient } from '~/redux/features/metric/bmisSlice';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
-import { fetchApiCreateBloodForPatientForPatientMessageRejectedSelector } from '~/redux/selector';
 
 function MetricsBlood({ patients, bloodPatient }) {
     const dispatch = useDispatch();
+    const [form] = Form.useForm();
 
-    const messageReject = useSelector(fetchApiCreateBloodForPatientForPatientMessageRejectedSelector);
+    // const messageReject = useSelector(fetchApiCreateBloodForPatientForPatientMessageRejectedSelector);
 
     // console.log('bloodPatient', bloodPatient);
 
@@ -18,11 +18,7 @@ function MetricsBlood({ patients, bloodPatient }) {
         if (values) {
             dispatch(fetchApiCreateBloodForPatient(values));
 
-            if (messageReject !== null || messageReject.status === 'fail') {
-                return;
-            } else {
-                message.success('Bạn đã tạo thành công chỉ số huyết áp.');
-            }
+            form.resetFields();
         }
     };
 
@@ -89,15 +85,16 @@ function MetricsBlood({ patients, bloodPatient }) {
         <div className="metrics-blood-wrapper">
             <TitleName>Chỉ Số Huyết Áp</TitleName>
 
-            <div className="message-rejected">
+            {/* <div className="message-rejected">
                 {messageReject !== null && <Alert type="error" message={messageReject.message} />}
-            </div>
+            </div> */}
 
             <Form
                 onFinish={handleSubmitForm}
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
+                form={form}
                 fields={[{ name: ['patient'], value: patients?.patient?._id }]}
                 className="form-submit-metrics"
             >

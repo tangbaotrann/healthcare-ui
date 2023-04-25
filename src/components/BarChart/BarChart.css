@@ -1,6 +1,10 @@
-.info-patient {
+.display-modal-patient-list {
     display: flex;
-    flex-direction: column;
+}
+
+.info-patient {
+    /* display: flex; */
+    /* flex-direction: column; */
 }
 
 .info-detail {
@@ -20,15 +24,15 @@
 }
 
 .container-chart {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     width: 100%;
+    flex: 10;
 }
 
 .bmi-glycemic-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
 
@@ -53,7 +57,8 @@
 
 .filter-glycemic {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    margin-left: 22px;
 }
 
 .message-status-title {
@@ -109,6 +114,7 @@
     font-size: 1.6rem;
     font-weight: 600;
     padding: 20px;
+    margin-top: 24px;
     line-height: 0;
     text-align: center;
     border-radius: 100px;
@@ -126,10 +132,15 @@
 }
 
 /* Footer buttons */
+.container-modal-patient-list {
+    /* display: flex; */
+    /* flex-direction: column; */
+    flex: 3;
+}
+
 .display-btn-modal-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* display: flex; */
+    /* flex-direction: column; */
 }
 
 /* remind */
@@ -145,6 +156,7 @@
     font-size: 1.6rem;
     font-weight: 600;
     padding: 20px;
+    margin: 16px 0;
     line-height: 0;
     text-align: center;
     border-radius: 100px;
@@ -168,6 +180,7 @@
     font-size: 1.6rem;
     font-weight: 600;
     padding: 20px;
+    margin-bottom: 16px;
     line-height: 0;
     text-align: center;
     border-radius: 100px;
@@ -207,4 +220,10 @@
     color: var(--white) !important;
     background-color: var(--blu);
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
+}
+
+.display-chart-gly-blood {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
