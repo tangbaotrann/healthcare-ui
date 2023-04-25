@@ -210,6 +210,18 @@ const scheduleDoctor = createSlice({
 
             state.deleteScheduleMedical = action.payload;
         },
+        arrivalDeleteScheduleMedicalAppointmentAwait: (state, action) => {
+            console.log('ac.pay 214 ->', action.payload);
+
+            // scheduleMedicalAppointmentAwait
+            const _splice = state.allScheduleDetailOfPatient.findIndex(
+                (_schedule_detail) => _schedule_detail._id === action.payload._id,
+            );
+
+            if (_splice > -1) {
+                state.allScheduleDetailOfPatient.splice(_splice, 1);
+            }
+        },
     },
     extraReducers: (builder) => {
         builder
