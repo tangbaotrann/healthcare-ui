@@ -128,23 +128,28 @@ function DoctorManager() {
             {(awaitAccept?.data?.is_accepted === false || checkAwaitAccept?.is_accepted === false) && (
                 <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
             )}
+            {(isLoadingScheduleDoctor || isLoadingNotification || isLoadingUser || isLoadingScheduleDetail) && (
+                <div className="loading-main">
+                    <div class="loader"></div>
+                </div>
+            )}
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === constants.layoutDashboard || changeLayout === null ? (
                     <>
-                        {isLoadingScheduleDoctor ||
+                        {/* {isLoadingScheduleDoctor ||
                         isLoadingNotification ||
                         isLoadingUser ||
                         isLoadingScheduleDetail ? (
                             <LoadingOutlined className="icon-loading-dashboard" spin />
                         ) : (
-                            <Dashboard
-                                schedules={schedules}
-                                totalFee={totalFee}
-                                feeOfPatientResultedExam={feeOfPatientResultedExam}
-                                totalFeeOfWeek={totalFeeOfWeek}
-                                totalFeeOfMonth={totalFeeOfMonth}
-                            />
-                        )}
+                            )} */}
+                        <Dashboard
+                            schedules={schedules}
+                            totalFee={totalFee}
+                            feeOfPatientResultedExam={feeOfPatientResultedExam}
+                            totalFeeOfWeek={totalFeeOfWeek}
+                            totalFeeOfMonth={totalFeeOfMonth}
+                        />
                     </>
                 ) : changeLayout === constants.layoutListRegisterSchedule ? (
                     <CreateScheduleDoctor infoUser={infoUser} schedules={schedules} />

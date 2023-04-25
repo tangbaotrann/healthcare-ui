@@ -11,6 +11,7 @@ import {
 } from '~/redux/selector';
 import CardItemRegisterSchedule from '../CardItemRegisterSchedule';
 import socket from '~/utils/socket';
+import patientSlice from '~/redux/features/patient/patientSlice';
 
 function CardListRegisterSchedule({ patients }) {
     const [status, setStatus] = useState(true);
@@ -31,12 +32,20 @@ function CardListRegisterSchedule({ patients }) {
     }, []);
 
     useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', ({ schedule_detail }) => {
+            console.log('notification_register_schedule_from_patient_success', schedule_detail);
+            dispatch(scheduleDoctor.actions.arrivalDeleteScheduleMedicalAppointmentAwait(schedule_detail));
+        });
+    }, []);
+
+    useEffect(() => {
         dispatch(fetchApiGetAllScheduleDetailOfPatient(patients?.patient?._id));
     }, [patients?.patient?._id]);
 
     // handle status true
     const handleFilterRegisterStatusTrue = () => {
         setStatus(true);
+        dispatch(fetchApiGetAllScheduleDetailOfPatient(patients?.patient?._id));
     };
 
     // handle status false

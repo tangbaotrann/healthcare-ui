@@ -66,10 +66,6 @@ function ListRegisterScheduleAppointment() {
 
                     <div className="display-calls">
                         <Link
-                            // patients.patient.person.username
-                            // ${parserUTF8Config(
-                            //     patients.patient.person.username,
-                            // )
                             to={`${endPoints.meetingRoom}/${roomId.room_id}/${roomId.info_patient.replace(/\s/g, '')}`}
                             target="_blank"
                             onClick={handleHideModal}

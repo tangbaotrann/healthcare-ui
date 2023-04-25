@@ -473,6 +473,21 @@ const patientSlice = createSlice({
                 socket.emit('notification_confirm_register_schedule', {
                     data: action.payload,
                 });
+            })
+            .addCase(fetchApiResponseContentAfterExamiation.fulfilled, (state, action) => {
+                console.log('notification_register_schedule_from_patient', action.payload);
+
+                const _splice = state.scheduleMedicalAppointmentAwait.findIndex(
+                    (_schedule_detail) => _schedule_detail._id === action.payload.schedule_detail._id,
+                );
+
+                if (_splice > -1) {
+                    state.scheduleMedicalAppointmentAwait.splice(_splice, 1);
+                }
+
+                socket.emit('notification_register_schedule_from_patient', {
+                    data: action.payload,
+                });
             });
     },
 });

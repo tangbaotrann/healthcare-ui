@@ -77,7 +77,7 @@ function StatisticsChart({ feeOfPatientResultedExam }) {
 
     return (
         <div className="statistics-chart-wrapper">
-            <ReactECharts option={option} />
+            <ReactECharts option={option} className="statistics-chart-dashboard" />
 
             <div className="statistics-chart-note-text">
                 <p className="statistics-chart-note-text-title">Biểu đồ: </p>
