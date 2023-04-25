@@ -12,7 +12,7 @@ function MeetScreen() {
     const { roomId, username } = useParams();
 
     // console.log('roomId', roomId);
-    console.log('username', username);
+    // console.log('username', username.replace(/\s/g, ''));
     // console.log('userId', userId);
 
     const myMeeting = async (element) => {
@@ -25,8 +25,7 @@ function MeetScreen() {
             serverSecret,
             roomId,
             Date.now().toString(),
-            // parserUTF8Config(username)
-            `${username ? parserUTF8Config(username) : 'BOT'}`,
+            `${username ? parserUTF8Config(username.toString()).replace(/\s/g, '') : 'BOT'}`,
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
