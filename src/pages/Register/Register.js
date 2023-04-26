@@ -1,11 +1,10 @@
 // lib
-import { KeyOutlined } from '@ant-design/icons/lib/icons';
+import { KeyOutlined, PhoneOutlined } from '@ant-design/icons/lib/icons';
 import { Form, Input, Button, Select, Alert } from 'antd';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 // me
 import './Register.css';
@@ -13,6 +12,8 @@ import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
 import { useUserAuth } from '~/context/UserAuthContext';
 import axios from 'axios';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import { parsePhoneNumber } from 'react-phone-number-input';
 
 function Register() {
     const [number, setNumber] = useState('');
@@ -20,21 +21,35 @@ function Register() {
     const [confirmOTP, setConfirmOTP] = useState('');
     const [rules, setRules] = useState('');
     const [messageError, setMessageError] = useState(false);
-
-    const dispatch = useDispatch();
+    const [checkPhone, setCheckPhone] = useState(false);
+    const [checkOTP, setCheckOTP] = useState(false);
 
     const { setUpRecaptcha } = useUserAuth();
 
     const navigate = useNavigate();
 
     // console.log('rules ->', rules);
+    // console.log('registerSuccess ->', registerSuccess);
 
     // handle send otp
     const handleOnFinishSendOTP = async (values) => {
         const { phone_number, rule, password } = values;
 
         if (values) {
-            const formatPhone = phone_number.replace('+84', '0');
+            const validatorPhone = isValidPhoneNumber(phone_number);
+            const parsePhone = parsePhoneNumber(phone_number);
+
+            const formatPhone = parsePhone.number.replace('+84', '0');
+
+            // console.log('formatPhone', formatPhone);
+            // console.log('validator', validatorPhone);
+
+            if (validatorPhone === false) {
+                setCheckPhone(true);
+                setMessageError(false);
+                return;
+            }
+
             await axios
                 .post(
                     `${process.env.REACT_APP_BASE_URL}auth/register`,
@@ -47,35 +62,33 @@ function Register() {
                         headers: { Authorization: '***' },
                     },
                 )
-                .then((res) => {
+                .then(async (res) => {
                     // dispatch(fetchApiRegister(values));
                     // console.log('res ->', res.data.data);
+
                     localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
-                    if (rule === 'doctor') {
-                        navigate(`${endPoints.createInfo}`);
-                    } else if (rule === 'patient') {
-                        navigate(`${endPoints.createInfoPatient}`);
+                    try {
+                        const __res = await setUpRecaptcha(phone_number);
+                        console.log(__res);
+                        setConfirmOTP(__res);
+                        setRules(rule);
+                        setFlag(true);
+                        setCheckPhone(false);
+                        setMessageError(false);
+                    } catch (err) {
+                        console.log({ err });
                     }
                 })
                 .catch((err) => {
-                    setMessageError(true);
+                    if (validatorPhone === false) {
+                        setCheckPhone(true);
+                        setMessageError(false);
+                    } else {
+                        setMessageError(true);
+                        setCheckPhone(false);
+                    }
                 });
-        }
-
-        try {
-            // const res = await setUpRecaptcha(phone_number);
-            // console.log(res);
-            // setConfirmOTP(res);
-            // setRules(rule);
-            // setFlag(true);
-            // if (rule === 'doctor') {
-            //     navigate(`${endPoints.createInfo}`);
-            // } else if (rules === 'patient') {
-            //     navigate(`${endPoints.createInfoPatient}`);
-            // }
-        } catch (err) {
-            console.log({ err });
         }
     };
 
@@ -94,19 +107,27 @@ function Register() {
                 navigate(`${endPoints.createInfoPatient}`);
             }
         } catch (err) {
+            setCheckOTP(true);
             console.log({ err });
         }
     };
 
     return (
         <BackgroundOutSite>
-            {messageError && (
+            {messageError ? (
                 <Alert
                     message="Số điện thoại đã có người đăng ký. Vui lòng nhập số khác!"
                     type="error"
                     style={{ marginBottom: '12px' }}
                 />
-            )}
+            ) : checkPhone ? (
+                <Alert
+                    message="Số điện thoại của bạn không hợp lệ. Vui lòng thử lại!"
+                    type="error"
+                    style={{ marginBottom: '12px' }}
+                />
+            ) : null}
+
             <Form
                 onFinish={handleOnFinishSendOTP}
                 onFinishFailed={(error) => {
@@ -193,7 +214,7 @@ function Register() {
                 </Form.Item>
 
                 {/* reCaptcha */}
-                {/* <div id="recaptcha-container" /> */}
+                <div id="recaptcha-container"></div>
 
                 {/* Register button */}
                 <div className="register-footer">
@@ -204,8 +225,17 @@ function Register() {
                 </div>
             </Form>
 
+            {/* message error OTP */}
+            {checkOTP ? (
+                <Alert
+                    type="error"
+                    message="Mã OTP không chính xác. Vui lòng kiểm tra lại!"
+                    style={{ marginBottom: '12px' }}
+                />
+            ) : null}
+
             {/* Verify captcha (otp) */}
-            {/* <Form
+            <Form
                 onFinish={handleOnFinishVerifyOTP}
                 onFinishFailed={(error) => {
                     console.log({ error });
@@ -226,12 +256,12 @@ function Register() {
                 </Form.Item>
 
                 <div className="register-footer">
-                    <Link to="/login">Quay lại</Link>
+                    <Link to={`${endPoints.register}`}>Quay lại</Link>
                     <Button type="primary" htmlType="submit">
                         Xác nhận mã OTP
                     </Button>
                 </div>
-            </Form> */}
+            </Form>
         </BackgroundOutSite>
     );
 }

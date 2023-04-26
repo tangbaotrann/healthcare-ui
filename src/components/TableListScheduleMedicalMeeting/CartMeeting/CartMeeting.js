@@ -31,7 +31,6 @@ function CartMeeting({ infoUser }) {
     const dispatch = useDispatch();
 
     const scheduleMedicalsMeetingFilter = useSelector(scheduleMedicalMeetingFilterOfDoctor);
-    const isLoading = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
     const infoDoctor = useSelector(getDoctorLoginFilter);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
@@ -104,89 +103,85 @@ function CartMeeting({ infoUser }) {
                 {record ? <Conversation infoUser={infoUser} recordConversation={record} /> : null}
             </Modal>
 
-            {isLoading ? (
-                <Skeleton active />
-            ) : (
-                <>
-                    {scheduleMedicalsMeetingFilter.length > 0 ? (
-                        scheduleMedicalsMeetingFilter.map((_scheduleMedicalMeeting) => {
-                            return (
-                                <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
-                                    <Image src={logo.iconLogo192x192} className="schedule-medical-meeting-cart-image" />
+            <>
+                {scheduleMedicalsMeetingFilter.length > 0 ? (
+                    scheduleMedicalsMeetingFilter.map((_scheduleMedicalMeeting) => {
+                        return (
+                            <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
+                                <Image src={logo.iconLogo192x192} className="schedule-medical-meeting-cart-image" />
 
-                                    <div className="schedule-medical-meeting-cart-info">
-                                        <div className="schedule-medical-meeting-cart-info-item">
-                                            <img className="icon-item" src={icons.iconUser} alt="icon-user" />
-                                            <p className="desc-item">
-                                                {_scheduleMedicalMeeting?.conversations?.member?.username}
-                                            </p>
-                                        </div>
-                                        <div className="schedule-medical-meeting-cart-info-item">
-                                            <img className="icon-item-time" src={icons.iconTime} alt="icon-time" />
-                                            <p className="desc-item">
-                                                {moment(_scheduleMedicalMeeting?.days?.day).format('dddd')} -{' '}
-                                                {moment(_scheduleMedicalMeeting?.day_exam).format('DD/MM/YYYY')} -{' '}
-                                                {_scheduleMedicalMeeting?.shifts?.name} (
-                                                {moment(new Date(_scheduleMedicalMeeting?.shifts?.time_start)).format(
-                                                    'HH:mm',
-                                                )}
-                                                {' -> '}
-                                                {moment(new Date(_scheduleMedicalMeeting?.shifts?.time_end)).format(
-                                                    'HH:mm',
-                                                )}
-                                                )
-                                            </p>
-                                        </div>
-                                        <div className="schedule-medical-meeting-cart-info-item">
-                                            <img className="icon-item" src={icons.iconHealth} alt="icon-health" />
-                                            <Paragraph
-                                                ellipsis={{
-                                                    rows: 1,
-                                                    expandable: true,
-                                                    symbol: 'Xem thêm',
-                                                }}
-                                                className="desc-item"
-                                            >
-                                                {_scheduleMedicalMeeting?.content_exam}
-                                            </Paragraph>
-                                        </div>
-                                        <div className="schedule-medical-meeting-cart-info-item">
-                                            <img className="icon-item" src={icons.iconPrice} alt="icon-price" />
-                                            <p className="desc-item">{_scheduleMedicalMeeting?.schedule?.fee} VNĐ</p>
-                                        </div>
-
-                                        {/* Button */}
-                                        <Link
-                                            to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor?.person?.username}`}
-                                            target="_blank"
-                                            style={{ width: '100%' }}
-                                        >
-                                            <Button
-                                                className="schedule-medical-meeting-cart-btn"
-                                                onClick={() => handleCallGetInfoUser(_scheduleMedicalMeeting)}
-                                            >
-                                                Tham gia ngay
-                                            </Button>
-                                        </Link>
-
-                                        {/* Nhắn tin */}
-                                        <Button
-                                            className="cart-meeting-show-conversation-message"
-                                            onClick={() => handleShowModalConversation(_scheduleMedicalMeeting)}
-                                        >
-                                            Nhắn tin
-                                        </Button>
+                                <div className="schedule-medical-meeting-cart-info">
+                                    <div className="schedule-medical-meeting-cart-info-item">
+                                        <img className="icon-item" src={icons.iconUser} alt="icon-user" />
+                                        <p className="desc-item">
+                                            {_scheduleMedicalMeeting?.conversations?.member?.username}
+                                        </p>
                                     </div>
+                                    <div className="schedule-medical-meeting-cart-info-item">
+                                        <img className="icon-item-time" src={icons.iconTime} alt="icon-time" />
+                                        <p className="desc-item">
+                                            {moment(_scheduleMedicalMeeting?.days?.day).format('dddd')} -{' '}
+                                            {moment(_scheduleMedicalMeeting?.day_exam).format('DD/MM/YYYY')} -{' '}
+                                            {_scheduleMedicalMeeting?.shifts?.name} (
+                                            {moment(new Date(_scheduleMedicalMeeting?.shifts?.time_start)).format(
+                                                'HH:mm',
+                                            )}
+                                            {' -> '}
+                                            {moment(new Date(_scheduleMedicalMeeting?.shifts?.time_end)).format(
+                                                'HH:mm',
+                                            )}
+                                            )
+                                        </p>
+                                    </div>
+                                    <div className="schedule-medical-meeting-cart-info-item">
+                                        <img className="icon-item" src={icons.iconHealth} alt="icon-health" />
+                                        <Paragraph
+                                            ellipsis={{
+                                                rows: 1,
+                                                expandable: true,
+                                                symbol: 'Xem thêm',
+                                            }}
+                                            className="desc-item"
+                                        >
+                                            {_scheduleMedicalMeeting?.content_exam}
+                                        </Paragraph>
+                                    </div>
+                                    <div className="schedule-medical-meeting-cart-info-item">
+                                        <img className="icon-item" src={icons.iconPrice} alt="icon-price" />
+                                        <p className="desc-item">{_scheduleMedicalMeeting?.schedule?.fee} VNĐ</p>
+                                    </div>
+
+                                    {/* Button */}
+                                    <Link
+                                        to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor?.person?.username}`}
+                                        target="_blank"
+                                        style={{ width: '100%' }}
+                                    >
+                                        <Button
+                                            className="schedule-medical-meeting-cart-btn"
+                                            onClick={() => handleCallGetInfoUser(_scheduleMedicalMeeting)}
+                                        >
+                                            Tham gia ngay
+                                        </Button>
+                                    </Link>
+
+                                    {/* Nhắn tin */}
+                                    <Button
+                                        className="cart-meeting-show-conversation-message"
+                                        onClick={() => handleShowModalConversation(_scheduleMedicalMeeting)}
+                                    >
+                                        Nhắn tin
+                                    </Button>
                                 </div>
-                            );
-                        })
-                    ) : (
-                        <p className="message-notification-cart-meeting">
-                            <i>-- Hiện tại bạn chưa có cuộc hẹn khám --</i>
-                        </p>
-                    )}
-                </>
-            )}
+                            </div>
+                        );
+                    })
+                ) : (
+                    <p className="message-notification-cart-meeting">
+                        <i>-- Hiện tại bạn chưa có cuộc hẹn khám --</i>
+                    </p>
+                )}
+            </>
 
             {checkLeavedRoom !== null ? (
                 <ContentAfterExaminated

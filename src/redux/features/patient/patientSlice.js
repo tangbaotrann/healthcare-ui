@@ -367,7 +367,11 @@ const patientSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiScheduleMedicalAppointmentResultExam.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiScheduleMedicalAppointmentResultExam.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.resultExam = action.payload;
             })
             .addCase(fetchApiScheduleDetailByIdDoctor.pending, (state, action) => {
@@ -385,7 +389,11 @@ const patientSlice = createSlice({
                 state.scheduleMedicalAppointment = action.payload;
             })
             // lịch chờ khám
+            .addCase(fetchApiScheduleMedicalAppointmentAwait.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiScheduleMedicalAppointmentAwait.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.scheduleMedicalAppointmentAwait = action.payload;
             })
             .addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {

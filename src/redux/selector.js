@@ -6,6 +6,8 @@ import moment from 'moment';
 // find user doctor by token
 export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.doctorByToken;
 export const isLoadingUserDoctorByTokenSelector = (state) => state.userSlice.isLoading;
+export const isLoadingFetchApiLoginSelector = (state) => state.userSlice.isLoading;
+export const isLoadingFetchApiForgotPasswordSelector = (state) => state.userSlice.isLoadingForgotPassword;
 
 // all user doctor
 export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
@@ -31,6 +33,7 @@ export const fetchApiAllCreateScheduleDoctorSelector = (state) => state.schedule
 export const isLoadingScheduleDoctorSelector = (state) => state.scheduleDoctor.isLoading;
 export const fetchApiAllCreateDaysDoctorSelector = (state) => state.scheduleDoctor.days;
 export const fetchApiAllShiftsDoctorSelector = (state) => state.scheduleDoctor.shifts;
+export const isLoadingAllShiftsDoctorSelector = (state) => state.scheduleDoctor.isLoading;
 export const fetchApiScheduleByIdDoctorSelector = (state) => state.scheduleDoctor.idDoctor;
 export const fetchApiAllScheduleDetailsSelector = (state) => state.scheduleDoctor.scheduleDetails;
 export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.day_of_week;
