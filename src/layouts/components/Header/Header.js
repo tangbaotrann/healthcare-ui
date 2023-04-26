@@ -152,7 +152,11 @@ function Header({ checkUserLogin, patients }) {
                                 </Link>
                             </h4>
                             <h4 className="section-right-register">
-                                <Link to={endPoints.register} className="register">
+                                <Link
+                                    to={endPoints.register}
+                                    className="register"
+                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                >
                                     Đăng ký
                                 </Link>
                             </h4>

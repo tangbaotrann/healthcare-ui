@@ -119,43 +119,54 @@ function InformationPatient({ patients }) {
                         <i>* Được phụ trách khám bởi Bác sĩ:</i>
                     </p>
                 </div>
-                <div className="info-patient-item">
-                    <div className="info-patient-display-footer">
-                        <Image
-                            src={patients?.patient?.doctor_glycemic_id?.person?.avatar}
-                            className="info-patient-avatar-doctor"
-                            alt="avatar-doctor"
-                        />
-                        <p className="info-patient-item-desc" style={{ textAlign: 'center' }}>
-                            {patients?.patient?.doctor_glycemic_id?.person?.username}
-                        </p>
-                        <div style={{ textAlign: 'center' }}>
-                            <Rate
-                                defaultValue={patients?.patient?.doctor_glycemic_id?.rating}
-                                style={{ fontSize: '1.3rem' }}
-                                disabled
-                            />
+                {patients?.patient?.doctor_glycemic_id || patients?.patient?.doctor_blood_id ? (
+                    <>
+                        <div className="info-patient-item">
+                            <div className="info-patient-display-footer">
+                                <Image
+                                    src={patients?.patient?.doctor_glycemic_id?.person?.avatar}
+                                    className="info-patient-avatar-doctor"
+                                    alt="avatar-doctor"
+                                />
+                                <p className="info-patient-item-desc" style={{ textAlign: 'center' }}>
+                                    {patients?.patient?.doctor_glycemic_id?.person?.username}
+                                </p>
+                                <div style={{ textAlign: 'center' }}>
+                                    <Rate
+                                        defaultValue={patients?.patient?.doctor_glycemic_id?.rating}
+                                        style={{ fontSize: '1.3rem' }}
+                                        disabled
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="info-patient-item">
-                    <p className="info-patient-item-label">Năm sinh: </p>
-                    <p className="info-patient-item-desc">
-                        {moment(patients?.patient?.doctor_glycemic_id?.person?.dob).format('DD/MM/YYYY')}
+
+                        <div className="info-patient-item">
+                            <p className="info-patient-item-label">Năm sinh: </p>
+                            <p className="info-patient-item-desc">
+                                {moment(patients?.patient?.doctor_glycemic_id?.person?.dob).format('DD/MM/YYYY')}
+                            </p>
+                        </div>
+                        <div className="info-patient-item">
+                            <p className="info-patient-item-label">Giới tính: </p>
+                            <p className="info-patient-item-desc">
+                                {patients?.patient?.doctor_glycemic_id?.person?.gender === true ? 'Nam' : 'Nữ'}
+                            </p>
+                        </div>
+                        <div className="info-patient-item">
+                            <p className="info-patient-item-label">Đảm nhiệm loại bệnh: </p>
+                            <p className="info-patient-item-desc">
+                                {patients?.patient?.doctor_glycemic_id?.work_type === 'glycemic'
+                                    ? 'Đường huyết'
+                                    : 'Huyết áp'}
+                            </p>
+                        </div>
+                    </>
+                ) : (
+                    <p className="info-patient-display-footer-message">
+                        <i>-- Hiện tại bạn chưa có bác sĩ phụ trách khám bệnh (do chưa đăng ký bác sĩ khám) --</i>
                     </p>
-                </div>
-                <div className="info-patient-item">
-                    <p className="info-patient-item-label">Giới tính: </p>
-                    <p className="info-patient-item-desc">
-                        {patients?.patient?.doctor_glycemic_id?.person?.gender === true ? 'Nam' : 'Nữ'}
-                    </p>
-                </div>
-                <div className="info-patient-item">
-                    <p className="info-patient-item-label">Đảm nhiệm loại bệnh: </p>
-                    <p className="info-patient-item-desc">
-                        {patients?.patient?.doctor_glycemic_id?.work_type === 'glycemic' ? 'Đường huyết' : 'Huyết áp'}
-                    </p>
-                </div>
+                )}
             </Modal>
         </div>
     );
