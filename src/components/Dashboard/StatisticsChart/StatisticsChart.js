@@ -1,11 +1,14 @@
 // lib
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
+import moment from 'moment';
 
 // me
 import './StatisticsChart.css';
 
 function StatisticsChart({ feeOfPatientResultedExam }) {
+    // console.log('feeOfPatientResultedExam', feeOfPatientResultedExam);
+
     // option
     const option = {
         color: ['#FE4C00'],
@@ -34,7 +37,7 @@ function StatisticsChart({ feeOfPatientResultedExam }) {
             {
                 type: 'category',
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Web', 'Thu', 'Fri', 'Sat', 'Sun'],
+                data: feeOfPatientResultedExam?.map((_schedule) => moment(_schedule.day_exam).format('DD-MM-YYYY')),
             },
         ],
         yAxis: [

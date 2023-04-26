@@ -1,7 +1,7 @@
 // lib
-import { KeyOutlined } from '@ant-design/icons/lib/icons';
+import { KeyOutlined, LoadingOutlined } from '@ant-design/icons/lib/icons';
 import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
+import PhoneInput, { isValidPhoneNumber, parsePhoneNumber } from 'react-phone-number-input';
 import { Form, Input, Button, Alert } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,22 +13,25 @@ import './Login.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { fetchApiLogin } from '~/redux/features/user/userSlice';
 import { endPoints } from '~/routers';
-import { fetchApiLoginSelector } from '~/redux/selector';
+import { fetchApiLoginSelector, isLoadingFetchApiLoginSelector } from '~/redux/selector';
 
 function Login() {
     const [number, setNumber] = useState('');
     const [messageError, setMessageError] = useState(false);
+    const [checkPhone, setCheckPhone] = useState(false);
     const [ruleAccount, setRuleAccount] = useState({});
 
     const messageSuccess = useSelector(fetchApiLoginSelector);
+    const isLoading = useSelector(isLoadingFetchApiLoginSelector);
 
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
+    console.log('isLoading ->', isLoading);
     // console.log('decodedToken ->', decodedToken);
-    console.log('messageError ->', messageError);
-    console.log('messageSuccess ->', messageSuccess);
+    // console.log('messageError ->', messageError);
+    // console.log('messageSuccess ->', messageSuccess);
     // console.log('ruleAccount ->', ruleAccount);
     // console.log('messageReject ->', messageReject);
     // console.log('token login ->', token);
@@ -49,11 +52,26 @@ function Login() {
     const handleOnFishSubmitLogin = async (values) => {
         try {
             if (values) {
-                const formatPhone = values.phone_number.replace('+84', '0');
+                const validatorPhone = isValidPhoneNumber(values.phone_number);
+                const parsePhone = parsePhoneNumber(values.phone_number);
+
+                const formatPhone = parsePhone.number.replace('+84', '0');
+
+                // console.log('formatPhone', formatPhone);
+                // console.log('validator', validatorPhone);
+
+                if (validatorPhone === false) {
+                    setCheckPhone(true);
+                    setMessageError(false);
+                    return;
+                }
+
                 await axios
                     .get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`)
                     .then((res) => {
                         dispatch(fetchApiLogin(values));
+                        setCheckPhone(false);
+                        setMessageError(false);
 
                         if (res.data.data.rule === 'patient') {
                             if (messageSuccess.accessToken) {
@@ -73,7 +91,13 @@ function Login() {
                         setRuleAccount(res.data.data);
                     })
                     .catch((err) => {
-                        setMessageError(true);
+                        if (validatorPhone === false) {
+                            setCheckPhone(true);
+                            setMessageError(false);
+                        } else {
+                            setMessageError(true);
+                            setCheckPhone(false);
+                        }
                     });
             }
         } catch (err) {
@@ -83,13 +107,19 @@ function Login() {
 
     return (
         <BackgroundOutSite>
-            {(messageSuccess.length > 0 || messageSuccess.status === 'fail') && !messageError ? (
+            {(messageSuccess.length > 0 || messageSuccess.status === 'fail') && !messageError && !checkPhone ? (
                 <Alert message={`${messageSuccess.message}`} type="error" style={{ marginBottom: '12px' }} />
             ) : null}
 
             {messageError ? (
                 <Alert
-                    message="Tài khoản chưa được đăng ký. Vui lòng thử lại!"
+                    message="Tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại!"
+                    type="error"
+                    style={{ marginBottom: '12px' }}
+                />
+            ) : checkPhone ? (
+                <Alert
+                    message="Số điện thoại của bạn không hợp lệ. Vui lòng thử lại!"
                     type="error"
                     style={{ marginBottom: '12px' }}
                 />
@@ -142,13 +172,13 @@ function Login() {
 
                 {/* Button */}
                 <Button type="primary" htmlType="submit" block>
-                    Đăng nhập
+                    {isLoading ? <LoadingOutlined spin /> : 'Đăng nhập'}
                 </Button>
 
                 {/* Register & Forgot-password button */}
                 <div className="link-to">
-                    <Link to="/register">Đăng ký ngay</Link>
-                    <Link to="/forgot-password">Quên mật khẩu</Link>
+                    <Link to={`${endPoints.register}`}>Đăng ký ngay</Link>
+                    <Link to={`${endPoints.forgotPassword}`}>Quên mật khẩu</Link>
                 </div>
             </Form>
         </BackgroundOutSite>

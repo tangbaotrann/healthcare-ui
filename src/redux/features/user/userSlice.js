@@ -1,6 +1,7 @@
 // lib
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { message } from 'antd';
 
 // login
 export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (values, { rejectWithValue }) => {
@@ -287,6 +288,29 @@ export const fetchApiCheckExistUserByNumberPhone = createAsyncThunk(
     },
 );
 
+// fetch api forgot password
+export const fetchApiForgotPassword = createAsyncThunk(
+    'user/fetchApiForgotPassword',
+    async ({ values, formatPhone }) => {
+        console.log('values slice', values);
+        console.log('formatPhone slice', formatPhone);
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_BASE_URL}accounts`, {
+                phone_number: formatPhone,
+                password: values.password,
+            });
+
+            console.log('res forgot password', res.data.data);
+            message.success('Mật khẩu của bạn đã được cập nhật thành công');
+
+            return res.data.data;
+        } catch (err) {
+            message.error('Lỗi!');
+            console.log('Error forgot password ->', { err });
+        }
+    },
+);
+
 const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -297,6 +321,7 @@ const userSlice = createSlice({
         profileForDoctor: [],
         userLogin: [],
         isLoading: false,
+        isLoadingForgotPassword: false,
         patient: [],
         patientInfo: [],
         checkExits: [],
@@ -314,11 +339,22 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchApiForgotPassword.pending, (state, action) => {
+                state.isLoadingForgotPassword = true;
+            })
+            .addCase(fetchApiForgotPassword.fulfilled, (state, action) => {
+                state.isLoadingForgotPassword = false;
+            })
             // login
+            .addCase(fetchApiLogin.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiLogin.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.userLogin = action.payload;
             })
             .addCase(fetchApiLogin.rejected, (state, action) => {
+                state.isLoading = false;
                 state.userLogin = action.payload;
             })
             // find all user doctor
@@ -330,7 +366,11 @@ const userSlice = createSlice({
                 state.data = action.payload;
             })
             // find user doctor by id
+            .addCase(fetchApiUserDoctorByToken.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiUserDoctorByToken.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.doctorByToken = action.payload;
             })
             // register

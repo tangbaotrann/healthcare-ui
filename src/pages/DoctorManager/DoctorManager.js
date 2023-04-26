@@ -17,6 +17,9 @@ import {
     filterTotalFeeOfWeek,
     getDoctorLoginFilter,
     getIdDoctorFilter,
+    isLoadingAllPostByIdDoctorSelector,
+    isLoadingAllShiftsDoctorSelector,
+    isLoadingConversationsSelector,
     isLoadingNotificationSelector,
     isLoadingScheduleDetailByIdDoctorSelector,
     isLoadingScheduleDoctorSelector,
@@ -68,6 +71,9 @@ function DoctorManager() {
     const isLoadingNotification = useSelector(isLoadingNotificationSelector);
     const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
     const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
+    const isLoadingConversation = useSelector(isLoadingConversationsSelector);
+    const isLoadingAllShiftsDoctor = useSelector(isLoadingAllShiftsDoctorSelector);
+    const isLoadingAllPostByIdDoctor = useSelector(isLoadingAllPostByIdDoctorSelector);
 
     // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
     // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
@@ -128,9 +134,15 @@ function DoctorManager() {
             {(awaitAccept?.data?.is_accepted === false || checkAwaitAccept?.is_accepted === false) && (
                 <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
             )}
-            {(isLoadingScheduleDoctor || isLoadingNotification || isLoadingUser || isLoadingScheduleDetail) && (
+            {(isLoadingScheduleDoctor ||
+                isLoadingNotification ||
+                isLoadingUser ||
+                isLoadingScheduleDetail ||
+                isLoadingConversation ||
+                isLoadingAllShiftsDoctor ||
+                isLoadingAllPostByIdDoctor) && (
                 <div className="loading-main">
-                    <div class="loader"></div>
+                    <div className="loader"></div>
                 </div>
             )}
             <LayoutDoctorManager infoUser={infoUser}>
