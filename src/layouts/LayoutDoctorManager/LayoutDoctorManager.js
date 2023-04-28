@@ -78,6 +78,10 @@ function LayoutDoctorManager({ children, infoUser }) {
         }
     }, [token.accessToken]);
 
+    useEffect(() => {
+        socket.emit('add_user', getIdDoctor?._id);
+    }, [getIdDoctor?._id]);
+
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed} width={230} className="sidebar">
@@ -155,7 +159,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                         {
                             key: constants.layoutBlog,
                             icon: <SolutionOutlined />,
-                            label: 'Blog',
+                            label: 'Blogs',
                         },
                     ]}
                     // Change layout

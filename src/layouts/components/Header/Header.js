@@ -1,7 +1,7 @@
 // lib
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Badge, Popover, Space, message } from 'antd';
+import { Badge, Popover, Space } from 'antd';
 
 // me
 import './Header.css';
@@ -41,9 +41,13 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Quản lý chỉ số*/}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Quản lý chỉ số</NavLink>
-                            </div>
+                            <NavLink
+                                className="active"
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                Quản lý chỉ số
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -55,9 +59,9 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Đặt lịch khám*/}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Đặt lịch khám</NavLink>
-                            </div>
+                            <NavLink className="active" to={endPoints.login}>
+                                Đặt lịch khám
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -69,9 +73,13 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Danh sách đã đăng ký lịch khám */}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Danh sách lịch khám</NavLink>
-                            </div>
+                            <NavLink
+                                className="active"
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                Danh sách lịch khám
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -83,9 +91,13 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Thông báo */}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Thông báo</NavLink>
-                            </div>
+                            <NavLink
+                                className="active"
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                Thông báo
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -110,9 +122,13 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Chat message */}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Trò chuyện</NavLink>
-                            </div>
+                            <NavLink
+                                className="active"
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                Trò chuyện
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
@@ -124,15 +140,19 @@ function Header({ checkUserLogin, patients }) {
 
                         {/* Blogger */}
                         {patients?.length === 0 || patients === undefined ? (
-                            <div onClick={() => message.warning('Bạn cần phải đăng nhập.')}>
-                                <NavLink>Blog</NavLink>
-                            </div>
+                            <NavLink
+                                className="active"
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                Blogs
+                            </NavLink>
                         ) : (
                             <NavLink
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
                                 to={endPoints.blog}
                             >
-                                Blog
+                                Blogs
                             </NavLink>
                         )}
                     </ul>

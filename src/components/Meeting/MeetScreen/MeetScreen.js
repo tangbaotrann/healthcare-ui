@@ -1,7 +1,6 @@
 // lib
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useParams } from 'react-router-dom';
-// import { decode } from 'as-latin1';
 
 // me
 import './MeetScreen.css';
@@ -16,8 +15,6 @@ function MeetScreen() {
     // console.log('userId', userId);
 
     const myMeeting = async (element) => {
-        // let _username = decode(username);
-        // console.log('_username', _username);
         const appID = 1406738560;
         const serverSecret = process.env.REACT_APP_SERVER_SECRET;
         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(

@@ -321,6 +321,7 @@ const userSlice = createSlice({
         profileForDoctor: [],
         userLogin: [],
         isLoading: false,
+        isLoadingRegister: false,
         isLoadingForgotPassword: false,
         patient: [],
         patientInfo: [],
@@ -374,7 +375,11 @@ const userSlice = createSlice({
                 state.doctorByToken = action.payload;
             })
             // register
+            .addCase(fetchApiRegister.pending, (state, action) => {
+                state.isLoadingRegister = true;
+            })
             .addCase(fetchApiRegister.fulfilled, (state, action) => {
+                state.isLoadingRegister = true;
                 state.userRegister = action.payload;
             })
             // create info user

@@ -47,12 +47,16 @@ import {
     fetchApiScheduleMedicalAppointmentResultExam,
 } from '~/redux/features/patient/patientSlice';
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
-import { LoadingOutlined } from '@ant-design/icons';
 import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting';
 import Blog from '~/components/Blog';
+import { useNavigate } from 'react-router-dom';
+import { endPoints } from '~/routers';
 
 function DoctorManager() {
     const dispatch = useDispatch();
+    const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+
+    const navigate = useNavigate();
 
     const changeLayout = useSelector(btnSelectMenuChangeLayoutSelector);
     const infoUser = useSelector(fetchApiUserDoctorByTokenSelector);
@@ -84,10 +88,15 @@ function DoctorManager() {
     // console.log(changeLayout);
     // console.log(infoUser);
     // console.log('getIdDoctor', getIdDoctor);
+    // console.log('getToken', getToken);
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
+
+    useEffect(() => {
+        getToken === null && navigate(`${endPoints.homeIntro}`);
+    }, [getToken, navigate]);
 
     useEffect(() => {
         dispatch(fetchApiAllCreateScheduleDoctor());
