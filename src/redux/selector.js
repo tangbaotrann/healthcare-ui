@@ -8,6 +8,7 @@ export const fetchApiUserDoctorByTokenSelector = (state) => state.userSlice.doct
 export const isLoadingUserDoctorByTokenSelector = (state) => state.userSlice.isLoading;
 export const isLoadingFetchApiLoginSelector = (state) => state.userSlice.isLoading;
 export const isLoadingFetchApiForgotPasswordSelector = (state) => state.userSlice.isLoadingForgotPassword;
+export const isLoadingFetchApiRegisterSelector = (state) => state.userSlice.isLoadingRegister;
 
 // all user doctor
 export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
@@ -357,8 +358,8 @@ export const getIdDoctorFilter = createSelector(
 
         return getIdDoctorFromListSchedule?.map((schedule) => {
             // console.log('sche -->', schedule);
-            const days = listDay.find((_day) => _day._id === schedule.day._id);
-            const shifts = listShift.find((_shift) => _shift._id === schedule.time._id);
+            const days = listDay?.find((_day) => _day._id === schedule.day._id);
+            const shifts = listShift?.find((_shift) => _shift._id === schedule.time._id);
             return {
                 _id: schedule?._id,
                 time_per_conversation: schedule?.time_per_conversation,
@@ -596,33 +597,37 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
 
-        const scheduleMedicals = listScheduleMedical
-            .filter((_status) => _status.status === false)
-            .map((_scheduleMedical) => {
-                const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
-                const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
-                const conversations = cleanConversation.find(
-                    (_conversation) => _conversation.member._id === _scheduleMedical.patient._id,
-                );
+        if (listScheduleMedical?.length > 0) {
+            const scheduleMedicals = listScheduleMedical
+                ?.filter((_status) => _status.status === false)
+                ?.map((_scheduleMedical) => {
+                    const days = listDay?.find((_day) => _day._id === _scheduleMedical.schedule.day);
+                    const shifts = listShift?.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+                    const conversations = cleanConversation?.find(
+                        (_conversation) => _conversation.member._id === _scheduleMedical.patient._id,
+                    );
 
-                return {
-                    status: _scheduleMedical.status,
-                    content_exam: _scheduleMedical.content_exam,
-                    result_exam: _scheduleMedical.result_exam,
-                    createdAt: _scheduleMedical.createdAt,
-                    day_exam: _scheduleMedical.day_exam,
-                    doctor: _scheduleMedical.doctor,
-                    patient: _scheduleMedical.patient,
-                    schedule: _scheduleMedical.schedule,
-                    updatedAt: _scheduleMedical.updatedAt,
-                    days,
-                    shifts,
-                    conversations,
-                    _id: _scheduleMedical._id,
-                };
-            });
+                    return {
+                        status: _scheduleMedical.status,
+                        content_exam: _scheduleMedical.content_exam,
+                        result_exam: _scheduleMedical.result_exam,
+                        createdAt: _scheduleMedical.createdAt,
+                        day_exam: _scheduleMedical.day_exam,
+                        doctor: _scheduleMedical.doctor,
+                        patient: _scheduleMedical.patient,
+                        schedule: _scheduleMedical.schedule,
+                        updatedAt: _scheduleMedical.updatedAt,
+                        days,
+                        shifts,
+                        conversations,
+                        _id: _scheduleMedical._id,
+                    };
+                });
 
-        return scheduleMedicals;
+            return scheduleMedicals;
+        } else {
+            return [];
+        }
     },
 );
 
@@ -641,9 +646,9 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
         const scheduleMedicals = listScheduleMedical
             // .filter((_status) => _status.status === true && _status.result_exam === null)
             ?.map((_scheduleMedical) => {
-                const days = listDay.find((_day) => _day._id === _scheduleMedical.schedule.day);
-                const shifts = listShift.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
-                const conversations = cleanConversation.find(
+                const days = listDay?.find((_day) => _day._id === _scheduleMedical.schedule.day);
+                const shifts = listShift?.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
+                const conversations = cleanConversation?.find(
                     (_conversation) => _conversation.member._id === _scheduleMedical.patient._id,
                 );
 

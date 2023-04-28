@@ -9,6 +9,7 @@ import TitleName from '../TitleName';
 import { fetchApiResultHeathByIdPatientSelector, scheduleDetailByIdDoctorFilters } from '~/redux/selector';
 import { fetchApiResultHeathByIdPatient } from '~/redux/features/patient/patientSlice';
 import ResultHealthMessage from './ResultHealthMessage';
+import moment from 'moment';
 
 function ResultHeathPatient() {
     const [openModal, setOpenModal] = useState(false);
@@ -97,7 +98,7 @@ function ResultHeathPatient() {
                     index: index + 1,
                     username: patient?.person?.username,
                     gender: patient?.person?.gender === true ? 'Nam' : 'Nữ',
-                    dob: patient?.person?.dob,
+                    dob: moment(patient?.dob).format('DD/MM/YYYY'),
                     blood: patient?.blood,
                     address: patient?.person?.address,
                     _id: patient?._id,

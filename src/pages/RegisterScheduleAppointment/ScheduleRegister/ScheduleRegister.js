@@ -7,16 +7,13 @@ import scheduleDoctor from '~/redux/features/scheduleDoctor/scheduleDoctorSlice'
 import { filterGetScheduleAppointmentAndHide, isLoadingScheduleDoctorSelector } from '~/redux/selector';
 import ScheduleRegisterItem from '../ScheduleRegisterItem/ScheduleRegisterItem';
 import axios from 'axios';
-import moment from 'moment';
+import moment, { now } from 'moment';
 import socket from '~/utils/socket';
 
 function ScheduleRegister() {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [dateTime, setDateTime] = useState();
     const [scheduleAppointment, setScheduleAppointment] = useState({});
-    const [messageError, setMessageError] = useState(false);
-    const [messageSuccess, setMessageSuccess] = useState(false);
-    const [checked, setChecked] = useState();
 
     const dispatch = useDispatch();
 
@@ -37,13 +34,13 @@ function ScheduleRegister() {
 
     // handle disabled date
     const handleDisabledDate = (date) => {
-        // console.log('---->', new Date().getDate());
-        // console.log('---->', new Date(date).getMonth());
-        if (new Date(date).getDate() < new Date().getDate() || new Date(date).getMonth() < new Date().getMonth()) {
-            return true;
-        } else {
-            return false;
-        }
+        // if (new Date(date).getDate() < new Date().getDate() && new Date(date).getMonth() < new Date().getMonth() + 1) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
+
+        return date && date < moment().add(0, 'month');
     };
 
     // handle button
@@ -91,9 +88,6 @@ function ScheduleRegister() {
             )
             .then((res) => {
                 console.log('res ->', res.data.data);
-                // setChecked(res.data.data);
-                // setMessageSuccess(true);
-                // setMessageError(false);
                 message.success('Bạn đã đăng ký thành công lịch khám này. Vui lòng chờ xác nhận từ bác sĩ nhé!');
                 setOpenModalConfirm(false);
                 socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
@@ -101,9 +95,6 @@ function ScheduleRegister() {
             .catch((err) => {
                 console.log({ err });
                 message.error(`${err.response.data.message}`);
-                // setMessageSuccess(false);
-                // setMessageError(true);
-                // setOpenModalConfirm(false);
             });
     };
 
@@ -116,28 +107,6 @@ function ScheduleRegister() {
                 <Skeleton active />
             ) : (
                 <>
-                    {/* {messageError ? (
-                        <Alert
-                            message="Ca khám này của Bác sĩ đã có người đăng ký. Vui lòng chọn ca khác!"
-                            type="error"
-                            style={{ marginBottom: '12px' }}
-                        />
-                    ) : messageSuccess ? (
-                        <Alert
-                            message={`Bạn đã đăng ký thành công ca khám vào ngày ${moment(
-                                checked.schedule_detail.day_exam,
-                            ).format('DD/MM/YYYY')} (${moment(checked.schedule_detail.day_exam).format(
-                                'dddd',
-                            )}) lúc ${moment(checked.schedule_detail.schedule.time.time_start).format(
-                                'HH:mm',
-                            )} - ${moment(checked.schedule_detail.schedule.time.time_end).format(
-                                'HH:mm',
-                            )}. Vui lòng chờ thông báo thêm từ Bác sĩ nhé!`}
-                            type="success"
-                            style={{ marginBottom: '12px' }}
-                        />
-                    ) : null} */}
-
                     {schedules.length === 0 ? (
                         <p className="notification-schedule-register">
                             <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
