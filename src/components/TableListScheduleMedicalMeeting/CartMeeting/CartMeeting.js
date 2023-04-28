@@ -1,16 +1,14 @@
 // lib
 import moment from 'moment';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Image, Modal, Skeleton, Typography, message } from 'antd';
+import { Button, Image, Modal, Typography, message } from 'antd';
 
 // me
 import { icons, logo } from '~/asset/images';
 import {
     btnClickGetUsernameLeavedRoomSelector,
     getDoctorLoginFilter,
-    isLoadingScheduleDetailByIdDoctorSelector,
     scheduleMedicalMeetingFilterOfDoctor,
 } from '~/redux/selector';
 import socket from '~/utils/socket';
@@ -20,6 +18,7 @@ import ContentAfterExaminated from '~/components/Conversation/ContentAfterExamin
 import Conversation from '~/components/Conversation';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
+import { Link } from 'react-router-dom';
 
 const { Paragraph } = Typography;
 
@@ -34,7 +33,7 @@ function CartMeeting({ infoUser }) {
     const infoDoctor = useSelector(getDoctorLoginFilter);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
-    console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
+    // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
@@ -68,6 +67,7 @@ function CartMeeting({ infoUser }) {
         const conversation = _scheduleMedicalMeeting.conversations;
 
         socket.emit('call_id_room_to_user', { conversation, infoDoctor, _scheduleMedicalMeeting });
+        // dispatch(callSlice.actions.arrivalUserId(_scheduleMedicalMeeting));
         setConversation(conversation);
         setRecord(_scheduleMedicalMeeting);
     };

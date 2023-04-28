@@ -86,15 +86,30 @@ function App() {
                     element={
                         typeof getToken === 'undefined' || !getToken ? (
                             <Navigate replace to={endPoints.homeIntro} />
-                        ) : (
+                        ) : rule?.rule === 'doctor' ? (
                             <Navigate replace to={endPoints.doctorManager} />
+                        ) : rule?.rule === 'patient' ? (
+                            <Navigate replace to={endPoints.homeIntro} />
+                        ) : (
+                            <PageNotFound />
                         )
                     }
                 />
 
                 {/* Doctor Manager */}
                 <Route path={`${endPoints.meetingRoom}/:roomId/:username`} element={<Meeting />} />
-                <Route path={endPoints.doctorManager} element={<DoctorManager />} />
+
+                <Route path={`${endPoints.doctorManager}`} element={<DoctorManager />} />
+                <Route
+                    path={`${endPoints.doctorManager}`}
+                    element={
+                        getToken === null ? (
+                            <Navigate replace to={endPoints.homeIntro} />
+                        ) : (
+                            <Navigate replace to={endPoints.doctorManager} />
+                        )
+                    }
+                />
 
                 {/* Maps */}
                 <Route path={`${endPoints.maps}/:address`} element={<Maps getToken={getToken} />} />

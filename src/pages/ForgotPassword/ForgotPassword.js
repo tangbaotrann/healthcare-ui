@@ -1,5 +1,5 @@
 // lib
-import { KeyOutlined, PhoneOutlined } from '@ant-design/icons';
+import { KeyOutlined, LoadingOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Alert, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input';
@@ -164,7 +164,7 @@ function ForgotPassword() {
                 <div className="footer-forgot-password">
                     <Link to={`${endPoints.login}`}>Quay lại</Link>
                     <Button type="primary" htmlType="submit">
-                        Lấy lại mật khẩu
+                        {isLoadingSuccess ? <LoadingOutlined spin /> : 'Lấy lại mật khẩu'}
                     </Button>
                 </div>
             </Form>

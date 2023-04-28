@@ -1,5 +1,5 @@
 // lib
-import { KeyOutlined, PhoneOutlined } from '@ant-design/icons/lib/icons';
+import { KeyOutlined, LoadingOutlined, PhoneOutlined } from '@ant-design/icons/lib/icons';
 import { Form, Input, Button, Select, Alert } from 'antd';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
@@ -14,6 +14,8 @@ import { useUserAuth } from '~/context/UserAuthContext';
 import axios from 'axios';
 import { isValidPhoneNumber } from 'react-phone-number-input';
 import { parsePhoneNumber } from 'react-phone-number-input';
+import { useSelector } from 'react-redux';
+import { isLoadingFetchApiRegisterSelector } from '~/redux/selector';
 
 function Register() {
     const [number, setNumber] = useState('');
@@ -27,6 +29,8 @@ function Register() {
     const { setUpRecaptcha } = useUserAuth();
 
     const navigate = useNavigate();
+
+    const isLoading = useSelector(isLoadingFetchApiRegisterSelector);
 
     // console.log('rules ->', rules);
     // console.log('registerSuccess ->', registerSuccess);
@@ -220,7 +224,7 @@ function Register() {
                 <div className="register-footer">
                     <Link to="/login">Quay lại</Link>
                     <Button type="primary" htmlType="submit">
-                        Đăng ký
+                        {isLoading ? <LoadingOutlined spin /> : 'Đăng ký'}
                     </Button>
                 </div>
             </Form>

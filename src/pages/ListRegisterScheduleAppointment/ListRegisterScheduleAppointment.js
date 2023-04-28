@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import ScrollToTop from 'react-scroll-to-top';
 import { Button, Modal } from 'antd';
+import { Link } from 'react-router-dom';
 
 import './ListRegisterScheduleAppointment.css';
 import DefaultLayout from '~/layouts/DefaultLayout';
@@ -17,10 +17,15 @@ import CardListRegisterSchedule from './CardListRegisterSchedule/CardListRegiste
 function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
     const [roomId, setRoomId] = useState();
+    // const [userId, setUserId] = useState();
 
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
 
     const dispatch = useDispatch();
+
+    // console.log('userId ->', userId);
+    // console.log('roomId', roomId);
+    // console.log('patients.patient.person.username', patients.patient.person.username);
 
     useEffect(() => {
         socket.on('call_id_room_to_user_success', ({ room_id, info_doctor, info_patient }) => {
@@ -29,16 +34,13 @@ function ListRegisterScheduleAppointment() {
         });
     }, []);
 
-    // console.log('roomId', roomId);
-    // console.log('patients.patient.person.username', patients.patient.person.username);
-
     useEffect(() => {
-        socket.emit('add_user', patients.patient._id);
+        socket.emit('add_user', patients?.patient?._id);
 
         socket.on('get_users', (users) => {
             console.log('get_users', users);
         });
-    }, [patients.patient._id]);
+    }, [patients?.patient?._id]);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -54,7 +56,7 @@ function ListRegisterScheduleAppointment() {
             {roomId && (
                 <Modal
                     open={openModalCall}
-                    // onCancel={hideModalCall}
+                    onCancel={handleHideModal}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { display: 'none' } }}
                 >
