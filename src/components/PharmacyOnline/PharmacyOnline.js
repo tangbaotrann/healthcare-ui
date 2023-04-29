@@ -7,7 +7,7 @@ function PharmacyOnline() {
     return (
         <div className="wrapper-pharmacy-online">
             {/* Section left */}
-            <div className="pharmacy-online-section-left">
+            {/* <div className="pharmacy-online-section-left">
                 <img
                     className="pharmacy-online-section-img"
                     src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/online-pharmacy-video-cover.svg"
@@ -25,12 +25,12 @@ function PharmacyOnline() {
                         />
                     </video>
                 </div>
-            </div>
+            </div> */}
 
             {/* Section right */}
-            <div className="pharmacy-online-section-right">
+            {/* <div className="pharmacy-online-section-right">
                 <div className="pharmacy-online-section-right-inner">
-                    <h2 className="pharmacy-online-section-right-title">Nhà Thuốc Trực Tuyến Jio</h2>
+                    <h2 className="pharmacy-online-section-right-title">Nhà Thuốc Trực Tuyến T&T Healthcare</h2>
 
                     <span className="separator"></span>
 
@@ -46,7 +46,7 @@ function PharmacyOnline() {
                         <h3 className="pharmacy-online-section-right-icon-text">Tiết kiệm 20% tất cả các sản phẩm</h3>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Doctor come home */}
             {/* <DoctorComeHome /> */}

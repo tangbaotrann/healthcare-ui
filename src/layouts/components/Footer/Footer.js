@@ -18,15 +18,15 @@ function Footer({ className }) {
                 <ul>
                     <li>
                         <span className="footer-info-item">Liên hệ: </span>
-                        19001789
+                        0353810417
                     </li>
                     <li>
                         <span className="footer-info-item">Hỗ trợ: </span>
-                        adminsupport@health.com
+                        t&thealthcare@gmail.com
                     </li>
                     <li>
-                        <span className="footer-info-item">Copyright </span>© 2017-2023 Rai and Rohl Technologies, Inc.
-                        All rights reserved.
+                        <span className="footer-info-item">Copyright </span>© 2022-2023 T&T Healthcare. All rights
+                        reserved.
                     </li>
                 </ul>
 

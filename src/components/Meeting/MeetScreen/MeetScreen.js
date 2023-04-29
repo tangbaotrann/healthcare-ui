@@ -1,16 +1,21 @@
 // lib
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 // me
 import './MeetScreen.css';
 import socket from '~/utils/socket';
 import parserUTF8Config from '~/utils/parserUTF8Config';
+import { fetchApiUpdateIsExam } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 
 function MeetScreen() {
-    const { roomId, username } = useParams();
+    const { roomId, scheduleDetailId, username } = useParams();
+
+    const dispatch = useDispatch();
 
     // console.log('roomId', roomId);
+    console.log('scheduleDetailId', scheduleDetailId);
     // console.log('username', username.replace(/\s/g, ''));
     // console.log('userId', userId);
 
@@ -22,7 +27,11 @@ function MeetScreen() {
             serverSecret,
             roomId,
             Date.now().toString(),
-            `${username ? parserUTF8Config(username.toString()).replace(/\s/g, '') : 'BOT'}`,
+            `${
+                username
+                    ? parserUTF8Config(username.toString()).replace(/\s/g, '').replace(/Đ/g, 'D').toString()
+                    : 'BOT'
+            }`,
         );
 
         const zp = ZegoUIKitPrebuilt.create(kitToken);
@@ -35,6 +44,8 @@ function MeetScreen() {
             onJoinRoom: () => {
                 // Add your custom logic
                 console.log('users joined ->', username);
+                dispatch(fetchApiUpdateIsExam(scheduleDetailId));
+                console.log('Updated');
                 // dispatch(callSlice.actions.arrivalUsername(username));
             },
             onLeaveRoom: () => {

@@ -173,6 +173,29 @@ export const fetchApiDeleteScheduleMedicalOfPatient = createAsyncThunk(
     },
 );
 
+// fetch api update is_exam
+export const fetchApiUpdateIsExam = createAsyncThunk(
+    'scheduleDoctor/fetchApiUpdateIsExam',
+    async (scheduleDetailId) => {
+        try {
+            if (scheduleDetailId) {
+                const res = await axios.put(
+                    `${process.env.REACT_APP_BASE_URL}schedule-details/${scheduleDetailId}/status`,
+                    {
+                        is_exam: true,
+                    },
+                );
+
+                console.log('res updated is_exam --->', res.data.data);
+
+                return res.data.data;
+            }
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const scheduleDoctor = createSlice({
     name: 'scheduleDoctor',
     initialState: {
