@@ -4,6 +4,9 @@ import { Button, Image } from 'antd';
 // me
 import './ExploreClinicInformation.css';
 import { ExploreClinicInformationClockIcon, ExploreClinicInformationLocationIcon } from '~/components/Icons';
+import { logo } from '~/asset/images';
+import { Link } from 'react-router-dom';
+import { endPoints } from '~/routers';
 
 function ExploreClinicInformation() {
     return (
@@ -11,7 +14,7 @@ function ExploreClinicInformation() {
             <div className="wrapper-explore-clinic-information">
                 <Image
                     className="explore-clinic-information-img"
-                    src="https://cdn.jiohealth.com/apps/clinic/1/feature-image/web/0_20221128_1.jpg"
+                    src={logo.roomExamX1}
                     alt="img-explore-clinic-information"
                 />
 
@@ -27,15 +30,17 @@ function ExploreClinicInformation() {
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
                     <div className="explore-clinic-information-footer">
-                        <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button>
-                        <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                        <Link to={endPoints.registerScheduleAppointment}>
+                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
             <div className="wrapper-explore-clinic-information">
                 <Image
                     className="explore-clinic-information-img"
-                    src="https://cdn.jiohealth.com/apps/clinic/3/feature-image/web/0_20221007.jpg"
+                    src={logo.roomExamX2}
                     alt="img-explore-clinic-information"
                 />
 
@@ -51,15 +56,17 @@ function ExploreClinicInformation() {
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
                     <div className="explore-clinic-information-footer">
-                        <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button>
-                        <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                        <Link to={endPoints.registerScheduleAppointment}>
+                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
             <div className="wrapper-explore-clinic-information">
                 <Image
                     className="explore-clinic-information-img"
-                    src="https://cdnqa.jiohealth.com/apps/clinic/4/feature-image/web/1_20221121_0.jpg"
+                    src={logo.roomExamX3}
                     alt="img-explore-clinic-information"
                 />
 
@@ -75,8 +82,10 @@ function ExploreClinicInformation() {
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
                     <div className="explore-clinic-information-footer">
-                        <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button>
-                        <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                        <Link to={endPoints.registerScheduleAppointment}>
+                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                        </Link>
                     </div>
                 </div>
             </div>

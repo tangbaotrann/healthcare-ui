@@ -2,6 +2,7 @@
 import './RemoteHealthConsultation.css';
 import { RemoteHealthConsultationChatIcon, RemoteHealthConsultationVideoIcon } from '../Icons';
 import FeelUnwell from '../FeelUnwell';
+import { logo } from '~/asset/images';
 
 function RemoteHealthConsultation() {
     return (
@@ -10,9 +11,10 @@ function RemoteHealthConsultation() {
             <div className="remote-health-consultation-section-left">
                 <img
                     className="remote-health-consultation-img"
-                    src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/new-24-7-video-chat-vietnamese.png"
+                    src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/images/premium/doctor-bg.svg"
                     alt="remote-health-consultation-img"
                 />
+                <img src={logo.remoteHealthX1} className="remote-health-consultation-img-x1" alt="" />
             </div>
 
             {/* Section right */}
@@ -26,7 +28,8 @@ function RemoteHealthConsultation() {
 
                     <p className="remote-health-consultation-section-right-desc">
                         Bạn cần sự tư vấn chuyên môn khi gặp các vấn đề sức khỏe? Dù bạn ở đâu hay vào bất cứ lúc nào,
-                        các bác sĩ chuyên khoa của Jio Health luôn sẵn sàng tư vấn, giải đáp đáp mọi thắc mắc của bạn.
+                        các bác sĩ chuyên khoa của T&T Healthcare luôn sẵn sàng tư vấn, giải đáp đáp mọi thắc mắc của
+                        bạn.
                     </p>
 
                     <div className="remote-health-consultation-section-right-icon">

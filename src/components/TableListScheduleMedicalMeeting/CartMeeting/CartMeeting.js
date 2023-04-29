@@ -37,7 +37,7 @@ function CartMeeting({ infoUser }) {
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
-    // console.log('record ->', record);
+    console.log('record ->', record);
 
     // user join room
     useEffect(() => {
@@ -108,6 +108,11 @@ function CartMeeting({ infoUser }) {
                     scheduleMedicalsMeetingFilter.map((_scheduleMedicalMeeting) => {
                         return (
                             <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
+                                {_scheduleMedicalMeeting.is_exam ? (
+                                    <div className="cart-meeting-banner-is-exam">
+                                        <i>Đang khám</i>
+                                    </div>
+                                ) : null}
                                 <Image src={logo.iconLogo192x192} className="schedule-medical-meeting-cart-image" />
 
                                 <div className="schedule-medical-meeting-cart-info">
@@ -153,7 +158,9 @@ function CartMeeting({ infoUser }) {
 
                                     {/* Button */}
                                     <Link
-                                        to={`${endPoints.meetingRoom}/${conversation._id}/${infoDoctor?.person?.username}`}
+                                        to={`${endPoints.meetingRoom}/${conversation._id}/${
+                                            record._id
+                                        }/${infoDoctor?.person?.username.replace(/\s/g, '')}`}
                                         target="_blank"
                                         style={{ width: '100%' }}
                                     >
@@ -161,7 +168,7 @@ function CartMeeting({ infoUser }) {
                                             className="schedule-medical-meeting-cart-btn"
                                             onClick={() => handleCallGetInfoUser(_scheduleMedicalMeeting)}
                                         >
-                                            Tham gia ngay
+                                            {_scheduleMedicalMeeting.is_exam ? 'Tham gia lại' : 'Tham gia'}
                                         </Button>
                                     </Link>
 

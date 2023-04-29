@@ -2,7 +2,8 @@
     position: absolute;
     left: -42px;
     right: 0;
-    top: 660px;
+    /* top: 660px; */
+    top: 0px;
     display: flex;
     align-items: center;
     z-index: -1;
