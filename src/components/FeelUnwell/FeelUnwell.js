@@ -10,7 +10,7 @@ function FeelUnwell() {
             <div className="feel-unwell-section-left">
                 <div className="feel-unwell-section-left-inner">
                     <h2 className="feel-unwell-section-left-title">
-                        Bạn thấy không khỏe? Hãy để Jio Health chăm sóc cho bạn!
+                        Bạn thấy không khỏe? Hãy để T&T Healthcare chăm sóc cho bạn!
                     </h2>
 
                     <span className="separator"></span>
