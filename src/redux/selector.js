@@ -638,7 +638,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        // console.log('fetchApiScheduleMedicalAppointmentAwaitSelector ->', listScheduleMedical);
+        console.log('fetchApiScheduleMedicalAppointmentAwaitSelector ->', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -666,6 +666,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
                     shifts,
                     conversations,
                     _id: _scheduleMedical._id,
+                    is_exam: _scheduleMedical.is_exam,
                 };
             });
 
@@ -763,7 +764,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
         // console.log('day', day);
         // console.log('day.getDay', day.getDay());
 
-        if (schedules.length > 0) {
+        if (schedules?.length > 0) {
             const now = new Date();
 
             //Lấy tất cả lịch ngày hôm nay
@@ -862,14 +863,14 @@ export const filterNotificationGetConversationId = createSelector(
             // console.log('_conversations ->', _conversations);
 
             return {
-                content: _notification.content,
-                createdAt: _notification.createdAt,
-                from: _notification.from,
-                hasSeen: _notification.hasSeen,
-                rule: _notification.rule,
-                to: _notification.to,
-                updatedAt: _notification.updatedAt,
-                _id: _notification._id,
+                content: _notification?.content,
+                createdAt: _notification?.createdAt,
+                from: _notification?.from,
+                hasSeen: _notification?.hasSeen,
+                rule: _notification?.rule,
+                to: _notification?.to,
+                updatedAt: _notification?.updatedAt,
+                _id: _notification?._id,
                 conversation: _conversations,
             };
         });

@@ -93,6 +93,31 @@
     position: relative;
 }
 
+.re-join-room {
+    position: absolute;
+    bottom: 22px;
+    right: 12px;
+}
+
+.re-join-room-btn {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.re-join-room-btn:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+}
+
 .content-cart-item-note-success-right {
     position: absolute;
     right: 0;

@@ -9,6 +9,7 @@ import {
     HealthInformationSexualHealthIcon,
 } from '../Icons';
 import RemoteHealthConsultation from '../RemoteHealthConsultation';
+import { endPoints } from '~/routers';
 
 function HealthInformation() {
     return (
@@ -22,8 +23,8 @@ function HealthInformation() {
 
                     <p className="health-information-section-left-desc">
                         360 độ nội dung sức khỏe thuộc các chủ đề được nhiều người quan tâm hiện nay, dưới sự xây dựng
-                        từ các chuyên gia sức khỏe tại Jio Health. Cần xem thêm nhiều bài viết chuyên khoa thú vị khác?
-                        Blog Jio Health là điểm đến về tin tức và kiến thức sức khỏe lý tưởng dành cho bạn.
+                        từ các chuyên gia sức khỏe tại T&T Healthcare. Cần xem thêm nhiều bài viết chuyên khoa thú vị
+                        khác? Blog T&T Healthcare là điểm đến về tin tức và kiến thức sức khỏe lý tưởng dành cho bạn.
                     </p>
                 </div>
             </div>
@@ -37,26 +38,26 @@ function HealthInformation() {
                 />
 
                 <div className="health-information-section-right-box">
-                    <Link to="/endocrinology">
+                    <Link to={endPoints.metricsPatient}>
                         <div className="health-information-section-right-box-endocrinology">
                             <HealthInformationEndocrinologyIcon />
-                            <h5 className="endocrinology-name">Đái tháo đường</h5>
+                            <h5 className="endocrinology-name">BMI</h5>
                         </div>
                     </Link>
                 </div>
                 <div className="health-information-section-right-box">
-                    <Link to="/cardiology">
+                    <Link to={endPoints.metricsPatient}>
                         <div className="health-information-section-right-box-endocrinology">
                             <HealthInformationCardiologyIcon />
-                            <h5 className="endocrinology-name">Tim mạch</h5>
+                            <h5 className="endocrinology-name">Đường huyết</h5>
                         </div>
                     </Link>
                 </div>
                 <div className="health-information-section-right-box">
-                    <Link to="/sexual-health">
+                    <Link to={endPoints.metricsPatient}>
                         <div className="health-information-section-right-box-endocrinology">
                             <HealthInformationSexualHealthIcon />
-                            <h5 className="endocrinology-name">Sức khỏe giới tính</h5>
+                            <h5 className="endocrinology-name">Huyết áp</h5>
                         </div>
                     </Link>
                 </div>

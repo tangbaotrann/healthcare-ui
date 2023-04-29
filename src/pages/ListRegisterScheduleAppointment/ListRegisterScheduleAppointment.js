@@ -24,13 +24,13 @@ function ListRegisterScheduleAppointment() {
     const dispatch = useDispatch();
 
     // console.log('userId ->', userId);
-    // console.log('roomId', roomId);
+    console.log('roomId', roomId);
     // console.log('patients.patient.person.username', patients.patient.person.username);
 
     useEffect(() => {
-        socket.on('call_id_room_to_user_success', ({ room_id, info_doctor, info_patient }) => {
+        socket.on('call_id_room_to_user_success', ({ room_id, info_doctor, info_patient, schedule_details_id }) => {
             setOpenModalCall(true);
-            setRoomId({ room_id, info_doctor, info_patient });
+            setRoomId({ room_id, info_doctor, info_patient, schedule_details_id });
         });
     }, []);
 
@@ -68,7 +68,9 @@ function ListRegisterScheduleAppointment() {
 
                     <div className="display-calls">
                         <Link
-                            to={`${endPoints.meetingRoom}/${roomId.room_id}/${roomId.info_patient.replace(/\s/g, '')}`}
+                            to={`${endPoints.meetingRoom}/${roomId.room_id}/${
+                                roomId.schedule_details_id
+                            }/${roomId.info_patient.replace(/\s/g, '')}`}
                             target="_blank"
                             onClick={handleHideModal}
                         >

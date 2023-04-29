@@ -6,14 +6,17 @@ import { Button, Form, Input, Modal, message } from 'antd';
 import { icons } from '~/asset/images';
 import TitleName from '~/components/TitleName';
 import { fetchApiDeleteScheduleMedicalOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
+import { Link } from 'react-router-dom';
+import { endPoints } from '~/routers';
 
-function CardItemRegisterSchedule({ schedule }) {
+function CardItemRegisterSchedule({ schedule, patients }) {
     const [openModal, setOpenModal] = useState(false);
     const [record, setRecord] = useState({});
 
     const dispatch = useDispatch();
 
-    console.log('schedule ->', schedule);
+    // console.log('schedule ->', schedule);
+    console.log('patient ->', patients);
     // console.log('record ->', record);
 
     const handleOpenModal = () => {
@@ -38,14 +41,17 @@ function CardItemRegisterSchedule({ schedule }) {
     return (
         <div className="content-cart-item">
             {schedule.status ? (
-                <div className="content-cart-item-note-success-right">
-                    <i>Đã xác nhận</i>
-                </div>
+                <>
+                    <div className="content-cart-item-note-success-right">
+                        <i>Đã xác nhận</i>
+                    </div>
+                </>
             ) : (
                 <div className="content-cart-item-note-await-right">
                     <i>Đang chờ xác nhận</i>
                 </div>
             )}
+
             <div className="content-cart-item-header">
                 <img className="content-cart-item-avatar" src={schedule?.doctor?.person?.avatar} alt="avatar" />
                 <h2 className="content-cart-item-username">BS: {schedule?.doctor?.person?.username}</h2>
@@ -70,6 +76,20 @@ function CardItemRegisterSchedule({ schedule }) {
                         <p className="content-cart-item-price">Chi phí: {schedule.schedule.fee} VNĐ</p>
                     </div>
                 </div>
+
+                {schedule.is_exam && (
+                    <div className="re-join-room">
+                        <Link
+                            to={`${endPoints.meetingRoom}/${schedule.conversation_id}/${patients.patient.person.username
+                                .replace(/\s/g, '')
+                                .replace(/Đ/g, 'D')
+                                .toString()}`}
+                            target="_blank"
+                        >
+                            <Button className="re-join-room-btn">Tham gia lại</Button>
+                        </Link>
+                    </div>
+                )}
             </div>
 
             <div className="content-cart-item-footer">

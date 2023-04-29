@@ -78,7 +78,9 @@ function CardListRegisterSchedule({ patients }) {
                 <>
                     {scheduleDetailsStatusTrue.length > 0 ? (
                         scheduleDetailsStatusTrue.map((schedule) => {
-                            return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
+                            return (
+                                <CardItemRegisterSchedule schedule={schedule} patients={patients} key={schedule._id} />
+                            );
                         })
                     ) : (
                         <p className="message-empty-schedule">
@@ -90,7 +92,9 @@ function CardListRegisterSchedule({ patients }) {
                 <>
                     {scheduleDetailsStatusFalse.length > 0 ? (
                         scheduleDetailsStatusFalse.map((schedule) => {
-                            return <CardItemRegisterSchedule schedule={schedule} key={schedule._id} />;
+                            return (
+                                <CardItemRegisterSchedule schedule={schedule} patients={patients} key={schedule._id} />
+                            );
                         })
                     ) : (
                         <p className="message-empty-schedule">
