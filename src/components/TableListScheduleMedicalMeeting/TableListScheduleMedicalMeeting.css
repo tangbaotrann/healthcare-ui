@@ -109,6 +109,10 @@
     box-shadow: 0 0 0 0.2rem rgb(76 225 198 / 25%);
 }
 
+.schedule-medical-meeting-cart-btn.meeting-cart-btn-disable {
+    /* display: disa; */
+}
+
 /* Option filter */
 .display-filter-meeting {
     display: flex;
