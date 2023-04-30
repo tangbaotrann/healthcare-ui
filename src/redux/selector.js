@@ -856,7 +856,7 @@ export const filterNotificationGetConversationId = createSelector(
 
         const _notifications = notifications.map((_notification) => {
             // conversation
-            const _conversations = listSchedule.find(
+            const _conversations = listSchedule?.find(
                 (_conversation) => _conversation?.conversations?._id === _notification?.conversation_id, // notification chưa có conversation_id
             );
 

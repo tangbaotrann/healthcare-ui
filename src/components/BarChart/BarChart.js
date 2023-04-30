@@ -198,6 +198,15 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                         {/* Info patient */}
                         <InformationPatient infoPatient={infoPatient} />
                     </div>
+
+                    {/* Status text message notification */}
+                    <p className="message-status-desc">
+                        <span className="message-status-lbl">
+                            <i style={{ fontWeight: '900' }}>* Thông báo:</i>
+                        </span>
+                        {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
+                    </p>
+
                     <div className="display-btn-modal-footer">
                         <Button className="position-on-map-btn" onClick={handleMapsNavigate} block>
                             Xem vị trí trên maps
@@ -225,11 +234,6 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                 <Divider type="vertical" style={{ height: '100vh' }} />
 
                 <div className="container-chart">
-                    {/* Status text message notification */}
-                    <p className="message-status-desc">
-                        <span className="message-status-lbl">Thông báo:</span>
-                        {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
-                    </p>
                     <div className="inner-chart">
                         <div className="filter-glycemic">
                             <Select

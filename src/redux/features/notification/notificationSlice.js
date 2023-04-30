@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -88,6 +89,7 @@ const notificationSlice = createSlice({
             const getNotification = state.data.find((_notification) => _notification._id === notification._id);
 
             if (!getNotification) {
+                toast.success(`${notification.content}`);
                 state.data.unshift(notification);
             } else {
                 console.log('err notification!');
@@ -101,6 +103,7 @@ const notificationSlice = createSlice({
             const getNotification = state.dataPatient.find((_notification) => _notification._id === notification._id);
 
             if (!getNotification) {
+                toast.success(`${notification.content}`);
                 state.dataPatient.unshift(notification);
             } else {
                 console.log('err notification!');

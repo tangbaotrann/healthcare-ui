@@ -1,4 +1,5 @@
 import axios from 'axios';
+import socket from '~/utils/socket';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
@@ -165,6 +166,10 @@ const blogSlice = createSlice({
         arrivalBtnClickedPost: (state, action) => {
             state.btnClickedPost = action.payload;
         },
+        arrivalLikePost: (state, action) => {
+            // if(state.getPost._id === action.payload) {
+            // }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -191,6 +196,10 @@ const blogSlice = createSlice({
             .addCase(fetchApiLikePostOfPatient.fulfilled, (state, action) => {
                 if (state.getPost._id === action.payload._id) {
                     state.getPost = action.payload;
+
+                    socket.emit('like_post_from_patient', {
+                        data: action.payload,
+                    });
                 }
             })
             .addCase(fetchApiDisLikePost.fulfilled, (state, action) => {

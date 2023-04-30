@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Popover, Tooltip } from 'antd';
+import { Button, Modal, Popover, Tooltip } from 'antd';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 
 import './MessageChat.css';
@@ -21,6 +21,8 @@ import MessageChatPreviewImage from './MessageChatPreviewImage';
 import { ReactMic } from 'react-mic';
 import axios from 'axios';
 import { isLoadingMessagesSelector } from '~/redux/selector';
+import { Link } from 'react-router-dom';
+import { endPoints } from '~/routers';
 
 function MessageChat({ conversationClick, messages, patients }) {
     const [value, setValue] = useState('');
@@ -31,12 +33,17 @@ function MessageChat({ conversationClick, messages, patients }) {
     const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
     const [onlineUsers, setOnlineUsers] = useState([]);
 
+    const [openModalCall, setOpenModalCall] = useState(false);
+    const [roomId, setRoomId] = useState();
+
     const dispatch = useDispatch();
 
     const scrollMessage = useRef();
     const focusInputMessage = useRef();
 
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
+
+    console.log('roomId -->', roomId);
 
     // user join room
     useEffect(() => {
@@ -61,6 +68,22 @@ function MessageChat({ conversationClick, messages, patients }) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // show call now
+    useEffect(() => {
+        socket.on('call_now_to_user_success', ({ room_id, info_doctor, info_patient }) => {
+            console.log('call_now_to_user_success room_id', room_id);
+            console.log('call_now_to_user_success info_doctor', info_doctor);
+            console.log('call_now_to_user_success info_patient', info_patient);
+            setOpenModalCall(true);
+            setRoomId({ room_id, info_doctor, info_patient });
+        });
+    }, []);
+
+    // hide modal call now
+    const handleHideModal = () => {
+        setOpenModalCall(false);
+    };
 
     // handle change input
     const handleChangeInput = (e) => {
@@ -89,18 +112,19 @@ function MessageChat({ conversationClick, messages, patients }) {
 
     // handle send message (create message)
     const handleSendMessage = (e) => {
+        e.preventDefault();
         if (e.keyCode === 13) {
-            dispatch(
-                fetchApiCreateMessage({
-                    conversation: conversationClick._id,
-                    senderId: patients.patient._id,
-                    content: value,
-                    image: newImageMessage,
-                }),
-            );
-            setValue('');
-            setNewImageMessage([]);
         }
+        dispatch(
+            fetchApiCreateMessage({
+                conversation: conversationClick._id,
+                senderId: patients.patient._id,
+                content: value,
+                image: newImageMessage,
+            }),
+        );
+        setValue('');
+        setNewImageMessage([]);
     };
 
     // handle option change images
@@ -180,6 +204,31 @@ function MessageChat({ conversationClick, messages, patients }) {
 
     return (
         <div className="chat-messages-container">
+            {roomId && (
+                <Modal
+                    open={openModalCall}
+                    onCancel={handleHideModal}
+                    cancelButtonProps={{ style: { display: 'none' } }}
+                    okButtonProps={{ style: { display: 'none' } }}
+                >
+                    <p style={{ textAlign: 'center' }}>
+                        <i className="call-title-name-from">
+                            BS. {roomId.info_doctor.person.username} đang gọi cho bạn...
+                        </i>
+                    </p>
+
+                    <div className="display-calls">
+                        <Link
+                            to={`${endPoints.meetingRoom}/${roomId.room_id}/${roomId.info_patient.replace(/\s/g, '')}`}
+                            target="_blank"
+                            onClick={handleHideModal}
+                        >
+                            <Button className="call-go-to-room-awaiting">Đi đến phòng chờ</Button>
+                        </Link>
+                    </div>
+                </Modal>
+            )}
+
             <div className="chat-messages-header">
                 <img
                     className="chat-messages-header-avatar"
@@ -241,24 +290,25 @@ function MessageChat({ conversationClick, messages, patients }) {
                 </div>
 
                 {isLoadingSpeech && <p className="loading-listen-message"></p>}
-                <input
-                    type="text"
-                    ref={focusInputMessage}
-                    value={value}
-                    onChange={(e) => handleChangeInput(e)}
-                    onKeyDown={handleSendMessage}
-                    className="input-message-text"
-                    rows="2"
-                    placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
-                    spellCheck="false"
-                />
+                <form>
+                    <input
+                        type="text"
+                        ref={focusInputMessage}
+                        value={value}
+                        onChange={(e) => handleChangeInput(e)}
+                        className="input-message-text"
+                        rows="2"
+                        placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
+                        spellCheck="false"
+                    />
 
-                {/* Button send  */}
-                {(value || newImageMessage.length !== 0) && (
-                    <button className="btn-submit" onClick={handleSendMessage}>
-                        <SendOutlined className="btn-submit-icon" />
-                    </button>
-                )}
+                    {/* Button send  */}
+                    {(value || newImageMessage.length !== 0) && (
+                        <button className="btn-submit" onClick={handleSendMessage}>
+                            <SendOutlined className="btn-submit-icon" />
+                        </button>
+                    )}
+                </form>
 
                 {/* Preview Emoji */}
                 <div className="container-emoji-picker">
