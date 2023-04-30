@@ -168,16 +168,18 @@ function CartMeeting({ infoUser }) {
                                         }/${infoDoctor?.person?.username.replace(/\s/g, '')}`}
                                         target="_blank"
                                         style={{ width: '100%' }}
-                                        aria-disabled={
-                                            moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') !== 0
-                                                ? true
-                                                : false
-                                        }
+                                        className={`${
+                                            moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
+                                                ? 'schedule-medical-meeting-cart-btn-no-active'
+                                                : 'schedule-medical-meeting-cart-btn-active'
+                                        }`}
                                     >
                                         <Button
                                             className="schedule-medical-meeting-cart-btn"
                                             disabled={
-                                                moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') !== 0
+                                                moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
+                                                    ? false
+                                                    : true
                                             }
                                             onClick={() => handleCallGetInfoUser(_scheduleMedicalMeeting)}
                                         >
