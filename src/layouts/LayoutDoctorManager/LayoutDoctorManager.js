@@ -226,7 +226,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                     className="site-layout-header"
                     style={{
                         padding: 0,
-                        marginBottom: '12px',
+                        // marginBottom: '12px',
                         height: '0px',
                         position: 'sticky',
                         left: '0px',
