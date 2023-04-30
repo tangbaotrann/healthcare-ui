@@ -1,4 +1,8 @@
 .btn-register-schedule {
+    position: sticky;
+    top: 60px;
+    left: 0;
+
     border: none;
     outline: none;
     font-size: 1.8rem;
@@ -7,10 +11,11 @@
     padding: 24px;
     line-height: 0;
     border-radius: 100px;
-    margin-top: 16px;
+    margin-top: 24px;
     color: var(--white);
     background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
     box-shadow: 6px 8px 14px 2px #8065cc;
+    z-index: 2;
 }
 
 .btn-register-schedule:hover {

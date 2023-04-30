@@ -1,7 +1,7 @@
 // lib
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select, message } from 'antd';
 import moment from 'moment';
 
 // me
@@ -38,6 +38,11 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     // handle submit form
     const handleCreateScheduleDoctorOnFish = (values) => {
         if (values) {
+            if (values.fee < 100000) {
+                message.error('Số tiền phải lớn hơn 100.000đ!');
+                return;
+            }
+
             dispatch(fetchApiCreateScheduleDoctor(values));
             handleCancel();
         }
