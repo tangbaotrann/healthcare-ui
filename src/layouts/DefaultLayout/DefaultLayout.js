@@ -1,15 +1,29 @@
 // me
 import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import Header from '../components/Header';
+import socket from '~/utils/socket';
+import notificationSlice from '~/redux/features/notification/notificationSlice';
 
 function DefaultLayout({ children, checkUserLogin, patients }) {
-    // useEffect(() => {
-    //     socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
-    //         console.log('notification_confirm_register_schedule_success', notification);
-    //         toast.success(`${notification.content}`);
-    //     });
-    // }, []);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
+            console.log('notification_confirm_register_schedule_success ->', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
+            console.log('notification_register_schedule_from_patient_success', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
 
     return (
         <>

@@ -103,10 +103,10 @@ function Header({ checkUserLogin, patients }) {
                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}
                                 to={endPoints.notificationPatient}
                             >
-                                {notificationNotHasSeen.length > 0 ? (
+                                {notificationNotHasSeen?.length > 0 ? (
                                     <Space size="small">
                                         <Badge
-                                            count={notificationNotHasSeen.length}
+                                            count={notificationNotHasSeen?.length}
                                             overflowCount={99}
                                             size="small"
                                             offset={[4, -4]}
