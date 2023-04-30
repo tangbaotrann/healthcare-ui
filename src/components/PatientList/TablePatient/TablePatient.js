@@ -20,9 +20,18 @@ function TablePatient({ cols, patients }) {
                       })[bmis.length - 1]
                     : 0,
                 glycemic: glycemics
-                    ? glycemics.map((_glycemic) => {
-                          return _glycemic.metric;
-                      })[glycemics.length - 1]
+                    ? glycemics
+                          .map((_glycemic) => {
+                              const __case =
+                                  _glycemic.case === 1
+                                      ? `Trước ăn: ${_glycemic.metric} - `
+                                      : _glycemic.case === 2
+                                      ? `Sau ăn: ${_glycemic.metric} - `
+                                      : `Trước ngủ: ${_glycemic.metric}`;
+
+                              return __case;
+                          })
+                          .slice(-3)
                     : 0,
                 blood_pressures: blood_pressures
                     ? blood_pressures.map((_blood) => {

@@ -14,6 +14,8 @@ import {
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
 import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // me
 import './LayoutDoctorManager.css';
@@ -28,11 +30,11 @@ import {
     fetchApiScheduleMedicalAppointmentAwait,
 } from '~/redux/features/patient/patientSlice';
 import ParticlesBackground from '~/components/ParticlesBackground';
-import { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
+import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/features/notification/notificationSlice';
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
-import { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
+import blogSlice, { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
 import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
@@ -56,19 +58,28 @@ function LayoutDoctorManager({ children, infoUser }) {
     // console.log('notificationNotHasSeen', notificationNotHasSeen);
     // console.log('token', token);
 
-    // useEffect(() => {
-    //     socket.on('notification_register_schedule_from_patient_success', (data) => {
-    //         console.log('notification_register_schedule_from_patient_success', data);
-    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(data));
-    //     });
-    // }, []);
+    useEffect(() => {
+        socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
+            console.log('notification_confirm_register_schedule_success ->', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
 
-    // useEffect(() => {
-    //     socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
-    //         console.log('notification_confirm_register_schedule_success ->', notification);
-    //         dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
-    //     });
-    // }, []);
+    useEffect(() => {
+        socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
+            console.log('notification_register_schedule_from_patient_success', notification);
+            dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('like_post_from_patient', ({ author, title }) => {
+            console.log('like_post_from_patient author', author);
+            console.log('like_post_from_patient title', title);
+            // dispatch(blogSlice.actions.arrivalLikePost(author));
+            toast.success(`Bệnh nhân đã thích bài viết "${title}" này của bạn`);
+        });
+    }, []);
 
     useEffect(() => {
         if (token.accessToken) {
@@ -80,6 +91,10 @@ function LayoutDoctorManager({ children, infoUser }) {
 
     useEffect(() => {
         socket.emit('add_user', getIdDoctor?._id);
+
+        socket.on('get_users', (users) => {
+            console.log('user ->', users);
+        });
     }, [getIdDoctor?._id]);
 
     return (
@@ -166,14 +181,14 @@ function LayoutDoctorManager({ children, infoUser }) {
                     onSelect={(item) => {
                         if (item.key === constants.layoutDashboard) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            socket.emit('add_user', getIdDoctor._id);
+                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            socket.emit('add_user', getIdDoctor._id);
+                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutScheduleMedicalMeeting) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor._id));
@@ -183,7 +198,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            socket.emit('add_user', getIdDoctor._id);
+                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListConversation) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
@@ -191,7 +206,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                             // dispatch(fetchApiUserDoctorByToken(token.accessToken));
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            socket.emit('add_user', getIdDoctor._id);
+                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutResultHealthPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
@@ -201,7 +216,7 @@ function LayoutDoctorManager({ children, infoUser }) {
                         } else if (item.key === constants.layoutBlog) {
                             dispatch(fetchApiAllPostByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            socket.emit('add_user', getIdDoctor._id);
+                            // socket.emit('add_user', getIdDoctor._id);
                         }
                     }}
                 />
@@ -247,6 +262,9 @@ function LayoutDoctorManager({ children, infoUser }) {
                 >
                     {children}
                 </Content>
+
+                {/* Toast notification */}
+                <ToastContainer position="top-right" autoClose={3000} closeOnClick={false} />
                 <ParticlesBackground />
             </Layout>
         </Layout>

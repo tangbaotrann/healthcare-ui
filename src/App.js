@@ -98,6 +98,7 @@ function App() {
 
                 {/* Doctor Manager */}
                 <Route path={`${endPoints.meetingRoom}/:roomId/:scheduleDetailId/:username`} element={<Meeting />} />
+                <Route path={`${endPoints.meetingRoom}/:roomId/:username`} element={<Meeting />} />
 
                 <Route path={`${endPoints.doctorManager}`} element={<DoctorManager />} />
                 <Route

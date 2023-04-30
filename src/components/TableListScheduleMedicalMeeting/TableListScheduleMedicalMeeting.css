@@ -33,6 +33,7 @@
     border-bottom-left-radius: 6px;
     background-color: var(--status-normal);
     box-shadow: 0 0 12px 0 var(--status-normal);
+    z-index: 2;
 }
 
 .cart-meeting-banner-is-exam p {

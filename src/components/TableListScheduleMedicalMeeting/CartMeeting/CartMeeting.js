@@ -113,7 +113,10 @@ function CartMeeting({ infoUser }) {
                                         <i>Đang khám</i>
                                     </div>
                                 ) : null}
-                                <Image src={logo.iconLogo192x192} className="schedule-medical-meeting-cart-image" />
+                                <Image
+                                    src={_scheduleMedicalMeeting.patient.person.avatar}
+                                    className="schedule-medical-meeting-cart-image"
+                                />
 
                                 <div className="schedule-medical-meeting-cart-info">
                                     <div className="schedule-medical-meeting-cart-info-item">

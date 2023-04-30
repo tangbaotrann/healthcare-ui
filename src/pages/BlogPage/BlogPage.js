@@ -23,6 +23,7 @@ import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
 import ChatBot from '~/components/ChatBot';
 import BlogPatient from '~/components/BlogPatient/BlogPatient';
 import Footer from '~/layouts/components/Footer/Footer';
+import socket from '~/utils/socket';
 
 function BlogPage() {
     const [openBlogDetail, setOpenBlogDetail] = useState(false);
@@ -49,6 +50,10 @@ function BlogPage() {
     useEffect(() => {
         dispatch(fetchApiAllPatients());
     }, []);
+
+    useEffect(() => {
+        socket.emit('add_user', patients?.patient?._id);
+    }, [patients?.patient?._id]);
 
     // handle blog details
     const handleOpenBlogDetails = async (post) => {
