@@ -57,7 +57,7 @@ function Home({ checkUserLogin }) {
                     <Content>
                         <SlideImage patients={patients} />
                         <ExploreClinic />
-                        <HealthInformation />
+                        <HealthInformation patients={patients} />
                     </Content>
                 )}
             </DefaultLayout>

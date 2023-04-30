@@ -11,7 +11,7 @@ import {
 import RemoteHealthConsultation from '../RemoteHealthConsultation';
 import { endPoints } from '~/routers';
 
-function HealthInformation() {
+function HealthInformation({ patients }) {
     return (
         <div className="wrapper-health-information">
             {/* Section left */}
@@ -38,28 +38,57 @@ function HealthInformation() {
                 />
 
                 <div className="health-information-section-right-box">
-                    <Link to={endPoints.metricsPatient}>
-                        <div className="health-information-section-right-box-endocrinology">
-                            <HealthInformationEndocrinologyIcon />
-                            <h5 className="endocrinology-name">BMI</h5>
-                        </div>
-                    </Link>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <Link to={endPoints.login}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationEndocrinologyIcon />
+                                <h5 className="endocrinology-name">BMI</h5>
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link to={endPoints.metricsPatient}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationEndocrinologyIcon />
+                                <h5 className="endocrinology-name">BMI</h5>
+                            </div>
+                        </Link>
+                    )}
                 </div>
+
                 <div className="health-information-section-right-box">
-                    <Link to={endPoints.metricsPatient}>
-                        <div className="health-information-section-right-box-endocrinology">
-                            <HealthInformationCardiologyIcon />
-                            <h5 className="endocrinology-name">Đường huyết</h5>
-                        </div>
-                    </Link>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <Link to={endPoints.login}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationCardiologyIcon />
+                                <h5 className="endocrinology-name">Đường huyết</h5>
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link to={endPoints.metricsPatient}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationCardiologyIcon />
+                                <h5 className="endocrinology-name">Đường huyết</h5>
+                            </div>
+                        </Link>
+                    )}
                 </div>
+
                 <div className="health-information-section-right-box">
-                    <Link to={endPoints.metricsPatient}>
-                        <div className="health-information-section-right-box-endocrinology">
-                            <HealthInformationSexualHealthIcon />
-                            <h5 className="endocrinology-name">Huyết áp</h5>
-                        </div>
-                    </Link>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <Link to={endPoints.login}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationSexualHealthIcon />
+                                <h5 className="endocrinology-name">Huyết áp</h5>
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link to={endPoints.metricsPatient}>
+                            <div className="health-information-section-right-box-endocrinology">
+                                <HealthInformationSexualHealthIcon />
+                                <h5 className="endocrinology-name">Huyết áp</h5>
+                            </div>
+                        </Link>
+                    )}
                 </div>
             </div>
 
