@@ -15,6 +15,7 @@ import {
 import Footer from '~/layouts/components/Footer';
 import ChatBot from '~/components/ChatBot';
 import ScheduleRegister from './ScheduleRegister/ScheduleRegister';
+import socket from '~/utils/socket';
 
 function RegisterScheduleAppointment() {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -46,6 +47,10 @@ function RegisterScheduleAppointment() {
         dispatch(fetchApiAllShiftsDoctor());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        socket.emit('add_user', patients?.patient?._id);
+    }, [patients?.patient?._id]);
 
     return (
         <DefaultLayout patients={patients}>
