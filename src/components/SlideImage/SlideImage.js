@@ -30,7 +30,9 @@ function SlideImage({ patients }) {
                     <div className="banner-clinic-icon">
                         <SlideShowBannerClinicIcon />
                     </div>
-                    <h3 className="appointment-desc">Hơn 300,000 khách hàng tin tưởng sử dụng dịch vụ</h3>
+                    <h3 className="appointment-desc">
+                        Hệ thống khám và cảnh báo thông minh cho nhóm bệnh nhân đường huyết và huyết áp
+                    </h3>
                 </div>
 
                 {/* Click vào hiện lên modal */}

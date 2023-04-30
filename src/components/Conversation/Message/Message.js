@@ -98,18 +98,20 @@ function Message({ messages, conversation, infoUser }) {
 
     // handle send message (create message)
     const handleSendMessage = (e) => {
+        e.preventDefault();
         if (e.keyCode === 13) {
-            dispatch(
-                fetchApiCreateMessage({
-                    conversation: conversation._id,
-                    senderId: infoDoctor._id,
-                    content: value,
-                    image: newImageMessage,
-                }),
-            );
-            setValue('');
-            setNewImageMessage([]);
         }
+
+        dispatch(
+            fetchApiCreateMessage({
+                conversation: conversation._id,
+                senderId: infoDoctor._id,
+                content: value,
+                image: newImageMessage,
+            }),
+        );
+        setValue('');
+        setNewImageMessage([]);
     };
 
     // handle preview emoji
@@ -132,7 +134,8 @@ function Message({ messages, conversation, infoUser }) {
 
     // get info user
     const handleCallGetInfoUser = () => {
-        socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+        // socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+        socket.emit('call_now_to_user', { conversation, infoDoctor });
     };
 
     // handle start recording
@@ -269,24 +272,25 @@ function Message({ messages, conversation, infoUser }) {
                     </div>
 
                     {isLoadingSpeech && <p className="loading-listen-message"></p>}
-                    <input
-                        type="text"
-                        ref={focusInputMessage}
-                        value={value}
-                        onChange={(e) => handleChangeInput(e)}
-                        onKeyDown={handleSendMessage}
-                        className="input-message-text"
-                        rows="2"
-                        placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
-                        spellCheck="false"
-                    />
+                    <form>
+                        <input
+                            type="text"
+                            ref={focusInputMessage}
+                            value={value}
+                            onChange={(e) => handleChangeInput(e)}
+                            className="input-message-text"
+                            rows="2"
+                            placeholder={!isLoadingSpeech ? 'Nhập tin nhắn...' : ''}
+                            spellCheck="false"
+                        />
 
-                    {/* Button send  */}
-                    {(value || newImageMessage.length !== 0) && (
-                        <button className="btn-submit" onClick={handleSendMessage}>
-                            <SendOutlined className="btn-submit-icon" />
-                        </button>
-                    )}
+                        {/* Button send  */}
+                        {(value || newImageMessage.length !== 0) && (
+                            <button className="btn-submit" onClick={handleSendMessage}>
+                                <SendOutlined className="btn-submit-icon" />
+                            </button>
+                        )}
+                    </form>
 
                     <div className="container-emoji-picker">
                         <div className="preview-images">

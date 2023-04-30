@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import socket from '~/utils/socket';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
@@ -72,11 +73,12 @@ const messageSlice = createSlice({
     reducers: {
         arrivalMessageFromSocket: (state, action) => {
             const newMessage = action.payload;
-            // console.log('newMessage ->', newMessage);
+            console.log('newMessage ->', newMessage);
 
             const idMessage = state.data.find((_message) => _message._id === newMessage._id);
 
             if (!idMessage) {
+                toast.success(`Bạn có 1 tin nhắn mới.`);
                 state.data.push(newMessage);
             } else {
                 return;

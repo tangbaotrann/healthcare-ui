@@ -51,6 +51,7 @@ import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedic
 import Blog from '~/components/Blog';
 import { useNavigate } from 'react-router-dom';
 import { endPoints } from '~/routers';
+import socket from '~/utils/socket';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -93,6 +94,10 @@ function DoctorManager() {
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
+
+    socket.on('get_users', (users) => {
+        console.log('user ->', users);
+    });
 
     useEffect(() => {
         getToken === null && navigate(`${endPoints.homeIntro}`);
