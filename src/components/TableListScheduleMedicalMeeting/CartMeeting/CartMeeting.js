@@ -66,7 +66,9 @@ function CartMeeting({ infoUser }) {
         console.log('_scheduleMedicalMeeting', _scheduleMedicalMeeting);
         const conversation = _scheduleMedicalMeeting.conversations;
 
-        socket.emit('call_id_room_to_user', { conversation, infoDoctor, _scheduleMedicalMeeting });
+        if (!_scheduleMedicalMeeting.is_exam) {
+            socket.emit('call_id_room_to_user', { conversation, infoDoctor, _scheduleMedicalMeeting });
+        }
         // dispatch(callSlice.actions.arrivalUserId(_scheduleMedicalMeeting));
         setConversation(conversation);
         setRecord(_scheduleMedicalMeeting);
