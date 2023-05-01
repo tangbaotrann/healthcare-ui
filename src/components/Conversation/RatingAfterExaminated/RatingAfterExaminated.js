@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux';
 import TitleName from '~/components/TitleName';
 import { fetchApiRatingForDoctor } from '~/redux/features/patient/patientSlice';
 
-function RatingAfterExaminated({ patients, schedule_details_id }) {
+function RatingAfterExaminated({ patients, scheduleDetail }) {
     const [openModal, setOpenModal] = useState(false);
     const [valueRating, setValueRating] = useState(5);
 
     const dispatch = useDispatch();
 
-    console.log('schedule_details_id', schedule_details_id);
+    console.log('scheduleDetail', scheduleDetail);
 
     useEffect(() => {
         setOpenModal(true);
@@ -54,7 +54,7 @@ function RatingAfterExaminated({ patients, schedule_details_id }) {
                 fields={[
                     { name: ['rating'], value: valueRating },
                     { name: ['patient_id'], value: patients?.patient?._id },
-                    { name: ['schedule_id'], value: schedule_details_id?._id },
+                    { name: ['schedule_id'], value: scheduleDetail?._id },
                     { name: ['doctor_id'], value: patients?.patient?.doctor_glycemic_id?._id },
                 ]}
             >
