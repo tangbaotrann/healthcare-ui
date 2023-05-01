@@ -36,8 +36,8 @@ function CartMeeting({ infoUser }) {
     // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
-    // console.log('conversation ->', conversation);
-    console.log('record ->', record);
+    console.log('conversation ->', conversation);
+    // console.log('record ->', record);
 
     // user join room
     useEffect(() => {
@@ -113,7 +113,7 @@ function CartMeeting({ infoUser }) {
                             <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
                                 {_scheduleMedicalMeeting.is_exam ? (
                                     <div className="cart-meeting-banner-is-exam">
-                                        <i>Đang khám</i>
+                                        <i>Đang khám...</i>
                                     </div>
                                 ) : null}
                                 <Image

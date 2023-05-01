@@ -1,5 +1,6 @@
 // lib
 import { Button, Image } from 'antd';
+import { useDispatch } from 'react-redux';
 
 // me
 import './ExploreClinicInformation.css';
@@ -7,8 +8,11 @@ import { ExploreClinicInformationClockIcon, ExploreClinicInformationLocationIcon
 import { logo } from '~/asset/images';
 import { Link } from 'react-router-dom';
 import { endPoints } from '~/routers';
+import userSlice from '~/redux/features/user/userSlice';
 
-function ExploreClinicInformation() {
+function ExploreClinicInformation({ patients }) {
+    const dispatch = useDispatch();
+
     return (
         <>
             <div className="wrapper-explore-clinic-information">
@@ -29,12 +33,26 @@ function ExploreClinicInformation() {
                     </p>
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
-                    <div className="explore-clinic-information-footer">
-                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
-                        <Link to={endPoints.registerScheduleAppointment}>
-                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
-                        </Link>
-                    </div>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link to={endPoints.login}>
+                                <Button
+                                    className="explore-clinic-information-appointment-btn"
+                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                >
+                                    Đặt khám
+                                </Button>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link to={endPoints.registerScheduleAppointment}>
+                                <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="wrapper-explore-clinic-information">
@@ -55,12 +73,24 @@ function ExploreClinicInformation() {
                     </p>
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
-                    <div className="explore-clinic-information-footer">
-                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
-                        <Link to={endPoints.registerScheduleAppointment}>
-                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
-                        </Link>
-                    </div>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link
+                                to={endPoints.login}
+                                onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                            >
+                                <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link to={endPoints.registerScheduleAppointment}>
+                                <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="wrapper-explore-clinic-information">
@@ -81,12 +111,26 @@ function ExploreClinicInformation() {
                     </p>
 
                     {/* 2 button: Gọi ngay & Đặt khám */}
-                    <div className="explore-clinic-information-footer">
-                        {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
-                        <Link to={endPoints.registerScheduleAppointment}>
-                            <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
-                        </Link>
-                    </div>
+                    {patients?.length === 0 || patients === undefined ? (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link to={endPoints.login}>
+                                <Button
+                                    className="explore-clinic-information-appointment-btn"
+                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                >
+                                    Đặt khám
+                                </Button>
+                            </Link>
+                        </div>
+                    ) : (
+                        <div className="explore-clinic-information-footer">
+                            {/* <Button className="explore-clinic-information-call-now-btn">Gọi ngay</Button> */}
+                            <Link to={endPoints.registerScheduleAppointment}>
+                                <Button className="explore-clinic-information-appointment-btn">Đặt khám</Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

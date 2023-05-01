@@ -28,7 +28,7 @@ function Login() {
 
     const navigate = useNavigate();
 
-    console.log('isLoading ->', isLoading);
+    // console.log('isLoading ->', isLoading);
     // console.log('decodedToken ->', decodedToken);
     // console.log('messageError ->', messageError);
     // console.log('messageSuccess ->', messageSuccess);
@@ -171,7 +171,7 @@ function Login() {
                 </Form.Item>
 
                 {/* Button */}
-                <Button type="primary" htmlType="submit" block>
+                <Button type="primary" htmlType="submit" disabled={isLoading} block>
                     {isLoading ? <LoadingOutlined spin /> : 'Đăng nhập'}
                 </Button>
 

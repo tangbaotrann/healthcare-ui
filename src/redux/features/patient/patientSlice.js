@@ -324,24 +324,6 @@ export const fetchApiMovePatient = createAsyncThunk('user/fetchApiMovePatient', 
     }
 });
 
-// Rating
-export const fetchApiRatingForDoctor = createAsyncThunk('patient/fetchApiRatingForDoctor', async (values) => {
-    try {
-        const { rating, patient_id, schedule_id, doctor_id } = values;
-
-        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/patients/rating/${doctor_id}`, {
-            rating: rating,
-            patient_id: patient_id,
-            schedule_id: schedule_id,
-        });
-        console.log('res rating', res.data);
-
-        return res.data.data;
-    } catch (err) {
-        console.log({ err });
-    }
-});
-
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
