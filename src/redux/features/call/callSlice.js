@@ -6,6 +6,7 @@ const callSlice = createSlice({
     initialState: {
         btnClickCallUserId: null,
         btnClickLeaveRoom: null,
+        btnClickPatientLeaveRoom: null,
     },
     reducers: {
         arrivalUserId: (state, action) => {
@@ -13,6 +14,9 @@ const callSlice = createSlice({
         },
         arrivalUsername: (state, action) => {
             state.btnClickLeaveRoom = action.payload;
+        },
+        arrivalPatientUsername: (state, action) => {
+            state.btnClickPatientLeaveRoom = action.payload;
         },
     },
 });
