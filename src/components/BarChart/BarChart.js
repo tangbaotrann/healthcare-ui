@@ -39,10 +39,10 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
 
-    // console.log('bmis', bmis);
+    console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
     // console.log('filterChartGlycemic', filterChartGlycemic);
-    console.log('infoPatient', infoPatient);
+    // console.log('infoPatient', infoPatient);
     // console.log('getIdDoctor', getIdDoctor);
 
     // Option bmi
@@ -204,7 +204,9 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                         <span className="message-status-lbl">
                             <i style={{ fontWeight: '900' }}>* Thông báo:</i>
                         </span>
-                        {infoPatient.status.props.status.message ? infoPatient.status.props.status.message.status : ''}
+                        {infoPatient?.status?.props?.status?.message
+                            ? infoPatient?.status?.props?.status?.message?.status
+                            : ''}
                     </p>
 
                     <div className="display-btn-modal-footer">

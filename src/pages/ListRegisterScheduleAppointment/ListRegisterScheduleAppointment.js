@@ -95,7 +95,7 @@ function ListRegisterScheduleAppointment() {
                 </Modal>
             )}
 
-            {openModalRating && <RatingAfterExaminated patients={patients} schedule_details_id={roomId} />}
+            {openModalRating && <RatingAfterExaminated patients={patients} scheduleDetail={roomId} />}
 
             <ChatBot />
             <ScrollToTop smooth className="scroll-to-top" />
