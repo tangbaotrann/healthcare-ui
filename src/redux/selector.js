@@ -94,6 +94,7 @@ export const btnClickedRecordGetIdConversationSelector = (state) =>
 // get id user when clicked button call
 export const btnClickGetUserIdSelector = (state) => state.callSlice.btnClickCallUserId; // hide
 export const btnClickGetUsernameLeavedRoomSelector = (state) => state.callSlice.btnClickLeaveRoom;
+export const btnClickGetPatientUsernameLeaveRoomSelector = (state) => state.callSlice.btnClickPatientLeaveRoom;
 
 // get all message by id conversation
 export const fetchApiMessagesSelector = (state) => state.messageSlice.data;

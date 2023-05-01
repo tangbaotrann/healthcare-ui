@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, Modal, message } from 'antd';
 
 import { icons } from '~/asset/images';
@@ -8,6 +8,10 @@ import TitleName from '~/components/TitleName';
 import { fetchApiDeleteScheduleMedicalOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import { Link } from 'react-router-dom';
 import { endPoints } from '~/routers';
+import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated/RatingAfterExaminated';
+import { btnClickGetUsernameLeavedRoomSelector } from '~/redux/selector';
+import socket from '~/utils/socket';
+import callSlice from '~/redux/features/call/callSlice';
 
 function CardItemRegisterSchedule({ schedule, patients }) {
     const [openModal, setOpenModal] = useState(false);
@@ -15,9 +19,18 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
     const dispatch = useDispatch();
 
+    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+
     // console.log('schedule ->', schedule);
-    console.log('patient ->', patients);
+    // console.log('patient ->', patients);
     // console.log('record ->', record);
+
+    useEffect(() => {
+        socket.on('user_leave_room_call_success', ({ username, roomId }) => {
+            console.log('user_leave_room_call_success ->', username, roomId);
+            dispatch(callSlice.actions.arrivalPatientUsername(username));
+        });
+    }, []);
 
     const handleOpenModal = () => {
         setOpenModal(true);
@@ -38,8 +51,21 @@ function CardItemRegisterSchedule({ schedule, patients }) {
         }
     };
 
+    const handleEmitSocket = () => {
+        // console.log('schedule ->', schedule);
+        // if (!schedule.is_exam) {
+        socket.emit('rating_for_doctor', {
+            conversation_id: schedule.conversation_id,
+            patient_id: schedule.patient,
+        });
+        // }
+    };
+
     return (
         <div className="content-cart-item">
+            {/* show modal rating for doctor */}
+            {/* {checkLeavedRoom && <RatingAfterExaminated patients={patients} schedule_details_id={record} />} */}
+
             {schedule.status ? (
                 <>
                     <div className="content-cart-item-note-success-right">
@@ -85,6 +111,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                                 .replace(/Đ/g, 'D')
                                 .toString()}`}
                             target="_blank"
+                            onClick={handleEmitSocket}
                         >
                             <Button className="re-join-room-btn">Tham gia lại</Button>
                         </Link>
