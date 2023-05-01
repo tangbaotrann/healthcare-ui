@@ -19,18 +19,18 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
     const dispatch = useDispatch();
 
-    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+    // const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
     // console.log('schedule ->', schedule);
     // console.log('patient ->', patients);
     // console.log('record ->', record);
 
-    useEffect(() => {
-        socket.on('user_leave_room_call_success', ({ username, roomId }) => {
-            console.log('user_leave_room_call_success ->', username, roomId);
-            dispatch(callSlice.actions.arrivalPatientUsername(username));
-        });
-    }, []);
+    // useEffect(() => {
+    //     socket.on('user_leave_room_call_success', ({ username, roomId }) => {
+    //         console.log('user_leave_room_call_success ->', username, roomId);
+    //         dispatch(callSlice.actions.arrivalPatientUsername(username));
+    //     });
+    // }, []);
 
     const handleOpenModal = () => {
         setOpenModal(true);

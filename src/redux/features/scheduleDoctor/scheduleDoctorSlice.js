@@ -196,6 +196,25 @@ export const fetchApiUpdateIsExam = createAsyncThunk(
     },
 );
 
+// Rating
+export const fetchApiRatingForDoctor = createAsyncThunk('patient/fetchApiRatingForDoctor', async (values) => {
+    try {
+        const { rating, patient_id, schedule_id, doctor_id, content } = values;
+
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/patients/rating/${doctor_id}`, {
+            rating: rating,
+            patient_id: patient_id,
+            schedule_id: schedule_id,
+            content: content,
+        });
+        console.log('res rating', res.data.data);
+
+        return res.data.data;
+    } catch (err) {
+        console.log({ err });
+    }
+});
+
 const scheduleDoctor = createSlice({
     name: 'scheduleDoctor',
     initialState: {
@@ -280,6 +299,21 @@ const scheduleDoctor = createSlice({
             })
             .addCase(fetchApiAllScheduleDetails.fulfilled, (state, action) => {
                 state.scheduleDetails = action.payload;
+            })
+            // rating for doctor
+            .addCase(fetchApiRatingForDoctor.fulfilled, (state, action) => {
+                const schedule = action.payload;
+
+                console.log('schedule patient del slice ->', schedule);
+
+                const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
+                    (_schedule) => _schedule._id === schedule.schedule_id,
+                );
+
+                // cut
+                if (spliceSchedule > -1) {
+                    state.allScheduleDetailOfPatient.splice(spliceSchedule, 1);
+                }
             })
             .addCase(fetchApiGetAllScheduleDetailOfPatient.fulfilled, (state, action) => {
                 state.allScheduleDetailOfPatient = action.payload;

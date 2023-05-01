@@ -1,9 +1,9 @@
-import { Button, Form, Input, Modal, Rate } from 'antd';
+import { Button, Form, Input, Modal, Rate, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import TitleName from '~/components/TitleName';
-import { fetchApiRatingForDoctor } from '~/redux/features/patient/patientSlice';
+import { fetchApiRatingForDoctor } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 
 function RatingAfterExaminated({ patients, scheduleDetail }) {
     const [openModal, setOpenModal] = useState(false);
@@ -17,22 +17,24 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
         setOpenModal(true);
     }, []);
 
-    const handleCancel = () => {
-        setOpenModal(false);
-    };
+    // const handleCancel = () => {
+    //     setOpenModal(false);
+    // };
 
     const handleRatingAfterExamOnFish = (values) => {
         if (values) {
             console.log('values', values);
 
             dispatch(fetchApiRatingForDoctor(values));
+            setOpenModal(false);
+            message.success('Gửi đánh giá cho bác sĩ thành công. Cám ơn bạn rất nhiều!');
         }
     };
 
     return (
         <Modal
             open={openModal}
-            onCancel={handleCancel}
+            // onCancel={handleCancel}
             cancelButtonProps={{ style: { display: 'none' } }}
             okButtonProps={{ style: { display: 'none' } }}
         >
@@ -54,8 +56,8 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
                 fields={[
                     { name: ['rating'], value: valueRating },
                     { name: ['patient_id'], value: patients?.patient?._id },
-                    { name: ['schedule_id'], value: scheduleDetail?._id },
-                    { name: ['doctor_id'], value: patients?.patient?.doctor_glycemic_id?._id },
+                    { name: ['schedule_id'], value: scheduleDetail?.schedule_details_id },
+                    { name: ['doctor_id'], value: scheduleDetail?.info_doctor?._id },
                 ]}
             >
                 <Form.Item
@@ -71,31 +73,19 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
                     <Input.TextArea placeholder="Nhập nội dung đánh giá..." />
                 </Form.Item>
 
-                <Form.Item
-                    name="rating"
-                    // style={{ display: 'none' }}
-                >
+                <Form.Item name="rating" style={{ display: 'none' }}>
                     <Input disabled />
                 </Form.Item>
 
-                <Form.Item
-                    name="patient_id"
-                    // style={{ display: 'none' }}
-                >
+                <Form.Item name="patient_id" style={{ display: 'none' }}>
                     <Input disabled />
                 </Form.Item>
 
-                <Form.Item
-                    name="schedule_id"
-                    // style={{ display: 'none' }}
-                >
+                <Form.Item name="schedule_id" style={{ display: 'none' }}>
                     <Input disabled />
                 </Form.Item>
 
-                <Form.Item
-                    name="doctor_id"
-                    // style={{ display: 'none' }}
-                >
+                <Form.Item name="doctor_id" style={{ display: 'none' }}>
                     <Input disabled />
                 </Form.Item>
 

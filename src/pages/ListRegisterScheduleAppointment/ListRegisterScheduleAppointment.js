@@ -24,15 +24,15 @@ function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
     const [roomId, setRoomId] = useState();
     const [openModalRating, setOpenModalRating] = useState(false);
-    // const [userId, setUserId] = useState();
 
-    const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
+    const patients = useSelector(fetchApiAllPatientsSelector);
+    const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
     const dispatch = useDispatch();
 
     // console.log('userId ->', userId);
-    // console.log('roomId -->', roomId);
-    // console.log('checkLeavedRoom patient ->', checkLeavedRoom);
+    console.log('roomId -->', roomId);
+    console.log('checkLeavedRoom patient ->', checkLeavedRoom);
     // console.log('patients.patient.person.username', patients.patient.person.username);
 
     useEffect(() => {
@@ -49,12 +49,25 @@ function ListRegisterScheduleAppointment() {
     }, []);
 
     useEffect(() => {
+        socket.emit('join_room', roomId); // obj
         socket.emit('add_user', patients?.patient?._id);
 
-        socket.on('get_users', (users) => {
-            console.log('get_users', users);
+        // socket.on('get_users', (users) => {
+        //     console.log('get_users', users);
+        // });
+
+        // joined_room
+        socket.on('joined_room', (conversationId) => {
+            console.log('[conversation - id] ->', conversationId);
         });
-    }, [patients?.patient?._id]);
+    }, [patients?.patient?._id, roomId]);
+
+    useEffect(() => {
+        socket.on('user_leave_room_call_success', ({ username, roomId }) => {
+            console.log('user_leave_room_call_success ->', username, roomId);
+            dispatch(callSlice.actions.arrivalUsername(username));
+        });
+    }, []);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -62,6 +75,7 @@ function ListRegisterScheduleAppointment() {
 
     const handleHideModal = () => {
         setOpenModalCall(false);
+        socket.emit('join_room', roomId); // obj
         // roomId && socket.emit('user_leave_room_call', { roomId })
     };
 
@@ -95,7 +109,9 @@ function ListRegisterScheduleAppointment() {
                 </Modal>
             )}
 
-            {openModalRating && <RatingAfterExaminated patients={patients} scheduleDetail={roomId} />}
+            {(openModalRating || checkLeavedRoom !== null) && (
+                <RatingAfterExaminated patients={patients} scheduleDetail={roomId} />
+            )}
 
             <ChatBot />
             <ScrollToTop smooth className="scroll-to-top" />
