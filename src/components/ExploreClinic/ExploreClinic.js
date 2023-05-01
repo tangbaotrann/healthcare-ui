@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import './ExploreClinic.css';
 import ExploreClinicInformation from './ExploreClinicInformation';
 
-function ExploreClinic() {
+function ExploreClinic({ patients }) {
     return (
         <div className="wrapper-explore-clinic">
             <div className="explore-clinic-header">
@@ -24,7 +24,7 @@ function ExploreClinic() {
 
             {/* Footer */}
             <div className="explore-clinic-footer">
-                <ExploreClinicInformation />
+                <ExploreClinicInformation patients={patients} />
             </div>
         </div>
     );

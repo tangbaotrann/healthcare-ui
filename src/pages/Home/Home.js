@@ -56,7 +56,7 @@ function Home({ checkUserLogin }) {
                 ) : (
                     <Content>
                         <SlideImage patients={patients} />
-                        <ExploreClinic />
+                        <ExploreClinic patients={patients} />
                         <HealthInformation patients={patients} />
                     </Content>
                 )}
