@@ -72,6 +72,7 @@ function CartMeeting({ infoUser }) {
         // dispatch(callSlice.actions.arrivalUserId(_scheduleMedicalMeeting));
         setConversation(conversation);
         setRecord(_scheduleMedicalMeeting);
+        // socket.emit('user_join_room_call', { _scheduleMedicalMeeting });
     };
 
     // show modal conversation

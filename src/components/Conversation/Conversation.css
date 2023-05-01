@@ -98,3 +98,8 @@
     margin: 2px 2px;
     color: var(--await-loading);
 }
+
+.container-rating-exam {
+    text-align: center;
+    margin: 0 auto;
+}

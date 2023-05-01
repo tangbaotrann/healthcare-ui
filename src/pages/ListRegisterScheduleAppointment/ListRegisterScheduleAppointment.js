@@ -9,14 +9,21 @@ import DefaultLayout from '~/layouts/DefaultLayout';
 import ChatBot from '~/components/ChatBot';
 import Footer from '~/layouts/components/Footer';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
-import { fetchApiAllPatientsSelector } from '~/redux/selector';
+import {
+    btnClickGetPatientUsernameLeaveRoomSelector,
+    btnClickGetUsernameLeavedRoomSelector,
+    fetchApiAllPatientsSelector,
+} from '~/redux/selector';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import CardListRegisterSchedule from './CardListRegisterSchedule/CardListRegisterSchedule';
+import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated/RatingAfterExaminated';
+import callSlice from '~/redux/features/call/callSlice';
 
 function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
     const [roomId, setRoomId] = useState();
+    const [openModalRating, setOpenModalRating] = useState(false);
     // const [userId, setUserId] = useState();
 
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -24,13 +31,20 @@ function ListRegisterScheduleAppointment() {
     const dispatch = useDispatch();
 
     // console.log('userId ->', userId);
-    console.log('roomId', roomId);
+    // console.log('roomId -->', roomId);
+    // console.log('checkLeavedRoom patient ->', checkLeavedRoom);
     // console.log('patients.patient.person.username', patients.patient.person.username);
 
     useEffect(() => {
         socket.on('call_id_room_to_user_success', ({ room_id, info_doctor, info_patient, schedule_details_id }) => {
             setOpenModalCall(true);
             setRoomId({ room_id, info_doctor, info_patient, schedule_details_id });
+        });
+    }, []);
+
+    useEffect(() => {
+        socket.on('rating_for_doctor_success', ({ conversation_id, patient_id }) => {
+            setOpenModalRating(true);
         });
     }, []);
 
@@ -48,6 +62,7 @@ function ListRegisterScheduleAppointment() {
 
     const handleHideModal = () => {
         setOpenModalCall(false);
+        // roomId && socket.emit('user_leave_room_call', { roomId })
     };
 
     return (
@@ -79,6 +94,8 @@ function ListRegisterScheduleAppointment() {
                     </div>
                 </Modal>
             )}
+
+            {openModalRating && <RatingAfterExaminated patients={patients} schedule_details_id={roomId} />}
 
             <ChatBot />
             <ScrollToTop smooth className="scroll-to-top" />

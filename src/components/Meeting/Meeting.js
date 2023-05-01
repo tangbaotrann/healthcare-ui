@@ -4,29 +4,22 @@ import { useParams } from 'react-router-dom';
 // me
 import './Meeting.css';
 import MeetScreen from './MeetScreen';
+import { useEffect, useState } from 'react';
+import socket from '~/utils/socket';
 
 function Meeting() {
     // const [roomCodeWithInfoMember, setRoomCodeWithInfoMember] = useState('');
+
     const { roomId } = useParams();
 
     // console.log('username', username);
     // const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
+    // console.log('infoUserJoin -->', infoUserJoin);
     // console.log('checkLeavedRoom', checkLeavedRoom);
     // console.log('roomId meeting', roomId);
     // console.log('infoMember params ->', infoMember);
     // console.log('getIdDoctor ->', getIdDoctor);
-
-    // handle submit
-    // const handleSubmitForm = (values) => {
-    //     const { room_id } = values;
-    //     setRoomCodeWithInfoMember(room_id);
-    //     navigate(`${endPoints.meetingRoom}/${room_id}/${username}`);
-
-    //     // socket call id room id to user
-    //     // socket.emit('call_id_room_to_user', { roomId: roomId });
-    //     // socket.emit('send_username_when_call', { username });
-    // };
 
     return (
         <div className="meeting-wrapper">
