@@ -41,9 +41,9 @@ const { Header, Sider, Content } = Layout;
 
 function LayoutDoctorManager({ children, infoUser }) {
     const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
+    // const {
+    //     token: { colorBgContainer },
+    // } = theme.useToken();
 
     const dispatch = useDispatch();
 
