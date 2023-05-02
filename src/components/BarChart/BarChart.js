@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -271,7 +271,7 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
 
                         {/* Show history */}
                         <div className="history-body">
-                            <HistoryExamOfPatient historyExams={historyExams} />
+                            <HistoryExamOfPatient historyExams={historyExams} className="custom-load-more-btn" />
                         </div>
                     </div>
                 ) : (

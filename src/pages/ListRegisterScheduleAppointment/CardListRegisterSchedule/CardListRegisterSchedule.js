@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Skeleton } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,20 +8,24 @@ import scheduleDoctor, {
 import {
     filterRegisterScheduleAppointmentWithStatusFalse,
     filterRegisterScheduleAppointmentWithStatusTrue,
+    isLoadingGetAllScheduleDetailOfPatient,
 } from '~/redux/selector';
 import CardItemRegisterSchedule from '../CardItemRegisterSchedule';
 import socket from '~/utils/socket';
+import ButtonLoadMore from '~/components/ButtonLoadMore/ButtonLoadMore';
 
 function CardListRegisterSchedule({ patients }) {
     const [status, setStatus] = useState(true);
+    const [visible, setVisible] = useState(5);
 
     const dispatch = useDispatch();
 
     const scheduleDetailsStatusTrue = useSelector(filterRegisterScheduleAppointmentWithStatusTrue);
     const scheduleDetailsStatusFalse = useSelector(filterRegisterScheduleAppointmentWithStatusFalse);
+    const isLoading = useSelector(isLoadingGetAllScheduleDetailOfPatient);
 
     // console.log('patients', patients);
-    console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
+    // console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
@@ -52,6 +56,22 @@ function CardListRegisterSchedule({ patients }) {
         setStatus(false);
     };
 
+    const handleShowMoreCards = () => {
+        setVisible((prev) => prev + 5);
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+        });
+    };
+
+    const handleLessCards = () => {
+        setVisible(5);
+        window.scrollTo({
+            top: 100,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <>
             <div className="display-btn-filter-status-register-schedule">
@@ -75,12 +95,22 @@ function CardListRegisterSchedule({ patients }) {
 
             {status ? (
                 <>
-                    {scheduleDetailsStatusTrue.length > 0 ? (
-                        scheduleDetailsStatusTrue.map((schedule) => {
-                            return (
-                                <CardItemRegisterSchedule schedule={schedule} patients={patients} key={schedule._id} />
-                            );
-                        })
+                    {scheduleDetailsStatusTrue?.length > 0 ? (
+                        <>
+                            {isLoading ? (
+                                <Skeleton active />
+                            ) : (
+                                scheduleDetailsStatusTrue.slice(0, visible).map((schedule) => {
+                                    return (
+                                        <CardItemRegisterSchedule
+                                            schedule={schedule}
+                                            patients={patients}
+                                            key={schedule._id}
+                                        />
+                                    );
+                                })
+                            )}
+                        </>
                     ) : (
                         <p className="message-empty-schedule">
                             <i>-- Bạn chưa có lịch khám nào --</i>
@@ -89,12 +119,22 @@ function CardListRegisterSchedule({ patients }) {
                 </>
             ) : (
                 <>
-                    {scheduleDetailsStatusFalse.length > 0 ? (
-                        scheduleDetailsStatusFalse.map((schedule) => {
-                            return (
-                                <CardItemRegisterSchedule schedule={schedule} patients={patients} key={schedule._id} />
-                            );
-                        })
+                    {scheduleDetailsStatusFalse?.length > 0 ? (
+                        <>
+                            {isLoading ? (
+                                <Skeleton active />
+                            ) : (
+                                scheduleDetailsStatusFalse.map((schedule) => {
+                                    return (
+                                        <CardItemRegisterSchedule
+                                            schedule={schedule}
+                                            patients={patients}
+                                            key={schedule._id}
+                                        />
+                                    );
+                                })
+                            )}
+                        </>
                     ) : (
                         <p className="message-empty-schedule">
                             <i>-- Bạn chưa có lịch chờ nào --</i>
@@ -102,6 +142,18 @@ function CardListRegisterSchedule({ patients }) {
                     )}
                 </>
             )}
+
+            {scheduleDetailsStatusTrue?.length >= 5 && visible < scheduleDetailsStatusTrue?.length ? (
+                <ButtonLoadMore onClick={handleShowMoreCards}>Xem thêm</ButtonLoadMore>
+            ) : visible > 5 && visible >= scheduleDetailsStatusTrue?.length ? (
+                <ButtonLoadMore onClick={handleLessCards}>Thu gọn</ButtonLoadMore>
+            ) : null}
+
+            {scheduleDetailsStatusFalse?.length >= 5 && visible < scheduleDetailsStatusFalse?.length ? (
+                <ButtonLoadMore onClick={handleShowMoreCards}>Xem thêm</ButtonLoadMore>
+            ) : visible > 5 && visible >= scheduleDetailsStatusFalse?.length ? (
+                <ButtonLoadMore onClick={handleLessCards}>Thu gọn</ButtonLoadMore>
+            ) : null}
         </>
     );
 }

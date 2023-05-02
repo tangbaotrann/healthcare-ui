@@ -26,6 +26,7 @@
 }
 
 .blog-patient-item-container {
+    position: relative;
     display: flex;
     border-radius: 16px;
     border: 2px solid #e8e8e8;
@@ -90,4 +91,14 @@
 .patient-blog-footer {
     top: 0;
     width: 100%;
+}
+
+.message-blog-no-post {
+    text-align: center;
+}
+
+.message-blog-no-post i {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--black);
 }
