@@ -13,6 +13,7 @@ import {
     btnClickGetUsernameLeavedRoomSelector,
     fetchApiAllPatientsSelector,
     fetchApiHistoryExamOfPatientSelector,
+    isLoadingHistoryExamOfPatientSelector,
 } from '~/redux/selector';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
@@ -31,6 +32,7 @@ function ListRegisterScheduleAppointment() {
     const patients = useSelector(fetchApiAllPatientsSelector);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
     const historyExams = useSelector(fetchApiHistoryExamOfPatientSelector);
+    const isLoading = useSelector(isLoadingHistoryExamOfPatientSelector);
 
     const dispatch = useDispatch();
 
@@ -170,7 +172,7 @@ function ListRegisterScheduleAppointment() {
                         {tabList ? (
                             <CardListRegisterSchedule patients={patients} />
                         ) : (
-                            <HistoryExamOfPatient historyExams={historyExams} />
+                            <HistoryExamOfPatient historyExams={historyExams} isLoading={isLoading} />
                         )}
                     </div>
                 </div>

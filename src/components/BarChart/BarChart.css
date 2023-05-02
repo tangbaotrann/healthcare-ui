@@ -28,6 +28,7 @@
     /* flex-direction: column; */
     width: 100%;
     flex: 10;
+    height: 0;
 }
 
 .bmi-glycemic-container {
@@ -133,9 +134,8 @@
 
 /* Footer buttons */
 .container-modal-patient-list {
-    /* display: flex; */
-    /* flex-direction: column; */
     flex: 3;
+    height: 0;
 }
 
 .display-btn-modal-footer {
@@ -226,4 +226,53 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.history-watch-btn {
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 20px;
+    line-height: 0;
+    text-align: center;
+    border-radius: 100px;
+    color: var(--white);
+    background-color: var(--status-normal);
+    margin-top: 16px;
+    margin-left: 6px;
+}
+
+.history-watch-btn:hover {
+    opacity: 0.8;
+    color: var(--white) !important;
+    transition: all 0.2s;
+}
+
+/* show history */
+.history-watch {
+    display: flex;
+    flex-direction: column;
+    flex: 10;
+}
+
+.history-body {
+    overflow-y: scroll;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 82vh;
+}
+
+.history-icon-back {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--black);
+}
+
+.history-icon-back:hover {
+    color: var(--primary);
+    opacity: 0.8;
+    transition: all 0.2s;
+    cursor: pointer;
 }

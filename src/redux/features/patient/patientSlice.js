@@ -356,8 +356,12 @@ const patientSlice = createSlice({
         patientRegisterSchedule: [],
         resultExam: [],
         historyExam: [],
+        btnClickedOpenHistory: null,
     },
     reducers: {
+        clickedOpenHistory: (state, action) => {
+            state.btnClickedOpenHistory = action.payload;
+        },
         arrivalFilterMeeting: (state, action) => {
             state.btnOptionSelectedMeeting = action.payload;
         },
@@ -516,7 +520,11 @@ const patientSlice = createSlice({
                     data: action.payload,
                 });
             })
+            .addCase(fetchApiHistoryExamOfPatient.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiHistoryExamOfPatient.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.historyExam = action.payload;
             });
     },

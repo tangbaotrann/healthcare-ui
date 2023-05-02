@@ -20,7 +20,11 @@ import { Button, Divider, Select } from 'antd';
 import './BarChart.css';
 import TitleName from '../TitleName';
 import { endPoints } from '~/routers';
-import { getDoctorLoginFilter } from '~/redux/selector';
+import {
+    btnClickedOpenHistorySelector,
+    fetchApiHistoryExamOfPatientSelector,
+    getDoctorLoginFilter,
+} from '~/redux/selector';
 import glycemicSlice from '~/redux/features/metric/glycemicSlice';
 import bmisSlice from '~/redux/features/metric/bmisSlice';
 import bloodPressureSlice from '~/redux/features/metric/bloodPressure';
@@ -28,6 +32,9 @@ import InformationPatient from './InformationPatient';
 import ModalRemind from './ModalRemind/ModalRemind';
 import ModalStopExaminated from './ModalStopExaminated/ModalStopExaminated';
 import ModalMovePatient from './ModalMovePatient/ModalMovePatient';
+import { LeftOutlined } from '@ant-design/icons';
+import patientSlice, { fetchApiHistoryExamOfPatient } from '~/redux/features/patient/patientSlice';
+import HistoryExamOfPatient from '../HistoryExamOfPatient/HistoryExamOfPatient';
 
 // get chart
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -38,8 +45,12 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
     const dispatch = useDispatch();
 
     const getIdDoctor = useSelector(getDoctorLoginFilter);
+    const historyExams = useSelector(fetchApiHistoryExamOfPatientSelector);
+    const openHistory = useSelector(btnClickedOpenHistorySelector);
 
-    console.log('bmis', bmis);
+    // console.log('openHistory', openHistory);
+    // console.log('historyExams', historyExams);
+    // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
     // console.log('filterChartGlycemic', filterChartGlycemic);
     // console.log('infoPatient', infoPatient);
@@ -186,6 +197,17 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
         dispatch(bloodPressureSlice.actions.arrivalFilterBloodPressure(value));
     };
 
+    const handleWatchHistoryPatient = () => {
+        dispatch(fetchApiHistoryExamOfPatient(infoPatient._id));
+        // setOpenHistory(true);
+        dispatch(patientSlice.actions.clickedOpenHistory('show'));
+    };
+
+    const hideHistory = () => {
+        // setOpenHistory(false);
+        dispatch(patientSlice.actions.clickedOpenHistory(null));
+    };
+
     return (
         <>
             <div style={{ marginTop: '-28px' }}>
@@ -214,6 +236,10 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
                             Xem vị trí trên maps
                         </Button>
 
+                        <Button className="history-watch-btn" block onClick={handleWatchHistoryPatient}>
+                            Xem lịch sử khám
+                        </Button>
+
                         {/* Modal remind */}
                         <ModalRemind getIdDoctor={getIdDoctor} infoPatient={infoPatient} />
 
@@ -235,46 +261,61 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
 
                 <Divider type="vertical" style={{ height: '100vh' }} />
 
-                <div className="container-chart">
-                    <div className="inner-chart">
-                        <div className="filter-glycemic">
-                            <Select
-                                options={[
-                                    { value: 'all', label: 'Tất cả' },
-                                    { value: 'week', label: 'Theo tuần' },
-                                    { value: 'month', label: 'Theo tháng' },
-                                ]}
-                                defaultValue="all"
-                                style={{ width: 140 }}
-                                onSelect={handleChangeFilterGlycemic}
-                            />
+                {openHistory ? (
+                    <div className="history-watch">
+                        <div className="history-header">
+                            <p className="history-icon-back" onClick={hideHistory}>
+                                <LeftOutlined /> Lịch sử khám cho bệnh nhân
+                            </p>
                         </div>
 
-                        <div className="display-chart-gly-blood">
-                            {/* Glycemic */}
-                            <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
+                        {/* Show history */}
+                        <div className="history-body">
+                            <HistoryExamOfPatient historyExams={historyExams} />
+                        </div>
+                    </div>
+                ) : (
+                    <div className="container-chart">
+                        <div className="inner-chart">
+                            <div className="filter-glycemic">
+                                <Select
+                                    options={[
+                                        { value: 'all', label: 'Tất cả' },
+                                        { value: 'week', label: 'Theo tuần' },
+                                        { value: 'month', label: 'Theo tháng' },
+                                    ]}
+                                    defaultValue="all"
+                                    style={{ width: 140 }}
+                                    onSelect={handleChangeFilterGlycemic}
+                                />
+                            </div>
 
-                            {/* Huyết áp */}
-                            <div className="blood-pressures-container">
-                                <div className="inner-chart">
-                                    <Line
-                                        options={optionBloodPressure}
-                                        data={dataBloodPressure}
-                                        height={260}
-                                        width={400}
-                                    />
+                            <div className="display-chart-gly-blood">
+                                {/* Glycemic */}
+                                <Line options={optionsGlycemic} data={dataGlycemic} height={260} width={400} />
+
+                                {/* Huyết áp */}
+                                <div className="blood-pressures-container">
+                                    <div className="inner-chart">
+                                        <Line
+                                            options={optionBloodPressure}
+                                            data={dataBloodPressure}
+                                            height={260}
+                                            width={400}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="bmi-glycemic-container">
-                        {/* BMI */}
-                        <div className="inner-chart">
-                            <Line options={options} data={data} height={260} width={400} />
+                        <div className="bmi-glycemic-container">
+                            {/* BMI */}
+                            <div className="inner-chart">
+                                <Line options={options} data={data} height={260} width={400} />
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </>
     );
