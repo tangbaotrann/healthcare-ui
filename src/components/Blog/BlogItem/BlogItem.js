@@ -2,14 +2,14 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Divider, Image, Drawer, Skeleton } from 'antd';
+import { Divider, Image, Drawer } from 'antd';
 import { ArrowLeftOutlined, HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons';
 
 // me
 import { fetchApiDisLikePost, fetchApiGetPostById, fetchApiLikePost } from '~/redux/features/blog/blogSlice';
 import Comment from '../Comment';
 import { fetchApiCommentByIdPost } from '~/redux/features/comment/commentSlice';
-import { fetchApiCommentByIdPostSelector, isLoadingAllPostByIdDoctorSelector } from '~/redux/selector';
+import { fetchApiCommentByIdPostSelector } from '~/redux/selector';
 
 function BlogItem({ posts, blogPost, infoUser }) {
     const [postDetail, setPostDetail] = useState(false);

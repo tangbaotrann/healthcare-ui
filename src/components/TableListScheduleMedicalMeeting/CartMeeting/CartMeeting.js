@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Image, Modal, Typography, message } from 'antd';
 
 // me
-import { icons, logo } from '~/asset/images';
+import { icons } from '~/asset/images';
 import {
     btnClickGetUsernameLeavedRoomSelector,
     getDoctorLoginFilter,
