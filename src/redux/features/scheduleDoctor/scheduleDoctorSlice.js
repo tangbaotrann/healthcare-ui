@@ -319,7 +319,11 @@ const scheduleDoctor = createSlice({
                     data: action.payload,
                 });
             })
+            .addCase(fetchApiGetAllScheduleDetailOfPatient.pending, (state, action) => {
+                state.isLoading = true;
+            })
             .addCase(fetchApiGetAllScheduleDetailOfPatient.fulfilled, (state, action) => {
+                state.isLoading = false;
                 state.allScheduleDetailOfPatient = action.payload;
             })
             .addCase(fetchApiDeleteScheduleMedicalOfPatient.fulfilled, (state, action) => {

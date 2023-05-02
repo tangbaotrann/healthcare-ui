@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Image, Skeleton } from 'antd';
+import { Image, Select, Skeleton } from 'antd';
 import ScrollToTop from 'react-scroll-to-top';
 
 import './BlogPage.css';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import {
+    blogPatientOptionSelectedFilter,
     fetchApiAllPatientsSelector,
     fetchApiCommentByIdPostSelector,
     fetchApiGetAllPostSelector,
     fetchApiGetPostByIdSelector,
     isLoadingGetAllPostSelector,
 } from '~/redux/selector';
-import {
+import blogSlice, {
     fetchApiGetAllPost,
     fetchApiGetPostById,
     fetchApiLikePostOfPatient,
@@ -24,6 +25,7 @@ import ChatBot from '~/components/ChatBot';
 import BlogPatient from '~/components/BlogPatient/BlogPatient';
 import Footer from '~/layouts/components/Footer/Footer';
 import socket from '~/utils/socket';
+import moment from 'moment';
 
 function BlogPage() {
     const [openBlogDetail, setOpenBlogDetail] = useState(false);
@@ -32,7 +34,7 @@ function BlogPage() {
     const [openComments, setOpenComments] = useState(false);
 
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
-    const posts = useSelector(fetchApiGetAllPostSelector); // filterGetInfoPatientByAccountId
+    const posts = useSelector(blogPatientOptionSelectedFilter); // fetchApiGetAllPostSelector
     const blogPost = useSelector(fetchApiGetPostByIdSelector);
     const comments = useSelector(fetchApiCommentByIdPostSelector); // filterGetCommentPost
     const isLoading = useSelector(isLoadingGetAllPostSelector);
@@ -102,6 +104,15 @@ function BlogPage() {
         );
     };
 
+    useEffect(() => {
+        dispatch(blogSlice.actions.arrivalFilterBlog('week'));
+    }, []);
+
+    // handle filter blog
+    const handleChangeFilterBlog = (value) => {
+        dispatch(blogSlice.actions.arrivalFilterBlog(value));
+    };
+
     return (
         <DefaultLayout patients={patients}>
             <ChatBot />
@@ -129,6 +140,19 @@ function BlogPage() {
                             <p className="blog-patient-sub-title">
                                 Tổng hợp các bài viết chia sẻ về bệnh đái tháo đường.
                             </p>
+
+                            {/* Filter blog */}
+                            <div className="custom-filter-blog">
+                                <Select
+                                    options={[
+                                        { value: 'all', label: 'Tất cả' },
+                                        { value: 'week', label: 'Theo tuần' },
+                                    ]}
+                                    defaultValue="Theo tuần"
+                                    style={{ width: 140, zIndex: '2' }}
+                                    onSelect={handleChangeFilterBlog}
+                                />
+                            </div>
                         </div>
 
                         {/* Mid  */}
@@ -136,60 +160,72 @@ function BlogPage() {
                             <Skeleton active />
                         ) : (
                             <div className="blog-patient-middle-content">
-                                {posts.map((post) => {
-                                    return (
-                                        <div
-                                            className="blog-patient-item-container"
-                                            key={post._id}
-                                            onClick={() => handleOpenBlogDetails(post)}
-                                        >
-                                            <div className="content-left-container">
-                                                {/* Header */}
-                                                <div className="blog-header">
-                                                    <img
-                                                        src={post?.author?.person?.avatar}
-                                                        className="blog-header-avatar"
-                                                        alt="avatar"
-                                                    />
-                                                    <p className="blog-header-username">
-                                                        BS. {post?.author?.person?.username}
-                                                    </p>
-                                                </div>
-                                                {/* Content */}
-                                                <div className="blog-content">
-                                                    {/* Description */}
-                                                    <div className="blog-content-desc">
-                                                        <h3 className="blog-content-desc-title">
-                                                            {post.title || null}
-                                                        </h3>
-                                                        <div
-                                                            className="blog-content-desc-detail"
-                                                            dangerouslySetInnerHTML={{ __html: post.content }}
+                                {posts?.length > 0 ? (
+                                    posts.map((post) => {
+                                        return (
+                                            <div
+                                                className="blog-patient-item-container"
+                                                key={post._id}
+                                                onClick={() => handleOpenBlogDetails(post)}
+                                            >
+                                                <div className="content-left-container">
+                                                    {/* Header */}
+                                                    <div className="blog-header">
+                                                        <img
+                                                            src={post?.author?.person?.avatar}
+                                                            className="blog-header-avatar"
+                                                            alt="avatar"
                                                         />
+                                                        <p className="blog-header-username">
+                                                            BS. {post?.author?.person?.username}
+                                                        </p>
+                                                    </div>
+                                                    {/* Content */}
+                                                    <div className="blog-content">
+                                                        {/* Description */}
+                                                        <div className="blog-content-desc">
+                                                            <h3 className="blog-content-desc-title">
+                                                                {post.title || null}
+                                                            </h3>
+                                                            <div
+                                                                className="blog-content-desc-detail"
+                                                                dangerouslySetInnerHTML={{ __html: post.content }}
+                                                            />
+
+                                                            <p className="blog-footer-time">
+                                                                {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
+                                                                <span className="blog-footer-icon-time">·</span>{' '}
+                                                                {moment(post.createdAt).format('HH:mm a')}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            {/* Image */}
-                                            <div className="blog-content-image">
-                                                {post.images.length === 0
-                                                    ? null
-                                                    : post.images.length >= 1
-                                                    ? post.images.map((_postImage, index) => {
-                                                          return (
-                                                              <Image
-                                                                  key={index}
-                                                                  className="blog-content-image-detail"
-                                                                  src={_postImage}
-                                                                  alt="image-content"
-                                                              />
-                                                          );
-                                                      })
-                                                    : null}
+                                                {/* Image */}
+                                                <div className="blog-content-image">
+                                                    {post.images.length === 0
+                                                        ? null
+                                                        : post.images.length >= 1
+                                                        ? post.images.map((_postImage, index) => {
+                                                              return (
+                                                                  <Image
+                                                                      key={index}
+                                                                      className="blog-content-image-detail"
+                                                                      src={_postImage}
+                                                                      alt="image-content"
+                                                                  />
+                                                              );
+                                                          })
+                                                        : null}
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })
+                                ) : (
+                                    <p className="message-blog-no-post">
+                                        <i>-- Hiện tại chưa có bài viết nào của các bác sĩ --</i>
+                                    </p>
+                                )}
                             </div>
                         )}
                     </>

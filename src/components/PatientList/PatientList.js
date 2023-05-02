@@ -27,13 +27,12 @@ function PatientList() {
 
     const dispatch = useDispatch();
 
-    const patients = useSelector(scheduleDetailByIdDoctorFilters); // fetchApiScheduleDetailByIdDoctorSelector
+    const patients = useSelector(scheduleDetailByIdDoctorFilters);
     const bmis = useSelector(userBMIListSelectorFilter);
     const glycemics = useSelector(userGlycemicListSelectorFilter);
     const bloodPressures = useSelector(userBloodPressureListSelectorFilter);
-    // const openHistory = useSelector(btnClickedOpenHistorySelector);
 
-    console.log('patients', patients);
+    // console.log('patients', patients);
     // console.log('bmis', bmis);
     // console.log('glycemics', glycemics);
     // console.log('bloodPressures', bloodPressures);

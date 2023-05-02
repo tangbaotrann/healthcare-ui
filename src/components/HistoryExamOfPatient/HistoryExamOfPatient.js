@@ -1,8 +1,34 @@
 import moment from 'moment';
-import './HistoryExamOfPatient.css';
+import { useState } from 'react';
 import { Skeleton } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
-function HistoryExamOfPatient({ historyExams, isLoading }) {
+import './HistoryExamOfPatient.css';
+import ButtonLoadMore from '../ButtonLoadMore';
+
+function HistoryExamOfPatient({ historyExams, isLoading, className }) {
+    const [visible, setVisible] = useState(5);
+
+    // console.log('historyExams', historyExams.length);
+    // console.log('visible', visible);
+    // console.log('loading', loading);
+
+    const handleShowMoreCards = () => {
+        setVisible((prev) => prev + 5);
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+        });
+    };
+
+    const handleLessCards = () => {
+        setVisible(5);
+        window.scrollTo({
+            top: 100,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <div className="history-wrapper">
             {historyExams?.length > 0 ? (
@@ -10,7 +36,7 @@ function HistoryExamOfPatient({ historyExams, isLoading }) {
                     {isLoading ? (
                         <Skeleton active />
                     ) : (
-                        historyExams.map((history) => {
+                        historyExams.slice(0, visible).map((history) => {
                             return (
                                 <div className="content-cart-item" key={history._id}>
                                     <div className="history-banner-right">
@@ -42,6 +68,16 @@ function HistoryExamOfPatient({ historyExams, isLoading }) {
                     <i>-- Hiện tại bạn chưa có lịch sử khám (do chưa đăng ký khám) --</i>
                 </p>
             )}
+
+            {historyExams?.length >= 5 && visible < historyExams?.length ? (
+                <ButtonLoadMore onClick={handleShowMoreCards} className={className} isLoading={isLoading}>
+                    Xem thêm
+                </ButtonLoadMore>
+            ) : visible > 5 && visible >= historyExams?.length ? (
+                <ButtonLoadMore onClick={handleLessCards} className={className} isLoading={isLoading}>
+                    Thu gọn
+                </ButtonLoadMore>
+            ) : null}
         </div>
     );
 }
