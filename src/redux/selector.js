@@ -130,6 +130,9 @@ export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
 
 export const fetchApiScheduleMedicalAppointmentResultExamSelector = (state) => state.patientSlice.resultExam;
 
+// history
+export const fetchApiHistoryExamOfPatientSelector = (state) => state.patientSlice.historyExam;
+
 /* -- Handle Selector -- */
 
 // get all schedule of patient (lấy hết lịch khám của bệnh nhân)
