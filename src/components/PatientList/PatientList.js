@@ -19,6 +19,7 @@ import BarChart from '../BarChart';
 import StatusHeathLoader from '../StatusHeathLoader';
 import MetricPieChart from './MetricPieChart';
 import TablePatient from './TablePatient';
+import patientSlice from '~/redux/features/patient/patientSlice';
 
 function PatientList() {
     const [showModalProfileDoctor, setShowModalProfileDoctor] = useState(false);
@@ -30,6 +31,7 @@ function PatientList() {
     const bmis = useSelector(userBMIListSelectorFilter);
     const glycemics = useSelector(userGlycemicListSelectorFilter);
     const bloodPressures = useSelector(userBloodPressureListSelectorFilter);
+    // const openHistory = useSelector(btnClickedOpenHistorySelector);
 
     console.log('patients', patients);
     // console.log('bmis', bmis);
@@ -48,6 +50,7 @@ function PatientList() {
     // close modal view profile doctor
     const handleCancel = () => {
         setShowModalProfileDoctor(false);
+        dispatch(patientSlice.actions.clickedOpenHistory(null));
     };
 
     // cols
