@@ -55,6 +55,7 @@
     color: var(--white);
     background: linear-gradient(271.41deg, #3300c4 11.44%, #D68397 93%);
     box-shadow: 6px 8px 14px 2px #8065cc;
+    z-index: 2;
 }
 
 .create-btn-write:hover {
@@ -314,6 +315,7 @@
 .post-detail-content-left-fix-to-top {
     position: sticky;
     top: 12px;
+    z-index: 5;
 }
 
 .post-detail-content-left-username {

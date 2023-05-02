@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Form, Input, Modal, message } from 'antd';
 
 import { icons } from '~/asset/images';
@@ -8,10 +8,7 @@ import TitleName from '~/components/TitleName';
 import { fetchApiDeleteScheduleMedicalOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import { Link } from 'react-router-dom';
 import { endPoints } from '~/routers';
-import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated/RatingAfterExaminated';
-import { btnClickGetUsernameLeavedRoomSelector } from '~/redux/selector';
 import socket from '~/utils/socket';
-import callSlice from '~/redux/features/call/callSlice';
 
 function CardItemRegisterSchedule({ schedule, patients }) {
     const [openModal, setOpenModal] = useState(false);
@@ -63,9 +60,6 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
     return (
         <div className="content-cart-item">
-            {/* show modal rating for doctor */}
-            {/* {checkLeavedRoom && <RatingAfterExaminated patients={patients} schedule_details_id={record} />} */}
-
             {schedule.status ? (
                 <>
                     <div className="content-cart-item-note-success-right">

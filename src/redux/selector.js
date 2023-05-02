@@ -136,10 +136,30 @@ export const fetchApiScheduleMedicalAppointmentResultExamSelector = (state) => s
 export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
     fetchApiGetAllScheduleDetailOfPatientSelector,
     (lists) => {
-        if (lists) {
-            const _lists = lists.filter((_schedule) => _schedule.status === false && _schedule.result_exam === null);
+        if (lists?.length > 0) {
+            // console.log('list', lists);
+            const now = new Date();
 
-            return _lists;
+            const _listSchedule = lists.filter(
+                (_schedule) =>
+                    new Date(_schedule.day_exam) >= now && _schedule.status === false && _schedule.result_exam === null,
+            );
+
+            const _schedule_now = _listSchedule.filter(
+                (_schedule) => moment(_schedule.day_exam).diff(new Date(), 'day') === 0,
+            );
+
+            const _schedule_now_ids = _schedule_now.map((_schedule) => _schedule._id);
+
+            const _schedule_after = _listSchedule.filter((_schedule) => {
+                return !_schedule_now_ids.includes(_schedule._id);
+            });
+
+            const _results = _schedule_now.concat(_schedule_after);
+
+            console.log('_results list false', _results);
+
+            return _results;
         } else {
             return [];
         }
@@ -148,15 +168,30 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
 export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
     fetchApiGetAllScheduleDetailOfPatientSelector,
     (lists) => {
-        if (lists) {
+        if (lists?.length > 0) {
             // console.log('list', lists);
-            const _lists = lists
-                .filter((_schedule) => _schedule.status === true && _schedule.result_exam === null)
-                .map((_schedule) => {
-                    return _schedule;
-                });
+            const now = new Date();
 
-            return _lists;
+            const _listSchedule = lists.filter(
+                (_schedule) =>
+                    new Date(_schedule.day_exam) >= now && _schedule.status === true && _schedule.result_exam === null,
+            );
+
+            const _schedule_now = _listSchedule.filter(
+                (_schedule) => moment(_schedule.day_exam).diff(new Date(), 'day') === 0,
+            );
+
+            const _schedule_now_ids = _schedule_now.map((_schedule) => _schedule._id);
+
+            const _schedule_after = _listSchedule.filter((_schedule) => {
+                return !_schedule_now_ids.includes(_schedule._id);
+            });
+
+            const _results = _schedule_now.concat(_schedule_after);
+
+            console.log('_results', _results);
+
+            return _results;
         } else {
             return [];
         }

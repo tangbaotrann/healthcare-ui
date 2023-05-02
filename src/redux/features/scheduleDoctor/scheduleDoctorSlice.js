@@ -207,9 +207,9 @@ export const fetchApiRatingForDoctor = createAsyncThunk('patient/fetchApiRatingF
             schedule_id: schedule_id,
             content: content,
         });
-        console.log('res rating', res.data.data);
+        console.log('res rating', res.data);
 
-        return res.data.data;
+        return res.data;
     } catch (err) {
         console.log({ err });
     }
@@ -302,18 +302,22 @@ const scheduleDoctor = createSlice({
             })
             // rating for doctor
             .addCase(fetchApiRatingForDoctor.fulfilled, (state, action) => {
-                const schedule = action.payload;
+                const schedule = action.payload.data;
 
                 console.log('schedule patient del slice ->', schedule);
 
                 const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
-                    (_schedule) => _schedule._id === schedule.schedule_id,
+                    (_schedule) => _schedule._id === schedule.schedule_id._id,
                 );
 
                 // cut
                 if (spliceSchedule > -1) {
                     state.allScheduleDetailOfPatient.splice(spliceSchedule, 1);
                 }
+
+                socket.emit('notification_confirm_register_schedule', {
+                    data: action.payload,
+                });
             })
             .addCase(fetchApiGetAllScheduleDetailOfPatient.fulfilled, (state, action) => {
                 state.allScheduleDetailOfPatient = action.payload;

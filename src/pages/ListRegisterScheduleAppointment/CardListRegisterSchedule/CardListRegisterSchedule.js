@@ -6,14 +6,11 @@ import scheduleDoctor, {
     fetchApiGetAllScheduleDetailOfPatient,
 } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import {
-    btnClickGetUsernameLeavedRoomSelector,
     filterRegisterScheduleAppointmentWithStatusFalse,
     filterRegisterScheduleAppointmentWithStatusTrue,
 } from '~/redux/selector';
 import CardItemRegisterSchedule from '../CardItemRegisterSchedule';
 import socket from '~/utils/socket';
-import patientSlice from '~/redux/features/patient/patientSlice';
-import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated/RatingAfterExaminated';
 
 function CardListRegisterSchedule({ patients }) {
     const [status, setStatus] = useState(true);
