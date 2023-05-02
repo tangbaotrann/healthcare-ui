@@ -9,23 +9,32 @@ import DefaultLayout from '~/layouts/DefaultLayout';
 import ChatBot from '~/components/ChatBot';
 import Footer from '~/layouts/components/Footer';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
-import { btnClickGetUsernameLeavedRoomSelector, fetchApiAllPatientsSelector } from '~/redux/selector';
+import {
+    btnClickGetUsernameLeavedRoomSelector,
+    fetchApiAllPatientsSelector,
+    fetchApiHistoryExamOfPatientSelector,
+} from '~/redux/selector';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
-import CardListRegisterSchedule from './CardListRegisterSchedule/CardListRegisterSchedule';
-import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated/RatingAfterExaminated';
+import CardListRegisterSchedule from './CardListRegisterSchedule';
+import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminated';
 import callSlice from '~/redux/features/call/callSlice';
+import HistoryExamOfPatient from '~/components/HistoryExamOfPatient';
+import { fetchApiHistoryExamOfPatient } from '~/redux/features/patient/patientSlice';
 
 function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
     const [roomId, setRoomId] = useState();
     const [openModalRating, setOpenModalRating] = useState(false);
+    const [tabList, setTabList] = useState(true);
 
     const patients = useSelector(fetchApiAllPatientsSelector);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
+    const historyExams = useSelector(fetchApiHistoryExamOfPatientSelector);
 
     const dispatch = useDispatch();
 
+    // console.log('historyExams ->', historyExams);
     // console.log('userId ->', userId);
     // console.log('roomId -->', roomId);
     // console.log('checkLeavedRoom patient ->', checkLeavedRoom);
@@ -74,6 +83,15 @@ function ListRegisterScheduleAppointment() {
         socket.emit('join_room', roomId); // obj
     };
 
+    const handleOpenScheduleRegister = () => {
+        setTabList(true);
+    };
+
+    const handleOpenScheduleHistory = () => {
+        dispatch(fetchApiHistoryExamOfPatient(patients.patient._id));
+        setTabList(false);
+    };
+
     return (
         <DefaultLayout patients={patients}>
             {/* Show modal confirm call */}
@@ -113,11 +131,6 @@ function ListRegisterScheduleAppointment() {
 
             <div className="register-schedule-appointment-wrapper">
                 <div className="list-register-schedule-appointment-banner">
-                    {/* <img
-                        className="list-register-schedule-appointment-img-left"
-                        src="https://cdn.jiohealth.com/jio-website/home-page/jio-website-v2.2/assets/icons/vaccination/qa-note-icon.svg"
-                        alt=""
-                    /> */}
                     <div className="register-schedule-appointment-title-name">DANH SÁCH LỊCH KHÁM CỦA BẠN</div>
                     <img
                         className="list-register-schedule-appointment-img-left"
@@ -128,15 +141,37 @@ function ListRegisterScheduleAppointment() {
 
                 {/* Content */}
                 <div className="register-schedule-appointment-container">
+                    <div className="tab-list-register-history">
+                        <Button
+                            className={`${tabList ? 'tab-item-active' : 'tab-item'}`}
+                            onClick={handleOpenScheduleRegister}
+                        >
+                            Lịch khám
+                        </Button>
+                        <Button
+                            className={`${!tabList ? 'tab-item-active' : 'tab-item'}`}
+                            onClick={handleOpenScheduleHistory}
+                        >
+                            Lịch sử khám
+                        </Button>
+                    </div>
                     <div className="progress-bar"></div>
 
                     <div className="register-schedule-appointment-content-container">
                         {/* Header */}
                         <div className="content-header">
-                            <h2 className="content-header-title">Lịch khám của bạn</h2>
+                            {tabList ? (
+                                <h2 className="content-header-title">Lịch khám của bạn</h2>
+                            ) : (
+                                <h2 className="content-header-title">Lịch sử khám của bạn</h2>
+                            )}
                         </div>
 
-                        <CardListRegisterSchedule patients={patients} />
+                        {tabList ? (
+                            <CardListRegisterSchedule patients={patients} />
+                        ) : (
+                            <HistoryExamOfPatient historyExams={historyExams} />
+                        )}
                     </div>
                 </div>
             </div>

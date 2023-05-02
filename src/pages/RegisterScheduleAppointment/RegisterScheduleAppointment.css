@@ -40,17 +40,6 @@
     position: relative;
 }
 
-.progress-bar {
-    position: absolute;
-    top: 0;
-    left: 40px;
-    width: 25%;
-    height: 5px;
-    background: #1dcbb6;
-    border-radius: 100px;
-    z-index: 2;
-}
-
 .register-schedule-appointment-content-container {
     background: #fff;
     border-radius: 30px 30px 0 0;
