@@ -53,6 +53,11 @@
     align-items: center;
 }
 
+.custom-ske-loading {
+    padding: 10px 14px;
+    margin-left: 10px;
+}
+
 .menu-list ul .inactive {
     font-size: 1.6rem;
     padding: 10px 14px;

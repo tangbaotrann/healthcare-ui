@@ -38,7 +38,7 @@ function HealthInformation({ patients }) {
                 />
 
                 <div className="health-information-section-right-box">
-                    {patients?.length === 0 || patients === undefined ? (
+                    {!patients ? (
                         <Link to={endPoints.login}>
                             <div className="health-information-section-right-box-endocrinology">
                                 <HealthInformationEndocrinologyIcon />
@@ -56,7 +56,7 @@ function HealthInformation({ patients }) {
                 </div>
 
                 <div className="health-information-section-right-box">
-                    {patients?.length === 0 || patients === undefined ? (
+                    {!patients ? (
                         <Link to={endPoints.login}>
                             <div className="health-information-section-right-box-endocrinology">
                                 <HealthInformationCardiologyIcon />
@@ -74,7 +74,7 @@ function HealthInformation({ patients }) {
                 </div>
 
                 <div className="health-information-section-right-box">
-                    {patients?.length === 0 || patients === undefined ? (
+                    {!patients ? (
                         <Link to={endPoints.login}>
                             <div className="health-information-section-right-box-endocrinology">
                                 <HealthInformationSexualHealthIcon />
