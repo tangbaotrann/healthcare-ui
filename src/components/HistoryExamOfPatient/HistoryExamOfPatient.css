@@ -1,0 +1,30 @@
+.history-info-content p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-left: 12px;
+    line-height: 2rem;
+}
+
+.history-banner-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 12px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--status-normal);
+    box-shadow: 0 0 12px 0 var(--status-normal);
+}
+
+.history-message {
+    margin-top: 16px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--black);
+}

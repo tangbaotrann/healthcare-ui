@@ -324,6 +324,24 @@ export const fetchApiMovePatient = createAsyncThunk('user/fetchApiMovePatient', 
     }
 });
 
+// fetch api history
+export const fetchApiHistoryExamOfPatient = createAsyncThunk(
+    'patient/fetchApiHistoryExamOfPatient',
+    async (idPatient) => {
+        try {
+            if (idPatient) {
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients/${idPatient}/histories`);
+
+                console.log('res history exam ->', res.data.data);
+
+                return res.data.data;
+            }
+        } catch (err) {
+            console.log({ err });
+        }
+    },
+);
+
 const patientSlice = createSlice({
     name: 'patient',
     initialState: {
@@ -337,6 +355,7 @@ const patientSlice = createSlice({
         isLoading: false,
         patientRegisterSchedule: [],
         resultExam: [],
+        historyExam: [],
     },
     reducers: {
         arrivalFilterMeeting: (state, action) => {
@@ -496,6 +515,9 @@ const patientSlice = createSlice({
                 socket.emit('notification_register_schedule_from_patient', {
                     data: action.payload,
                 });
+            })
+            .addCase(fetchApiHistoryExamOfPatient.fulfilled, (state, action) => {
+                state.historyExam = action.payload;
             });
     },
 });

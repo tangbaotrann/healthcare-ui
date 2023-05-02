@@ -9,6 +9,54 @@
     z-index: 1;
 }
 
+.progress-bar {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 25%;
+    height: 5px;
+    background: var(--primary);
+    border-radius: 100px;
+    z-index: 2;
+}
+
+.tab-list-register-history {
+    position: absolute;
+    top: -30px;
+    left: 30px;
+    border-bottom: none;
+    z-index: 2;
+}
+
+.tab-item-active {
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 0 10px;
+    line-height: 0;
+    color: var(--white);
+    background-color: var(--primary);
+}
+
+.tab-item {
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 16px;
+    line-height: 0;
+    margin: 0 10px;
+    color: var(--black);
+    background-color: var(--white);
+}
+
+.tab-item:hover, .tab-item:hover {
+    color: var(--white) !important;
+    background-color: var(--primary);
+    transition: all 0.2s;
+}
+
 .list-register-schedule-appointment-img-left {
     position: absolute;
     width: 100%;
