@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import TitleName from '~/components/TitleName';
+import callSlice from '~/redux/features/call/callSlice';
 import { fetchApiRatingForDoctor } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 
 function RatingAfterExaminated({ patients, scheduleDetail }) {
@@ -26,6 +27,7 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
             console.log('values', values);
 
             dispatch(fetchApiRatingForDoctor(values));
+            dispatch(callSlice.actions.arrivalUsername(null));
             setOpenModal(false);
             message.success('Gửi đánh giá cho bác sĩ thành công. Cám ơn bạn rất nhiều!');
         }

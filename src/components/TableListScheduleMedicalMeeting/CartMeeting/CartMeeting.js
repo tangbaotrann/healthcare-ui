@@ -36,7 +36,7 @@ function CartMeeting({ infoUser }) {
     // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
-    console.log('conversation ->', conversation);
+    // console.log('conversation ->', conversation);
     // console.log('record ->', record);
 
     // user join room
