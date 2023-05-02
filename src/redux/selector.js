@@ -132,6 +132,8 @@ export const fetchApiScheduleMedicalAppointmentResultExamSelector = (state) => s
 
 // history
 export const fetchApiHistoryExamOfPatientSelector = (state) => state.patientSlice.historyExam;
+export const isLoadingHistoryExamOfPatientSelector = (state) => state.patientSlice.isLoading;
+export const btnClickedOpenHistorySelector = (state) => state.patientSlice.btnClickedOpenHistory;
 
 /* -- Handle Selector -- */
 
