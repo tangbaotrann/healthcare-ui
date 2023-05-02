@@ -9,11 +9,7 @@ import DefaultLayout from '~/layouts/DefaultLayout';
 import ChatBot from '~/components/ChatBot';
 import Footer from '~/layouts/components/Footer';
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
-import {
-    btnClickGetPatientUsernameLeaveRoomSelector,
-    btnClickGetUsernameLeavedRoomSelector,
-    fetchApiAllPatientsSelector,
-} from '~/redux/selector';
+import { btnClickGetUsernameLeavedRoomSelector, fetchApiAllPatientsSelector } from '~/redux/selector';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import CardListRegisterSchedule from './CardListRegisterSchedule/CardListRegisterSchedule';
@@ -31,8 +27,8 @@ function ListRegisterScheduleAppointment() {
     const dispatch = useDispatch();
 
     // console.log('userId ->', userId);
-    console.log('roomId -->', roomId);
-    console.log('checkLeavedRoom patient ->', checkLeavedRoom);
+    // console.log('roomId -->', roomId);
+    // console.log('checkLeavedRoom patient ->', checkLeavedRoom);
     // console.log('patients.patient.person.username', patients.patient.person.username);
 
     useEffect(() => {
@@ -76,7 +72,6 @@ function ListRegisterScheduleAppointment() {
     const handleHideModal = () => {
         setOpenModalCall(false);
         socket.emit('join_room', roomId); // obj
-        // roomId && socket.emit('user_leave_room_call', { roomId })
     };
 
     return (

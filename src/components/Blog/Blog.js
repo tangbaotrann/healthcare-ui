@@ -19,7 +19,7 @@ function Blog({ infoUser }) {
     const blogPost = useSelector(fetchApiGetPostByIdSelector);
 
     // console.log('posts', posts);
-    console.log('blogPost ->>>', blogPost);
+    // console.log('blogPost ->>>', blogPost);
 
     // handle open modal
     const handleOpenModal = () => {
@@ -32,7 +32,7 @@ function Blog({ infoUser }) {
     };
 
     useEffect(() => {
-        dispatch(blogSlice.actions.arrivalFilterBlog('all'));
+        dispatch(blogSlice.actions.arrivalFilterBlog('week'));
     }, []);
 
     // handle filter blog
@@ -49,7 +49,7 @@ function Blog({ infoUser }) {
                         { value: 'all', label: 'Tất cả' },
                         { value: 'week', label: 'Theo tuần' },
                     ]}
-                    defaultValue="all"
+                    defaultValue="Theo tuần"
                     style={{ width: 140, zIndex: '2' }}
                     onSelect={handleChangeFilterBlog}
                 />
