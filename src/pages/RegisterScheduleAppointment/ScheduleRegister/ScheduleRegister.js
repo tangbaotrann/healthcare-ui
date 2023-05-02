@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
+import { Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
+import axios from 'axios';
+import moment from 'moment';
 
 import TitleName from '~/components/TitleName';
 import scheduleDoctor from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import { filterGetScheduleAppointmentAndHide, isLoadingScheduleDoctorSelector } from '~/redux/selector';
 import ScheduleRegisterItem from '../ScheduleRegisterItem/ScheduleRegisterItem';
-import axios from 'axios';
-import moment, { now } from 'moment';
 import socket from '~/utils/socket';
+import ButtonLoadMore from '~/components/ButtonLoadMore';
 
 function ScheduleRegister() {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [dateTime, setDateTime] = useState();
     const [scheduleAppointment, setScheduleAppointment] = useState({});
+    const [visible, setVisible] = useState(5);
 
     const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ function ScheduleRegister() {
     // const dateOfWeek = useSelector(btnOptionSelectDayOfWeekSelector);
 
     // console.log('checkRegisterSchedule', checkRegisterSchedule);
-    console.log('schedules --->', schedules);
+    // console.log('schedules --->', schedules);
     // console.log('scheduleAppointment --->', scheduleAppointment);
     // console.log('dateTime --->', dateTime);
 
@@ -70,7 +72,7 @@ function ScheduleRegister() {
                 {
                     content_exam: content_exam,
                     schedule: schedule,
-                    day_exam: day_exam, // day_exam
+                    day_exam: day_exam,
                 },
                 {
                     headers: {
@@ -92,31 +94,45 @@ function ScheduleRegister() {
             });
     };
 
+    const handleShowMoreCards = () => {
+        setVisible((prev) => prev + 5);
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+        });
+    };
+
+    const handleLessCards = () => {
+        setVisible(5);
+        window.scrollTo({
+            top: 600,
+            behavior: 'smooth',
+        });
+    };
+
     return (
         <>
             <Calendar onSelect={handleOptionSelect} disabledDate={handleDisabledDate} fullscreen={false} />
 
             {/* Cart MAP */}
-            {isLoading ? (
-                <Skeleton active />
+            {schedules.length === 0 ? (
+                <p className="notification-schedule-register">
+                    <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
+                </p>
             ) : (
                 <>
-                    {schedules.length === 0 ? (
-                        <p className="notification-schedule-register">
-                            <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
-                        </p>
+                    {isLoading ? (
+                        <Skeleton active />
                     ) : (
-                        <>
-                            {schedules.map((schedule) => {
-                                return (
-                                    <ScheduleRegisterItem
-                                        schedule={schedule}
-                                        handleRegisterScheduleAppointment={handleRegisterScheduleAppointment}
-                                        key={schedule._id}
-                                    />
-                                );
-                            })}
-                        </>
+                        schedules.slice(0, visible).map((schedule) => {
+                            return (
+                                <ScheduleRegisterItem
+                                    schedule={schedule}
+                                    handleRegisterScheduleAppointment={handleRegisterScheduleAppointment}
+                                    key={schedule._id}
+                                />
+                            );
+                        })
                     )}
                 </>
             )}
@@ -174,6 +190,12 @@ function ScheduleRegister() {
                     </div>
                 </Form>
             </Modal>
+
+            {schedules?.length >= 5 && visible < schedules?.length ? (
+                <ButtonLoadMore onClick={handleShowMoreCards}>Xem thêm</ButtonLoadMore>
+            ) : visible > 5 && visible >= schedules?.length ? (
+                <ButtonLoadMore onClick={handleLessCards}>Thu gọn</ButtonLoadMore>
+            ) : null}
         </>
     );
 }

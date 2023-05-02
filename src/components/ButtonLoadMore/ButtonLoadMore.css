@@ -1,0 +1,29 @@
+.history-cart-load-more-btn {
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 20px;
+    width: 12%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary);
+    box-shadow: 0 0 12px 0 var(--primary);
+}
+
+.history-cart-load-more-btn:hover {
+    color: var(--white) !important;
+    border-color: var(--primary) !important;
+}
+
+.history-cart-load-more-isLoading {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 20px;
+    width: 12%;
+}

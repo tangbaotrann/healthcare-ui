@@ -41,6 +41,7 @@ export const btnOptionSelectDayOfWeekSelector = (state) => state.scheduleDoctor.
 export const fetchApiCreateScheduleDoctorSelector = (state) => state.scheduleDoctor.createSchedule;
 export const fetchApiCreateScheduleDoctorMessageRejectSelector = (state) => state.scheduleDoctor.messageReject;
 export const fetchApiGetAllScheduleDetailOfPatientSelector = (state) => state.scheduleDoctor.allScheduleDetailOfPatient;
+export const isLoadingGetAllScheduleDetailOfPatient = (state) => state.scheduleDoctor.isLoading;
 
 // schedule detail by id doctor
 export const fetchApiScheduleDetailByIdDoctorSelector = (state) => state.patientSlice.data; // nằm ở Quản lý bệnh nhân (mục Danh sách bệnh nhân)
@@ -244,6 +245,27 @@ export const filterGetInfoPatientByAccountId = createSelector(fetchApiAllPatient
 // filter blog btnOptionSelectedBlogSelector
 export const blogOptionSelectedFilter = createSelector(
     fetchApiAllPostByIdDoctorSelector,
+    btnOptionSelectedBlogSelector,
+    (posts, option) => {
+        console.log('posts selector ->', posts);
+        const now = new Date();
+        if (posts.length > 0) {
+            if (option === 'all') {
+                return posts;
+            } else if (option === 'week') {
+                const _posts = posts.filter((b) => moment(b.createdAt).week() === moment(now).week());
+
+                return _posts;
+            }
+        }
+
+        return [];
+    },
+);
+
+// filter blog btnOptionSelectedBlogSelector (Patient)
+export const blogPatientOptionSelectedFilter = createSelector(
+    fetchApiGetAllPostSelector,
     btnOptionSelectedBlogSelector,
     (posts, option) => {
         console.log('posts selector ->', posts);

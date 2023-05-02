@@ -257,11 +257,28 @@
 }
 
 .history-body {
+    position: relative;
     overflow-y: scroll;
     margin-top: 10px;
     padding: 10px;
     width: 100%;
     height: 82vh;
+}
+
+.custom-load-more-btn {
+    border-radius: 20px;
+    width: 10%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary);
+    box-shadow: 0 0 12px 0 var(--primary);
+    z-index: 5;
+}
+
+.custom-load-more-btn:hover {
+    color: var(--white) !important;
+    border-color: var(--primary) !important;
 }
 
 .history-icon-back {
