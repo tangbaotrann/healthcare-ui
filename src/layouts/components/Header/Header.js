@@ -1,23 +1,25 @@
 // lib
 import { Link, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Badge, Popover, Space } from 'antd';
+import { Badge, Popover, Skeleton, Space } from 'antd';
 
 // me
 import './Header.css';
 import { endPoints } from '~/routers';
 import { logo } from '~/asset/images';
 import InformationPatient from './InformationPatient';
-import { filterNotificationPatientNotHasSeen } from '~/redux/selector';
+import { filterNotificationPatientNotHasSeen, isLoadingApiAllPatientsSelector } from '~/redux/selector';
 import userSlice from '~/redux/features/user/userSlice';
 
 function Header({ checkUserLogin, patients }) {
     const notificationNotHasSeen = useSelector(filterNotificationPatientNotHasSeen);
+    const isLoading = useSelector(isLoadingApiAllPatientsSelector);
 
     const dispatch = useDispatch();
 
+    // console.log('isLoading', isLoading);
     // console.log('checkUserLogin', checkUserLogin);
-    // console.log('patients', patients);
+    // console.log('patients header', patients);
     // console.log('notificationNotHasSeen', notificationNotHasSeen);
 
     return (
@@ -30,6 +32,18 @@ function Header({ checkUserLogin, patients }) {
 
                 {/* Menu */}
                 <div className="menu-list">
+                    {/* {isLoading ? (
+                        <Space>
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                            <Skeleton.Button active className="custom-ske-loading" />
+                        </Space>
+                    ) : (
+                    )} */}
                     <ul>
                         {/* Trang chủ */}
                         <NavLink
@@ -162,24 +176,33 @@ function Header({ checkUserLogin, patients }) {
                 <div className="section-right">
                     {patients?.length === 0 || patients === undefined ? (
                         <>
-                            <h4 className="section-right-login">
-                                <Link
-                                    to={endPoints.login}
-                                    className="login"
-                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
-                                >
-                                    Đăng nhập
-                                </Link>
-                            </h4>
-                            <h4 className="section-right-register">
-                                <Link
-                                    to={endPoints.register}
-                                    className="register"
-                                    onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
-                                >
-                                    Đăng ký
-                                </Link>
-                            </h4>
+                            {isLoading ? (
+                                <Space>
+                                    <Skeleton.Avatar active />
+                                    <Skeleton.Button active />
+                                </Space>
+                            ) : (
+                                <>
+                                    <h4 className="section-right-login">
+                                        <Link
+                                            to={endPoints.login}
+                                            className="login"
+                                            onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                        >
+                                            Đăng nhập
+                                        </Link>
+                                    </h4>
+                                    <h4 className="section-right-register">
+                                        <Link
+                                            to={endPoints.register}
+                                            className="register"
+                                            onClick={() => dispatch(userSlice.actions.clickedClearInfoLogin([]))}
+                                        >
+                                            Đăng ký
+                                        </Link>
+                                    </h4>
+                                </>
+                            )}
                         </>
                     ) : (
                         <div className="home-intro-header">
