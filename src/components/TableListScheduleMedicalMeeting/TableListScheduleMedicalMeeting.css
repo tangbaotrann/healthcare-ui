@@ -48,6 +48,7 @@
 
 .schedule-medical-meeting-cart-image {
     width: 240px !important;
+    height: 240px !important;
     border-radius: 12px;
     object-fit: cover;
 }

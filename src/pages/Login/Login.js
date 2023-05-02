@@ -18,6 +18,7 @@ import { fetchApiLoginSelector, isLoadingFetchApiLoginSelector } from '~/redux/s
 function Login() {
     const [number, setNumber] = useState('');
     const [messageError, setMessageError] = useState(false);
+    const [messageAccountAdmin, setMessageAccountAdmin] = useState(false);
     const [checkPhone, setCheckPhone] = useState(false);
     const [ruleAccount, setRuleAccount] = useState({});
 
@@ -32,7 +33,7 @@ function Login() {
     // console.log('decodedToken ->', decodedToken);
     // console.log('messageError ->', messageError);
     // console.log('messageSuccess ->', messageSuccess);
-    // console.log('ruleAccount ->', ruleAccount);
+    console.log('ruleAccount ->', ruleAccount);
     // console.log('messageReject ->', messageReject);
     // console.log('token login ->', token);
 
@@ -41,9 +42,15 @@ function Login() {
             if (messageSuccess.length > 0 || messageSuccess.accessToken) {
                 navigate(`${endPoints.homeIntro}`);
             }
+        } else if (ruleAccount.rule === 'doctor') {
+            if (messageSuccess.length > 0 || messageSuccess.accessToken) {
+                navigate(`${endPoints.homeIntro}`);
+            }
         } else {
             if (messageSuccess.length > 0 || messageSuccess.accessToken) {
-                navigate(`${endPoints.doctorManager}`);
+                setMessageAccountAdmin(true);
+                setCheckPhone(false);
+                setMessageError(false);
             }
         }
     }, [messageSuccess.accessToken]);
@@ -63,6 +70,7 @@ function Login() {
                 if (validatorPhone === false) {
                     setCheckPhone(true);
                     setMessageError(false);
+                    setMessageAccountAdmin(false);
                     return;
                 }
 
@@ -72,6 +80,7 @@ function Login() {
                         dispatch(fetchApiLogin(values));
                         setCheckPhone(false);
                         setMessageError(false);
+                        setMessageAccountAdmin(false);
 
                         if (res.data.data.rule === 'patient') {
                             if (messageSuccess.accessToken) {
@@ -94,9 +103,11 @@ function Login() {
                         if (validatorPhone === false) {
                             setCheckPhone(true);
                             setMessageError(false);
+                            setMessageAccountAdmin(false);
                         } else {
                             setMessageError(true);
                             setCheckPhone(false);
+                            setMessageAccountAdmin(false);
                         }
                     });
             }
@@ -120,6 +131,12 @@ function Login() {
             ) : checkPhone ? (
                 <Alert
                     message="Số điện thoại của bạn không hợp lệ. Vui lòng thử lại!"
+                    type="error"
+                    style={{ marginBottom: '12px' }}
+                />
+            ) : messageAccountAdmin ? (
+                <Alert
+                    message="Bạn không có quyền truy cập tài khoản này. Vui lòng thử lại!"
                     type="error"
                     style={{ marginBottom: '12px' }}
                 />
