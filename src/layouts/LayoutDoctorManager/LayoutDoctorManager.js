@@ -34,7 +34,7 @@ import notificationSlice, { fetchApiNotificationByDoctorId } from '~/redux/featu
 import { fetchApiConversations } from '~/redux/features/conversation/conversationSlice';
 import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
-import blogSlice, { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
+import { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
 import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
@@ -93,7 +93,7 @@ function LayoutDoctorManager({ children, infoUser }) {
         socket.emit('add_user', getIdDoctor?._id);
 
         socket.on('get_users', (users) => {
-            console.log('user ->', users);
+            // console.log('user ->', users);
         });
     }, [getIdDoctor?._id]);
 
