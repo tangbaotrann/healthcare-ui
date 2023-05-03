@@ -41,7 +41,7 @@ function HistoryExamOfPatient({ historyExams, isLoading, className }) {
                                     <div className="history-banner-right">
                                         <i>
                                             Ngày: {moment(history.created_at).format('DD/MM/YYYY')} - lúc:{' '}
-                                            {moment(history.created_at).format('HH:mm a')}
+                                            {moment(history.created_at).format('HH:mm')}
                                         </i>
                                     </div>
                                     <div className="content-cart-item-header">

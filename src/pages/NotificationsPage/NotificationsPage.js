@@ -126,7 +126,7 @@ function NotificationsPage() {
                         content: _notification.content,
                         createdAt: `${moment(_notification.createdAt).format('DD-MM-YYYY')} lúc ${moment(
                             _notification.createdAt,
-                        ).format('HH:mm a')}`,
+                        ).format('HH:mm')}`,
                         hasSeen: _notification.hasSeen,
                         _id: _notification._id,
                         rule: _notification.rule,
