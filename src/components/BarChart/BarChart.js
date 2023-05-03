@@ -1,6 +1,6 @@
 // lib
 import moment from 'moment';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -129,25 +129,46 @@ function BarChart({ bmis, glycemics, bloodPressures, infoPatient, handleCancel }
         datasets: [
             {
                 label: 'Đường huyết trước bữa ăn (TH 1)',
-                data: glycemics
-                    .filter((filter_glycemic) => filter_glycemic.case === 1)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemics.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 1;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
                 label: 'Đường huyết sau bữa ăn (TH 2)',
-                data: glycemics
-                    .filter((filter_glycemic) => filter_glycemic.case === 2)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemics.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 2;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
             {
                 label: 'Đường huyết trước lúc ngủ (TH 3)',
-                data: glycemics
-                    .filter((filter_glycemic) => filter_glycemic.case === 3)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemics.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 3;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(93, 235, 53)',
                 backgroundColor: 'rgba(93, 235, 53, 0.5)',
             },
