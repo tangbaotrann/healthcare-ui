@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { Skeleton } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 
 import './HistoryExamOfPatient.css';
 import ButtonLoadMore from '../ButtonLoadMore';
@@ -9,8 +8,8 @@ import ButtonLoadMore from '../ButtonLoadMore';
 function HistoryExamOfPatient({ historyExams, isLoading, className }) {
     const [visible, setVisible] = useState(5);
 
-    // console.log('historyExams', historyExams.length);
-    // console.log('visible', visible);
+    console.log('historyExams', historyExams.length);
+    console.log('visible', visible);
     // console.log('loading', loading);
 
     const handleShowMoreCards = () => {

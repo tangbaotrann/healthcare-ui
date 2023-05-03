@@ -25,7 +25,9 @@ function CardListRegisterSchedule({ patients }) {
     const isLoading = useSelector(isLoadingGetAllScheduleDetailOfPatient);
 
     // console.log('patients', patients);
-    // console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
+    console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
+    console.log('scheduleDetailsStatusFalse', scheduleDetailsStatusFalse);
+    console.log('visible', visible);
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
