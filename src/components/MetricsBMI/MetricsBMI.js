@@ -154,7 +154,7 @@ function MetricsBMI({ patients, bmiPatient }) {
                     height: _bmi.height,
                     cal_bmi: _bmi.cal_bmi,
                     createdAt: `${moment(_bmi.createdAt).format('DD/MM/YYYY')} - lúc ${moment(_bmi.createdAt).format(
-                        'HH:mm a',
+                        'HH:mm',
                     )}`,
                 }))}
                 rowKey="index"

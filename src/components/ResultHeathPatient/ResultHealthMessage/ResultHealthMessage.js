@@ -5,6 +5,9 @@ import { Table } from 'antd';
 // me
 import './ResultHealthMessage.css';
 
+import 'moment/locale/vi'; // without this line it didn't work
+moment.locale('vi');
+
 function ResultHealthMessage({ resultHeath, information }) {
     // console.log('information ->', information);
 
@@ -74,7 +77,7 @@ function ResultHealthMessage({ resultHeath, information }) {
                             content_exam: result.content_exam,
                             result_exam: result.result_exam,
                             day_exam: moment(result.day_exam).format('DD/MM/YYYY'),
-                            time_exam: moment(result.day_exam).format('HH:mm a'),
+                            time_exam: moment(result.day_exam).format('HH:mm'),
                         }))}
                         rowKey="index"
                         pagination={{

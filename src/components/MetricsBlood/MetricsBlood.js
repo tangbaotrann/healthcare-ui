@@ -147,7 +147,7 @@ function MetricsBlood({ patients, bloodPatient }) {
                     diastole: _blood.diastole,
                     createdAt: `${moment(_blood.createdAt).format('DD/MM/YYYY')} - lúc ${moment(
                         _blood.createdAt,
-                    ).format('HH:mm a')}`,
+                    ).format('HH:mm')}`,
                 }))}
                 rowKey="index"
                 style={{ marginTop: '12px' }}

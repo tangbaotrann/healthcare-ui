@@ -9,6 +9,9 @@ import './MessageItem.css';
 import { logo } from '~/asset/images';
 import { isLoadingMessagesSelector } from '~/redux/selector';
 
+import 'moment/locale/vi'; // without this line it didn't work
+moment.locale('vi');
+
 function MessageItem({ messages, infoUser, scrollMessage }) {
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
     // const isLoadingWhenSended = useSelector(isLoadingWhenSendMessageSelector);
@@ -83,7 +86,7 @@ function MessageItem({ messages, infoUser, scrollMessage }) {
                                     // Content
                                     <p className="message-info-content">{message.content}</p>
                                 )}
-                                <p className="message-info-time">{moment(message.createdAt).format('HH:mm a')}</p>
+                                <p className="message-info-time">{moment(message.createdAt).format('HH:mm')}</p>
                             </div>
                         </div>
                     );

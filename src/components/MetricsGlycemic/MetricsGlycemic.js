@@ -203,7 +203,7 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
                     metric: _glycemic.metric,
                     createdAt: `${moment(_glycemic.createdAt).format('DD/MM/YYYY')} - lúc ${moment(
                         _glycemic.createdAt,
-                    ).format('HH:mm a')}`,
+                    ).format('HH:mm')}`,
                 }))}
                 rowKey="index"
                 style={{ marginTop: '12px' }}

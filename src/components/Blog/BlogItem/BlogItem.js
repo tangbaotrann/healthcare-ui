@@ -158,7 +158,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                         BS: {blogPost.author.person.username}
                                     </h4>
                                     <p className="post-detail-content-right-time">
-                                        <span>·</span> {moment(blogPost.createdAt).format('HH:mm a')}
+                                        <span>·</span> {moment(blogPost.createdAt).format('HH:mm')}
                                     </p>
                                 </div>
                             </div>
@@ -256,7 +256,7 @@ function BlogItem({ posts, blogPost, infoUser }) {
                                             <p className="blog-footer-time">
                                                 {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
                                                 <span className="blog-footer-icon-time">·</span>{' '}
-                                                {moment(post.createdAt).format('HH:mm a')}
+                                                {moment(post.createdAt).format('HH:mm')}
                                             </p>
                                         </div>
                                     </div>

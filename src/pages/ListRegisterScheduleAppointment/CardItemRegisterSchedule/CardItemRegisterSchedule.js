@@ -74,7 +74,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                         <img className="content-cart-item-time-icon" src={icons.iconTime} alt="iconTime" />
                         <p className="content-cart-item-time">
                             Thứ: {moment(schedule.day_exam).format('DD/MM/YYYY')} - lúc:{' '}
-                            {moment(schedule.day_exam).format('HH:mm a')} (Thời gian khám:{' '}
+                            {moment(schedule.day_exam).format('HH:mm')} (Thời gian khám:{' '}
                             {schedule.schedule.time_per_conversation} phút)
                         </p>
                     </div>
