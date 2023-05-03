@@ -270,6 +270,7 @@
     width: 10%;
     font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 12px;
     color: var(--white);
     background-color: var(--primary);
     box-shadow: 0 0 12px 0 var(--primary);

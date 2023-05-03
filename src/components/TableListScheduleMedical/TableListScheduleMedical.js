@@ -10,21 +10,26 @@ import TitleName from '../TitleName';
 import patientSlice, {
     fetchApiConfirmScheduleMedical,
     fetchApiDeleteScheduleMedical,
+    fetchApiHistoryExamOfPatient,
 } from '~/redux/features/patient/patientSlice';
-import { getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
+import { fetchApiHistoryExamOfPatientSelector, getDayAndTimeScheduleMedicalFilterOfDoctor } from '~/redux/selector';
 import socket from '~/utils/socket';
+import HistoryExamOfPatient from '../HistoryExamOfPatient/HistoryExamOfPatient';
 
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
     const [showModal, setShowModal] = useState(false);
+    const [openHistory, setOpenHistory] = useState(false);
     const [openModalInfoDetailPatient, setOpenModalInfoDetailPatient] = useState(false);
     const [infoDetailPatient, setInfoDetailPatient] = useState({});
 
     const dispatch = useDispatch();
 
     const scheduleMedicalsFilter = useSelector(getDayAndTimeScheduleMedicalFilterOfDoctor);
+    const historyExams = useSelector(fetchApiHistoryExamOfPatientSelector);
 
-    console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
+    console.log('historyExams', historyExams);
+    // console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
     // console.log('infoMember render', infoMember);
 
     useEffect(() => {
@@ -130,6 +135,9 @@ function TableListScheduleMedical({ infoUser }) {
                             >
                                 Xem
                             </Button>
+                            <Button className="btn-show-history-exam" onClick={() => handleShowHistory(record)}>
+                                Lịch sử khám
+                            </Button>
                             <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
                                 Xác nhận
                             </Button>
@@ -168,6 +176,7 @@ function TableListScheduleMedical({ infoUser }) {
     // hide modal
     const handleCancel = () => {
         setShowModal(false);
+        setOpenHistory(false);
         setOpenModalInfoDetailPatient(false);
     };
 
@@ -178,6 +187,11 @@ function TableListScheduleMedical({ infoUser }) {
             setShowModal(false);
             message.success('Bạn đã hủy lịch khám của bệnh nhân.');
         }
+    };
+
+    const handleShowHistory = (record) => {
+        dispatch(fetchApiHistoryExamOfPatient(record.patient._id));
+        setOpenHistory(true);
     };
 
     return (
@@ -274,6 +288,21 @@ function TableListScheduleMedical({ infoUser }) {
                 </Form>
             </Modal>
 
+            {/* Modal history */}
+            <Modal
+                open={openHistory}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { display: 'none' } }}
+                width={2000}
+                centered={true}
+            >
+                <TitleName>Lịch sử khám của bệnh nhân</TitleName>
+                <div className="modal-container-history">
+                    <HistoryExamOfPatient historyExams={historyExams} className="custom-load-more-btn" />
+                </div>
+            </Modal>
+
             <TitleName>Danh Sách Lịch Khám Của Bác Sĩ</TitleName>
 
             {/* return: { info patient } -> get info */}
@@ -284,9 +313,6 @@ function TableListScheduleMedical({ infoUser }) {
                     day: moment(scheduleMedical?.days?.day).format('dddd'),
                     createdAt: moment(scheduleMedical?.createdAt).format('HH:mm a - DD/MM/YYYY'),
                     day_exam: moment(scheduleMedical?.day_exam).format('HH:mm a - DD/MM/YYYY'),
-                    // time: `${scheduleMedical?.shifts?.name} (${moment(
-                    //     new Date(scheduleMedical?.shifts?.time_start),
-                    // ).format('HH:mm')} -> ${moment(new Date(scheduleMedical?.shifts?.time_end)).format('HH:mm')})`,
                     time_per_conversation: `${scheduleMedical?.schedule?.time_per_conversation} phút`,
                     fee: `${scheduleMedical?.schedule?.fee} VNĐ`,
                     content_exam: scheduleMedical?.content_exam,
