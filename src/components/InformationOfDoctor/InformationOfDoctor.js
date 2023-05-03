@@ -11,6 +11,7 @@ import './InformationOfDoctor.css';
 import userSlice, { fetchApiUpdateInfoForDoctor } from '~/redux/features/user/userSlice';
 import RatingOfDoctor from '../RatingOfDoctor';
 import { endPoints } from '~/routers';
+import socket from '~/utils/socket';
 
 function InformationOfDoctor({ infoUser }) {
     const [modalInfoDoctor, setModalInfoDoctor] = useState(false);
@@ -44,6 +45,7 @@ function InformationOfDoctor({ infoUser }) {
         localStorage.removeItem('token_user_login');
         dispatch(userSlice.actions.clickedLogoutDoctor([]));
         navigate(`${endPoints.homeIntro}`);
+        socket.emit('user_disconnect', { __user: infoUser.doctor._id });
     };
 
     return (

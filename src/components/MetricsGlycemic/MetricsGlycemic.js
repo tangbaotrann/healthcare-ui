@@ -10,8 +10,6 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
     const dispatch = useDispatch();
     const [form] = Form.useForm();
 
-    // const messageReject = useSelector(fetchApiCreateGlycemicForPatientMessageRejectedSelector);
-
     // console.log('glycemicPatient', glycemicPatient);
     // console.log('messageReject', messageReject);
 
@@ -64,31 +62,67 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
     const lablelArrs = new Set([...labelsGlycemic]);
     const resultsLabelsGlycemic = Array.from(lablelArrs);
 
+    // console.log('resultsLabelsGlycemic', resultsLabelsGlycemic);
+    // console.log(
+    //     '-->',
+    //     resultsLabelsGlycemic.map((day, index) => {
+    //         const metrics = glycemicPatient.filter((filter_glycemic) => {
+    //             const res = filter_glycemic.case === 3;
+    //             return res;
+    //         });
+
+    //         const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+    //         console.log({ metric });
+    //         return metric ? metric.metric : 0;
+    //     }),
+    // );
+
     // data glycemic
     const dataGlycemic = {
         labels: resultsLabelsGlycemic,
         datasets: [
             {
                 label: 'Đường huyết trước bữa ăn (TH 1)',
-                data: glycemicPatient
-                    .filter((filter_glycemic) => filter_glycemic.case === 1)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemicPatient.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 1;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
                 label: 'Đường huyết sau bữa ăn (TH 2)',
-                data: glycemicPatient
-                    .filter((filter_glycemic) => filter_glycemic.case === 2)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemicPatient.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 2;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
             {
                 label: 'Đường huyết trước lúc ngủ (TH 3)',
-                data: glycemicPatient
-                    .filter((filter_glycemic) => filter_glycemic.case === 3)
-                    .map((glycemic) => glycemic.metric),
+                data: resultsLabelsGlycemic.map((day, index) => {
+                    const metrics = glycemicPatient.filter((filter_glycemic) => {
+                        const res = filter_glycemic.case === 3;
+                        return res;
+                    });
+
+                    const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
+                    // console.log({ metric });
+                    return metric ? metric.metric : 0;
+                }),
                 borderColor: 'rgb(93, 235, 53)',
                 backgroundColor: 'rgba(93, 235, 53, 0.5)',
             },
@@ -98,10 +132,6 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
     return (
         <div className="metrics-glycemic-wrapper">
             <TitleName>Chỉ Số Đường Huyết</TitleName>
-
-            {/* <div className="message-rejected">
-                {messageReject !== null && <Alert type="error" message={messageReject.message} />}
-            </div> */}
 
             <Form
                 onFinish={handleSubmitForm}
