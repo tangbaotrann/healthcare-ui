@@ -44,7 +44,7 @@ function Login() {
             }
         } else if (ruleAccount.rule === 'doctor') {
             if (messageSuccess.length > 0 || messageSuccess.accessToken) {
-                navigate(`${endPoints.homeIntro}`);
+                navigate(`${endPoints.doctorManager}`);
             }
         } else {
             if (messageSuccess.length > 0 || messageSuccess.accessToken) {
