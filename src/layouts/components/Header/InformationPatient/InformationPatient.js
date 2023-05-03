@@ -9,6 +9,7 @@ import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import TitleName from '~/components/TitleName';
 import { endPoints } from '~/routers';
 import userSlice from '~/redux/features/user/userSlice';
+import socket from '~/utils/socket';
 
 function InformationPatient({ patients }) {
     const [openModal, setOpenModal] = useState(false);
@@ -29,6 +30,7 @@ function InformationPatient({ patients }) {
         localStorage.removeItem('token_user_login');
         dispatch(userSlice.actions.clickedLogoutPatient([]));
         navigate(`${endPoints.homeIntro}`);
+        socket.emit('user_disconnect', { __user: patients.patient._id });
     };
 
     return (
