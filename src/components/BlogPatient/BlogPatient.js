@@ -84,7 +84,7 @@ function BlogPatient({
                                 BS: {blogPost.author.person.username}
                             </h4>
                             <p className="post-detail-content-right-time">
-                                <span>·</span> {moment(blogPost.createdAt).format('HH:mm a')}
+                                <span>·</span> {moment(blogPost.createdAt).format('HH:mm')}
                             </p>
                         </div>
                     </div>

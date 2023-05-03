@@ -16,6 +16,9 @@ import { fetchApiHistoryExamOfPatientSelector, getDayAndTimeScheduleMedicalFilte
 import socket from '~/utils/socket';
 import HistoryExamOfPatient from '../HistoryExamOfPatient/HistoryExamOfPatient';
 
+import 'moment/locale/vi'; // without this line it didn't work
+moment.locale('vi');
+
 function TableListScheduleMedical({ infoUser }) {
     const [record, setRecord] = useState({});
     const [showModal, setShowModal] = useState(false);
@@ -311,8 +314,8 @@ function TableListScheduleMedical({ infoUser }) {
                 dataSource={scheduleMedicalsFilter.map((scheduleMedical, index) => ({
                     index: index + 1,
                     day: moment(scheduleMedical?.days?.day).format('dddd'),
-                    createdAt: moment(scheduleMedical?.createdAt).format('HH:mm a - DD/MM/YYYY'),
-                    day_exam: moment(scheduleMedical?.day_exam).format('HH:mm a - DD/MM/YYYY'),
+                    createdAt: moment(scheduleMedical?.createdAt).format('HH:mm - DD/MM/YYYY'),
+                    day_exam: moment(scheduleMedical?.day_exam).format('HH:mm - DD/MM/YYYY'),
                     time_per_conversation: `${scheduleMedical?.schedule?.time_per_conversation} phút`,
                     fee: `${scheduleMedical?.schedule?.fee} VNĐ`,
                     content_exam: scheduleMedical?.content_exam,

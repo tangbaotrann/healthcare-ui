@@ -23,8 +23,8 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                         <img className="content-cart-item-time-icon" src={icons.iconTime} alt="iconTime" />
                         <p className="content-cart-item-time">
                             Thứ: {moment(schedule?.day?.day).format('dddd')} - Ngày: {schedule.date_compare._i} - Thời
-                            gian: {moment(new Date(schedule?.time?.time_start)).format('HH:mm a')} {' - '}
-                            {moment(new Date(schedule?.time?.time_end)).format('HH:mm a')}
+                            gian: {moment(new Date(schedule?.time?.time_start)).format('HH:mm')} {' - '}
+                            {moment(new Date(schedule?.time?.time_end)).format('HH:mm')}
                         </p>
                     </div>
                     <div className="content-cart-item-body-price">

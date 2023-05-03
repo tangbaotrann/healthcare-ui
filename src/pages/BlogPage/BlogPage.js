@@ -195,7 +195,7 @@ function BlogPage() {
                                                             <p className="blog-footer-time">
                                                                 {moment(post.createdAt).format('DD/MM/YYYY')}{' '}
                                                                 <span className="blog-footer-icon-time">·</span>{' '}
-                                                                {moment(post.createdAt).format('HH:mm a')}
+                                                                {moment(post.createdAt).format('HH:mm')}
                                                             </p>
                                                         </div>
                                                     </div>

@@ -5,6 +5,8 @@ import moment from 'moment';
 // me
 import './TableListSchedule.css';
 import TitleName from '~/components/TitleName';
+import 'moment/locale/vi'; // without this line it didn't work
+moment.locale('vi');
 
 function TableListSchedule({ schedules }) {
     console.log('schedules =', schedules);
