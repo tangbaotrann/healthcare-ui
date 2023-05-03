@@ -1,6 +1,7 @@
 // lib
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // me
 import './DoctorManager.css';
@@ -24,7 +25,6 @@ import {
     isLoadingScheduleDetailByIdDoctorSelector,
     isLoadingScheduleDoctorSelector,
     isLoadingUserDoctorByTokenSelector,
-    scheduleMedicalMeetingFilterOfDoctor,
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
 import {
@@ -49,9 +49,7 @@ import {
 import ResultHeathPatient from '~/components/ResultHeathPatient/ResultHeathPatient';
 import TableListScheduleMedicalMeeting from '~/components/TableListScheduleMedicalMeeting';
 import Blog from '~/components/Blog';
-import { useNavigate } from 'react-router-dom';
 import { endPoints } from '~/routers';
-import socket from '~/utils/socket';
 
 function DoctorManager() {
     const dispatch = useDispatch();
@@ -95,9 +93,9 @@ function DoctorManager() {
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
 
-    socket.on('get_users', (users) => {
-        console.log('user ->', users);
-    });
+    // socket.on('get_users', (users) => {
+    //     console.log('user ->', users);
+    // });
 
     useEffect(() => {
         getToken === null && navigate(`${endPoints.homeIntro}`);
