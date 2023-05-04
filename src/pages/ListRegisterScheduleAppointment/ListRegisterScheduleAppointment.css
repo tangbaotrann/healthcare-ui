@@ -189,8 +189,8 @@
     border-bottom-left-radius: 6px;
     font-size: 1.6rem;
     font-weight: 600;
-    background-color: var(--status-alarm);
-    box-shadow: 0 0 12px 0 var(--status-alarm);
+    background-color: var(--status-waring);
+    box-shadow: 0 0 12px 0 var(--status-waring);
 }
 
 .content-cart-item-footer-btn.cancel-schedule-register {
