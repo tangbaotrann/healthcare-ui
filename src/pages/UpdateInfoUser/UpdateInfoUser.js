@@ -4,7 +4,7 @@ import { Button, DatePicker, Form, Input, Select, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // me
 import './UpdateInfoUser.css';
@@ -30,7 +30,7 @@ function UpdateInfoUser() {
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    console.log('create info doctor ->', values);
+                    // console.log('create info doctor ->', values);
                     if (values && tokenCurrent) {
                         dispatch(
                             fetchApiUpdateInfoUser({

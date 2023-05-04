@@ -9,7 +9,7 @@ import 'moment/locale/vi'; // without this line it didn't work
 moment.locale('vi');
 
 function TableListSchedule({ schedules }) {
-    console.log('schedules =', schedules);
+    // console.log('schedules =', schedules);
 
     // cols
     const cols = [

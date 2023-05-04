@@ -3,7 +3,7 @@ import { Image } from 'antd';
 import moment from 'moment';
 
 function CommentItem({ comments }) {
-    console.log('comments ->', comments);
+    // console.log('comments ->', comments);
     return (
         <>
             {comments.length > 0 ? (

@@ -65,13 +65,13 @@ function ListRegisterScheduleAppointment() {
 
         // joined_room
         socket.on('joined_room', (conversationId) => {
-            console.log('[conversation - id] ->', conversationId);
+            // console.log('[conversation - id] ->', conversationId);
         });
     }, [patients?.patient?._id, roomId]);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {
-            console.log('user_leave_room_call_success ->', username, roomId);
+            // console.log('user_leave_room_call_success ->', username, roomId);
             dispatch(callSlice.actions.arrivalUsername(username));
         });
     }, []);

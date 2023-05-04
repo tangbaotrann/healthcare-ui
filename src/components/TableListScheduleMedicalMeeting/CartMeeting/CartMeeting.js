@@ -56,14 +56,14 @@ function CartMeeting({ infoUser }) {
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {
-            console.log('user_leave_room_call_success ->', username, roomId);
+            // console.log('user_leave_room_call_success ->', username, roomId);
             dispatch(callSlice.actions.arrivalUsername(username));
         });
     }, []);
 
     // get info user
     const handleCallGetInfoUser = (_scheduleMedicalMeeting) => {
-        console.log('_scheduleMedicalMeeting', _scheduleMedicalMeeting);
+        // console.log('_scheduleMedicalMeeting', _scheduleMedicalMeeting);
         const conversation = _scheduleMedicalMeeting.conversations;
 
         if (!_scheduleMedicalMeeting.is_exam) {
@@ -77,7 +77,7 @@ function CartMeeting({ infoUser }) {
 
     // show modal conversation
     const handleShowModalConversation = (_scheduleMedicalMeeting) => {
-        console.log('record ->', _scheduleMedicalMeeting);
+        // console.log('record ->', _scheduleMedicalMeeting);
         if (_scheduleMedicalMeeting.conversations === null || _scheduleMedicalMeeting.conversations === undefined) {
             message.error('Bạn chưa có cuộc trò chuyện!');
             return;

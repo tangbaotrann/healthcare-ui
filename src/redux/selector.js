@@ -165,7 +165,7 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
 
             const _results = _schedule_now.concat(_schedule_after);
 
-            console.log('_results list false', _results);
+            // console.log('_results list false', _results);
 
             return _results;
         } else {
@@ -178,8 +178,6 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
     (lists) => {
         if (lists?.length > 0) {
             // console.log('list', lists);
-            // moment(day_exam).format('DD/MM/YYYY') ===
-            //         moment(new Date()).format('DD/MM/YYYY')
             const now = new Date();
 
             const _listSchedule = lists.filter(
@@ -201,7 +199,7 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
 
             const _results = _schedule_now.concat(_schedule_after);
 
-            console.log('_results', _results);
+            // console.log('_results', _results);
 
             return _results;
         } else {
@@ -215,8 +213,8 @@ export const filterGetCommentPost = createSelector(
     fetchApiGetPostByIdSelector,
     fetchApiCommentByIdPostSelector,
     (posts, comments) => {
-        console.log('posts 106 ->', posts);
-        console.log('comments 106 ->', comments);
+        // console.log('posts 106 ->', posts);
+        // console.log('comments 106 ->', comments);
 
         const _comments = comments.map((_comment) => {
             const _posts = _comment.post_id === posts._id ? _comment : null;
@@ -234,8 +232,8 @@ export const filterGetInfoPatientByAccountId = createSelector(fetchApiAllPatient
     const decodedToken = jwt_decode(getToken);
 
     // console.log('getToken', getToken);
-    console.log('listPatient', listPatient);
-    console.log('decodedToken', decodedToken);
+    // console.log('listPatient', listPatient);
+    // console.log('decodedToken', decodedToken);
 
     if (listPatient.length > 0) {
         const patients = listPatient.map((_patient) => {
@@ -253,7 +251,7 @@ export const blogOptionSelectedFilter = createSelector(
     fetchApiAllPostByIdDoctorSelector,
     btnOptionSelectedBlogSelector,
     (posts, option) => {
-        console.log('posts selector ->', posts);
+        // console.log('posts selector ->', posts);
         const now = new Date();
         if (posts.length > 0) {
             if (option === 'all') {
@@ -274,7 +272,7 @@ export const blogPatientOptionSelectedFilter = createSelector(
     fetchApiGetAllPostSelector,
     btnOptionSelectedBlogSelector,
     (posts, option) => {
-        console.log('posts selector ->', posts);
+        // console.log('posts selector ->', posts);
         const now = new Date();
         if (posts.length > 0) {
             if (option === 'all') {
@@ -459,8 +457,8 @@ export const scheduleDetailByIdDoctorFilters = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     fetchApiUserDoctorByTokenSelector,
     (listScheduleDetail, userDoctorCurrent) => {
-        console.log('listScheduleDetail selector ->', listScheduleDetail);
-        console.log('userDoctorCurrent selector ->', userDoctorCurrent);
+        // console.log('listScheduleDetail selector ->', listScheduleDetail);
+        // console.log('userDoctorCurrent selector ->', userDoctorCurrent);
         if (listScheduleDetail) {
             const listScheduleDetailFilter = listScheduleDetail?.filter(
                 (_listScheduleDetail) =>
@@ -484,7 +482,7 @@ export const filterStatusHealthNormalOfPatientForChart = createSelector(
     fetchApiScheduleDetailByIdDoctorSelector,
     fetchApiUserDoctorByTokenSelector,
     (listPatient, userDoctorCurrent) => {
-        console.log('listPatient selector ->', listPatient);
+        // console.log('listPatient selector ->', listPatient);
         if (listPatient) {
             const patient = listPatient.filter(
                 (_patient) =>
@@ -619,7 +617,7 @@ export const getDayAndTimeScheduleMedicalALLFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -648,7 +646,7 @@ export const getDayAndTimeScheduleMedicalALLFilterOfDoctor = createSelector(
             };
         });
 
-        console.log('scheduleMedicals ->', scheduleMedicals);
+        // console.log('scheduleMedicals ->', scheduleMedicals);
 
         return scheduleMedicals;
     },
@@ -661,7 +659,7 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('listScheduleMedical', listScheduleMedical);
+        // console.log('listScheduleMedical', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -707,7 +705,7 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
     fetchApiAllShiftsDoctorSelector,
     cleanConversationListSelector,
     (listScheduleMedical, listDay, listShift, cleanConversation) => {
-        console.log('fetchApiScheduleMedicalAppointmentAwaitSelector ->', listScheduleMedical);
+        // console.log('fetchApiScheduleMedicalAppointmentAwaitSelector ->', listScheduleMedical);
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
@@ -798,7 +796,7 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
         // console.log('listMeeting', listMeeting);
 
         const now = new Date();
-        console.log('day ->', moment(now).date());
+        // console.log('day ->', moment(now).date());
         if (listMeeting?.length > 0) {
             if (option === 'all') {
                 return listMeeting;
@@ -905,7 +903,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
                 );
             });
 
-            console.log('final_schedule', final_schedule);
+            // console.log('final_schedule', final_schedule);
 
             return final_schedule;
         }
@@ -920,8 +918,8 @@ export const filterNotificationGetConversationId = createSelector(
     // getDayAndTimeScheduleMedicalALLFilterOfDoctor,
     getDayAndTimeScheduleMedicalMeetingFilterOfDoctor,
     (notifications, listSchedule) => {
-        console.log('notifications ->', notifications);
-        console.log('listSchedule ->', listSchedule);
+        // console.log('notifications ->', notifications);
+        // console.log('listSchedule ->', listSchedule);
 
         const _notifications = notifications.map((_notification) => {
             // conversation
@@ -944,7 +942,7 @@ export const filterNotificationGetConversationId = createSelector(
             };
         });
 
-        console.log('_notifications ->', _notifications);
+        // console.log('_notifications ->', _notifications);
         return _notifications;
     },
 );
@@ -1116,8 +1114,8 @@ export const filterDoctorForMovePatient = createSelector(
     fetchApiUserDoctorsSelector,
     fetchApiUserDoctorByTokenSelector,
     (userDoctors, userDoctorCurrent) => {
-        console.log('userDoctors ->', userDoctors);
-        console.log('userDoctorCurrent ->', userDoctorCurrent);
+        // console.log('userDoctors ->', userDoctors);
+        // console.log('userDoctorCurrent ->', userDoctorCurrent);
 
         if (userDoctors.length > 0) {
             const _userDoctors = userDoctors.filter((_userDoctor) => _userDoctor._id !== userDoctorCurrent.doctor._id);

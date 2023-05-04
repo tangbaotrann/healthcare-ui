@@ -1,5 +1,5 @@
 // lib
-import { CheckOutlined, CloseOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 // me
 import './AwaitBrowsingAccountDoctor.css';

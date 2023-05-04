@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import socket from '~/utils/socket';
@@ -11,7 +10,7 @@ export const fetchApiMessages = createAsyncThunk('message/fetchApiMessages', asy
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}messages/${idConversation}`);
 
-        console.log('res messages', res.data.data);
+        // console.log('res messages', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -22,7 +21,7 @@ export const fetchApiMessages = createAsyncThunk('message/fetchApiMessages', asy
 // Form data for message
 const createFormData = (message) => {
     const { conversation, senderId, content, image } = message;
-    console.log('img slice ->', image);
+    // console.log('img slice ->', image);
 
     const formData = new FormData();
 
@@ -54,7 +53,7 @@ export const fetchApiCreateMessage = createAsyncThunk('message/fetchApiCreateMes
                 },
             });
 
-            console.log('res create message', res.data.data);
+            // console.log('res create message', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -73,7 +72,7 @@ const messageSlice = createSlice({
     reducers: {
         arrivalMessageFromSocket: (state, action) => {
             const newMessage = action.payload;
-            console.log('newMessage ->', newMessage);
+            // console.log('newMessage ->', newMessage);
 
             const idMessage = state.data.find((_message) => _message._id === newMessage._id);
 

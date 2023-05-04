@@ -33,7 +33,7 @@ function Login() {
     // console.log('decodedToken ->', decodedToken);
     // console.log('messageError ->', messageError);
     // console.log('messageSuccess ->', messageSuccess);
-    console.log('ruleAccount ->', ruleAccount);
+    // console.log('ruleAccount ->', ruleAccount);
     // console.log('messageReject ->', messageReject);
     // console.log('token login ->', token);
 

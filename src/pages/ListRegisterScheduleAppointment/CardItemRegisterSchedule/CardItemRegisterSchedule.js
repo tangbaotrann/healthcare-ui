@@ -2,11 +2,11 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Form, Input, Modal, message } from 'antd';
+import { Link } from 'react-router-dom';
 
 import { icons } from '~/asset/images';
 import TitleName from '~/components/TitleName';
 import { fetchApiDeleteScheduleMedicalOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
-import { Link } from 'react-router-dom';
 import { endPoints } from '~/routers';
 import socket from '~/utils/socket';
 

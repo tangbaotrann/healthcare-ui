@@ -133,7 +133,7 @@ function ChatBot({ patients }) {
         setMuteRecording(false);
         setOpenPopover(false);
 
-        console.log('recordedBlob is: ', recordedBlob);
+        // console.log('recordedBlob is: ', recordedBlob);
         // setAudio(recordedBlob);
 
         setIsLoadingSpeech(true);

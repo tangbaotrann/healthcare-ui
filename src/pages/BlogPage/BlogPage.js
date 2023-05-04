@@ -9,7 +9,6 @@ import {
     blogPatientOptionSelectedFilter,
     fetchApiAllPatientsSelector,
     fetchApiCommentByIdPostSelector,
-    fetchApiGetAllPostSelector,
     fetchApiGetPostByIdSelector,
     isLoadingGetAllPostSelector,
 } from '~/redux/selector';
@@ -59,7 +58,7 @@ function BlogPage() {
 
     // handle blog details
     const handleOpenBlogDetails = async (post) => {
-        console.log('post ->', post);
+        // console.log('post ->', post);
         await dispatch(fetchApiGetPostById(post._id));
         setOpenBlogDetail(true);
         setLikes(false);

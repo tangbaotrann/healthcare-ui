@@ -13,7 +13,7 @@ import {
     SolutionOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
-import { Badge, Layout, Menu, Popover, Space, theme } from 'antd';
+import { Badge, Layout, Menu, Popover, Space } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -60,22 +60,22 @@ function LayoutDoctorManager({ children, infoUser }) {
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
-            console.log('notification_confirm_register_schedule_success ->', notification);
+            // console.log('notification_confirm_register_schedule_success ->', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });
     }, []);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
-            console.log('notification_register_schedule_from_patient_success', notification);
+            // console.log('notification_register_schedule_from_patient_success', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });
     }, []);
 
     useEffect(() => {
         socket.on('like_post_from_patient', ({ author, title }) => {
-            console.log('like_post_from_patient author', author);
-            console.log('like_post_from_patient title', title);
+            // console.log('like_post_from_patient author', author);
+            // console.log('like_post_from_patient title', title);
             // dispatch(blogSlice.actions.arrivalLikePost(author));
             toast.success(`Bệnh nhân đã thích bài viết "${title}" này của bạn`);
         });

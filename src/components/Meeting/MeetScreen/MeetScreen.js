@@ -8,7 +8,6 @@ import './MeetScreen.css';
 import socket from '~/utils/socket';
 import parserUTF8Config from '~/utils/parserUTF8Config';
 import { fetchApiUpdateIsExam } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
-import { useEffect, useState } from 'react';
 
 function MeetScreen() {
     const { roomId, scheduleDetailId, username } = useParams();
@@ -49,13 +48,13 @@ function MeetScreen() {
             },
             onJoinRoom: () => {
                 // Add your custom logic
-                console.log('users joined ->', username);
+                // console.log('users joined ->', username);
                 dispatch(fetchApiUpdateIsExam(scheduleDetailId));
-                console.log('Updated');
+                // console.log('Updated');
                 // dispatch(callSlice.actions.arrivalUsername(username));
             },
             onLeaveRoom: () => {
-                console.log('users leaved ->', username);
+                // console.log('users leaved ->', username);
                 // dispatch(callSlice.actions.arrivalUsername(username));
                 // socket.emit('user_patient_leave_room_call', { username, roomId, scheduleDetailId });
                 socket.emit('user_leave_room_call', { username, roomId });

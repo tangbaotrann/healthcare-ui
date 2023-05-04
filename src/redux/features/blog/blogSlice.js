@@ -38,7 +38,7 @@ export const fetchApiCreatePost = createAsyncThunk('blog/fetchApiCreatePost', as
             },
         });
 
-        console.log('res create post ->', res.data.data);
+        // console.log('res create post ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -51,7 +51,7 @@ export const fetchApiGetAllPost = createAsyncThunk('blog/fetchApiGetAllPost', as
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts`);
 
-        console.log('res all post ->', res.data.data);
+        // console.log('res all post ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -63,7 +63,7 @@ export const fetchApiGetAllPost = createAsyncThunk('blog/fetchApiGetAllPost', as
 export const fetchApiAllPostByIdDoctor = createAsyncThunk('blog/fetchApiAllPostByIdDoctor', async (doctor_id) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts/doctor/${doctor_id} `);
-        console.log('res all post by id doctor ->', res.data.data);
+        // console.log('res all post by id doctor ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -77,7 +77,7 @@ export const fetchApiGetPostById = createAsyncThunk('blog/fetchApiGetPostById', 
         console.log('idPost ->', idPost);
         if (idPost) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}posts/${idPost}`);
-            console.log('res get post by id ->', res.data.data);
+            // console.log('res get post by id ->', res.data.data);
 
             return res.data.data;
         }
@@ -92,7 +92,7 @@ export const fetchApiLikePost = createAsyncThunk('blog/fetchApiLikePost', async 
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/like`, {
             user_id: user_id,
         });
-        console.log('res like post ->', res.data.data);
+        // console.log('res like post ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -108,7 +108,7 @@ export const fetchApiLikePostOfPatient = createAsyncThunk(
             const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/like`, {
                 user_id: user_id,
             });
-            console.log('res like post from patient ->', res.data.data);
+            // console.log('res like post from patient ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -125,7 +125,7 @@ export const fetchApiUnLikePostOfPatient = createAsyncThunk(
             const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/dislike`, {
                 user_id: user_id,
             });
-            console.log('res un-like post from patient ->', res.data.data);
+            // console.log('res un-like post from patient ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -140,7 +140,7 @@ export const fetchApiDisLikePost = createAsyncThunk('blog/fetchApiDisLikePost', 
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}posts/${post_id}/dislike`, {
             user_id: user_id,
         });
-        console.log('res dislike post ->', res.data.data);
+        // console.log('res dislike post ->', res.data.data);
 
         return res.data.data;
     } catch (err) {

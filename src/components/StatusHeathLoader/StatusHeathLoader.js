@@ -2,7 +2,7 @@
 import './StatusHeathLoader.css';
 
 function StatusHeathLoader({ status }) {
-    console.log('status', status);
+    // console.log('status', status);
 
     return (
         <>

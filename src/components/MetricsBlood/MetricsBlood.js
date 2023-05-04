@@ -1,10 +1,10 @@
 import { Button, Form, Input, Table } from 'antd';
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import { Line } from 'react-chartjs-2';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateBloodForPatient } from '~/redux/features/metric/bmisSlice';
-import moment from 'moment';
-import { Line } from 'react-chartjs-2';
 
 function MetricsBlood({ patients, bloodPatient }) {
     const dispatch = useDispatch();
