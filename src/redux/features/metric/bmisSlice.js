@@ -92,6 +92,7 @@ export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
             return res.data.data;
         } catch (err) {
             message.error(`${err.response.data.message}`);
+            console.log({ err });
             return;
         }
     },

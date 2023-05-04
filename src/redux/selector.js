@@ -152,7 +152,9 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
             );
 
             const _schedule_now = _listSchedule.filter(
-                (_schedule) => moment(_schedule.day_exam).diff(new Date(), 'day') === 0,
+                (_schedule) =>
+                    moment(_schedule.day_exam).diff(new Date(), 'day') === 0 &&
+                    moment(_schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY'),
             );
 
             const _schedule_now_ids = _schedule_now.map((_schedule) => _schedule._id);
@@ -176,6 +178,8 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
     (lists) => {
         if (lists?.length > 0) {
             // console.log('list', lists);
+            // moment(day_exam).format('DD/MM/YYYY') ===
+            //         moment(new Date()).format('DD/MM/YYYY')
             const now = new Date();
 
             const _listSchedule = lists.filter(
@@ -184,7 +188,9 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
             );
 
             const _schedule_now = _listSchedule.filter(
-                (_schedule) => moment(_schedule.day_exam).diff(new Date(), 'day') === 0,
+                (_schedule) =>
+                    moment(_schedule.day_exam).diff(new Date(), 'day') === 0 &&
+                    moment(_schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY'),
             );
 
             const _schedule_now_ids = _schedule_now.map((_schedule) => _schedule._id);
