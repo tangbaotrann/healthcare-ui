@@ -15,7 +15,7 @@ import Home from './pages/Home';
 import DoctorManager from './pages/DoctorManager';
 import Maps from './components/Maps';
 import { fetchApiUserDoctorByToken } from './redux/features/user/userSlice';
-import { btnClickGetUsernameLeavedRoomSelector, fetchApiUserDoctorByTokenSelector } from './redux/selector';
+import { fetchApiUserDoctorByTokenSelector } from './redux/selector';
 import Meeting from './components/Meeting';
 import CreateInfoPatient from './pages/CreateInfoPatient/CreateInfoPatient';
 import RegisterScheduleAppointment from './pages/RegisterScheduleAppointment';
@@ -25,8 +25,6 @@ import NotificationsPage from './pages/NotificationsPage';
 import MetricsPatient from './pages/MetricsPatient/MetricsPatient';
 import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment';
 import PageNotFound from './pages/PageNotFound';
-import socket from './utils/socket';
-import callSlice from './redux/features/call/callSlice';
 
 function App() {
     const [rule, setRule] = useState();
