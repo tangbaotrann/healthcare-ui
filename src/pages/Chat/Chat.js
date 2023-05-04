@@ -52,7 +52,7 @@ function Chat() {
     const handleClickedConversation = (conversation) => {
         setConversationClick(conversation);
         dispatch(fetchApiMessages(conversation._id));
-        console.log('handleClickedConversation', conversation);
+        // console.log('handleClickedConversation', conversation);
     };
 
     const handleHideModal = () => {

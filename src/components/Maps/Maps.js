@@ -1,6 +1,6 @@
 // lib
 import { useState, useRef } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftOutlined, CloseOutlined, SendOutlined } from '@ant-design/icons';
 import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api';
 import { Button, Spin } from 'antd';
@@ -26,8 +26,8 @@ function Maps({ getToken }) {
 
     const dispatch = useDispatch();
 
-    console.log('address ->', address);
-    console.log('getToken ->', getToken);
+    // console.log('address ->', address);
+    // console.log('getToken ->', getToken);
     // console.log('data ->', data);
 
     /** @type React.MutableRefObject<HTMLInputElement> */

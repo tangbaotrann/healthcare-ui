@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal, Popover, Tooltip } from 'antd';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
-
-import './MessageChat.css';
-import { logo } from '~/asset/images';
 import {
     AudioMutedOutlined,
     AudioOutlined,
@@ -14,6 +11,10 @@ import {
     SendOutlined,
     SmileOutlined,
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+
+import './MessageChat.css';
+import { logo } from '~/asset/images';
 import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
 import socket from '~/utils/socket';
 import MessageChatItem from './MessageChatItem';
@@ -21,7 +22,6 @@ import MessageChatPreviewImage from './MessageChatPreviewImage';
 import { ReactMic } from 'react-mic';
 import axios from 'axios';
 import { isLoadingMessagesSelector } from '~/redux/selector';
-import { Link } from 'react-router-dom';
 import { endPoints } from '~/routers';
 
 function MessageChat({ conversationClick, messages, patients }) {
@@ -43,7 +43,7 @@ function MessageChat({ conversationClick, messages, patients }) {
 
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
 
-    console.log('roomId -->', roomId);
+    // console.log('roomId -->', roomId);
 
     // user join room
     useEffect(() => {
@@ -72,9 +72,9 @@ function MessageChat({ conversationClick, messages, patients }) {
     // show call now
     useEffect(() => {
         socket.on('call_now_to_user_success', ({ room_id, info_doctor, info_patient }) => {
-            console.log('call_now_to_user_success room_id', room_id);
-            console.log('call_now_to_user_success info_doctor', info_doctor);
-            console.log('call_now_to_user_success info_patient', info_patient);
+            // console.log('call_now_to_user_success room_id', room_id);
+            // console.log('call_now_to_user_success info_doctor', info_doctor);
+            // console.log('call_now_to_user_success info_patient', info_patient);
             setOpenModalCall(true);
             setRoomId({ room_id, info_doctor, info_patient });
         });
@@ -173,7 +173,7 @@ function MessageChat({ conversationClick, messages, patients }) {
         setMuteRecording(false);
         setOpenPopover(false);
 
-        console.log('recordedBlob is: ', recordedBlob);
+        // console.log('recordedBlob is: ', recordedBlob);
         // setAudio(recordedBlob);
 
         setIsLoadingSpeech(true);

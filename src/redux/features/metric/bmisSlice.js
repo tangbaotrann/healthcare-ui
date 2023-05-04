@@ -8,7 +8,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 export const fetchApiBMIByIdPatient = createAsyncThunk('bmi/fetchApiBMIByIdPatient', async (idPatient) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}bmis/${idPatient}`);
-        console.log('res - patient', res.data.data.bmis);
+        // console.log('res - patient', res.data.data.bmis);
 
         return res.data.data.bmis;
     } catch (err) {
@@ -39,7 +39,7 @@ export const fetchApiCreateBMIForPatient = createAsyncThunk('bmi/fetchApiCreateB
             },
         );
         message.success('Bạn đã tạo thành công chỉ số BMI.');
-        console.log('res create bmi', res.data.data);
+        // console.log('res create bmi', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -55,7 +55,7 @@ export const fetchApiAllBMIOfPatient = createAsyncThunk('bmi/fetchApiAllBMIOfPat
     try {
         if (idPatient) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}bmis/${idPatient}`);
-            console.log('res all bmi', res.data.data);
+            // console.log('res all bmi', res.data.data);
 
             return res.data.data;
         }
@@ -87,7 +87,7 @@ export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
                 },
             );
             message.success('Bạn đã tạo thành công chỉ số đường huyết.');
-            console.log('res create glycemic', res.data.data);
+            // console.log('res create glycemic', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -103,7 +103,7 @@ export const fetchApiAllGlycemicOfPatient = createAsyncThunk('bmi/fetchApiAllGly
     try {
         if (idPatient) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-            console.log('res all glycemics', res.data.data);
+            // console.log('res all glycemics', res.data.data);
 
             return res.data.data;
         }
@@ -136,7 +136,7 @@ export const fetchApiCreateBloodForPatient = createAsyncThunk(
                 },
             );
             message.success('Bạn đã tạo thành công chỉ số huyết áp.');
-            console.log('res create blood', res.data.data);
+            // console.log('res create blood', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -151,7 +151,7 @@ export const fetchApiAllBloodOfPatient = createAsyncThunk('bmi/fetchApiAllBloodO
     try {
         if (idPatient) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}blood-pressures/${idPatient}`);
-            console.log('res all glycemics', res.data.data);
+            // console.log('res all glycemics', res.data.data);
 
             return res.data.data;
         }
@@ -183,7 +183,7 @@ const bmisSlice = createSlice({
                 state.data = action.payload;
             })
             .addCase(fetchApiCreateBMIForPatient.fulfilled, (state, action) => {
-                console.log('ac.pay create bmi ->', action.payload);
+                // console.log('ac.pay create bmi ->', action.payload);
 
                 if (action.payload) {
                     state.bmisPatient.bmis.push(action.payload.doc);
@@ -202,7 +202,7 @@ const bmisSlice = createSlice({
                 state.bmisPatient = action.payload;
             })
             .addCase(fetchApiCreateGlycemicForPatient.fulfilled, (state, action) => {
-                console.log('ac.pay create glycemic', action.payload);
+                // console.log('ac.pay create glycemic', action.payload);
 
                 if (action.payload) {
                     state.glycemicPatient.push(action.payload.doc);
@@ -219,7 +219,7 @@ const bmisSlice = createSlice({
                 state.glycemicPatient = action.payload;
             })
             .addCase(fetchApiCreateBloodForPatient.fulfilled, (state, action) => {
-                console.log('ac.pay create blood', action.payload);
+                // console.log('ac.pay create blood', action.payload);
 
                 if (action.payload) {
                     state.bloodPatient.push(action.payload.doc);

@@ -61,7 +61,7 @@ function ScheduleRegister() {
 
     // handle submit
     const handleSubmitForm = async (values) => {
-        console.log('value', values);
+        // console.log('value', values);
 
         const getToken = JSON.parse(localStorage.getItem('token_user_login'));
         const { content_exam, schedule, day_exam } = values;
@@ -83,7 +83,7 @@ function ScheduleRegister() {
                 },
             )
             .then((res) => {
-                console.log('res ->', res.data.data);
+                // console.log('res ->', res.data.data);
                 message.success('Bạn đã đăng ký thành công lịch khám này. Vui lòng chờ xác nhận từ bác sĩ nhé!');
                 setOpenModalConfirm(false);
                 socket.emit('notification_register_schedule_from_patient', { data: res.data.data });

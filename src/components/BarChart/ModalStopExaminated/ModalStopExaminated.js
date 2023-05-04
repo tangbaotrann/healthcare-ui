@@ -12,7 +12,7 @@ function ModalStopExaminated({ getIdDoctor, infoPatient, handleCancel }) {
 
     const dispatch = useDispatch();
 
-    console.log('infoPatient stop exam ->', infoPatient);
+    // console.log('infoPatient stop exam ->', infoPatient);
 
     // handle open modal
     const handleOpenModal = () => {
@@ -26,7 +26,7 @@ function ModalStopExaminated({ getIdDoctor, infoPatient, handleCancel }) {
 
     // handle stop exam
     const handleStopExamOnFish = (values) => {
-        console.log('values', values);
+        // console.log('values', values);
         if (values) {
             dispatch(fetchApiStopExaminatedByPatientId(values));
             setOpenModal(false);

@@ -1,21 +1,21 @@
 // lib
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { Button, Modal, Table, message } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 // me
 import './TableListNotification.css';
 import TitleName from '../TitleName';
-import notificationSlice, { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
+import { fetchApiUpdateSeenNotification } from '~/redux/features/notification/notificationSlice';
 import { filterNotificationGetConversationId } from '~/redux/selector';
 import Conversation from '../Conversation/Conversation';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import socket from '~/utils/socket';
 
-function TableListNotification({ notifications, infoUser }) {
+function TableListNotification({ infoUser }) {
     const [record, setRecord] = useState({});
     const [showModalConversation, setShowModalConversation] = useState(false);
     const dispatch = useDispatch();
@@ -46,7 +46,7 @@ function TableListNotification({ notifications, infoUser }) {
 
     useEffect(() => {
         socket.on('get_users', (users) => {
-            console.log('user ->', users);
+            // console.log('user ->', users);
         });
     }, []);
 
@@ -57,7 +57,7 @@ function TableListNotification({ notifications, infoUser }) {
 
     // handle show modal
     const handleShowModalConversation = (record) => {
-        console.log('rec', record);
+        // console.log('rec', record);
 
         if (record.conversation.conversations._id) {
             dispatch(conversationSlice.actions.arrivalIdConversation(record.conversation.conversations)); //arrivalFromRecordIdConversation obj conversation filter

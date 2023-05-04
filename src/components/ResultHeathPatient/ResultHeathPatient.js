@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal, Table } from 'antd';
+import moment from 'moment';
 
 // me
 import './ResultHeathPatient.css';
@@ -9,7 +10,6 @@ import TitleName from '../TitleName';
 import { fetchApiResultHeathByIdPatientSelector, scheduleDetailByIdDoctorFilters } from '~/redux/selector';
 import { fetchApiResultHeathByIdPatient } from '~/redux/features/patient/patientSlice';
 import ResultHealthMessage from './ResultHealthMessage';
-import moment from 'moment';
 
 function ResultHeathPatient() {
     const [openModal, setOpenModal] = useState(false);
@@ -20,7 +20,7 @@ function ResultHeathPatient() {
     const patients = useSelector(scheduleDetailByIdDoctorFilters); //  fetchApiScheduleDetailByIdDoctorSelector
     const resultHeath = useSelector(fetchApiResultHeathByIdPatientSelector);
 
-    console.log('patient result heath', patients);
+    // console.log('patient result heath', patients);
     // console.log('resultHeath ->', resultHeath);
 
     // cols

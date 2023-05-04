@@ -31,14 +31,14 @@ function CardListRegisterSchedule({ patients }) {
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
-            console.log('notification_confirm_register_schedule_success', notification);
+            // console.log('notification_confirm_register_schedule_success', notification);
             dispatch(scheduleDoctor.actions.arrivalScheduleDetailOfPatientStatusFalse(notification.schedule_detail_id));
         });
     }, []);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', ({ schedule_detail }) => {
-            console.log('notification_register_schedule_from_patient_success', schedule_detail);
+            // console.log('notification_register_schedule_from_patient_success', schedule_detail);
             dispatch(scheduleDoctor.actions.arrivalDeleteScheduleMedicalAppointmentAwait(schedule_detail));
         });
     }, []);

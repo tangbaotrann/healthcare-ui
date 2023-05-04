@@ -31,7 +31,7 @@ function TableListScheduleMedical({ infoUser }) {
     const scheduleMedicalsFilter = useSelector(getDayAndTimeScheduleMedicalFilterOfDoctor);
     const historyExams = useSelector(fetchApiHistoryExamOfPatientSelector);
 
-    console.log('historyExams', historyExams);
+    // console.log('historyExams', historyExams);
     // console.log('scheduleMedicalsFilter render', scheduleMedicalsFilter);
     // console.log('infoMember render', infoMember);
 
@@ -171,7 +171,7 @@ function TableListScheduleMedical({ infoUser }) {
 
     // show modal
     const handleShowModal = (record) => {
-        console.log('re', record);
+        // console.log('re', record);
         setShowModal(true);
         setRecord(record);
     };

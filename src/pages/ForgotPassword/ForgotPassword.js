@@ -1,18 +1,18 @@
 // lib
-import { KeyOutlined, LoadingOutlined, PhoneOutlined } from '@ant-design/icons';
+import { KeyOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Alert, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import PhoneInput from 'react-phone-number-input';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import { parsePhoneNumber } from 'react-phone-number-input';
 
 // me
 import './ForgotPassword.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
-import { isValidPhoneNumber } from 'react-phone-number-input';
-import { parsePhoneNumber } from 'react-phone-number-input';
 import axios from 'axios';
 import { fetchApiForgotPassword } from '~/redux/features/user/userSlice';
 import { isLoadingFetchApiForgotPasswordSelector } from '~/redux/selector';
@@ -39,8 +39,8 @@ function ForgotPassword() {
 
             const formatPhone = parsePhone.number.replace('+84', '0');
 
-            console.log('formatPhone', formatPhone);
-            console.log('validator', validatorPhone);
+            // console.log('formatPhone', formatPhone);
+            // console.log('validator', validatorPhone);
 
             if (validatorPhone === false) {
                 setCheckPhone(true);

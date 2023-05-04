@@ -25,8 +25,8 @@ function UpdateProfileDoctor() {
     const tokenCurrent = JSON.parse(localStorage.getItem('token_user_login'));
     const getIdInfoDoctor = useSelector(fetchApiUpdateInfoUserSelector);
 
-    console.log(tokenCurrent);
-    console.log('getIdInfoDoctor', getIdInfoDoctor);
+    // console.log(tokenCurrent);
+    // console.log('getIdInfoDoctor', getIdInfoDoctor);
 
     const navigate = useNavigate();
 

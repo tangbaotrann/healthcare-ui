@@ -16,7 +16,7 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
             phone_number: formatPhone, //phone_number,
             password: password,
         });
-        console.log('res login', res.data.data);
+        // console.log('res login', res.data.data);
 
         localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
@@ -35,7 +35,7 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
                 'Content-Type': 'application/json',
             },
         });
-        console.log('res doctors -', res.data.data);
+        // console.log('res doctors -', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -54,7 +54,7 @@ export const fetchApiUserDoctorByToken = createAsyncThunk('user/fetchApiUserDoct
                     ContentType: 'application/json',
                 },
             });
-            console.log('res doctor by id -', res.data.data);
+            // console.log('res doctor by id -', res.data.data);
 
             return res.data.data;
         }
@@ -70,7 +70,7 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
 
         const formatPhone = phone_number.replace('+84', '0');
 
-        console.log('formatPhone ->', formatPhone);
+        // console.log('formatPhone ->', formatPhone);
 
         const res = await axios.post(
             `${process.env.REACT_APP_BASE_URL}auth/register`,
@@ -83,7 +83,7 @@ export const fetchApiRegister = createAsyncThunk('user/fetchApiRegister', async 
                 headers: { Authorization: '***' },
             },
         );
-        console.log('res', res.data.data);
+        // console.log('res', res.data.data);
 
         localStorage.setItem('token_user_login', JSON.stringify(res.data.data.accessToken));
 
@@ -136,7 +136,7 @@ export const fetchApiUpdateInfoUser = createAsyncThunk(
 // update info for doctor
 const createFormDataUpdateInfoPatient = (values, fileList) => {
     const { username, dob, address, gender, avatar } = values;
-    console.log('->', new Date(dob));
+    // console.log('->', new Date(dob));
     const formData = new FormData();
 
     formData.append('username', username);
@@ -162,7 +162,7 @@ export const fetchApiUpdateInfoForDoctor = createAsyncThunk(
                     ContentType: 'multipart/form-data',
                 },
             });
-            console.log('update info doctor - ', res.data);
+            // console.log('update info doctor - ', res.data);
 
             return res.data;
         } catch (err) {
@@ -223,7 +223,7 @@ export const fetchApiAllPatients = createAsyncThunk('patient/fetchApiAllPatients
                     ContentType: 'application/json',
                 },
             });
-            console.log('res all patients ->', res.data.data);
+            // console.log('res all patients ->', res.data.data);
 
             return res.data.data;
         }
@@ -260,7 +260,7 @@ export const fetchApiCreateInfoPatient = createAsyncThunk(
                     ContentType: 'multipart/form-data',
                 },
             });
-            console.log('res create info patient ->', res.data.data);
+            // console.log('res create info patient ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -279,7 +279,7 @@ export const fetchApiCheckExistUserByNumberPhone = createAsyncThunk(
             const formatPhone = phone_number.replace('+84', '0');
 
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}accounts/phone/${formatPhone}`);
-            console.log('res check exits ->', res.data.data);
+            // console.log('res check exits ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -300,13 +300,13 @@ export const fetchApiForgotPassword = createAsyncThunk(
                 password: values.password,
             });
 
-            console.log('res forgot password', res.data.data);
+            // console.log('res forgot password', res.data.data);
             message.success('Mật khẩu của bạn đã được cập nhật thành công');
 
             return res.data.data;
         } catch (err) {
             message.error('Lỗi!');
-            console.log('Error forgot password ->', { err });
+            // console.log('Error forgot password ->', { err });
         }
     },
 );
