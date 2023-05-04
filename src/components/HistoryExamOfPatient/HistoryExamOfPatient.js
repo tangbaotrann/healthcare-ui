@@ -8,8 +8,8 @@ import ButtonLoadMore from '../ButtonLoadMore';
 function HistoryExamOfPatient({ historyExams, isLoading, className }) {
     const [visible, setVisible] = useState(5);
 
-    console.log('historyExams', historyExams.length);
-    console.log('visible', visible);
+    // console.log('historyExams', historyExams.length);
+    // console.log('visible', visible);
     // console.log('loading', loading);
 
     const handleShowMoreCards = () => {
@@ -35,31 +35,34 @@ function HistoryExamOfPatient({ historyExams, isLoading, className }) {
                     {isLoading ? (
                         <Skeleton active />
                     ) : (
-                        historyExams.slice(0, visible).map((history) => {
-                            return (
-                                <div className="content-cart-item" key={history._id}>
-                                    <div className="history-banner-right">
-                                        <i>
-                                            Ngày: {moment(history.created_at).format('DD/MM/YYYY')} - lúc:{' '}
-                                            {moment(history.created_at).format('HH:mm')}
-                                        </i>
-                                    </div>
-                                    <div className="content-cart-item-header">
-                                        <h2 className="content-cart-item-username">
-                                            BS: {history.doctor.username} -
-                                            {history.doctor.work_type === 'glycemic'
-                                                ? ' Đảm nhận bệnh đường huyết'
-                                                : ' Đảm nhận bệnh huyết áp'}
-                                        </h2>
-                                    </div>
+                        historyExams
+                            .slice(0, visible)
+                            .reverse()
+                            .map((history) => {
+                                return (
+                                    <div className="content-cart-item" key={history._id}>
+                                        <div className="history-banner-right">
+                                            <i>
+                                                Ngày: {moment(history.created_at).format('DD/MM/YYYY')} - lúc:{' '}
+                                                {moment(history.created_at).format('HH:mm')}
+                                            </i>
+                                        </div>
+                                        <div className="content-cart-item-header">
+                                            <h2 className="content-cart-item-username">
+                                                BS: {history.doctor.username} -
+                                                {history.doctor.work_type === 'glycemic'
+                                                    ? ' Đảm nhận bệnh đường huyết'
+                                                    : ' Đảm nhận bệnh huyết áp'}
+                                            </h2>
+                                        </div>
 
-                                    <div className="history-info-content">
-                                        <p>- Nội dung khám: {history.content_exam}</p>
-                                        <p>- Kết quả khám: {history.result_exam}</p>
+                                        <div className="history-info-content">
+                                            <p>- Nội dung khám: {history.content_exam}</p>
+                                            <p>- Kết quả khám: {history.result_exam}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })
+                                );
+                            })
                     )}
                 </>
             ) : (
