@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import axios from 'axios';
-import moment from 'moment';
 import socket from '~/utils/socket';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
@@ -80,7 +79,7 @@ export const fetchApiAllCreateScheduleDoctor = createAsyncThunk(
                     'Content-Type': 'application/json',
                 },
             });
-            console.log('res all schedule ->', res.data.data);
+            // console.log('res all schedule ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -101,7 +100,7 @@ export const fetchApiScheduleByIdDoctor = createAsyncThunk(
                         ContentType: 'application/json',
                     },
                 });
-                console.log('fetchApiScheduleByIdDoctor ->', res.data.data);
+                // console.log('fetchApiScheduleByIdDoctor ->', res.data.data);
 
                 return res.data.data;
             } catch (err) {
@@ -119,7 +118,7 @@ export const fetchApiAllScheduleDetails = createAsyncThunk('scheduleDoctor/fetch
                 ContentType: 'application/json',
             },
         });
-        console.log('res all schedule details ->', res.data.data);
+        // console.log('res all schedule details ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -164,7 +163,7 @@ export const fetchApiDeleteScheduleMedicalOfPatient = createAsyncThunk(
                 },
             });
 
-            console.log('res del register schedule patient ->', res.data.data);
+            // console.log('res del register schedule patient ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -186,7 +185,7 @@ export const fetchApiUpdateIsExam = createAsyncThunk(
                     },
                 );
 
-                console.log('res updated is_exam --->', res.data.data);
+                // console.log('res updated is_exam --->', res.data.data);
 
                 return res.data.data;
             }
@@ -207,7 +206,7 @@ export const fetchApiRatingForDoctor = createAsyncThunk('patient/fetchApiRatingF
             schedule_id: schedule_id,
             content: content,
         });
-        console.log('res rating', res.data);
+        // console.log('res rating', res.data);
 
         return res.data;
     } catch (err) {
@@ -239,7 +238,7 @@ const scheduleDoctor = createSlice({
         arrivalScheduleDetailOfPatientStatusFalse: (state, action) => {
             const id_schedule_detail = action.payload;
 
-            console.log('schedule patient del slice ->', id_schedule_detail);
+            // console.log('schedule patient del slice ->', id_schedule_detail);
 
             const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
                 (_schedule) => _schedule._id === id_schedule_detail,
@@ -253,7 +252,7 @@ const scheduleDoctor = createSlice({
             state.deleteScheduleMedical = action.payload;
         },
         arrivalDeleteScheduleMedicalAppointmentAwait: (state, action) => {
-            console.log('ac.pay 214 ->', action.payload);
+            // console.log('ac.pay 214 ->', action.payload);
 
             // scheduleMedicalAppointmentAwait
             const _splice = state.allScheduleDetailOfPatient.findIndex(
@@ -304,7 +303,7 @@ const scheduleDoctor = createSlice({
             .addCase(fetchApiRatingForDoctor.fulfilled, (state, action) => {
                 const schedule = action.payload.data;
 
-                console.log('schedule patient del slice ->', schedule);
+                // console.log('schedule patient del slice ->', schedule);
 
                 const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_id._id,
@@ -329,7 +328,7 @@ const scheduleDoctor = createSlice({
             .addCase(fetchApiDeleteScheduleMedicalOfPatient.fulfilled, (state, action) => {
                 const schedule = action.payload;
 
-                console.log('schedule patient del slice ->', schedule);
+                // console.log('schedule patient del slice ->', schedule);
 
                 const spliceSchedule = state.allScheduleDetailOfPatient.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_detail_id,

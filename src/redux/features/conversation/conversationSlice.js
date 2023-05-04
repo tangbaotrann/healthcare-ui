@@ -6,7 +6,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 export const fetchApiConversations = createAsyncThunk('conversation/fetchApiConversations', async (idDoctor) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}conversations/doctor/${idDoctor}`);
-        console.log('res conversation', res.data.data);
+        // console.log('res conversation', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -20,7 +20,7 @@ export const fetchApiConversationsOfPatient = createAsyncThunk(
     async (idPatient) => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}conversations/patient/${idPatient}`);
-            console.log('res conversation', res.data.data);
+            // console.log('res conversation', res.data.data);
 
             return res.data.data;
         } catch (err) {

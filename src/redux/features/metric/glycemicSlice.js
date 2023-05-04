@@ -7,7 +7,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 export const fetchApiGlycemicByIdPatient = createAsyncThunk('bmi/fetchApiGlycemicByIdPatient', async (idPatient) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}glycemics/${idPatient}`);
-        console.log('res - patient - glycemic', res.data.data);
+        // console.log('res - patient - glycemic', res.data.data);
 
         return res.data.data;
     } catch (err) {

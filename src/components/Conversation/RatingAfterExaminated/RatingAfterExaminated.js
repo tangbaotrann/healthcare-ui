@@ -12,7 +12,7 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
 
     const dispatch = useDispatch();
 
-    console.log('scheduleDetail', scheduleDetail);
+    // console.log('scheduleDetail', scheduleDetail);
 
     useEffect(() => {
         setOpenModal(true);
@@ -24,7 +24,7 @@ function RatingAfterExaminated({ patients, scheduleDetail }) {
 
     const handleRatingAfterExamOnFish = (values) => {
         if (values) {
-            console.log('values', values);
+            // console.log('values', values);
 
             dispatch(fetchApiRatingForDoctor(values));
             dispatch(callSlice.actions.arrivalUsername(null));

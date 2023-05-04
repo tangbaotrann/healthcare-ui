@@ -33,7 +33,7 @@ export const fetchApiCreateComment = createAsyncThunk('comment/fetchApiCreateCom
                 'content-type': 'multipart/form-data',
             },
         });
-        console.log('res create comment ->', res.data.data);
+        // console.log('res create comment ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -74,7 +74,7 @@ export const fetchApiCreateCommentOfPatient = createAsyncThunk(
                     'content-type': 'multipart/form-data',
                 },
             });
-            console.log('res create comment ->', res.data.data);
+            // console.log('res create comment ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -88,7 +88,7 @@ export const fetchApiCommentByIdPost = createAsyncThunk('blog/fetchApiCommentByI
     try {
         if (post_id !== null || post_id !== undefined) {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}comments/${post_id}`);
-            console.log('res comment by id post ->', res.data.data);
+            // console.log('res comment by id post ->', res.data.data);
 
             return res.data.data;
         }

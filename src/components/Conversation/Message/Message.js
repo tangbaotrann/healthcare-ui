@@ -5,12 +5,6 @@ import { Link } from 'react-router-dom';
 import EmojiPicker, { SkinTones } from 'emoji-picker-react';
 import { Popover, Tooltip } from 'antd';
 import { ReactMic } from 'react-mic';
-
-// me
-import './Message.css';
-import { logo } from '~/asset/images';
-import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
-import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
 import {
     AudioMutedOutlined,
     AudioOutlined,
@@ -20,10 +14,16 @@ import {
     SmileOutlined,
     VideoCameraAddOutlined,
 } from '@ant-design/icons';
+import axios from 'axios';
+
+// me
+import './Message.css';
+import { logo } from '~/asset/images';
+import messageSlice, { fetchApiCreateMessage } from '~/redux/features/message/messageSlice';
+import { btnClickGetIdConversationSelector, getDoctorLoginFilter } from '~/redux/selector';
 import socket from '~/utils/socket';
 import { endPoints } from '~/routers';
 import MessageItem from './MessageItem';
-import axios from 'axios';
 import callSlice from '~/redux/features/call/callSlice';
 import MessageChatPreviewImage from '~/components/MessageChat/MessageChatPreviewImage/MessageChatPreviewImage';
 
@@ -50,17 +50,17 @@ function Message({ messages, conversation, infoUser }) {
     const focusInputMessage = useRef();
 
     // console.log('checkLeavedRoom', checkLeavedRoom);
-    console.log('infoMember ->', infoMember);
+    // console.log('infoMember ->', infoMember);
     // console.log('messages ->', messages);
     // console.log('infoDoctor ->', infoDoctor);
-    console.log('conversation ->', conversation);
+    // console.log('conversation ->', conversation);
     // console.log('new img', newImageMessage);
     // console.log('recordConversation ->', recordConversation);
     // console.log('onlineUsers ->', onlineUsers);
 
     useEffect(() => {
         socket.on('user_leave_room_call_success', ({ username, roomId }) => {
-            console.log('user_leave_room_call_success ->', username, roomId);
+            // console.log('user_leave_room_call_success ->', username, roomId);
             dispatch(callSlice.actions.arrivalUsername(username));
         });
     }, []);
@@ -71,7 +71,7 @@ function Message({ messages, conversation, infoUser }) {
         socket.emit('add_user', infoDoctor._id);
 
         socket.on('get_users', (users) => {
-            console.log('USER - ONLINE -', users);
+            // console.log('USER - ONLINE -', users);
             setOnlineUsers(users.filter((_user) => _user.userId === conversation.member._id));
         });
 
@@ -149,7 +149,7 @@ function Message({ messages, conversation, infoUser }) {
         setMuteRecording(false);
         setOpenPopover(false);
 
-        console.log('recordedBlob is: ', recordedBlob);
+        // console.log('recordedBlob is: ', recordedBlob);
         // setAudio(recordedBlob);
 
         setIsLoadingSpeech(true);

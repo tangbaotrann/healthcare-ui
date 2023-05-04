@@ -1,7 +1,7 @@
 // lib
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button, DatePicker, Form, Input, Select, Upload } from 'antd';
 import { SendOutlined, UserOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
@@ -10,7 +10,6 @@ import ImgCrop from 'antd-img-crop';
 import './CreateInfoPatient.css';
 import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
-import { fetchApiRegisterSelector } from '~/redux/selector';
 import { fetchApiCreateInfoPatient } from '~/redux/features/user/userSlice';
 
 function CreateInfoPatient() {
@@ -31,7 +30,7 @@ function CreateInfoPatient() {
         <BackgroundOutSite>
             <Form
                 onFinish={(values) => {
-                    console.log('create info patient ->', values);
+                    // console.log('create info patient ->', values);
                     const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
                     if (values && getToken) {

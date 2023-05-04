@@ -10,7 +10,7 @@ export const fetchApiNotificationByDoctorId = createAsyncThunk(
         // console.log('id doctor', idDoctor);
         try {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}notifications/${idDoctor}`);
-            console.log('res', res.data.data);
+            // console.log('res', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -26,7 +26,7 @@ export const fetchApiNotificationByPatientId = createAsyncThunk(
         // console.log('id doctor', idDoctor);
         try {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}notifications/${idPatient}`);
-            console.log('res', res.data.data);
+            // console.log('res', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -45,7 +45,7 @@ export const fetchApiUpdateSeenNotification = createAsyncThunk(
             const res = await axios.put(`${process.env.REACT_APP_BASE_URL}notifications`, {
                 ids: [_id],
             });
-            console.log('res update seen', res.data.data);
+            // console.log('res update seen', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -63,7 +63,7 @@ export const fetchApiUpdateSeenNotificationPatient = createAsyncThunk(
             const res = await axios.put(`${process.env.REACT_APP_BASE_URL}notifications`, {
                 ids: [_id],
             });
-            console.log('res update seen', res.data.data);
+            // console.log('res update seen', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -84,7 +84,7 @@ const notificationSlice = createSlice({
     reducers: {
         notificationRegisterScheduleFromPatientSuccess: (state, action) => {
             const notification = action.payload;
-            console.log('act pay', notification);
+            // console.log('act pay', notification);
 
             const getNotification = state.data.find((_notification) => _notification._id === notification._id);
 
@@ -98,7 +98,7 @@ const notificationSlice = createSlice({
         },
         notificationRegisterScheduleFromDoctorSuccess: (state, action) => {
             const notification = action.payload;
-            console.log('act pay', notification);
+            // console.log('act pay', notification);
 
             const getNotification = state.dataPatient.find((_notification) => _notification._id === notification._id);
 
@@ -106,7 +106,7 @@ const notificationSlice = createSlice({
                 toast.success(`${notification.content}`);
                 state.dataPatient.unshift(notification);
             } else {
-                console.log('err notification!');
+                // console.log('err notification!');
                 return;
             }
         },

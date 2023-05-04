@@ -62,21 +62,6 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
     const lablelArrs = new Set([...labelsGlycemic]);
     const resultsLabelsGlycemic = Array.from(lablelArrs);
 
-    // console.log('resultsLabelsGlycemic', resultsLabelsGlycemic);
-    // console.log(
-    //     '-->',
-    //     resultsLabelsGlycemic.map((day, index) => {
-    //         const metrics = glycemicPatient.filter((filter_glycemic) => {
-    //             const res = filter_glycemic.case === 3;
-    //             return res;
-    //         });
-
-    //         const metric = metrics.find((metric) => moment(metric.createdAt).format('DD-MM-YYYY') === day);
-    //         console.log({ metric });
-    //         return metric ? metric.metric : 0;
-    //     }),
-    // );
-
     // data glycemic
     const dataGlycemic = {
         labels: resultsLabelsGlycemic,

@@ -1,22 +1,19 @@
 // lib
 import { useDispatch, useSelector } from 'react-redux';
 import { Divider } from 'antd';
+import { memo } from 'react';
 
 // me
 import './Conversation.css';
 import { logo } from '~/asset/images';
 import {
     btnClickGetIdConversationSelector,
-    btnClickedRecordGetIdConversationSelector,
     cleanConversationListSelector,
-    isLoadingConversationsSelector,
     messageOfUserFilter,
 } from '~/redux/selector';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 import Message from './Message';
-import { LoadingOutlined } from '@ant-design/icons';
-import { memo } from 'react';
 
 function Conversation({ infoUser, recordConversation }) {
     const dispatch = useDispatch();
@@ -24,8 +21,8 @@ function Conversation({ infoUser, recordConversation }) {
     const conversations = useSelector(cleanConversationListSelector);
 
     const conversation = useSelector(btnClickGetIdConversationSelector);
-    // const checkConversation = useSelector(btnClickedRecordGetIdConversationSelector);
     const messages = useSelector(messageOfUserFilter);
+    // const checkConversation = useSelector(btnClickedRecordGetIdConversationSelector);
 
     // console.log('conversations', conversations);
     // console.log('conversation info user patient ->', conversation);
@@ -35,7 +32,7 @@ function Conversation({ infoUser, recordConversation }) {
 
     // handle click conversation -> get id conversation
     const handleClickConversation = (conversation) => {
-        console.log('con', conversation);
+        // console.log('con', conversation);
         dispatch(conversationSlice.actions.arrivalIdConversation(conversation));
         dispatch(fetchApiMessages(conversation._id));
     };

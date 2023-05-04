@@ -5,6 +5,9 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { isValidPhoneNumber } from 'react-phone-number-input';
+import { parsePhoneNumber } from 'react-phone-number-input';
+import { useSelector } from 'react-redux';
 
 // me
 import './Register.css';
@@ -12,9 +15,6 @@ import BackgroundOutSite from '~/components/BackgroundOutSite';
 import { endPoints } from '~/routers';
 import { useUserAuth } from '~/context/UserAuthContext';
 import axios from 'axios';
-import { isValidPhoneNumber } from 'react-phone-number-input';
-import { parsePhoneNumber } from 'react-phone-number-input';
-import { useSelector } from 'react-redux';
 import { isLoadingFetchApiRegisterSelector } from '~/redux/selector';
 
 function Register() {
@@ -100,7 +100,7 @@ function Register() {
     const handleOnFinishVerifyOTP = async (values) => {
         const { basic_otp } = values;
 
-        console.log('basic_otp', basic_otp);
+        // console.log('basic_otp', basic_otp);
 
         try {
             await confirmOTP.confirm(basic_otp);

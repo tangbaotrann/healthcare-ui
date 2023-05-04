@@ -160,13 +160,6 @@ function DoctorManager() {
             <LayoutDoctorManager infoUser={infoUser}>
                 {changeLayout === constants.layoutDashboard || changeLayout === null ? (
                     <>
-                        {/* {isLoadingScheduleDoctor ||
-                        isLoadingNotification ||
-                        isLoadingUser ||
-                        isLoadingScheduleDetail ? (
-                            <LoadingOutlined className="icon-loading-dashboard" spin />
-                        ) : (
-                            )} */}
                         <Dashboard
                             schedules={schedules}
                             totalFee={totalFee}

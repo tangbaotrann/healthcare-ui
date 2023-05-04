@@ -24,7 +24,7 @@ function Home({ checkUserLogin }) {
     const dispatch = useDispatch();
 
     // console.log('schedules ->', schedules);
-    console.log('patients home', patients);
+    // console.log('patients home', patients);
     // console.log('isLoading', isLoading);
     // console.log('token', token);
 

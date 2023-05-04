@@ -15,7 +15,7 @@ function ModalMovePatient({ getIdDoctor, infoPatient, handleCancel }) {
 
     const movePatientForDoctors = useSelector(filterDoctorForMovePatient);
 
-    console.log('movePatientForDoctors ->', movePatientForDoctors);
+    // console.log('movePatientForDoctors ->', movePatientForDoctors);
     // console.log('getIdDoctor ->', getIdDoctor);
     // console.log('infoPatient ->', infoPatient);
 
@@ -32,7 +32,7 @@ function ModalMovePatient({ getIdDoctor, infoPatient, handleCancel }) {
     // handle move patient
     const handleMovePatientOnFish = (values) => {
         if (values) {
-            console.log('values', values);
+            // console.log('values', values);
             dispatch(fetchApiMovePatient(values));
             setOpenModal(false);
             handleCancel();

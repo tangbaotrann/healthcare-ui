@@ -10,7 +10,7 @@ export const fetchApiBloodPressureByIdPatient = createAsyncThunk(
         try {
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}blood-pressures/${idPatient}`);
 
-            console.log('res blood pressure', res.data.data);
+            // console.log('res blood pressure', res.data.data);
 
             return res.data.data;
         } catch (err) {

@@ -19,7 +19,7 @@ function TextEditor({ infoUser, onHideModal }) {
     const dispatch = useDispatch();
 
     // console.log('newImage', newImage);
-    console.log('infoUser', infoUser);
+    // console.log('infoUser', infoUser);
 
     // handle change input
     const handleTitleChange = (event) => {

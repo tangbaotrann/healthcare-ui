@@ -11,7 +11,7 @@ import InformationPatient from './InformationPatient';
 import { filterNotificationPatientNotHasSeen, isLoadingApiAllPatientsSelector } from '~/redux/selector';
 import userSlice from '~/redux/features/user/userSlice';
 
-function Header({ checkUserLogin, patients }) {
+function Header({ patients }) {
     const notificationNotHasSeen = useSelector(filterNotificationPatientNotHasSeen);
     const isLoading = useSelector(isLoadingApiAllPatientsSelector);
 
@@ -32,18 +32,6 @@ function Header({ checkUserLogin, patients }) {
 
                 {/* Menu */}
                 <div className="menu-list">
-                    {/* {isLoading ? (
-                        <Space>
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                            <Skeleton.Button active className="custom-ske-loading" />
-                        </Space>
-                    ) : (
-                    )} */}
                     <ul>
                         {/* Trang chủ */}
                         <NavLink

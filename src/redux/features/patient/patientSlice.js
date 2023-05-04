@@ -14,7 +14,7 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
                 const res = await axios.get(
                     `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/patient-list/${getIdDoctor}`,
                 );
-                console.log('res all schedule detail ->', res.data.data);
+                // console.log('res all schedule detail ->', res.data.data);
 
                 return res.data.data;
             } catch (err) {
@@ -34,7 +34,7 @@ export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
                 const res = await axios.get(
                     `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list-waiting/${getIdDoctor}`,
                 );
-                console.log('res schedule-medical-appointment -> ', res.data.data);
+                // console.log('res schedule-medical-appointment -> ', res.data.data);
 
                 return res.data.data;
             } catch (err) {
@@ -54,7 +54,7 @@ export const fetchApiScheduleMedicalAppointmentAwait = createAsyncThunk(
                     `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}?filter=view_wating_exam`,
                 );
 
-                console.log('res lịch chờ khám ->', res.data.data);
+                // console.log('res lịch chờ khám ->', res.data.data);
 
                 return res.data.data;
             }
@@ -73,7 +73,7 @@ export const fetchApiScheduleMedicalAppointmentResultExam = createAsyncThunk(
                     `${process.env.REACT_APP_BASE_URL}schedule-details/doctor/schedule-list/${getIdDoctor}?filter=view_result_exam`,
                 );
 
-                console.log('res result exam ->', res.data.data);
+                // console.log('res result exam ->', res.data.data);
 
                 return res.data.data;
             }
@@ -134,7 +134,7 @@ export const fetchApiDeleteScheduleMedical = createAsyncThunk(
                 },
             });
 
-            console.log('res del ->', res.data.data);
+            // console.log('res del ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -164,7 +164,7 @@ export const fetchApiRemindPatient = createAsyncThunk('patient/fetchApiRemindPat
             },
         );
 
-        console.log('res remind ->', res.data.data);
+        // console.log('res remind ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -195,7 +195,7 @@ export const fetchApiStopExaminatedByPatientId = createAsyncThunk(
                 },
             );
 
-            console.log('res stop examinated ->', res.data.data);
+            // console.log('res stop examinated ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -230,7 +230,7 @@ export const fetchApiResponseContentAfterExamiation = createAsyncThunk(
                 },
             );
 
-            console.log('res examination', res.data.data);
+            // console.log('res examination', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -249,7 +249,7 @@ export const fetchApiResultHeathByIdPatient = createAsyncThunk(
                 `${process.env.REACT_APP_BASE_URL}schedule-details/patient/${idPatient}/results`,
             );
 
-            console.log('res result health', res.data.data);
+            // console.log('res result health', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -281,7 +281,7 @@ export const fetchApiRegisterScheduleAppointmentOfPatient = createAsyncThunk(
                     },
                 },
             );
-            console.log('res register schedule appointment ->', res.data.data);
+            // console.log('res register schedule appointment ->', res.data.data);
 
             return res.data.data;
         } catch (err) {
@@ -316,7 +316,7 @@ export const fetchApiMovePatient = createAsyncThunk('user/fetchApiMovePatient', 
             },
         );
 
-        console.log('res move patient ->', res.data.data);
+        // console.log('res move patient ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -332,7 +332,7 @@ export const fetchApiHistoryExamOfPatient = createAsyncThunk(
             if (idPatient) {
                 const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients/${idPatient}/histories`);
 
-                console.log('res history exam ->', res.data.data);
+                // console.log('res history exam ->', res.data.data);
 
                 return res.data.data;
             }
@@ -366,7 +366,7 @@ const patientSlice = createSlice({
             state.btnOptionSelectedMeeting = action.payload;
         },
         arrivalConfirmScheduleMedicalAppointment: (state, action) => {
-            console.log('ac.pay 346 ->', action.payload);
+            // console.log('ac.pay 346 ->', action.payload);
 
             const _update = state.scheduleMedicalAppointment.find(
                 (_scheduleDetail) => _scheduleDetail._id === action.payload._id,
@@ -377,7 +377,7 @@ const patientSlice = createSlice({
             }
         },
         arrivalDeleteScheduleMedicalAppointment: (state, action) => {
-            console.log('ac.pay 357 ->', action.payload); // -> id
+            // console.log('ac.pay 357 ->', action.payload); // -> id
 
             const _splice = state.scheduleMedicalAppointment.findIndex(
                 (_scheduleDetail) => _scheduleDetail._id === action.payload,
@@ -422,7 +422,7 @@ const patientSlice = createSlice({
             .addCase(fetchApiConfirmScheduleMedical.fulfilled, (state, action) => {
                 const schedule = action.payload;
 
-                console.log('schedule confirm slice ->', schedule);
+                // console.log('schedule confirm slice ->', schedule);
 
                 const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_detail._id,
@@ -449,7 +449,7 @@ const patientSlice = createSlice({
             .addCase(fetchApiDeleteScheduleMedical.fulfilled, (state, action) => {
                 const schedule = action.payload;
 
-                console.log('schedule del slice ->', schedule);
+                // console.log('schedule del slice ->', schedule);
 
                 const spliceSchedule = state.scheduleMedicalAppointment.findIndex(
                     (_schedule) => _schedule._id === schedule.schedule_detail_id,
@@ -475,7 +475,7 @@ const patientSlice = createSlice({
                 });
             })
             .addCase(fetchApiStopExaminatedByPatientId.fulfilled, (state, action) => {
-                console.log('stop slice ->', action.payload);
+                // console.log('stop slice ->', action.payload);
                 const slicePatient = state.data.findIndex(({ patient }) => patient._id === action.payload.patient._id);
 
                 if (slicePatient > -1) {
@@ -494,7 +494,7 @@ const patientSlice = createSlice({
             })
             // Chuyển bệnh nhân
             .addCase(fetchApiMovePatient.fulfilled, (state, action) => {
-                console.log('Move patient slice ->', action.payload);
+                // console.log('Move patient slice ->', action.payload);
                 const slicePatient = state.data.findIndex(({ patient }) => patient._id === action.payload.patient._id);
 
                 if (slicePatient > -1) {
@@ -506,7 +506,7 @@ const patientSlice = createSlice({
                 });
             })
             .addCase(fetchApiResponseContentAfterExamiation.fulfilled, (state, action) => {
-                console.log('notification_register_schedule_from_patient', action.payload);
+                // console.log('notification_register_schedule_from_patient', action.payload);
 
                 const _splice = state.scheduleMedicalAppointmentAwait.findIndex(
                     (_schedule_detail) => _schedule_detail._id === action.payload.schedule_detail._id,
