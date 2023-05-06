@@ -193,6 +193,39 @@
     box-shadow: 0 0 12px 0 var(--status-waring);
 }
 
+.content-cart-item-note-day-exam {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 6px;
+    background-color: var(--primary);
+    box-shadow: 0 0 22px 0 var(--primary);
+}
+
+.content-cart-item-note-day-exam-time-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    margin-right: 6px;
+    animation: iconTime 2s infinite;
+}
+
+@keyframes iconTime {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .content-cart-item-footer-btn.cancel-schedule-register {
     background-color: var(--status-alarm);
 }

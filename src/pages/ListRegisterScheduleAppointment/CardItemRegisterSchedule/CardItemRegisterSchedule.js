@@ -17,6 +17,11 @@ function CardItemRegisterSchedule({ schedule, patients }) {
     const dispatch = useDispatch();
 
     // console.log('schedule ->', schedule);
+    // console.log(
+    //     'schedule ->',
+    //     moment(schedule.day_exam).diff(new Date(), 'day') === 0 &&
+    //         moment(schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY'),
+    // );
     // console.log('patient ->', patients);
     // console.log('record ->', record);
 
@@ -62,6 +67,20 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                     <i>Đang chờ xác nhận</i>
                 </div>
             )}
+
+            {schedule?.day_exam ? (
+                moment(schedule.day_exam).diff(new Date(), 'day') === 0 &&
+                moment(schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY') ? (
+                    <div className="content-cart-item-note-day-exam">
+                        <img
+                            className="content-cart-item-note-day-exam-time-icon"
+                            src={icons.iconTime}
+                            alt="iconTime"
+                        />
+                        <i>Hôm nay khám</i>
+                    </div>
+                ) : null
+            ) : null}
 
             <div className="content-cart-item-header">
                 <img className="content-cart-item-avatar" src={schedule?.doctor?.person?.avatar} alt="avatar" />

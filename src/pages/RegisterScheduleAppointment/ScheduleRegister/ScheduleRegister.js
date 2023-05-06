@@ -25,9 +25,9 @@ function ScheduleRegister() {
     // const dateOfWeek = useSelector(btnOptionSelectDayOfWeekSelector);
 
     // console.log('checkRegisterSchedule', checkRegisterSchedule);
-    // console.log('schedules --->', schedules);
+    console.log('schedules --->', schedules);
     // console.log('scheduleAppointment --->', scheduleAppointment);
-    // console.log('dateTime --->', dateTime);
+    console.log('dateTime --->', dateTime);
 
     // handle change option
     const handleOptionSelect = (date) => {
@@ -41,7 +41,7 @@ function ScheduleRegister() {
 
     // handle button
     const handleRegisterScheduleAppointment = (schedule) => {
-        console.log('->', schedule);
+        // console.log('->', schedule);
 
         // giờ
         const timeStart = moment(schedule.time.time_start).format('HH:mm');
