@@ -3,6 +3,7 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Image, Modal, Typography, message } from 'antd';
+import { Link } from 'react-router-dom';
 
 // me
 import { icons } from '~/asset/images';
@@ -18,7 +19,6 @@ import ContentAfterExaminated from '~/components/Conversation/ContentAfterExamin
 import Conversation from '~/components/Conversation';
 import conversationSlice from '~/redux/features/conversation/conversationSlice';
 import { fetchApiMessages } from '~/redux/features/message/messageSlice';
-import { Link } from 'react-router-dom';
 
 const { Paragraph } = Typography;
 
@@ -109,6 +109,10 @@ function CartMeeting({ infoUser }) {
             <>
                 {scheduleMedicalsMeetingFilter.length > 0 ? (
                     scheduleMedicalsMeetingFilter.map((_scheduleMedicalMeeting) => {
+                        // console.log('Hour ----> ', moment(_scheduleMedicalMeeting.day_exam).hour());
+                        // console.log('Minute ----> ', moment(_scheduleMedicalMeeting.day_exam).minute());
+                        // console.log('moment Hour ->', moment(new Date()).hour());
+
                         return (
                             <div className="schedule-medical-meeting-cart" key={_scheduleMedicalMeeting._id}>
                                 {_scheduleMedicalMeeting.is_exam ? (
@@ -116,6 +120,20 @@ function CartMeeting({ infoUser }) {
                                         <i>Đang khám...</i>
                                     </div>
                                 ) : null}
+
+                                {moment(_scheduleMedicalMeeting?.day_exam).diff(new Date(), 'day') === 0 &&
+                                moment(_scheduleMedicalMeeting?.day_exam).format('DD/MM/YYYY') ===
+                                    moment(new Date()).format('DD/MM/YYYY') ? (
+                                    <div className="cart-meeting-banner-day-exam-for-patient">
+                                        <img
+                                            className="cart-meeting-banner-day-exam-icon"
+                                            src={icons.iconTime}
+                                            alt="iconTime"
+                                        />
+                                        <i>Hôm nay khám cho bệnh nhân</i>
+                                    </div>
+                                ) : null}
+
                                 <Image
                                     src={_scheduleMedicalMeeting.patient.person.avatar}
                                     className="schedule-medical-meeting-cart-image"
@@ -171,7 +189,12 @@ function CartMeeting({ infoUser }) {
                                         style={{ width: '100%' }}
                                         className={`${
                                             moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
-                                                ? 'schedule-medical-meeting-cart-btn-no-active'
+                                                ? // &&
+                                                  // moment(_scheduleMedicalMeeting.day_exam).hour() <=
+                                                  //     moment(new Date()).hour() &&
+                                                  // moment(_scheduleMedicalMeeting.day_exam).minute() <=
+                                                  //     moment(new Date()).minute()
+                                                  'schedule-medical-meeting-cart-btn-no-active'
                                                 : 'schedule-medical-meeting-cart-btn-active'
                                         }`}
                                     >
@@ -179,7 +202,11 @@ function CartMeeting({ infoUser }) {
                                             className="schedule-medical-meeting-cart-btn"
                                             disabled={
                                                 moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
-                                                    ? false
+                                                    ? // && moment(_scheduleMedicalMeeting.day_exam).hour() <=
+                                                      //     moment(new Date()).hour() &&
+                                                      // moment(_scheduleMedicalMeeting.day_exam).minute() <=
+                                                      //     moment(new Date()).minute()
+                                                      false
                                                     : true
                                             }
                                             onClick={() => handleCallGetInfoUser(_scheduleMedicalMeeting)}
