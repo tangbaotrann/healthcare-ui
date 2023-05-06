@@ -173,6 +173,7 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
         }
     },
 );
+
 export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
     fetchApiGetAllScheduleDetailOfPatientSelector,
     (lists) => {
@@ -796,7 +797,8 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
         // console.log('listMeeting', listMeeting);
 
         const now = new Date();
-        // console.log('day ->', moment(now).date());
+        // console.log('week ->', moment(now).week());
+        // moment(_scheduleMedicalMeeting?.day_exam).diff(new Date(), 'day') === 0
         if (listMeeting?.length > 0) {
             if (option === 'all') {
                 return listMeeting;
@@ -808,12 +810,15 @@ export const scheduleMedicalMeetingFilterOfDoctor = createSelector(
                 const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).month() === moment(now).month());
 
                 return _listMeeting;
-            }
-            // else if (option === 'date') {
-            //     const _listMeeting = listMeeting.filter((b) => moment(b.createdAt).date() === moment(now).day());
+            } else if (option === 'date') {
+                const _listMeeting = listMeeting.filter(
+                    (b) =>
+                        moment(b.day_exam).diff(new Date(), 'day') === 0 &&
+                        moment(b.day_exam).format('DD/MM/YYYY') === moment(now).format('DD/MM/YYYY'),
+                );
 
-            //     return _listMeeting;
-            // }
+                return _listMeeting;
+            }
         }
 
         return [];

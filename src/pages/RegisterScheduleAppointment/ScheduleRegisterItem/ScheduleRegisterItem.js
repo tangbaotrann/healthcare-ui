@@ -34,14 +34,20 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                 </div>
 
                 <div className="content-cart-item-footer">
-                    <Button
-                        className="content-cart-item-footer-btn"
-                        onClick={
-                            () => handleRegisterScheduleAppointment(schedule) // schedule?._schedules[0]
-                        }
-                    >
-                        Đặt khám
-                    </Button>
+                    {/* {console.log('-->', new Date(schedule?.date_compare?._d).getFullYear(), new Date().getFullYear())} */}
+                    {new Date(schedule?.date_compare?._d).getDate() < new Date().getMonth() + 1 ||
+                    new Date(schedule?.date_compare?._d).getFullYear() < new Date().getFullYear() ? (
+                        ''
+                    ) : (
+                        <Button
+                            className="content-cart-item-footer-btn"
+                            onClick={
+                                () => handleRegisterScheduleAppointment(schedule) // schedule?._schedules[0]
+                            }
+                        >
+                            Đặt khám
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>

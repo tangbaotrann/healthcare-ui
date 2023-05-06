@@ -21,7 +21,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     // const checkExist = useSelector(fetchApiCreateScheduleDoctorMessageRejectSelector);
 
     // console.log(days);
-    // console.log('-->', shifts);
+    console.log('-->', shifts);
     // console.log('-->', schedules);
     // console.log('checkeExist -->', checkExist);
 

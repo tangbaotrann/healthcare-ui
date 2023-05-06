@@ -36,6 +36,41 @@
     z-index: 2;
 }
 
+.cart-meeting-banner-day-exam-for-patient {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    background-color: var(--primary);
+    box-shadow: 0 0 12px 0 var(--primary);
+    z-index: 2;
+}
+
+.cart-meeting-banner-day-exam-icon {
+    margin-right: 1px;
+    width: 18px;
+    height: 18px;
+    object-fit: cover;
+    animation: iconTime 2s infinite;
+}
+
+@keyframes iconTime {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .cart-meeting-banner-is-exam p {
     text-align: center;
 }
