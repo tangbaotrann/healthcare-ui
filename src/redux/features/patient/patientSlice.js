@@ -8,7 +8,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
     'patient/fetchApiScheduleDetailByIdDoctor',
     async (getIdDoctor) => {
-        console.log('get id', getIdDoctor);
+        // console.log('get id', getIdDoctor);
         if (getIdDoctor) {
             try {
                 const res = await axios.get(
@@ -28,7 +28,7 @@ export const fetchApiScheduleDetailByIdDoctor = createAsyncThunk(
 export const fetchApiScheduleMedicalAppointment = createAsyncThunk(
     'patient/fetchApiScheduleMedicalAppointment',
     async (getIdDoctor) => {
-        console.log('get ->', getIdDoctor);
+        // console.log('get ->', getIdDoctor);
         if (getIdDoctor) {
             try {
                 const res = await axios.get(
