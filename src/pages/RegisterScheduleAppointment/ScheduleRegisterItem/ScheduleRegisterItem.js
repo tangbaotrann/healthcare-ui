@@ -1,11 +1,15 @@
-import { Button } from 'antd';
+import { Button, Rate } from 'antd';
 import moment from 'moment';
 
 import { icons } from '~/asset/images';
+import { groupNumber } from '~/utils/cardsData';
 
 function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
     return (
         <div className="content-cart-item">
+            <div className="schedule-calender-empty">
+                <i>Lịch trống</i>
+            </div>
             <div className="content-cart-item-header">
                 <img
                     className="content-cart-item-avatar"
@@ -15,6 +19,7 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                 <h2 className="content-cart-item-username">
                     BS: {schedule?.doctor?.person?.username || schedule?._schedules[0]?.doctor?.person?.username}
                 </h2>
+                <Rate value={schedule?.doctor?.rating} disabled style={{ fontSize: '1.4rem', marginLeft: '10px' }} />
             </div>
 
             <div className="display-content-cart-item-body">
@@ -29,14 +34,35 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                     </div>
                     <div className="content-cart-item-body-price">
                         <img src={icons.iconPrice} alt="iconPrice" />
-                        <p className="content-cart-item-price">Chi phí: {schedule?.fee} VNĐ</p>
+                        <p className="content-cart-item-price">Chi phí: {groupNumber(schedule?.fee)} VNĐ</p>
                     </div>
                 </div>
 
                 <div className="content-cart-item-footer">
-                    {/* {console.log('-->', new Date(schedule?.date_compare?._d).getFullYear(), new Date().getFullYear())} */}
-                    {new Date(schedule?.date_compare?._d).getDate() < new Date().getMonth() + 1 ||
-                    new Date(schedule?.date_compare?._d).getFullYear() < new Date().getFullYear() ? (
+                    {/* {console.log(
+                        '-->',
+                        new Date(
+                            moment(
+                                schedule.date_compare._i.split('/').reverse().join('/') +
+                                    ' ' +
+                                    moment(schedule.time.time_start).format('HH:mm'),
+                            ),
+                        ),
+                    )} */}
+                    {new Date(
+                        moment(
+                            schedule.date_compare._i.split('/').reverse().join('/') +
+                                ' ' +
+                                moment(schedule.time.time_start).format('HH:mm'),
+                        ),
+                    ).getMonth() < new Date().getMonth() ||
+                    new Date(
+                        moment(
+                            schedule.date_compare._i.split('/').reverse().join('/') +
+                                ' ' +
+                                moment(schedule.time.time_start).format('HH:mm'),
+                        ),
+                    ).getFullYear() < new Date().getFullYear() ? (
                         ''
                     ) : (
                         <Button
