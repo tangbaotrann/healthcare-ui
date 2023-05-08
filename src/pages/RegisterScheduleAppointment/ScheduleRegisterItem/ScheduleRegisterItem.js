@@ -37,9 +37,10 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                         <p className="content-cart-item-price">Chi phí: {groupNumber(schedule?.fee)} VNĐ</p>
                     </div>
                 </div>
+            </div>
 
-                <div className="content-cart-item-footer">
-                    {/* {console.log(
+            <div className="content-cart-item-footer">
+                {/* {console.log(
                         '-->',
                         new Date(
                             moment(
@@ -49,32 +50,31 @@ function ScheduleRegisterItem({ schedule, handleRegisterScheduleAppointment }) {
                             ),
                         ),
                     )} */}
-                    {new Date(
-                        moment(
-                            schedule.date_compare._i.split('/').reverse().join('/') +
-                                ' ' +
-                                moment(schedule.time.time_start).format('HH:mm'),
-                        ),
-                    ).getMonth() < new Date().getMonth() ||
-                    new Date(
-                        moment(
-                            schedule.date_compare._i.split('/').reverse().join('/') +
-                                ' ' +
-                                moment(schedule.time.time_start).format('HH:mm'),
-                        ),
-                    ).getFullYear() < new Date().getFullYear() ? (
-                        ''
-                    ) : (
-                        <Button
-                            className="content-cart-item-footer-btn"
-                            onClick={
-                                () => handleRegisterScheduleAppointment(schedule) // schedule?._schedules[0]
-                            }
-                        >
-                            Đặt khám
-                        </Button>
-                    )}
-                </div>
+                {new Date(
+                    moment(
+                        schedule.date_compare._i.split('/').reverse().join('/') +
+                            ' ' +
+                            moment(schedule.time.time_start).format('HH:mm'),
+                    ),
+                ).getMonth() < new Date().getMonth() ||
+                new Date(
+                    moment(
+                        schedule.date_compare._i.split('/').reverse().join('/') +
+                            ' ' +
+                            moment(schedule.time.time_start).format('HH:mm'),
+                    ),
+                ).getFullYear() < new Date().getFullYear() ? (
+                    ''
+                ) : (
+                    <Button
+                        className="content-cart-item-footer-btn"
+                        onClick={
+                            () => handleRegisterScheduleAppointment(schedule) // schedule?._schedules[0]
+                        }
+                    >
+                        Đặt khám
+                    </Button>
+                )}
             </div>
         </div>
     );
