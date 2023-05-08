@@ -33,7 +33,7 @@ function CartMeeting({ infoUser }) {
     const infoDoctor = useSelector(getDoctorLoginFilter);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
-    console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
+    // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);

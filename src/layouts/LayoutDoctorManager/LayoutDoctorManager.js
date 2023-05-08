@@ -13,7 +13,7 @@ import {
     SolutionOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
-import { Badge, Layout, Menu, Popover, Space } from 'antd';
+import { Badge, Layout, Menu, Popover, Skeleton, Space } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -39,19 +39,14 @@ import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 
 const { Header, Sider, Content } = Layout;
 
-function LayoutDoctorManager({ children, infoUser }) {
+function LayoutDoctorManager({ children, infoUser, isLoadingUser, isLoadingNotification }) {
     const [collapsed, setCollapsed] = useState(false);
-    // const {
-    //     token: { colorBgContainer },
-    // } = theme.useToken();
 
     const dispatch = useDispatch();
 
-    // const getToken = JSON.parse(localStorage.getItem('token_user_login'));
     const getIdDoctor = useSelector(getDoctorLoginFilter);
     const notificationNotHasSeen = useSelector(filterNotificationNotHasSeen);
     const token = useSelector(fetchApiLoginSelector);
-    // const totalNotifications = useSelector(getTotalNotifications);
 
     // console.log('getIdDoctor', getIdDoctor);
     // console.log('totalNotifications', totalNotifications);
@@ -181,14 +176,12 @@ function LayoutDoctorManager({ children, infoUser }) {
                     onSelect={(item) => {
                         if (item.key === constants.layoutDashboard) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListRegisterSchedule) {
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedical) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointment(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutScheduleMedicalMeeting) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor._id));
@@ -198,15 +191,12 @@ function LayoutDoctorManager({ children, infoUser }) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(fetchApiNotificationByDoctorId(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutListConversation) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListPatient) {
-                            // dispatch(fetchApiUserDoctorByToken(token.accessToken));
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            // socket.emit('add_user', getIdDoctor._id);
                         } else if (item.key === constants.layoutResultHealthPatient) {
                             dispatch(fetchApiScheduleDetailByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
@@ -216,7 +206,6 @@ function LayoutDoctorManager({ children, infoUser }) {
                         } else if (item.key === constants.layoutBlog) {
                             dispatch(fetchApiAllPostByIdDoctor(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
-                            // socket.emit('add_user', getIdDoctor._id);
                         }
                     }}
                 />
@@ -241,10 +230,26 @@ function LayoutDoctorManager({ children, infoUser }) {
                         </Link>
 
                         <div className="site-layout-header-right">
-                            <Popover content={<InformationOfDoctor infoUser={infoUser} />}>
-                                <img src={infoUser?.doctor?.person?.avatar} alt="avatar-img" className="avatar-user" />
-                            </Popover>
-                            <h4 className="name-user">BS. {infoUser?.doctor?.person?.username}</h4>
+                            {isLoadingUser || isLoadingNotification ? (
+                                <>
+                                    <Skeleton.Avatar active style={{ marginTop: '16px' }} />
+                                    <Skeleton.Input
+                                        active
+                                        style={{ marginTop: '16px', marginRight: '6px', marginLeft: '6px' }}
+                                    />
+                                </>
+                            ) : (
+                                <>
+                                    <Popover content={<InformationOfDoctor infoUser={infoUser} />}>
+                                        <img
+                                            src={infoUser?.doctor?.person?.avatar}
+                                            alt="avatar-img"
+                                            className="avatar-user"
+                                        />
+                                    </Popover>
+                                    <h4 className="name-user">BS. {infoUser?.doctor?.person?.username}</h4>
+                                </>
+                            )}
                         </div>
                     </div>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {

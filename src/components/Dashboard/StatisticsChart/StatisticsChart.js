@@ -2,11 +2,35 @@
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import moment from 'moment';
+import { Skeleton } from 'antd';
+import { useSelector } from 'react-redux';
 
 // me
 import './StatisticsChart.css';
+import {
+    isLoadingAllPostByIdDoctorSelector,
+    isLoadingAllShiftsDoctorSelector,
+    isLoadingConversationsSelector,
+    isLoadingNotificationSelector,
+    isLoadingScheduleDetailByIdDoctorSelector,
+    isLoadingScheduleDoctorSelector,
+    isLoadingScheduleMedicalAppointmentResultExamSelector,
+    isLoadingUserDoctorByTokenSelector,
+} from '~/redux/selector';
 
 function StatisticsChart({ feeOfPatientResultedExam }) {
+    // isLoading
+    const isLoadingScheduleDoctor = useSelector(isLoadingScheduleDoctorSelector);
+    const isLoadingNotification = useSelector(isLoadingNotificationSelector);
+    const isLoadingUser = useSelector(isLoadingUserDoctorByTokenSelector);
+    const isLoadingScheduleDetail = useSelector(isLoadingScheduleDetailByIdDoctorSelector);
+    const isLoadingConversation = useSelector(isLoadingConversationsSelector);
+    const isLoadingAllShiftsDoctor = useSelector(isLoadingAllShiftsDoctorSelector);
+    const isLoadingAllPostByIdDoctor = useSelector(isLoadingAllPostByIdDoctorSelector);
+    const isLoadingScheduleMedicalAppointmentResultExam = useSelector(
+        isLoadingScheduleMedicalAppointmentResultExamSelector,
+    );
+
     // console.log('feeOfPatientResultedExam', feeOfPatientResultedExam);
 
     // option
@@ -80,14 +104,27 @@ function StatisticsChart({ feeOfPatientResultedExam }) {
 
     return (
         <div className="statistics-chart-wrapper">
-            <ReactECharts option={option} className="statistics-chart-dashboard" />
+            {isLoadingScheduleDoctor ||
+            isLoadingNotification ||
+            isLoadingUser ||
+            isLoadingScheduleDetail ||
+            isLoadingConversation ||
+            isLoadingAllShiftsDoctor ||
+            isLoadingAllPostByIdDoctor ||
+            isLoadingScheduleMedicalAppointmentResultExam ? (
+                <Skeleton active />
+            ) : (
+                <>
+                    <ReactECharts option={option} className="statistics-chart-dashboard" />
 
-            <div className="statistics-chart-note-text">
-                <p className="statistics-chart-note-text-title">Biểu đồ: </p>
-                <p className="statistics-chart-note-text-desc">
-                    Thống kê tổng doanh thu của tất cả các lịch đã khám cho bệnh nhân
-                </p>
-            </div>
+                    <div className="statistics-chart-note-text">
+                        <p className="statistics-chart-note-text-title">Biểu đồ: </p>
+                        <p className="statistics-chart-note-text-desc">
+                            Thống kê tổng doanh thu của tất cả các lịch đã khám cho bệnh nhân
+                        </p>
+                    </div>
+                </>
+            )}
         </div>
     );
 }
