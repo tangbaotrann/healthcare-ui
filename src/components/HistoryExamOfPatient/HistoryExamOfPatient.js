@@ -37,7 +37,7 @@ function HistoryExamOfPatient({ historyExams, isLoading, className }) {
                     ) : (
                         historyExams
                             .slice(0, visible)
-                            .reverse()
+                            // .reverse()
                             .map((history) => {
                                 return (
                                     <div className="content-cart-item" key={history._id}>

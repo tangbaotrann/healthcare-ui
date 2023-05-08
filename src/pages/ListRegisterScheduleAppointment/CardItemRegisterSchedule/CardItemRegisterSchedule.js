@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Form, Input, Modal, message } from 'antd';
+import { Button, Form, Input, Modal, Rate, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { icons } from '~/asset/images';
@@ -9,6 +9,7 @@ import TitleName from '~/components/TitleName';
 import { fetchApiDeleteScheduleMedicalOfPatient } from '~/redux/features/scheduleDoctor/scheduleDoctorSlice';
 import { endPoints } from '~/routers';
 import socket from '~/utils/socket';
+import { groupNumber } from '~/utils/cardsData';
 
 function CardItemRegisterSchedule({ schedule, patients }) {
     const [openModal, setOpenModal] = useState(false);
@@ -79,12 +80,22 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                         />
                         <i>Hôm nay khám</i>
                     </div>
+                ) : schedule?.status ? (
+                    <div className="content-cart-item-note-day-exam-awaiting">
+                        <img
+                            className="content-cart-item-note-day-exam-time-icon"
+                            src={icons.iconTime}
+                            alt="iconTime"
+                        />
+                        <i>Chưa đến ngày khám</i>
+                    </div>
                 ) : null
             ) : null}
 
             <div className="content-cart-item-header">
                 <img className="content-cart-item-avatar" src={schedule?.doctor?.person?.avatar} alt="avatar" />
                 <h2 className="content-cart-item-username">BS: {schedule?.doctor?.person?.username}</h2>
+                <Rate value={schedule?.doctor?.rating} disabled style={{ fontSize: '1.4rem', marginLeft: '10px' }} />
             </div>
 
             <div className="display-content-cart-item-body">
@@ -103,7 +114,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                     </div>
                     <div className="content-cart-item-body-price">
                         <img src={icons.iconPrice} alt="iconPrice" />
-                        <p className="content-cart-item-price">Chi phí: {schedule.schedule.fee} VNĐ</p>
+                        <p className="content-cart-item-price">Chi phí: {groupNumber(schedule.schedule.fee)} VNĐ</p>
                     </div>
                 </div>
 
