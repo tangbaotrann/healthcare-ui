@@ -24,6 +24,7 @@ import {
     isLoadingNotificationSelector,
     isLoadingScheduleDetailByIdDoctorSelector,
     isLoadingScheduleDoctorSelector,
+    isLoadingScheduleMedicalAppointmentResultExamSelector,
     isLoadingUserDoctorByTokenSelector,
 } from '~/redux/selector';
 import CreateScheduleDoctor from '~/components/CreateScheduleDoctor';
@@ -77,6 +78,9 @@ function DoctorManager() {
     const isLoadingConversation = useSelector(isLoadingConversationsSelector);
     const isLoadingAllShiftsDoctor = useSelector(isLoadingAllShiftsDoctorSelector);
     const isLoadingAllPostByIdDoctor = useSelector(isLoadingAllPostByIdDoctorSelector);
+    const isLoadingScheduleMedicalAppointmentResultExam = useSelector(
+        isLoadingScheduleMedicalAppointmentResultExamSelector,
+    );
 
     // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
     // console.log('scheduleMedicalsMeetingFilter', scheduleMedicalsMeetingFilter);
@@ -92,6 +96,7 @@ function DoctorManager() {
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
     // console.log('schedules 46 ->', schedules);
+    // console.log('isLoadingScheduleMedicalAppointmentResultExam ->', isLoadingScheduleMedicalAppointmentResultExam);
 
     // socket.on('get_users', (users) => {
     //     console.log('user ->', users);
@@ -152,12 +157,17 @@ function DoctorManager() {
                 isLoadingScheduleDetail ||
                 isLoadingConversation ||
                 isLoadingAllShiftsDoctor ||
-                isLoadingAllPostByIdDoctor) && (
+                isLoadingAllPostByIdDoctor ||
+                isLoadingScheduleMedicalAppointmentResultExam) && (
                 <div className="loading-main">
                     <div className="loader"></div>
                 </div>
             )}
-            <LayoutDoctorManager infoUser={infoUser}>
+            <LayoutDoctorManager
+                infoUser={infoUser}
+                isLoadingUser={isLoadingUser}
+                isLoadingNotification={isLoadingNotification}
+            >
                 {changeLayout === constants.layoutDashboard || changeLayout === null ? (
                     <>
                         <Dashboard

@@ -130,6 +130,7 @@ export const fetchApiRegisterScheduleAppointmentOfPatientSelector = (state) =>
     state.patientSlice.patientRegisterSchedule;
 
 export const fetchApiScheduleMedicalAppointmentResultExamSelector = (state) => state.patientSlice.resultExam;
+export const isLoadingScheduleMedicalAppointmentResultExamSelector = (state) => state.patientSlice.isLoading;
 
 // history
 export const fetchApiHistoryExamOfPatientSelector = (state) => state.patientSlice.historyExam;
@@ -758,6 +759,8 @@ export const filterTotalFee = createSelector(fetchApiScheduleMedicalAppointmentR
 // Lọc doanh thu (theo tuần)
 export const filterTotalFeeOfWeek = createSelector(fetchApiScheduleMedicalAppointmentResultExamSelector, (list) => {
     const now = new Date();
+
+    // console.log('list ->', list);
 
     if (list?.length > 0) {
         const _filterWeek = list.filter((_list) => moment(_list.day_exam).week() === moment(now).week());
