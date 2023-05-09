@@ -18,7 +18,8 @@ function MetricsBlood({ patients, bloodPatient }) {
         if (values) {
             dispatch(fetchApiCreateBloodForPatient(values));
 
-            form.resetFields();
+            form.setFieldValue(['systolic'], '');
+            form.setFieldValue(['diastole'], '');
         }
     };
 
