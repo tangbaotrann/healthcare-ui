@@ -22,26 +22,28 @@ export const fetchApiCreateBMIForPatient = createAsyncThunk('bmi/fetchApiCreateB
         const { patient, weight, gender, height } = values;
         const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-        const res = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}bmis`,
-            {
-                patient: patient,
-                weight: weight,
-                gender: gender,
-                height: height,
-            },
-            {
-                headers: {
-                    Accept: 'application/json, text/plain, */*',
-                    Authorization: `Bearer ${getToken}`,
-                    ContentType: 'application/json',
+        if (getToken) {
+            const res = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}bmis`,
+                {
+                    patient: patient,
+                    weight: weight,
+                    gender: gender,
+                    height: height,
                 },
-            },
-        );
-        message.success('Bạn đã tạo thành công chỉ số BMI.');
-        // console.log('res create bmi', res.data.data);
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            );
+            message.success('Bạn đã tạo thành công chỉ số BMI.');
+            // console.log('res create bmi', res.data.data);
 
-        return res.data.data;
+            return res.data.data;
+        }
     } catch (err) {
         // const message = err.response.data;
         // return rejectWithValue(message);
@@ -71,28 +73,30 @@ export const fetchApiCreateGlycemicForPatient = createAsyncThunk(
         try {
             const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
-            const res = await axios.post(
-                `${process.env.REACT_APP_BASE_URL}glycemics`,
-                {
-                    patient: values.patient,
-                    metric: values.metric,
-                    case: values.case,
-                },
-                {
-                    headers: {
-                        Accept: 'application/json, text/plain, */*',
-                        Authorization: `Bearer ${getToken}`,
-                        ContentType: 'application/json',
+            if (getToken) {
+                const res = await axios.post(
+                    `${process.env.REACT_APP_BASE_URL}glycemics`,
+                    {
+                        patient: values.patient,
+                        metric: values.metric,
+                        case: values.case,
                     },
-                },
-            );
-            message.success('Bạn đã tạo thành công chỉ số đường huyết.');
-            // console.log('res create glycemic', res.data.data);
+                    {
+                        headers: {
+                            Accept: 'application/json, text/plain, */*',
+                            Authorization: `Bearer ${getToken}`,
+                            ContentType: 'application/json',
+                        },
+                    },
+                );
+                message.success('Bạn đã tạo thành công chỉ số đường huyết.');
+                // console.log('res create glycemic ->', res.data.data);
 
-            return res.data.data;
+                return res.data.data;
+            }
         } catch (err) {
             message.error(`${err.response.data.message}`);
-            console.log({ err });
+            // console.log({ err });
             return;
         }
     },
