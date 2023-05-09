@@ -5,19 +5,25 @@ import { useDispatch } from 'react-redux';
 
 import TitleName from '../TitleName';
 import { fetchApiCreateGlycemicForPatient } from '~/redux/features/metric/bmisSlice';
+import { useRef } from 'react';
 
 function MetricsGlycemic({ patients, glycemicPatient }) {
-    const dispatch = useDispatch();
     const [form] = Form.useForm();
 
+    const hrefFocus = useRef();
+
+    const dispatch = useDispatch();
+
+    // console.log('form', form);
     // console.log('glycemicPatient', glycemicPatient);
-    // console.log('messageReject', messageReject);
+    // console.log('patients ->', patients);
 
     const handleSubmitForm = (values) => {
-        if (values) {
+        if (values && patients?.patient) {
             dispatch(fetchApiCreateGlycemicForPatient(values));
 
-            form.resetFields();
+            hrefFocus.current.focus();
+            form.setFieldValue(['metric'], '');
         }
     };
 
@@ -58,7 +64,7 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
     };
 
     // labels glycemic
-    const labelsGlycemic = glycemicPatient?.map((glycemic) => moment(glycemic.createdAt).format('DD-MM-YYYY'));
+    const labelsGlycemic = glycemicPatient?.map((glycemic) => moment(glycemic?.createdAt).format('DD-MM-YYYY'));
     const lablelArrs = new Set([...labelsGlycemic]);
     const resultsLabelsGlycemic = Array.from(lablelArrs);
 
@@ -123,8 +129,8 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
-                form={form}
                 fields={[{ name: ['patient'], value: patients?.patient?._id }]}
+                form={form}
                 className="form-submit-metrics"
             >
                 <Form.Item name="patient" hasFeedback style={{ display: 'none' }}>
@@ -147,6 +153,7 @@ function MetricsGlycemic({ patients, glycemicPatient }) {
                             { label: 'Sau bữa ăn', value: 2 },
                             { label: 'Trước khi ngủ', value: 3 },
                         ]}
+                        ref={hrefFocus}
                         placeholder="Lựa chọn"
                     />
                 </Form.Item>

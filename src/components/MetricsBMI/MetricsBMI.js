@@ -13,15 +13,16 @@ function MetricsBMI({ patients, bmiPatient }) {
 
     // const messageReject = useSelector(fetchApiCreateBMIForPatientMessageRejectedSelector);
 
-    // console.log('messageReject', messageReject);
+    // console.log('form ->', form);
     // console.log('bmiPatient', bmiPatient);
     // console.log('inputClearHref', inputClearHref);
 
     const handleSubmitForm = (values) => {
-        if (values) {
+        if (values && patients?.patient) {
             dispatch(fetchApiCreateBMIForPatient(values));
 
-            form.resetFields();
+            form.setFieldValue(['weight'], '');
+            form.setFieldValue(['height'], '');
         }
     };
 
@@ -94,11 +95,11 @@ function MetricsBMI({ patients, bmiPatient }) {
                 onFinishFailed={(error) => {
                     console.log({ error });
                 }}
-                form={form}
                 fields={[
                     { name: ['patient'], value: patients?.patient?._id },
                     { name: ['gender'], value: patients?.patient?.person?.gender },
                 ]}
+                form={form}
                 className="form-submit-metrics"
             >
                 <Form.Item name="patient" hasFeedback style={{ display: 'none' }}>
