@@ -1,0 +1,31 @@
+.wrapper-map {
+    position: relative;
+}
+
+.container-map {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 80%;
+}
+
+.controls {
+    width: 20%;
+    background-color: var(--black);
+    z-index: 9999;
+    height: 100vh;
+}
+
+/* Places */
+.combobox-input {
+   margin: 0 12px;
+   width: 90%;
+   border-radius: 6px;
+   padding: 12px;
+   outline-color: var(--primary) !important;
+}
+
+.combobox-input:focus {
+    outline-color: var(--primary) !important;
+}

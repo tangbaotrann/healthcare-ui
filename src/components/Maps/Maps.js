@@ -14,7 +14,7 @@ import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
 // center map
 const center = { lat: 10.832403, lng: 106.667299 };
 
-function Maps({ getToken }) {
+function Maps({ getToken, checkUserLogin }) {
     const [map, setMap] = useState(/** @type google.maps.Map */ (null));
     const [directionRes, setDirectionRes] = useState(null);
 
@@ -78,21 +78,23 @@ function Maps({ getToken }) {
             {/* Form */}
             <div className="maps-form">
                 <div className="back-to-doctor-manager">
-                    <Link
-                        to={endPoints.doctorManager}
-                        className="back-to-doctor-manager-link"
-                        onClick={() => dispatch(fetchApiUserDoctorByToken(getToken))}
-                    >
-                        <ArrowLeftOutlined className="back-to-doctor-manager-icon" />
-                        Quay lại
-                    </Link>
+                    {getToken && (
+                        <Link
+                            to={endPoints.doctorManager}
+                            className="back-to-doctor-manager-link"
+                            onClick={() => dispatch(fetchApiUserDoctorByToken(getToken))}
+                        >
+                            <ArrowLeftOutlined className="back-to-doctor-manager-icon" />
+                            Quay lại
+                        </Link>
+                    )}
                 </div>
                 <div className="maps-form-input">
                     {/* origin */}
                     <Autocomplete>
                         <input
                             className="maps-form-input-position"
-                            defaultValue="Hẻm 499/6 Quang Trung, phường 10, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam"
+                            defaultValue={checkUserLogin?.doctor?.person?.address} //"Hẻm 499/6 Quang Trung, phường 10, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam"
                             type="text"
                             ref={originRef}
                             placeholder="Điểm bắt đầu"

@@ -22,6 +22,7 @@ import RatingAfterExaminated from '~/components/Conversation/RatingAfterExaminat
 import callSlice from '~/redux/features/call/callSlice';
 import HistoryExamOfPatient from '~/components/HistoryExamOfPatient';
 import { fetchApiHistoryExamOfPatient } from '~/redux/features/patient/patientSlice';
+import MapsPatient from '~/components/MapsPatient/MapsPatient';
 
 function ListRegisterScheduleAppointment() {
     const [openModalCall, setOpenModalCall] = useState(false);
@@ -129,6 +130,7 @@ function ListRegisterScheduleAppointment() {
             )}
 
             <ChatBot />
+            <MapsPatient patients={patients} />
             <ScrollToTop smooth className="scroll-to-top" />
 
             <div className="register-schedule-appointment-wrapper">
