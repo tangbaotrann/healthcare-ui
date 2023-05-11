@@ -16,6 +16,7 @@ import Footer from '~/layouts/components/Footer';
 import ChatBot from '~/components/ChatBot';
 import ScheduleRegister from './ScheduleRegister/ScheduleRegister';
 import socket from '~/utils/socket';
+import MapsPatient from '~/components/MapsPatient/MapsPatient';
 
 function RegisterScheduleAppointment() {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -55,7 +56,9 @@ function RegisterScheduleAppointment() {
     return (
         <DefaultLayout patients={patients}>
             <ChatBot />
+            <MapsPatient patients={patients} />
             <ScrollToTop smooth className="scroll-to-top" />
+
             <div className="register-schedule-appointment-wrapper">
                 <div className="register-schedule-appointment-banner">
                     <div className="register-schedule-appointment-title-name">ĐẶT LỊCH KHÁM</div>

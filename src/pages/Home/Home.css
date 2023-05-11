@@ -2,6 +2,7 @@
     position: relative;
 }
 
+/* CHAT BOT */
 .home-sp-chatbot-container {
     position: fixed;
     bottom: 20px;
@@ -12,6 +13,19 @@
     background-color: var(--primary);
     z-index: 10;
     box-shadow: 0 0 24px 0 var(--primary);
+}
+
+/* MAPS */
+.wrapper-maps-patient {
+    position: fixed;
+    bottom: 94px;
+    right: 20px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, green, orange,red);
+    z-index: 10;
+    box-shadow: 0 0 24px 0 green;
 }
 
 .home-sp-chatbot-icon {
@@ -103,7 +117,7 @@
 
 .scroll-to-top {
     margin-right: -10px;
-    margin-bottom: 60px;
+    margin-bottom: 130px;
 }
 
 .scroll-to-top:hover {

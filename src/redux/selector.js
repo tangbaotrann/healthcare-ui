@@ -137,6 +137,9 @@ export const fetchApiHistoryExamOfPatientSelector = (state) => state.patientSlic
 export const isLoadingHistoryExamOfPatientSelector = (state) => state.patientSlice.isLoading;
 export const btnClickedOpenHistorySelector = (state) => state.patientSlice.btnClickedOpenHistory;
 
+// map
+export const selectedGetAddressSelector = (state) => state.mapSlice.data;
+
 /* -- Handle Selector -- */
 
 // get all schedule of patient (lấy hết lịch khám của bệnh nhân)
