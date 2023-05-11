@@ -25,6 +25,7 @@ import NotificationsPage from './pages/NotificationsPage';
 import MetricsPatient from './pages/MetricsPatient/MetricsPatient';
 import ListRegisterScheduleAppointment from './pages/ListRegisterScheduleAppointment';
 import PageNotFound from './pages/PageNotFound';
+import Map from './components/MapsPatient/Map';
 
 function App() {
     const [rule, setRule] = useState();
@@ -123,7 +124,11 @@ function App() {
                 />
 
                 {/* Maps */}
-                <Route path={`${endPoints.maps}/:address`} element={<Maps getToken={getToken} />} />
+                <Route
+                    path={`${endPoints.maps}/:address`}
+                    element={<Maps getToken={getToken} checkUserLogin={checkUserLogin} />}
+                />
+                <Route path={`${endPoints.maps}`} element={<Map />} />
 
                 {/* -- Patient --  */}
                 <Route path={`${endPoints.chatMessage}`} element={<Chat />} />

@@ -14,6 +14,8 @@ import notificationSlice, {
     fetchApiUpdateSeenNotificationPatient,
 } from '~/redux/features/notification/notificationSlice';
 import socket from '~/utils/socket';
+import ChatBot from '~/components/ChatBot/ChatBot';
+import MapsPatient from '~/components/MapsPatient/MapsPatient';
 
 function NotificationsPage() {
     const dispatch = useDispatch();
@@ -114,6 +116,9 @@ function NotificationsPage() {
 
     return (
         <DefaultLayout patients={patients}>
+            <ChatBot />
+            <MapsPatient patients={patients} />
+
             <div className="wrapper-notification-patient">
                 <TitleName>Danh Sách Các Thông Báo Của Bạn</TitleName>
 

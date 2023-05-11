@@ -16,6 +16,7 @@ import { fetchApiAllPatientsSelector, fetchApiLoginSelector, isLoadingApiAllPati
 import { fetchApiAllPatients } from '~/redux/features/user/userSlice';
 import { fetchApiNotificationByPatientId } from '~/redux/features/notification/notificationSlice';
 import socket from '~/utils/socket';
+import MapsPatient from '~/components/MapsPatient';
 
 function Home({ checkUserLogin }) {
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
@@ -47,6 +48,7 @@ function Home({ checkUserLogin }) {
     return (
         <div className="home-wrapper">
             <ChatBot patients={patients} />
+            <MapsPatient patients={patients} />
 
             <DefaultLayout checkUserLogin={checkUserLogin} patients={patients}>
                 <ScrollToTop smooth className="scroll-to-top" />

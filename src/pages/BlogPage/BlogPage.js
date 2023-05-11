@@ -25,6 +25,7 @@ import BlogPatient from '~/components/BlogPatient/BlogPatient';
 import Footer from '~/layouts/components/Footer/Footer';
 import socket from '~/utils/socket';
 import moment from 'moment';
+import MapsPatient from '~/components/MapsPatient/MapsPatient';
 
 function BlogPage() {
     const [openBlogDetail, setOpenBlogDetail] = useState(false);
@@ -115,7 +116,9 @@ function BlogPage() {
     return (
         <DefaultLayout patients={patients}>
             <ChatBot />
+            <MapsPatient patients={patients} />
             <ScrollToTop smooth className="scroll-to-top" />
+
             <div className="wrapper-blog-patient">
                 {/* Left */}
                 {openBlogDetail ? (

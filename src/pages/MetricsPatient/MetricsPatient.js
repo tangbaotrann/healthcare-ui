@@ -23,6 +23,7 @@ import socket from '~/utils/socket';
 import MetricsBMI from '~/components/MetricsBMI';
 import MetricsGlycemic from '~/components/MetricsGlycemic';
 import MetricsBlood from '~/components/MetricsBlood';
+import MapsPatient from '~/components/MapsPatient/MapsPatient';
 
 function MetricsPatient() {
     const [statusBMI, setStatusBMI] = useState(true);
@@ -76,6 +77,7 @@ function MetricsPatient() {
     return (
         <DefaultLayout patients={patients}>
             <ChatBot />
+            <MapsPatient patients={patients} />
             <ScrollToTop smooth className="scroll-to-top" />
 
             <div className="register-schedule-appointment-wrapper">

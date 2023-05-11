@@ -15,6 +15,7 @@ import userSlice from './features/user/userSlice';
 import bloodPressureSlice from './features/metric/bloodPressure';
 import blogSlice from './features/blog/blogSlice';
 import commentSlice from './features/comment/commentSlice';
+import mapSlice from './features/map/mapSlice';
 
 const store = configureStore({
     reducer: {
@@ -31,6 +32,7 @@ const store = configureStore({
         callSlice: callSlice.reducer,
         blogSlice: blogSlice.reducer,
         commentSlice: commentSlice.reducer,
+        mapSlice: mapSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
