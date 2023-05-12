@@ -10,7 +10,7 @@ export const fetchApiLogin = createAsyncThunk('user/fetchApiLogin', async (value
 
         const formatPhone = phone_number.replace('+84', '0');
 
-        console.log('formatPhone ->', formatPhone);
+        // console.log('formatPhone ->', formatPhone);
 
         const res = await axios.post(`${process.env.REACT_APP_BASE_URL}auth/login`, {
             phone_number: formatPhone, //phone_number,
@@ -215,7 +215,6 @@ export const fetchApiAllPatients = createAsyncThunk('patient/fetchApiAllPatients
         const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
         if (getToken) {
-            console.log('1111111111111');
             const res = await axios.get(`${process.env.REACT_APP_BASE_URL}patients`, {
                 headers: {
                     Accept: 'application/json, text/plain, */*',

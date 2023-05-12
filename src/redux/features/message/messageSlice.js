@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import socket from '~/utils/socket';
@@ -6,7 +7,7 @@ const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 // fetch api all message by id conversation
 export const fetchApiMessages = createAsyncThunk('message/fetchApiMessages', async (idConversation) => {
-    console.log('idConversation ->', idConversation);
+    // console.log('idConversation ->', idConversation);
     try {
         const res = await axios.get(`${process.env.REACT_APP_BASE_URL}messages/${idConversation}`);
 
@@ -66,6 +67,7 @@ const messageSlice = createSlice({
     name: 'message',
     initialState: {
         data: [],
+        messageNotAcceptCall: [],
         isLoading: false,
         isLoadingWhenSend: false,
     },
@@ -79,6 +81,30 @@ const messageSlice = createSlice({
             if (!idMessage) {
                 toast.success(`Bạn có 1 tin nhắn mới.`);
                 state.data.push(newMessage);
+            } else {
+                return;
+            }
+        },
+        arrivalMessageNotAcceptCall: (state, action) => {
+            const { small_id, schedule_details_id, patient_id } = action.payload;
+            // console.log('small_id ac.pay ->', small_id);
+            // console.log('schedule_details_id ac.pay ->', schedule_details_id);
+            // console.log('patient_id ac.pay ->', patient_id);
+
+            const _message = state.messageNotAcceptCall.find((_message) => _message === small_id);
+
+            if (!_message) {
+                if (schedule_details_id) {
+                    toast.error(
+                        `${
+                            patient_id ? 'Bạn đã từ chối đến cuộc hẹn khám!' : 'Bệnh nhân đã từ chối đến cuộc hẹn khám!'
+                        }`,
+                    );
+                    state.messageNotAcceptCall.push(small_id);
+                } else {
+                    toast.error('Cuộc gọi đã bị từ chối!');
+                    state.messageNotAcceptCall.push(small_id);
+                }
             } else {
                 return;
             }

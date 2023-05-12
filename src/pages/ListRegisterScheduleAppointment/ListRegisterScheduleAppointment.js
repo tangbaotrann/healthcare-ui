@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ScrollToTop from 'react-scroll-to-top';
 import { Button, Modal } from 'antd';
 import { Link } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import './ListRegisterScheduleAppointment.css';
 import DefaultLayout from '~/layouts/DefaultLayout';
@@ -29,6 +30,9 @@ function ListRegisterScheduleAppointment() {
     const [roomId, setRoomId] = useState();
     const [openModalRating, setOpenModalRating] = useState(false);
     const [tabList, setTabList] = useState(true);
+
+    const unique_id = uuid();
+    const small_id = unique_id.slice(0, 8);
 
     const patients = useSelector(fetchApiAllPatientsSelector);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
@@ -95,13 +99,24 @@ function ListRegisterScheduleAppointment() {
         setTabList(false);
     };
 
+    // handle not accept call
+    const handleNotAcceptCall = () => {
+        // console.log('not accept.');
+        socket.emit('call_now_not_accept_to_user', {
+            small_id: small_id,
+            roomId: roomId.room_id,
+            schedule_details_id: roomId.schedule_details_id,
+            patient_id: patients.patient._id,
+        });
+        handleHideModal();
+    };
+
     return (
         <DefaultLayout patients={patients}>
             {/* Show modal confirm call */}
             {roomId && (
                 <Modal
                     open={openModalCall}
-                    onCancel={handleHideModal}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { display: 'none' } }}
                 >
@@ -121,6 +136,10 @@ function ListRegisterScheduleAppointment() {
                         >
                             <Button className="call-go-to-room-awaiting">Đi đến phòng chờ</Button>
                         </Link>
+
+                        <Button onClick={handleNotAcceptCall} className="btn-not-accept-call">
+                            Từ chối tham gia
+                        </Button>
                     </div>
                 </Modal>
             )}

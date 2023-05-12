@@ -132,7 +132,7 @@ export const fetchApiGetAllScheduleDetailOfPatient = createAsyncThunk(
         try {
             if (patient_id) {
                 const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedule-details/patient/${patient_id}`);
-                console.log('res =>', res.data.data);
+                // console.log('res =>', res.data.data);
 
                 return res.data.data;
             }
