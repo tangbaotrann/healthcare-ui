@@ -10,8 +10,10 @@ import {
     LoadingOutlined,
     SendOutlined,
     SmileOutlined,
+    VideoCameraAddOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import './MessageChat.css';
 import { logo } from '~/asset/images';
@@ -32,9 +34,11 @@ function MessageChat({ conversationClick, messages, patients }) {
     const [openPopover, setOpenPopover] = useState(false);
     const [isLoadingSpeech, setIsLoadingSpeech] = useState(false);
     const [onlineUsers, setOnlineUsers] = useState([]);
-
     const [openModalCall, setOpenModalCall] = useState(false);
     const [roomId, setRoomId] = useState();
+
+    const unique_id = uuid();
+    const small_id = unique_id.slice(0, 8);
 
     const dispatch = useDispatch();
 
@@ -44,6 +48,8 @@ function MessageChat({ conversationClick, messages, patients }) {
     const isLoadingMessages = useSelector(isLoadingMessagesSelector);
 
     // console.log('roomId -->', roomId);
+    // console.log('conversationClick -->', conversationClick);
+    // console.log('patients -->', patients);
 
     // user join room
     useEffect(() => {
@@ -202,12 +208,28 @@ function MessageChat({ conversationClick, messages, patients }) {
         conversationClick && messages && scrollMessage.current?.scrollIntoView({ behavior: 'smooth' });
     }, [conversationClick, messages, scrollMessage]);
 
+    // get info user
+    const handleCallGetInfoUser = () => {
+        // socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+        socket.emit('call_now_to_user', { conversation: conversationClick, patients });
+    };
+
+    // handle not accept call
+    const handleNotAcceptCall = () => {
+        // console.log('not accept.');
+        socket.emit('call_now_not_accept_to_user', {
+            small_id: small_id,
+            roomId: roomId.room_id,
+            patient_id: patients.patient._id,
+        });
+        handleHideModal();
+    };
+
     return (
         <div className="chat-messages-container">
             {roomId && (
                 <Modal
                     open={openModalCall}
-                    onCancel={handleHideModal}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { display: 'none' } }}
                 >
@@ -225,6 +247,10 @@ function MessageChat({ conversationClick, messages, patients }) {
                         >
                             <Button className="call-go-to-room-awaiting">Đi đến phòng chờ</Button>
                         </Link>
+
+                        <Button onClick={handleNotAcceptCall} className="btn-not-accept-call">
+                            Từ chối tham gia
+                        </Button>
                     </div>
                 </Modal>
             )}
@@ -242,6 +268,16 @@ function MessageChat({ conversationClick, messages, patients }) {
                     {/* <p>Offline</p> */}
                     {/* <div className="badge"></div> */}
                 </div>
+
+                {/* icon call video onClick={handleCallJoined} */}
+                <button className="icon-call-video-btn">
+                    <Link
+                        to={`${endPoints.meetingRoom}/${conversationClick._id}/${patients.patient.person.username}`}
+                        target="_blank"
+                    >
+                        <VideoCameraAddOutlined className="icon-call-video" onClick={handleCallGetInfoUser} />
+                    </Link>
+                </button>
             </div>
 
             {/* MAP messages */}

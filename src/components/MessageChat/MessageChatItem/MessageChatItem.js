@@ -14,10 +14,10 @@ function MessageChatItem({ message, patients, scrollMessage }) {
         >
             <img
                 src={
-                    message.user.patient.person
-                        ? message.user.patient.person.avatar
-                        : message.user.patient.patient.person
-                        ? message.user.patient.patient.person.avatar
+                    message?.user?.patient?.person
+                        ? message?.user?.patient?.person?.avatar
+                        : message?.user?.patient?.patient?.person
+                        ? message?.user?.patient?.patient?.person?.avatar
                         : logo.iconChatbotLogo
                 }
                 className="message-avt"
