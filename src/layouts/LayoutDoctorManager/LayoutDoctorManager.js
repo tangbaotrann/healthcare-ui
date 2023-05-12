@@ -13,7 +13,7 @@ import {
     SolutionOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
-import { Badge, Layout, Menu, Popover, Skeleton, Space } from 'antd';
+import { Badge, Layout, Menu, Popover, Skeleton, Space, message } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -36,6 +36,7 @@ import socket from '~/utils/socket';
 import { logo } from '~/asset/images';
 import { fetchApiAllPostByIdDoctor } from '~/redux/features/blog/blogSlice';
 import { fetchApiUserDoctorByToken } from '~/redux/features/user/userSlice';
+import messageSlice from '~/redux/features/message/messageSlice';
 
 const { Header, Sider, Content } = Layout;
 
@@ -55,24 +56,31 @@ function LayoutDoctorManager({ children, infoUser, isLoadingUser, isLoadingNotif
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ notification }) => {
-            // console.log('notification_confirm_register_schedule_success ->', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });
     }, []);
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', ({ notification }) => {
-            // console.log('notification_register_schedule_from_patient_success', notification);
             dispatch(notificationSlice.actions.notificationRegisterScheduleFromPatientSuccess(notification));
         });
     }, []);
 
     useEffect(() => {
         socket.on('like_post_from_patient', ({ author, title }) => {
-            // console.log('like_post_from_patient author', author);
-            // console.log('like_post_from_patient title', title);
-            // dispatch(blogSlice.actions.arrivalLikePost(author));
             toast.success(`Bệnh nhân đã thích bài viết "${title}" này của bạn`);
+        });
+    }, []);
+
+    // socket not accept call
+    useEffect(() => {
+        socket.on('call_now_not_accept_to_user_success', ({ small_id, roomId, schedule_details_id }) => {
+            dispatch(
+                messageSlice.actions.arrivalMessageNotAcceptCall({
+                    small_id: small_id,
+                    schedule_details_id: schedule_details_id,
+                }),
+            );
         });
     }, []);
 

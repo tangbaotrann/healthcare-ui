@@ -28,7 +28,6 @@ import callSlice from '~/redux/features/call/callSlice';
 import MessageChatPreviewImage from '~/components/MessageChat/MessageChatPreviewImage/MessageChatPreviewImage';
 
 function Message({ messages, conversation, infoUser }) {
-    // recordConversation
     const [value, setValue] = useState('');
     const [previewEmoji, setPreviewEmoji] = useState(false);
     const [muteRecording, setMuteRecording] = useState(false);
