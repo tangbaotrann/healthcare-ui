@@ -152,7 +152,10 @@ export const filterRegisterScheduleAppointmentWithStatusFalse = createSelector(
 
             const _listSchedule = lists.filter(
                 (_schedule) =>
-                    new Date(_schedule.day_exam) >= now && _schedule.status === false && _schedule.result_exam === null,
+                    // new Date(_schedule.day_exam) >= now &&
+                    moment(_schedule.day_exam).add(45, 'minutes').isAfter(moment(now)) &&
+                    _schedule.status === false &&
+                    _schedule.result_exam === null,
             );
 
             const _schedule_now = _listSchedule.filter(
@@ -184,17 +187,23 @@ export const filterRegisterScheduleAppointmentWithStatusTrue = createSelector(
         if (lists?.length > 0) {
             // console.log('list', lists);
             const now = new Date();
+            // console.log('now', now);
 
             const _listSchedule = lists.filter(
                 (_schedule) =>
-                    new Date(_schedule.day_exam) >= now && _schedule.status === true && _schedule.result_exam === null,
+                    // new Date(_schedule.day_exam) >= now &&
+                    moment(_schedule.day_exam).add(45, 'minutes').isAfter(moment(now)) &&
+                    _schedule.status === true &&
+                    _schedule.result_exam === null,
             );
+            // console.log('_listSchedule', _listSchedule);
 
             const _schedule_now = _listSchedule.filter(
                 (_schedule) =>
                     moment(_schedule.day_exam).diff(new Date(), 'day') === 0 &&
                     moment(_schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY'),
             );
+            // console.log('_schedule_now ->', _schedule_now);
 
             const _schedule_now_ids = _schedule_now.map((_schedule) => _schedule._id);
 
@@ -668,10 +677,14 @@ export const getDayAndTimeScheduleMedicalFilterOfDoctor = createSelector(
         // console.log('listDay', listDay);
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
+        const now = new Date();
 
         if (listScheduleMedical?.length > 0) {
             const scheduleMedicals = listScheduleMedical
-                ?.filter((_status) => _status.status === false)
+                ?.filter(
+                    (_status) =>
+                        moment(_status.day_exam).add(45, 'minutes').isAfter(moment(now)) && _status.status === false,
+                )
                 ?.map((_scheduleMedical) => {
                     const days = listDay?.find((_day) => _day._id === _scheduleMedical.schedule.day);
                     const shifts = listShift?.find((_shift) => _shift._id === _scheduleMedical.schedule.time);
@@ -715,7 +728,14 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
         // console.log('listShift', listShift);
         // console.log('cleanConversationListSelector', cleanConversation);
 
-        const scheduleMedicals = listScheduleMedical
+        // new
+        const now = new Date();
+        const _schedules = listScheduleMedical.filter((schedule) => {
+            return moment(schedule.day_exam).add(45, 'minutes').isAfter(moment(now));
+        });
+        // console.log('_schedules ->', _schedules);
+
+        const scheduleMedicals = _schedules
             // .filter((_status) => _status.status === true && _status.result_exam === null)
             ?.map((_scheduleMedical) => {
                 const days = listDay?.find((_day) => _day._id === _scheduleMedical.schedule.day);

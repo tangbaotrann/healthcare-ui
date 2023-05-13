@@ -37,14 +37,14 @@ function TableListScheduleMedical({ infoUser }) {
 
     useEffect(() => {
         socket.on('notification_register_schedule_from_patient_success', ({ schedule_detail }) => {
-            console.log('notification_register_schedule_from_patient_success', schedule_detail);
+            // console.log('notification_register_schedule_from_patient_success', schedule_detail);
             dispatch(patientSlice.actions.arrivalConfirmScheduleMedicalAppointment(schedule_detail));
         });
     }, []);
 
     useEffect(() => {
         socket.on('notification_confirm_register_schedule_success', ({ schedule_detail_id }) => {
-            console.log('notification_confirm_register_schedule_success', schedule_detail_id);
+            // console.log('notification_confirm_register_schedule_success', schedule_detail_id);
             dispatch(patientSlice.actions.arrivalDeleteScheduleMedicalAppointment(schedule_detail_id));
         });
     }, []);

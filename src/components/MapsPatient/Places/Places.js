@@ -41,10 +41,10 @@ function Places({ setOffice }) {
                     onChange={(e) => setValue(e.target.value)}
                     disabled={!ready}
                     className="combobox-input"
-                    placeholder="Search office address"
+                    placeholder="Nhập địa chỉ..."
                 />
                 <ComboboxPopover>
-                    <ComboboxList>
+                    <ComboboxList className="combobox-list">
                         {status === 'OK' &&
                             data.map(({ place_id, description }) => (
                                 <ComboboxOption key={place_id} value={description} style={{ color: 'black' }} />
