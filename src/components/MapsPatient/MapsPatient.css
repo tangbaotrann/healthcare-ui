@@ -26,6 +26,11 @@
    outline-color: var(--primary) !important;
 }
 
+.combobox-list {
+    font-size: 1.4rem !important;
+    /* z-index: 9999; */
+}
+
 .combobox-input:focus {
     outline-color: var(--primary) !important;
 }

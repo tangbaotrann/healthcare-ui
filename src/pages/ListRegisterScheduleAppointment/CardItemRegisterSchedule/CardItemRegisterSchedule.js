@@ -69,7 +69,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                 </div>
             )}
 
-            {schedule?.day_exam ? (
+            {schedule?.day_exam && schedule?.status ? (
                 moment(schedule.day_exam).diff(new Date(), 'day') === 0 &&
                 moment(schedule.day_exam).format('DD/MM/YYYY') === moment(new Date()).format('DD/MM/YYYY') ? (
                     <div className="content-cart-item-note-day-exam">
