@@ -33,12 +33,13 @@ function Chat() {
     // console.log('messages', messages);
     // console.log('roomId ->', roomId);
 
-    useEffect(() => {
-        socket.on('call_id_room_to_user_success', ({ room_id, info_doctor }) => {
-            setOpenModalCall(true);
-            setRoomId({ room_id, info_doctor });
-        });
-    }, []);
+    // useEffect(() => {
+    //     // call_now_to_user_success - call_id_room_to_user_success
+    //     socket.on('call_now_to_user_success', ({ room_id, info_doctor }) => {
+    //         setOpenModalCall(true);
+    //         setRoomId({ room_id, info_doctor });
+    //     });
+    // }, []);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -55,14 +56,14 @@ function Chat() {
         // console.log('handleClickedConversation', conversation);
     };
 
-    const handleHideModal = () => {
-        setOpenModalCall(false);
-    };
+    // const handleHideModal = () => {
+    //     setOpenModalCall(false);
+    // };
 
     return (
         <DefaultLayout patients={patients}>
             {/* Show modal confirm call */}
-            {roomId && (
+            {/* {roomId && (
                 <Modal
                     open={openModalCall}
                     // onCancel={hideModalCall}
@@ -85,7 +86,7 @@ function Chat() {
                         </Link>
                     </div>
                 </Modal>
-            )}
+            )} */}
 
             <div className="chat-wrapper">
                 {/* Conversation */}

@@ -4,6 +4,7 @@ import './RatingOfDoctor.css';
 import TitleName from '../TitleName';
 
 function RatingOfDoctor({ infoUser }) {
+    // console.log('infoUser', infoUser);
     // cols
     const cols = [
         {

@@ -133,7 +133,7 @@ function Message({ messages, conversation, infoUser }) {
 
     // get info user
     const handleCallGetInfoUser = () => {
-        // socket.emit('call_id_room_to_user', { conversation, infoDoctor });
+        socket.emit('call_id_room_to_user', { conversation, infoDoctor });
         socket.emit('call_now_to_user', { conversation, infoDoctor });
     };
 
