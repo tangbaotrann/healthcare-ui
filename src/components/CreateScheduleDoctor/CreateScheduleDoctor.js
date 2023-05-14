@@ -1,5 +1,5 @@
 // lib
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import moment from 'moment';
@@ -13,6 +13,7 @@ import { fetchApiAllCreateDaysDoctorSelector, fetchApiAllShiftsDoctorSelector } 
 
 function CreateScheduleDoctor({ infoUser, schedules }) {
     const [showModal, setShowModal] = useState(false);
+    // const [listShift, setListShift] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -38,6 +39,7 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
     // handle submit form
     const handleCreateScheduleDoctorOnFish = (values) => {
         if (values) {
+            // console.log('-->', values);
             if (values.fee < 100000) {
                 message.error('Số tiền phải lớn hơn 100.000đ!');
                 return;
@@ -47,6 +49,22 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
             handleCancel();
         }
     };
+
+    // useEffect(() => {
+    //     const _listTime = shifts?.map((_shift) => {
+    //         return `${_shift?.name} (${moment(new Date(_shift?.time_start)).format('HH:mm')} -> ${moment(
+    //             new Date(_shift?.time_end),
+    //         ).format('HH:mm')})`;
+    //     });
+
+    //     console.log('_listTime', _listTime);
+    //     const _timeUnique = new Set([..._listTime]);
+    //     console.log('_timeUnique', _timeUnique);
+
+    //     const _shifts = Array.from(_timeUnique);
+    //     console.log('_shifts', _shifts);
+    //     setListShift(_shifts);
+    // }, [shifts]);
 
     return (
         <div className="wrapper-create-schedule-doctor">
