@@ -13,7 +13,6 @@ import { selectedGetAddressSelector } from '~/redux/selector';
 
 function Map() {
     const [office, setOffice] = useState(/** @type google.maps.LatLngLiteral */);
-    // const [mapped, setMapped] = useState(/** @type google.maps.Map */ (null));
     const [directionRes, setDirectionRes] = useState(null);
 
     const [distance, setDistance] = useState('');
@@ -35,7 +34,7 @@ function Map() {
 
     // console.log('houses ->', houses);
     // console.log('office ->', office);
-    // console.log('address ->', address);
+    console.log('address ->', address);
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -156,7 +155,7 @@ function Map() {
                                 <Marker key={house.lat} position={house} />
                             ))} */}
 
-                            <Circle center={office} radius={15000} options={closeOptions} />
+                            <Circle center={office} radius={1500} options={closeOptions} />
                             {/* <Circle center={office} radius={30000} options={middleOptions} /> */}
                             {/* <Circle center={office} radius={45000} options={farOptions} /> */}
                         </>

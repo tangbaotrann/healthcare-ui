@@ -56,7 +56,7 @@ function ResultHealthMessage({ resultHeath, information }) {
             </div>
             <div className="result-health-message-item">
                 <strong>Năm sinh:</strong>
-                <p>{moment(information.dob).format('DD/MM/YYYY')}</p>
+                <p>{information.dob}</p>
             </div>
             <div className="result-health-message-item">
                 <strong>Nhóm máu:</strong>
