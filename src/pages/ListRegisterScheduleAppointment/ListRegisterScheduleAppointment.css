@@ -208,6 +208,21 @@
     box-shadow: 0 0 22px 0 var(--primary);
 }
 
+.content-cart-item-note-day-exam-awaiting {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 6px;
+    background-color: var(--cart-item);
+    box-shadow: 0 0 22px 0 var(--cart-item);
+}
+
 .content-cart-item-note-day-exam-time-icon {
     width: 20px;
     height: 20px;
