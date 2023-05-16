@@ -33,7 +33,7 @@ function CartMeeting({ infoUser }) {
     const infoDoctor = useSelector(getDoctorLoginFilter);
     const checkLeavedRoom = useSelector(btnClickGetUsernameLeavedRoomSelector);
 
-    // console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
+    console.log('scheduleMedicalsMeetingFilter ->', scheduleMedicalsMeetingFilter);
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
@@ -131,6 +131,15 @@ function CartMeeting({ infoUser }) {
                                             alt="iconTime"
                                         />
                                         <i>Hôm nay khám cho bệnh nhân</i>
+                                    </div>
+                                ) : _scheduleMedicalMeeting?.status ? (
+                                    <div className="cart-meeting-banner-day-exam-for-patient-awaiting">
+                                        <img
+                                            className="cart-meeting-banner-day-exam-icon"
+                                            src={icons.iconTime}
+                                            alt="iconTime"
+                                        />
+                                        <i>Chưa đến ngày khám</i>
                                     </div>
                                 ) : null}
 
