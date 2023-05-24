@@ -26,7 +26,7 @@ function CardListRegisterSchedule({ patients }) {
 
     // console.log('patients', patients);
     // console.log('scheduleDetailsStatusTrue', scheduleDetailsStatusTrue);
-    // console.log('scheduleDetailsStatusFalse', scheduleDetailsStatusFalse);
+    console.log('scheduleDetailsStatusFalse', scheduleDetailsStatusFalse);
     // console.log('visible', visible);
 
     useEffect(() => {

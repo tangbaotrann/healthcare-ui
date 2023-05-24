@@ -35,7 +35,7 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
                 'Content-Type': 'application/json',
             },
         });
-        // console.log('res doctors -', res.data.data);
+        console.log('res all doctors ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -325,6 +325,7 @@ const userSlice = createSlice({
         patient: [],
         patientInfo: [],
         checkExits: [],
+        optionUsernameDoctorGetSchedule: null,
     },
     reducers: {
         clickedLogoutPatient: (state, action) => {
@@ -335,6 +336,9 @@ const userSlice = createSlice({
         },
         clickedClearInfoLogin: (state, action) => {
             state.userLogin = action.payload;
+        },
+        btnOptionUsernameDoctorGetSchedule: (state, action) => {
+            state.optionUsernameDoctorGetSchedule = action.payload;
         },
     },
     extraReducers: (builder) => {

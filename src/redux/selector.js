@@ -12,6 +12,7 @@ export const isLoadingFetchApiRegisterSelector = (state) => state.userSlice.isLo
 
 // all user doctor
 export const fetchApiUserDoctorsSelector = (state) => state.userSlice.data;
+export const btnOptionUsernameDoctorGetScheduleSelector = (state) => state.userSlice.optionUsernameDoctorGetSchedule;
 
 // login
 export const fetchApiLoginSelector = (state) => state.userSlice.userLogin;
@@ -419,6 +420,15 @@ export const getDoctorLoginFilter = createSelector(
         }
     },
 );
+
+// get all user doctor with is_accepted && !deleted
+export const filterUserDoctorsWithAccepted = createSelector(fetchApiUserDoctorsSelector, (listDoctor) => {
+    if (listDoctor?.length > 0) {
+        const _lists = listDoctor.filter((_doctor) => _doctor.is_accepted && !_doctor.deleted);
+
+        return _lists;
+    }
+});
 
 // get doctor id -> fetch api
 export const getIdDoctorFilter = createSelector(
@@ -856,11 +866,13 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
     fetchApiAllCreateScheduleDoctorSelector,
     fetchApiAllScheduleDetailsSelector,
     btnOptionSelectDayOfWeekSelector,
-    (schedules, scheduleDetails, day) => {
+    btnOptionUsernameDoctorGetScheduleSelector,
+    (schedules, scheduleDetails, day, optionUsername) => {
         // console.log('all schedules', schedules);
         // console.log('all schedules details', scheduleDetails);
         // console.log('day', day);
         // console.log('day.getDay', day.getDay());
+        // console.log('optionUsername ->', optionUsername);
 
         if (schedules?.length > 0) {
             const now = new Date();
@@ -893,26 +905,28 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
             // console.log('schedule_details_day_exams', schedule_details_day_exams);
 
             // Tạo thêm date_compare để so sánh
-            const __schedules = _schedules.map((_schedule) => {
-                const time = `${new Date(_schedule['time']['time_start']).getHours()}: ${new Date(
-                    _schedule['time']['time_start'],
-                ).getMinutes()}`;
+            const __schedules = _schedules
+                .filter((__schedule) => __schedule.doctor.is_accepted && !__schedule.doctor.deleted)
+                .map((_schedule) => {
+                    const time = `${new Date(_schedule['time']['time_start']).getHours()}: ${new Date(
+                        _schedule['time']['time_start'],
+                    ).getMinutes()}`;
 
-                const dateStr = moment(day).format('DD/MM/YYYY');
-                const date = moment(dateStr);
-                const date_time = moment(time, 'HH:mm');
-                date.set({
-                    hour: date_time.get('hour'),
-                    minute: date_time.get('minute'),
-                    second: date_time.get('second'),
+                    const dateStr = moment(day).format('DD/MM/YYYY');
+                    const date = moment(dateStr);
+                    const date_time = moment(time, 'HH:mm');
+                    date.set({
+                        hour: date_time.get('hour'),
+                        minute: date_time.get('minute'),
+                        second: date_time.get('second'),
+                    });
+
+                    return {
+                        ..._schedule,
+                        date_compare: date,
+                        doctor_id: _schedule.doctor._id,
+                    };
                 });
-
-                return {
-                    ..._schedule,
-                    date_compare: date,
-                    doctor_id: _schedule.doctor._id,
-                };
-            });
             // console.log('__schedules', __schedules);
 
             // Tiến hành so sánh
@@ -936,12 +950,33 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
 
             // console.log('final_schedule', final_schedule);
 
-            return final_schedule;
+            const after_filter = final_schedule.filter((_schedule) => _schedule.doctor._id === optionUsername);
+
+            if (optionUsername === 'all') {
+                return final_schedule;
+            } else {
+                return after_filter.filter((_after_filter) =>
+                    moment(
+                        _after_filter.date_compare._i.split('/').reverse().join('/') +
+                            ' ' +
+                            moment(_after_filter.time.time_start).format('HH:mm'),
+                    ),
+                );
+            }
+
+            // return final_schedule;
         }
 
         return [];
     },
 );
+
+// export const filterUsernameOfDoctorGetScheduleMedical = createSelector(
+//     btnOptionUsernameDoctorGetScheduleSelector,
+//     (option) => {
+//         console.log('opt name get id doctor ->', option);
+//     },
+// );
 
 // filter notification -> get id conversation -> show screen (Doctor)
 export const filterNotificationGetConversationId = createSelector(

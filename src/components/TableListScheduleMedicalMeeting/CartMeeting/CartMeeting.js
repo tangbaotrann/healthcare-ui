@@ -22,7 +22,7 @@ import { fetchApiMessages } from '~/redux/features/message/messageSlice';
 
 const { Paragraph } = Typography;
 
-function CartMeeting({ infoUser }) {
+function CartMeeting({ infoUser, schedules }) {
     const [conversation, setConversation] = useState('');
     const [record, setRecord] = useState({}); // get id schedule detail
     const [showModalConversation, setShowModalConversation] = useState(false);
@@ -37,7 +37,8 @@ function CartMeeting({ infoUser }) {
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
-    // console.log('record ->', record);
+    console.log('record ->', record);
+    // console.log('infoUser ->', infoUser);
 
     // user join room
     useEffect(() => {
@@ -246,9 +247,10 @@ function CartMeeting({ infoUser }) {
                 )}
             </>
 
-            {checkLeavedRoom !== null ? (
+            {checkLeavedRoom === null ? (
                 <ContentAfterExaminated
                     recordConversation={record} // get id schedule detail
+                    schedules={schedules}
                 />
             ) : null}
         </>

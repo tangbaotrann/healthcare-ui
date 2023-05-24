@@ -262,3 +262,9 @@
     z-index: 1;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.25);
 }
+
+.cancel-schedule-register-disabled {
+    background-color: #ccc !important;
+    cursor: not-allowed;
+    /* pointer-events: none; */
+}
