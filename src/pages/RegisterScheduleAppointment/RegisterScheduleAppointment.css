@@ -43,6 +43,19 @@
 /* Header */
 .content-header {
     display: flex;
+    justify-content: space-between;
+}
+
+.custom-select-opt-doctor {
+    display: flex;
+    align-items: center;
+}
+
+.custom-select-opt-doctor p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 6px;
+    color: var(--black);
 }
 
 .content-header-title {
@@ -74,6 +87,7 @@
     font-weight: 700;
     border-top-right-radius: 20px;
     border-bottom-left-radius: 6px;
+    color: var(--white);
     background-color: var(--status-normal);
     box-shadow: 0 0 22px 0 var(--status-normal);
 }

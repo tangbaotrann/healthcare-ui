@@ -41,7 +41,7 @@ function ScheduleRegister() {
 
     // handle button
     const handleRegisterScheduleAppointment = (schedule) => {
-        // console.log('->', schedule);
+        console.log('->', schedule);
 
         // giờ
         const timeStart = moment(schedule.time.time_start).format('HH:mm');
@@ -117,7 +117,7 @@ function ScheduleRegister() {
             {/* Cart MAP */}
             {schedules.length === 0 ? (
                 <p className="notification-schedule-register">
-                    <i>-- Ngày này hiện chưa có lịch khám. Vui lòng chọn ngày khác. --</i>
+                    <i>-- Ngày này hiện chưa có lịch khám của bác sĩ. Vui lòng chọn ngày khác. --</i>
                 </p>
             ) : (
                 <>
