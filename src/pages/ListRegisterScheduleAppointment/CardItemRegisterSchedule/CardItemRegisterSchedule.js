@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button, Form, Input, Modal, Rate, message } from 'antd';
+import { Button, Form, Input, Modal, Rate, Tooltip, message } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { icons } from '~/asset/images';
@@ -136,9 +136,23 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
             <div className="content-cart-item-footer">
                 {!schedule.status ? (
-                    <Button className="content-cart-item-footer-btn cancel-schedule-register" onClick={handleOpenModal}>
-                        Hủy lịch
-                    </Button>
+                    moment(schedule.day_exam).diff(moment(), 'minutes') >= 60 ? (
+                        <Button
+                            className="content-cart-item-footer-btn cancel-schedule-register"
+                            onClick={handleOpenModal}
+                        >
+                            Hủy lịch
+                        </Button>
+                    ) : (
+                        <Tooltip title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 1 tiếng." color="#1DCBB6">
+                            <Button
+                                className="content-cart-item-footer-btn cancel-schedule-register cancel-schedule-register-disabled"
+                                // onClick={handleOpenModal}
+                            >
+                                Hủy lịch
+                            </Button>
+                        </Tooltip>
+                    )
                 ) : null}
             </div>
 
