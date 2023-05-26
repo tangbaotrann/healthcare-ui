@@ -36,12 +36,16 @@ function ScheduleRegister() {
 
     // handle disabled date
     const handleDisabledDate = (date) => {
+        if (new Date(date).getDate() === new Date().getDate()) {
+            return false;
+        }
+
         return date && date < moment().add(0, 'month');
     };
 
     // handle button
     const handleRegisterScheduleAppointment = (schedule) => {
-        console.log('->', schedule);
+        // console.log('->', schedule);
 
         // giờ
         const timeStart = moment(schedule.time.time_start).format('HH:mm');
@@ -89,7 +93,7 @@ function ScheduleRegister() {
                 socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
             })
             .catch((err) => {
-                console.log({ err });
+                // console.log({ err });
                 message.error(`${err.response.data.message}`);
             });
     };

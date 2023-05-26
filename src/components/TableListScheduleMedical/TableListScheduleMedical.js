@@ -2,7 +2,7 @@
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Form, Image, Input, message, Modal, Table } from 'antd';
+import { Button, Form, Image, Input, message, Modal, Table, Tooltip } from 'antd';
 
 // me
 import './TableListScheduleMedical.css';
@@ -128,6 +128,7 @@ function TableListScheduleMedical({ infoUser }) {
         {
             key: 'handleStatus',
             render: (record) => {
+                console.log('re', record);
                 return (
                     <div className="status-tbl-schedule-medical">
                         <>
@@ -144,9 +145,23 @@ function TableListScheduleMedical({ infoUser }) {
                             <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
                                 Xác nhận
                             </Button>
-                            <Button className="btn-delete-schedule" onClick={() => handleShowModal(record)}>
-                                Hủy
-                            </Button>
+                            {moment(record.re_day_exam).diff(moment(), 'hours') >= 24 ? (
+                                <Button className="btn-delete-schedule" onClick={() => handleShowModal(record)}>
+                                    Hủy
+                                </Button>
+                            ) : (
+                                <Tooltip
+                                    title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 24 tiếng."
+                                    color="#1DCBB6"
+                                >
+                                    <Button
+                                        className="btn-delete-schedule btn-delete-schedule-disabled"
+                                        // onClick={() => handleShowModal(record)}
+                                    >
+                                        Hủy
+                                    </Button>
+                                </Tooltip>
+                            )}
                         </>
                     </div>
                 );
@@ -156,7 +171,7 @@ function TableListScheduleMedical({ infoUser }) {
 
     // handle select detail patient
     const handleSelectDetailInfoPatient = (record) => {
-        console.log(record);
+        // console.log(record);
         setOpenModalInfoDetailPatient(true);
         setInfoDetailPatient(record);
     };
@@ -329,6 +344,7 @@ function TableListScheduleMedical({ infoUser }) {
                     idDoctor: scheduleMedical?.doctor?._id,
                     conversation: scheduleMedical?.conversations,
                     patient: scheduleMedical.patient,
+                    re_day_exam: scheduleMedical?.day_exam,
                 }))}
                 rowKey="index"
                 pagination={{

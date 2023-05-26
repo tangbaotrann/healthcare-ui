@@ -78,7 +78,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                             src={icons.iconTime}
                             alt="iconTime"
                         />
-                        <i>Hôm nay khám</i>
+                        {schedule.re_examination ? <i>Hôm nay tái khám</i> : <i>Hôm nay khám</i>}
                     </div>
                 ) : schedule?.status ? (
                     <div className="content-cart-item-note-day-exam-awaiting">
@@ -87,7 +87,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                             src={icons.iconTime}
                             alt="iconTime"
                         />
-                        <i>Chưa đến ngày khám</i>
+                        {schedule.re_examination ? <i>Chưa đến ngày tái khám</i> : <i>Chưa đến ngày khám</i>}
                     </div>
                 ) : null
             ) : null}
@@ -136,7 +136,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
             <div className="content-cart-item-footer">
                 {!schedule.status ? (
-                    moment(schedule.day_exam).diff(moment(), 'minutes') >= 60 ? (
+                    moment(schedule.day_exam).diff(moment(), 'hours') >= 24 ? (
                         <Button
                             className="content-cart-item-footer-btn cancel-schedule-register"
                             onClick={handleOpenModal}
@@ -144,7 +144,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                             Hủy lịch
                         </Button>
                     ) : (
-                        <Tooltip title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 1 tiếng." color="#1DCBB6">
+                        <Tooltip title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 24 tiếng." color="#1DCBB6">
                             <Button
                                 className="content-cart-item-footer-btn cancel-schedule-register cancel-schedule-register-disabled"
                                 // onClick={handleOpenModal}

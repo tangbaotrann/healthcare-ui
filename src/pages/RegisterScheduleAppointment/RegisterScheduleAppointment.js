@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import ScrollToTop from 'react-scroll-to-top';
+import { AutoComplete, Input, Rate } from 'antd';
 
 import './RegisterScheduleAppointment.css';
 import DefaultLayout from '~/layouts/DefaultLayout';
 import { fetchApiAllPatientsSelector, filterUserDoctorsWithAccepted } from '~/redux/selector';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import userSlice, { fetchApiAllPatients, fetchApiUserDoctors } from '~/redux/features/user/userSlice';
 import {
     fetchApiAllCreateDaysDoctor,
@@ -17,9 +18,10 @@ import ChatBot from '~/components/ChatBot';
 import ScheduleRegister from './ScheduleRegister/ScheduleRegister';
 import socket from '~/utils/socket';
 import MapsPatient from '~/components/MapsPatient/MapsPatient';
-import { Select } from 'antd';
 
 function RegisterScheduleAppointment() {
+    const [options, setOptions] = useState([]);
+
     const patients = useSelector(fetchApiAllPatientsSelector); // filterGetInfoPatientByAccountId
     const optionDoctors = useSelector(filterUserDoctorsWithAccepted);
 
@@ -28,6 +30,7 @@ function RegisterScheduleAppointment() {
     // console.log('pat', patients);
     // console.log('scheduleAppointment', scheduleAppointment);
     // console.log('opt ->', optionDoctors);
+    // console.log('options ->', options);
 
     useEffect(() => {
         dispatch(fetchApiAllPatients());
@@ -60,13 +63,47 @@ function RegisterScheduleAppointment() {
         socket.emit('add_user', patients?.patient?._id);
     }, [patients?.patient?._id]);
 
-    useEffect(() => {
-        dispatch(userSlice.actions.btnOptionUsernameDoctorGetSchedule('all'));
-    }, []);
+    // handle autocomplete search name doctor
+    const handleSearch = (value) => {
+        setOptions(
+            value
+                ? optionDoctors?.map((_doctor) => {
+                      return {
+                          value: `${_doctor?.person?.username} (${
+                              _doctor.work_type === 'glycemic' ? 'Đường huyết' : 'Huyết áp'
+                          })`,
+                          label: (
+                              <div className="display-autocomplete">
+                                  <img
+                                      className="custom-avatar-doctor"
+                                      src={_doctor?.person?.avatar}
+                                      alt="avatar-doctor"
+                                  />
 
-    const handleFilterNameDoctor = (value) => {
-        dispatch(userSlice.actions.btnOptionUsernameDoctorGetSchedule(value));
+                                  <div className="autocomplete-info">
+                                      <span>
+                                          {_doctor?.person?.username} (
+                                          {_doctor.work_type === 'glycemic' ? 'Đường huyết' : 'Huyết áp'})
+                                      </span>
+                                      <Rate value={_doctor?.rating} disabled className="custom-rating" />
+                                  </div>
+                                  <span className="custom-hide-info-doctor">{_doctor?._id}</span>
+                              </div>
+                          ),
+                      };
+                  })
+                : [],
+        );
     };
+
+    // handle select value search
+    const handleSelect = (value, { label }) => {
+        dispatch(userSlice.actions.btnOptionUsernameDoctorGetSchedule(label.props.children[2].props.children));
+    };
+
+    useEffect(() => {
+        options.length <= 0 && dispatch(userSlice.actions.btnOptionUsernameDoctorGetSchedule('all'));
+    }, [options.length]);
 
     return (
         <DefaultLayout patients={patients}>
@@ -95,20 +132,17 @@ function RegisterScheduleAppointment() {
 
                             {/* Select option doctor */}
                             <div className="custom-select-opt-doctor">
-                                <p>Chọn bác sĩ:</p>
-                                <Select style={{ width: '275px' }} defaultValue="all" onSelect={handleFilterNameDoctor}>
-                                    <Select.Option value="all">Tất cả</Select.Option>
-                                    {optionDoctors?.length > 0
-                                        ? optionDoctors.map((_doctor) => {
-                                              return (
-                                                  <Select.Option key={_doctor._id} value={_doctor._id}>
-                                                      {_doctor.person.username} (
-                                                      {_doctor.work_type === 'glycemic' ? 'Đường huyết' : 'Huyết áp'})
-                                                  </Select.Option>
-                                              );
-                                          })
-                                        : ''}
-                                </Select>
+                                <p>Tìm bác sĩ:</p>
+                                <AutoComplete
+                                    dropdownMatchSelectWidth={250}
+                                    style={{ width: 275 }}
+                                    options={options}
+                                    filterOption={true}
+                                    onSearch={handleSearch}
+                                    onSelect={handleSelect}
+                                >
+                                    <Input.Search size="middle" placeholder="Tìm kiếm bác sĩ..." enterButton />
+                                </AutoComplete>
                             </div>
                         </div>
 

@@ -210,9 +210,10 @@ export const fetchApiResponseContentAfterExamiation = createAsyncThunk(
     async ({ values, scheduleDetailId }) => {
         try {
             console.log('values', values);
-            console.log('scheduleDetailId', scheduleDetailId);
+            // console.log('scheduleDetailId', scheduleDetailId);
 
-            const { result_exam, anamnesis } = values;
+            const { result_exam, anamnesis, prescription } = values;
+            console.log('prescription ->', prescription);
             const getToken = JSON.parse(localStorage.getItem('token_user_login'));
 
             const res = await axios.put(
@@ -220,6 +221,7 @@ export const fetchApiResponseContentAfterExamiation = createAsyncThunk(
                 {
                     result_exam: result_exam,
                     anamnesis: anamnesis,
+                    prescription: prescription,
                 },
                 {
                     headers: {
@@ -230,7 +232,7 @@ export const fetchApiResponseContentAfterExamiation = createAsyncThunk(
                 },
             );
 
-            // console.log('res examination', res.data.data);
+            console.log('res examination', res.data.data);
 
             return res.data.data;
         } catch (err) {
