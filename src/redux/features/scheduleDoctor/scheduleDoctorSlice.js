@@ -132,7 +132,7 @@ export const fetchApiGetAllScheduleDetailOfPatient = createAsyncThunk(
         try {
             if (patient_id) {
                 const res = await axios.get(`${process.env.REACT_APP_BASE_URL}schedule-details/patient/${patient_id}`);
-                // console.log('res =>', res.data.data);
+                // console.log('res fetchApiGetAllScheduleDetailOfPatient ->', res.data.data);
 
                 return res.data.data;
             }
@@ -147,7 +147,7 @@ export const fetchApiDeleteScheduleMedicalOfPatient = createAsyncThunk(
     'patient/fetchApiDeleteScheduleMedicalOfPatient',
     async (values) => {
         // console.log('idSchedule ->', idSchedule);
-        console.log('values ->', values);
+        // console.log('values ->', values);
         try {
             const { reason } = values;
             const { patient, _id } = values.record;

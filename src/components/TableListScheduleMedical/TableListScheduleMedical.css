@@ -93,3 +93,13 @@
     overflow-y: scroll;
     height: 80vh;
 }
+
+.btn-delete-schedule-disabled {
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+}
+
+.btn-delete-schedule-disabled:hover {
+    border: 1px solid #ccc !important;
+}

@@ -37,7 +37,7 @@ function CartMeeting({ infoUser, schedules }) {
     // console.log('infoDoctor ->', infoDoctor);
     // console.log('checkLeavedRoom ->', checkLeavedRoom);
     // console.log('conversation ->', conversation);
-    console.log('record ->', record);
+    // console.log('record ->', record);
     // console.log('infoUser ->', infoUser);
 
     // user join room
@@ -247,7 +247,7 @@ function CartMeeting({ infoUser, schedules }) {
                 )}
             </>
 
-            {checkLeavedRoom === null ? (
+            {checkLeavedRoom !== null ? (
                 <ContentAfterExaminated
                     recordConversation={record} // get id schedule detail
                     schedules={schedules}

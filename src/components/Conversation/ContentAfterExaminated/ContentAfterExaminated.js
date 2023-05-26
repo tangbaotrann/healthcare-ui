@@ -14,6 +14,8 @@ import { filterUserDoctorsWithAccepted, isLoadingScheduleDoctorSelector } from '
 import ButtonLoadMore from '~/components/ButtonLoadMore/ButtonLoadMore';
 import ScheduleRegisterItem from '~/pages/RegisterScheduleAppointment/ScheduleRegisterItem/ScheduleRegisterItem';
 import userSlice from '~/redux/features/user/userSlice';
+import axios from 'axios';
+import socket from '~/utils/socket';
 
 function ContentAfterExaminated({ recordConversation, schedules }) {
     const [openModal, setOpenModal] = useState(false);
@@ -66,6 +68,10 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
 
     // handle disabled date
     const handleDisabledDate = (date) => {
+        if (new Date(date).getDate() === new Date().getDate()) {
+            return false;
+        }
+
         return date && date < moment().add(0, 'month');
     };
 
@@ -77,8 +83,6 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
 
     // handle button
     const handleRegisterScheduleAppointment = (schedule) => {
-        console.log('->', schedule);
-
         // giờ
         const timeStart = moment(schedule.time.time_start).format('HH:mm');
 
@@ -92,10 +96,39 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
     };
 
     const handleSubmitForm = async (values) => {
-        console.log('value', values);
+        const getToken = JSON.parse(localStorage.getItem('token_user_login'));
+        const { content_exam, schedule, day_exam, patient_id, re_examination } = values;
 
-        // const getToken = JSON.parse(localStorage.getItem('token_user_login'));
-        // const { content_exam, schedule, day_exam } = values;
+        await axios
+            .post(
+                `${process.env.REACT_APP_BASE_URL}schedule-details`,
+                {
+                    content_exam: content_exam,
+                    schedule: schedule,
+                    day_exam: day_exam,
+                    patient_id: patient_id,
+                    re_examination: re_examination,
+                },
+                {
+                    headers: {
+                        Accept: 'application/json, text/plain, */*',
+                        Authorization: `Bearer ${getToken}`,
+                        ContentType: 'application/json',
+                    },
+                },
+            )
+            .then((res) => {
+                console.log('res re-exam ->', res.data.data);
+                message.success('Đã đăng ký tái khám cho bệnh nhân thành công.');
+                setOpenModalConfirm(false);
+                setOpenReExam(false);
+                setOpenCalender(false);
+                socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
+            })
+            .catch((err) => {
+                console.log({ err });
+                message.error(`${err.response.data.message}`);
+            });
     };
 
     const handleHideReExamSchedule = () => {
@@ -165,7 +198,7 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                         ]}
                         hasFeedback
                     >
-                        <Input placeholder="Nhập kết quả về sức khỏe..." />
+                        <Input.TextArea placeholder="Nhập kết quả về sức khỏe..." />
                     </Form.Item>
 
                     {/* anamnesis */}
@@ -187,6 +220,20 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                             ]}
                             placeholder="Chọn loại bệnh"
                         />
+                    </Form.Item>
+
+                    {/* Thuốc */}
+                    <Form.Item
+                        name="prescription"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Bạn cần phải nhập đơn thuốc cho bệnh nhân.',
+                            },
+                        ]}
+                        hasFeedback
+                    >
+                        <Input.TextArea name="prescription" placeholder="Nhập đơn thuốc..." />
                     </Form.Item>
 
                     {/* Button */}
@@ -286,6 +333,14 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                             name: ['schedule'],
                             value: scheduleAppointment?._id,
                         },
+                        {
+                            name: ['patient_id'],
+                            value: recordConversation?.patient?._id,
+                        },
+                        {
+                            name: ['re_examination'],
+                            value: true,
+                        },
                     ]}
                 >
                     {/* content_exam */}
@@ -303,22 +358,22 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                     </Form.Item>
 
                     {/* schedule */}
-                    <Form.Item name="schedule">
+                    <Form.Item name="schedule" style={{ display: 'none' }}>
                         <Input name="schedule" />
                     </Form.Item>
 
                     {/* day_exam */}
-                    <Form.Item name="day_exam">
+                    <Form.Item name="day_exam" style={{ display: 'none' }}>
                         <Input name="day_exam" />
                     </Form.Item>
 
                     {/* patient_id */}
-                    <Form.Item name="patient_id">
+                    <Form.Item name="patient_id" style={{ display: 'none' }}>
                         <Input name="patient_id" />
                     </Form.Item>
 
                     {/* re_examination */}
-                    <Form.Item name="re_examination">
+                    <Form.Item name="re_examination" style={{ display: 'none' }}>
                         <Input name="re_examination" />
                     </Form.Item>
 

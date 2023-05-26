@@ -95,7 +95,7 @@ function DoctorManager() {
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
-    // console.log('schedules 46 ->', schedules);
+    console.log('schedules 46 ->', schedules);
     // console.log('isLoadingScheduleMedicalAppointmentResultExam ->', isLoadingScheduleMedicalAppointmentResultExam);
 
     // socket.on('get_users', (users) => {

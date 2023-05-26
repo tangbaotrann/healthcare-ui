@@ -35,7 +35,7 @@ export const fetchApiUserDoctors = createAsyncThunk('user/fetchApiUserDoctors', 
                 'Content-Type': 'application/json',
             },
         });
-        console.log('res all doctors ->', res.data.data);
+        // console.log('res all doctors ->', res.data.data);
 
         return res.data.data;
     } catch (err) {
@@ -291,8 +291,8 @@ export const fetchApiCheckExistUserByNumberPhone = createAsyncThunk(
 export const fetchApiForgotPassword = createAsyncThunk(
     'user/fetchApiForgotPassword',
     async ({ values, formatPhone }) => {
-        console.log('values slice', values);
-        console.log('formatPhone slice', formatPhone);
+        // console.log('values slice', values);
+        // console.log('formatPhone slice', formatPhone);
         try {
             const res = await axios.put(`${process.env.REACT_APP_BASE_URL}accounts`, {
                 phone_number: formatPhone,
