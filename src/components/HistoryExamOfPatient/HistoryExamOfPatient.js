@@ -8,7 +8,7 @@ import ButtonLoadMore from '../ButtonLoadMore';
 function HistoryExamOfPatient({ historyExams, isLoading, className }) {
     const [visible, setVisible] = useState(5);
 
-    // console.log('historyExams', historyExams.length);
+    // console.log('historyExams', historyExams);
     // console.log('visible', visible);
     // console.log('loading', loading);
 
@@ -59,6 +59,11 @@ function HistoryExamOfPatient({ historyExams, isLoading, className }) {
                                         <div className="history-info-content">
                                             <p>- Nội dung khám: {history.content_exam}</p>
                                             <p>- Kết quả khám: {history.result_exam}</p>
+                                            <p>
+                                                {history.prescription
+                                                    ? `- Đơn thuốc nhận được: ${history.prescription}`
+                                                    : ''}{' '}
+                                            </p>
                                         </div>
                                     </div>
                                 );

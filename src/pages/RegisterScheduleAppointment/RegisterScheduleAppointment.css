@@ -202,3 +202,29 @@
     margin-top: 12px;
     color: var(--black);
 }
+
+.display-autocomplete {
+    display: flex;
+    align-items: center;
+}
+
+.custom-avatar-doctor {
+    width: 18px;
+    height: 18px;
+    border-radius: 100px;
+    object-fit: cover;
+    margin-right: 6px;
+}
+
+.autocomplete-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-rating {
+    font-size: 1rem;
+}
+
+.custom-hide-info-doctor {
+    display: none;
+}
