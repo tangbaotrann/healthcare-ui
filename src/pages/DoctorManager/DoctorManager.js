@@ -95,7 +95,7 @@ function DoctorManager() {
     // console.log('checkUserLogin - doctor-manager', checkUserLogin);
     // console.log('awaitAccept', awaitAccept);
     // console.log('checkAwaitAccept', checkAwaitAccept);
-    console.log('schedules 46 ->', schedules);
+    // console.log('schedules 46 ->', schedules);
     // console.log('isLoadingScheduleMedicalAppointmentResultExam ->', isLoadingScheduleMedicalAppointmentResultExam);
 
     // socket.on('get_users', (users) => {
@@ -148,8 +148,10 @@ function DoctorManager() {
 
     return (
         <>
-            {(awaitAccept?.data?.is_accepted === false || checkAwaitAccept?.is_accepted === false) && (
-                <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} />
+            {(awaitAccept?.data?.is_accepted === false ||
+                checkAwaitAccept?.is_accepted === false ||
+                checkAwaitAccept?.deleted) && (
+                <AwaitBrowsingAccountDoctor awaitAccept={awaitAccept} checkAwaitAccept={checkAwaitAccept} />
             )}
             {(isLoadingScheduleDoctor ||
                 isLoadingNotification ||
