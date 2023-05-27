@@ -906,7 +906,7 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
 
             // Tạo thêm date_compare để so sánh
             const __schedules = _schedules
-                // .filter((__schedule) => __schedule.doctor.is_accepted && !__schedule.doctor.deleted)
+                .filter((__schedule) => __schedule.doctor.is_accepted && !__schedule.doctor.deleted)
                 .map((_schedule) => {
                     const time = `${new Date(_schedule['time']['time_start']).getHours()}: ${new Date(
                         _schedule['time']['time_start'],
@@ -970,13 +970,6 @@ export const filterGetScheduleAppointmentAndHide = createSelector(
         return [];
     },
 );
-
-// export const filterUsernameOfDoctorGetScheduleMedical = createSelector(
-//     btnOptionUsernameDoctorGetScheduleSelector,
-//     (option) => {
-//         console.log('opt name get id doctor ->', option);
-//     },
-// );
 
 // filter notification -> get id conversation -> show screen (Doctor)
 export const filterNotificationGetConversationId = createSelector(
