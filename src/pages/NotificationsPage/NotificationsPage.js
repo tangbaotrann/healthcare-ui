@@ -135,9 +135,6 @@ function NotificationsPage() {
                         rule: _notification.rule,
                     }))}
                     rowKey="index"
-                    pagination={{
-                        pageSize: 8,
-                    }}
                     rowClassName={(record, index) =>
                         record.rule === 'RULE_DOCTOR_REMIND'
                             ? 'custom-row-rule-doctor-remind'
@@ -153,7 +150,6 @@ function NotificationsPage() {
                             ? 'custom-row-rule-sos'
                             : 'custom-row-else'
                     }
-                    style={{ height: '300px' }}
                     scroll={{ y: 440 }}
                 ></Table>
             </div>
