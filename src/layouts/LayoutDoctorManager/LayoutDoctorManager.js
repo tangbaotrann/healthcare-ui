@@ -13,7 +13,7 @@ import {
     SolutionOutlined,
     TableOutlined,
 } from '@ant-design/icons/lib/icons';
-import { Badge, Layout, Menu, Popover, Skeleton, Space, message } from 'antd';
+import { Badge, Layout, Menu, Popover, Skeleton, Space } from 'antd';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
