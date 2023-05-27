@@ -13,13 +13,11 @@ import { fetchApiAllCreateDaysDoctorSelector, fetchApiAllShiftsDoctorSelector } 
 
 function CreateScheduleDoctor({ infoUser, schedules }) {
     const [showModal, setShowModal] = useState(false);
-    // const [listShift, setListShift] = useState([]);
 
     const dispatch = useDispatch();
 
     const days = useSelector(fetchApiAllCreateDaysDoctorSelector);
     const shifts = useSelector(fetchApiAllShiftsDoctorSelector);
-    // const checkExist = useSelector(fetchApiCreateScheduleDoctorMessageRejectSelector);
 
     // console.log(days);
     // console.log('-->', shifts);
@@ -49,22 +47,6 @@ function CreateScheduleDoctor({ infoUser, schedules }) {
             handleCancel();
         }
     };
-
-    // useEffect(() => {
-    //     const _listTime = shifts?.map((_shift) => {
-    //         return `${_shift?.name} (${moment(new Date(_shift?.time_start)).format('HH:mm')} -> ${moment(
-    //             new Date(_shift?.time_end),
-    //         ).format('HH:mm')})`;
-    //     });
-
-    //     console.log('_listTime', _listTime);
-    //     const _timeUnique = new Set([..._listTime]);
-    //     console.log('_timeUnique', _timeUnique);
-
-    //     const _shifts = Array.from(_timeUnique);
-    //     console.log('_shifts', _shifts);
-    //     setListShift(_shifts);
-    // }, [shifts]);
 
     return (
         <div className="wrapper-create-schedule-doctor">

@@ -118,7 +118,7 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                 },
             )
             .then((res) => {
-                console.log('res re-exam ->', res.data.data);
+                // console.log('res re-exam ->', res.data.data);
                 message.success('Đã đăng ký tái khám cho bệnh nhân thành công.');
                 setOpenModalConfirm(false);
                 setOpenReExam(false);
@@ -126,7 +126,7 @@ function ContentAfterExaminated({ recordConversation, schedules }) {
                 socket.emit('notification_register_schedule_from_patient', { data: res.data.data });
             })
             .catch((err) => {
-                console.log({ err });
+                // console.log({ err });
                 message.error(`${err.response.data.message}`);
             });
     };
