@@ -75,12 +75,6 @@ function TableListScheduleMedical({ infoUser }) {
             dataIndex: 'day_exam',
             width: '10%',
         },
-        // {
-        //     key: 'time',
-        //     title: 'Ca làm',
-        //     dataIndex: 'time',
-        //     width: '12%',
-        // },
         {
             key: 'time_per_conversation',
             title: 'Thời gian khám',
@@ -128,7 +122,6 @@ function TableListScheduleMedical({ infoUser }) {
         {
             key: 'handleStatus',
             render: (record) => {
-                console.log('re', record);
                 return (
                     <div className="status-tbl-schedule-medical">
                         <>
