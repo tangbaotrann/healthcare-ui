@@ -191,6 +191,10 @@ function CartMeeting({ infoUser, schedules }) {
                                     </div>
 
                                     {/* Button */}
+                                    {/* {console.log(
+                                        '->',
+                                        moment(_scheduleMedicalMeeting.day_exam).diff(moment(), 'days') === 0,
+                                    )} */}
                                     <Link
                                         to={`${endPoints.meetingRoom}/${conversation._id}/${
                                             record._id
@@ -198,7 +202,9 @@ function CartMeeting({ infoUser, schedules }) {
                                         target="_blank"
                                         style={{ width: '100%' }}
                                         className={`${
-                                            moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
+                                            moment(_scheduleMedicalMeeting.day_exam).diff(moment(), 'days') === 0 &&
+                                            moment(_scheduleMedicalMeeting.day_exam).format('DD/MM/YYYY') ===
+                                                moment(new Date()).format('DD/MM/YYYY')
                                                 ? // &&
                                                   // moment(_scheduleMedicalMeeting.day_exam).hour() <=
                                                   //     moment(new Date()).hour() &&
@@ -211,7 +217,9 @@ function CartMeeting({ infoUser, schedules }) {
                                         <Button
                                             className="schedule-medical-meeting-cart-btn"
                                             disabled={
-                                                moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
+                                                moment(_scheduleMedicalMeeting.day_exam).diff(moment(), 'days') === 0 &&
+                                                moment(_scheduleMedicalMeeting.day_exam).format('DD/MM/YYYY') ===
+                                                    moment(new Date()).format('DD/MM/YYYY')
                                                     ? // && moment(_scheduleMedicalMeeting.day_exam).hour() <=
                                                       //     moment(new Date()).hour() &&
                                                       // moment(_scheduleMedicalMeeting.day_exam).minute() <=
@@ -223,7 +231,10 @@ function CartMeeting({ infoUser, schedules }) {
                                         >
                                             {_scheduleMedicalMeeting.is_exam
                                                 ? 'Tham gia lại'
-                                                : moment(_scheduleMedicalMeeting.day_exam).diff(new Date(), 'day') === 0
+                                                : moment(_scheduleMedicalMeeting.day_exam).diff(moment(), 'days') ===
+                                                      0 &&
+                                                  moment(_scheduleMedicalMeeting.day_exam).format('DD/MM/YYYY') ===
+                                                      moment(new Date()).format('DD/MM/YYYY')
                                                 ? 'Bắt đầu'
                                                 : 'Đang chờ'}
                                         </Button>
