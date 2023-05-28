@@ -740,8 +740,8 @@ export const getDayAndTimeScheduleMedicalMeetingFilterOfDoctor = createSelector(
 
         // new
         const now = new Date();
-        const _schedules = listScheduleMedical.filter((schedule) => {
-            return moment(schedule.day_exam).add(45, 'minutes').isAfter(moment(now));
+        const _schedules = listScheduleMedical?.filter((schedule) => {
+            return moment(schedule?.day_exam).add(45, 'minutes').isAfter(moment(now));
         });
         // console.log('_schedules ->', _schedules);
 
