@@ -136,7 +136,7 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
             <div className="content-cart-item-footer">
                 {!schedule.status ? (
-                    moment(schedule.day_exam).diff(moment(), 'hours') >= 24 ? (
+                    moment(record.re_day_exam).diff(moment(), 'hours') >= 24 ? (
                         <Button
                             className="content-cart-item-footer-btn cancel-schedule-register"
                             onClick={handleOpenModal}
