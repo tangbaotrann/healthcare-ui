@@ -136,15 +136,8 @@ function CardItemRegisterSchedule({ schedule, patients }) {
 
             <div className="content-cart-item-footer">
                 {!schedule.status ? (
-                    moment(record.re_day_exam).diff(moment(), 'hours') >= 24 ? (
-                        <Button
-                            className="content-cart-item-footer-btn cancel-schedule-register"
-                            onClick={handleOpenModal}
-                        >
-                            Hủy lịch
-                        </Button>
-                    ) : (
-                        <Tooltip title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 24 tiếng." color="#1DCBB6">
+                    moment(schedule.day_exam).diff(moment(), 'days') < 1 ? (
+                        <Tooltip title="Bạn chỉ có thể hủy được lịch hẹn khám của mình trước 1 ngày." color="#1DCBB6">
                             <Button
                                 className="content-cart-item-footer-btn cancel-schedule-register cancel-schedule-register-disabled"
                                 // onClick={handleOpenModal}
@@ -152,6 +145,13 @@ function CardItemRegisterSchedule({ schedule, patients }) {
                                 Hủy lịch
                             </Button>
                         </Tooltip>
+                    ) : (
+                        <Button
+                            className="content-cart-item-footer-btn cancel-schedule-register"
+                            onClick={handleOpenModal}
+                        >
+                            Hủy lịch
+                        </Button>
                     )
                 ) : null}
             </div>

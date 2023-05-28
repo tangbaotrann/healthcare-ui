@@ -138,22 +138,14 @@ function TableListScheduleMedical({ infoUser }) {
                             <Button type="primary" onClick={() => handleStatusScheduleMedical(record)}>
                                 Xác nhận
                             </Button>
-                            {moment(record.re_day_exam).diff(moment(), 'hours') >= 24 ? (
+                            {moment(record.re_day_exam).diff(moment(), 'days') < 1 ? (
+                                <Tooltip title="Bạn chỉ có thể hủy được lịch hẹn khám trước 1 ngày." color="#1DCBB6">
+                                    <Button className="btn-delete-schedule btn-delete-schedule-disabled">Hủy</Button>
+                                </Tooltip>
+                            ) : (
                                 <Button className="btn-delete-schedule" onClick={() => handleShowModal(record)}>
                                     Hủy
                                 </Button>
-                            ) : (
-                                <Tooltip
-                                    title="Bạn chỉ có thể hủy được lịch trước thời gian bắt đầu 24 tiếng."
-                                    color="#1DCBB6"
-                                >
-                                    <Button
-                                        className="btn-delete-schedule btn-delete-schedule-disabled"
-                                        // onClick={() => handleShowModal(record)}
-                                    >
-                                        Hủy
-                                    </Button>
-                                </Tooltip>
                             )}
                         </>
                     </div>
