@@ -192,6 +192,7 @@ function LayoutDoctorManager({ children, infoUser, isLoadingUser, isLoadingNotif
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutScheduleMedicalMeeting) {
                             dispatch(fetchApiConversations(getIdDoctor._id));
+                            console.log('1 ->>');
                             dispatch(fetchApiScheduleMedicalAppointmentAwait(getIdDoctor._id));
                             dispatch(layoutSlice.actions.btnSelectMenuChangeLayout(item.key));
                         } else if (item.key === constants.layoutListNotification) {
