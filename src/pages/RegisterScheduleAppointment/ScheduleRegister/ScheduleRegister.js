@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Calendar, Form, Input, Modal, Skeleton, message } from 'antd';
+import { Button, Calendar, Form, Input, Modal, Skeleton, Spin, message } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -10,12 +10,14 @@ import { filterGetScheduleAppointmentAndHide, isLoadingScheduleDoctorSelector } 
 import ScheduleRegisterItem from '../ScheduleRegisterItem/ScheduleRegisterItem';
 import socket from '~/utils/socket';
 import ButtonLoadMore from '~/components/ButtonLoadMore';
+import { LoadingOutlined } from '@ant-design/icons';
 
 function ScheduleRegister() {
     const [openModalConfirm, setOpenModalConfirm] = useState(false);
     const [dateTime, setDateTime] = useState();
     const [scheduleAppointment, setScheduleAppointment] = useState({});
     const [visible, setVisible] = useState(5);
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -70,6 +72,8 @@ function ScheduleRegister() {
         const getToken = JSON.parse(localStorage.getItem('token_user_login'));
         const { content_exam, schedule, day_exam } = values;
 
+        setLoading(true);
+
         await axios
             .post(
                 `${process.env.REACT_APP_BASE_URL}schedule-details`,
@@ -95,6 +99,9 @@ function ScheduleRegister() {
             .catch((err) => {
                 // console.log({ err });
                 message.error(`${err.response.data.message}`);
+            })
+            .finally((res) => {
+                setLoading(false);
             });
     };
 
@@ -188,8 +195,8 @@ function ScheduleRegister() {
                     </Form.Item>
 
                     <div className="display-reg-schedule-appointment">
-                        <Button className="content-cart-item-footer-btn" htmlType="submit" block>
-                            Xác nhận
+                        <Button className="content-cart-item-footer-btn" disabled={loading} htmlType="submit" block>
+                            {loading ? <LoadingOutlined spin className="loading-btn-confirm-schedule" /> : 'Xác nhận'}
                         </Button>
                     </div>
                 </Form>
